@@ -1,0 +1,400 @@
+任务：执行 R16-P14 Stage-1
+Oracle Prefix Feasibility Audit on ManiSkill3
+
+目标不是证明最终算法有效，而是回答：
+
+1. 是否存在非零的可干预窗口；
+2. safe prefix 是否值得保留；
+3. suffix-only intervention 是否优于 whole-chunk replan；
+4. 不同 failure cause 是否需要不同 intervention；
+5. 哪些任务适合继续训练 learned prefix-risk model。
+
+==================================================
+1. 固定平台
+==================================================
+
+Primary simulator:
+ManiSkill3
+
+Primary policy:
+small action-chunk behavior cloning policy
+
+初始优先使用 state-based observation，以隔离执行机制。
+后续再做 RGB + proprio。
+
+初始任务：
+
+- OpenCabinetDrawer-v1
+- PegInsertionSide-v1
+- PickCube-v1 或 StackCube-v1
+- PlugCharger-v1 作为 held-out candidate
+
+优先使用 ManiSkill 官方 demonstration 和官方 BC/IL 代码。
+若官方 baseline 不直接输出 action chunk，则实现最小 chunked BC：
+
+observation
+→ 3-layer MLP or small Transformer
+→ H × action_dim
+
+默认：
+H=16
+execution_horizon=8
+
+同时测试固定 horizon：
+1, 4, 8, 16
+
+不要使用 π0.5。
+不要使用 DINO-WM。
+不要训练最终 irreversibility head。
+
+==================================================
+2. 冻结与目录
+==================================================
+
+冻结：
+
+- steering repo commit
+- R16-P14 proposal/reviewer files
+- ManiSkill commit/version
+- task configs
+- demonstrations
+- policy config
+- model checkpoint
+- seeds
+- observation/action normalization
+- chunk length
+- execution horizons
+- perturbation schedule
+
+创建：
+
+experiments/r16_p14_maniskill_stage1/
+  preregistration.yaml
+  source_manifest.json
+  baseline/
+  policies/
+  snapshots/
+  branch_replays/
+  perturbations/
+  labels/
+  reports/
+  tests/
+  commands.sh
+  decision.json
+
+decision.json 只能是：
+
+PROCEED_TO_LEARNED_RISK
+REVISE_TASKS_OR_PERTURBATIONS
+KILL_PREFIX_HYPOTHESIS
+BLOCKED_BY_INFRA
+
+只使用普通 Git、JSONL、CSV 和 SHA256。
+禁止 formal activation 或大型发布基础设施。
+
+==================================================
+3. Baseline policy gate
+==================================================
+
+先训练或加载 small chunked BC。
+
+每个任务至少：
+
+- 3 train seeds
+- 50 clean evaluation episodes per seed
+
+记录：
+
+- task success
+- episode length
+- executed chunk count
+- action magnitude
+- contact events
+- gripper events
+- failure type
+
+任务进入后续步骤的条件：
+
+- clean success 位于约 30%–90%；
+- 或者策略能稳定完成主要前缀，但会在后续阶段失败；
+- 不能所有 episode 都在第一步失败；
+- action chunk 至少包含 8 个有效动作；
+- 能够产生多种 prefix outcome。
+
+若 success <30%，先改善 baseline 或换任务。
+若 success >95% 且几乎没有 failure，则保留 clean baseline，
+但必须通过受控扰动制造目标 failure。
+
+==================================================
+4. Instrumentation parity
+==================================================
+
+增加 opt-in 日志：
+
+每次 policy query 保存：
+
+- full action chunk
+- action chunk hash
+- current observation/state
+- executed prefix length
+- every executed action
+- contact state
+- gripper state
+- task progress
+- simulator state/snapshot
+- environment seed
+- policy seed
+- failure/violation event
+- timestamps
+
+instrumentation disabled 时必须与原 baseline 在相同 seed 下：
+
+- action chunk 完全一致；
+- executed actions 完全一致；
+- success 完全一致；
+- policy call 数完全一致。
+
+==================================================
+5. Snapshot / replay gate
+==================================================
+
+在每个动作 prefix 后保存 simulator state：
+
+s0
+s1
+...
+sH
+
+从同一个 snapshot：
+
+- 重放相同 suffix 3 次；
+- 状态差异必须小于固定容差；
+- task outcome 和 contact events 必须一致。
+
+若直接 snapshot restore 不可靠，则：
+
+same seed reset
+→ replay exact prefix
+→ verify state
+→ branch from replayed state
+
+replay determinism 必须达到至少 99%。
+
+==================================================
+6. Controlled perturbations
+==================================================
+
+OpenCabinetDrawer：
+
+- chunk decode 后在 drawer swept path 中加入 obstacle；
+- insertion time: early / middle / late；
+- severity: low / medium / high；
+- 可选增加 friction 或 mechanism resistance。
+
+PegInsertionSide：
+
+- chunk decode 后小幅移动或旋转 target box；
+- 注入 lateral peg displacement；
+- 改变 insertion friction；
+- 干预时刻覆盖 pre-contact / onset / sustained contact。
+
+PickCube / StackCube：
+
+- grasp 后移动 target；
+- 在 transport 中注入 small grip slip；
+- release 前移动 target region；
+- 改变局部 gripper friction。
+
+PlugCharger：
+
+- 只作为 held-out；
+- 使用 socket pose shift 或 charger lateral disturbance。
+
+扰动只作用于环境。
+禁止随机翻转 action token。
+扰动 schedule、severity 和 seed 必须在运行前固定。
+
+==================================================
+7. Prefix branch replay
+==================================================
+
+对每个 action chunk A=[a1,...,aH]，
+在每个 prefix k 后执行以下分支：
+
+U0: nominal_continue
+继续原始 suffix。
+
+U1: trim_and_replan
+取消未执行 suffix，立即由相同 BC 重新规划。
+
+U2: hold_and_replan
+保持一个控制周期，再重新观察和规划。
+
+U3: bounded_rollback_and_replan
+使用固定有界 rollback primitive 后重新规划。
+
+U4: cause_specific_local_repair
+
+cause-specific repair 至少包括：
+
+drawer obstacle:
+  stop pulling
+  retract drawer/arm
+  replan
+
+insertion misalignment:
+  stop forward motion
+  retract small distance
+  realign
+  replan
+
+grasp slip:
+  keep object supported
+  reclose or stabilize
+  replan
+
+premature release:
+  cancel gripper opening
+  retain grasp
+  realign target
+  replan
+
+branch budget 必须对所有方法相同。
+
+==================================================
+8. 两类不可逆标签
+==================================================
+
+physical_recoverable(k,c):
+
+使用 privileged scripted recovery 或 motion planner，
+是否还能避免 cause c 并完成任务。
+
+policy_recoverable(k,c):
+
+使用部署允许的 U1–U4 和当前 BC，
+是否还能避免 cause c 并在固定 budget 内完成任务。
+
+分别计算：
+
+k_irrev_physical
+k_irrev_policy
+
+不得把 first collision / first monitor violation
+直接当作 k_irrev。
+
+==================================================
+9. Oracle 方法比较
+==================================================
+
+必须比较：
+
+B0 fixed horizon {1,4,8,16}
+B1 periodic replanning
+B2 oracle whole-chunk shield
+B3 oracle same-trigger full replan
+B4 oracle cause-agnostic prefix trim
+B5 oracle R16-P14 suffix-only intervention
+
+B2–B5 使用相同的 oracle label、检查机会和 branch budget。
+
+==================================================
+10. 指标
+==================================================
+
+任务指标：
+
+- task success
+- safe success
+- violation rate
+- catastrophic failure rate
+
+边界指标：
+
+- k_irrev distribution
+- intervention window
+- first-detectable-to-irrev lead time
+- prefix localization error
+
+机制指标：
+
+- safe-prefix retention
+- cancelled suffix length
+- rework steps
+- extra path length
+- policy calls
+- rollback count
+- intervention count
+- premature intervention rate
+- late intervention rate
+
+原因指标：
+
+- failure cause distribution
+- best intervention per cause
+- cause-specific vs generic trim
+
+资源指标：
+
+- simulation time
+- policy latency
+- safety-check latency
+- branch replay count
+
+==================================================
+11. Continue / Kill gate
+==================================================
+
+PROCEED_TO_LEARNED_RISK 需要：
+
+1. 至少 3 个任务各获得 >=30 个 usable unsafe/near-unsafe chunks；
+2. 至少 2 个任务 median intervention window >=2 actions；
+3. oracle suffix-only 相比 no intervention：
+   violation rate 相对下降 >=30%；
+4. 相比 same-trigger full replan：
+   rework steps 下降 >=20%；
+5. median safe-prefix retention >=30% of the chunk；
+6. 至少两类 failure 的最佳 operator 不同，
+   或 cause-specific 明显优于 generic trim；
+7. replay determinism >=99%。
+
+REVISE_TASKS_OR_PERTURBATIONS：
+
+- baseline 太弱；
+- failure 太少；
+- perturbation 太人工；
+- monitor/cause 不清楚；
+- 任务没有非零 intervention window。
+
+KILL_PREFIX_HYPOTHESIS：
+
+- oracle suffix-only 不优于 same-trigger full replan；
+- safe prefix 保留不能减少重做；
+- 大多数 k_irrev 为 0 或 1；
+- cause-specific operator 没有增量价值；
+- 所有有效干预都等价于简单固定短 horizon。
+
+==================================================
+12. 第一次进度汇报
+==================================================
+
+第一次 checkpoint 只需汇报：
+
+1. exact repo/version/checkpoint；
+2. ManiSkill 是否跑通；
+3. 4 个任务的 BC baseline success；
+4. actual chunk length；
+5. logging parity 是否通过；
+6. snapshot/replay 是否可靠；
+7. 每个任务出现的主要 failure；
+8. 哪些 perturbation 已实现；
+9. 当前是否已经发现非零 intervention window；
+10. 下一条将执行的命令。
+
+在该 checkpoint 前：
+
+- 不训练 learned risk head；
+- 不运行 π0.5；
+- 不运行 DINO-WM；
+- 不启动 DEHP/REMAC 复现；
+- 不宣称性能提升。

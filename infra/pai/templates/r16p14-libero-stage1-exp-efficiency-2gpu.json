@@ -1,0 +1,134 @@
+{
+  "schema_version": 2,
+  "kind": "pytorchjob",
+  "name_prefix": "r16p14-libero-stage1",
+  "description": "Formal bounded Stage-1 oracle-prefix feasibility pilot on three LIBERO-GOAL tasks: nine small state-observation chunk-BC policies followed by clean rollouts and equal-budget oracle branch replay; no learned risk head, VLA, world model, or large-scale training",
+  "resource_alias": "exp-efficiency-r16p14-libero-2gpu",
+  "workspace_id": "179169",
+  "provenance": {
+    "contract_source_job_id": "dlcfp1szuc2cgqfp",
+    "resource_source_job_id": "dlc1j2p8ui63ulps",
+    "submission_method": "cli_create",
+    "pai_clone_performed": false,
+    "source_role": "readback_reference"
+  },
+  "network": {},
+  "storage": {
+    "data_sources": [
+      {"id": "d-mkixtohdn75dp8x9tb", "version": "v1", "mount_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon", "options": ""},
+      {"id": "d-lg9t2b6xajpukeqqeb", "version": "v1", "mount_path": "/mnt/cpfs/zbl-cpfs-new/SHARE/leon", "options": ""},
+      {"id": "d-36p023eg0f2vuqny8y", "version": "v1", "mount_path": "/mnt/cpfs/zbl-cpfs-new/CKPT/leon", "options": ""},
+      {"id": "d-ejgj2ej7io1t2t32uc", "version": "v1", "mount_path": "/mnt/cpfs/zbl-cpfs-new/dataset/leon", "options": ""},
+      {"id": "d-7fi8hehav247qi6x5o", "version": "v1", "mount_path": "/mnt/cpfs/zbl-cpfs-new/Models/", "options": ""}
+    ],
+    "output_root": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_libero_stage1/pai"
+  },
+  "worker": {
+    "count": 1,
+    "image": "dsw-registry-vpc.cn-wulanchabu.cr.aliyuncs.com/pai/modelscope:1.29.0-pytorch2.3.1tensorflow2.16.1-gpu-py311-cu121-ubuntu22.04",
+    "gpu": 2,
+    "cpu": 12,
+    "memory": "200Gi",
+    "shared_memory": "200Gi"
+  },
+  "runtime": {
+    "command_file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/pai-job-registry/launchers/r16p14_libero_stage1.sh",
+    "identity_mechanism": "controller_inline_bootstrap_then_setpriv",
+    "uid": 2254,
+    "gid": 2254,
+    "pod_env": {},
+    "secret_env_names": [],
+    "write_paths": [
+      "{{ARTIFACT_DIR}}",
+      "/mnt/cpfs/zbl-cpfs-new/CKPT/leon/torch/r16_p14_libero_stage1/r16p14-libero-stage1-pilot-v1",
+      "/mnt/cpfs/zbl-cpfs-new/USERS/leon/cache/r16_p14_libero_stage1/pilot-v1"
+    ],
+    "output_mode": "resume",
+    "create_artifact_dir": true,
+    "recursive_repair": false,
+    "payload_transport": "base64"
+  },
+  "fault_tolerance": {
+    "aimaster_args": "",
+    "maximum_platform_restarts": 0,
+    "expected_platform_restarts": 0,
+    "launcher_attempts": 1,
+    "retry_sleep_seconds": 30,
+    "pai_automatic_fault_tolerance": false
+  },
+  "evidence": {
+    "kind": "r16p14_libero_stage1_oracle_prefix_formal_pilot",
+    "resource_contract": "dedicated_2gpu_v1",
+    "workload_type": "training_and_rollout_evaluation",
+    "task_id": "r16p14-libero-stage1-oracle-prefix-20260812",
+    "model_id": "state-observation-chunk-bc-mlp-h16",
+    "success_gate": "persisted_step_loss_then_completed_rollout_and_report",
+    "validation_method": "static+dev14_cpu_replay+single_gpu_train_resume_oracle_smoke",
+    "validation_status": "passed_no_pai_gpu_probe",
+    "pai_probe_created": false,
+    "first_work_evidence_path": "{{ARTIFACT_DIR}}/training/r16p14-libero-stage1-pilot-v1/first_real_work.json",
+    "first_rollout_evidence_path": "{{ARTIFACT_DIR}}/shards/open_the_middle_drawer_of_the_cabinet/r16p14-libero-stage1-pilot-v1/baseline_eval/first_completed_rollout.json",
+    "training_completed_evidence_path": "{{ARTIFACT_DIR}}/TRAINING_COMPLETE.json",
+    "completed_evidence_path": "{{ARTIFACT_DIR}}/EVALUATION_COMPLETE.json",
+    "report_path": "{{ARTIFACT_DIR}}/report/report.md",
+    "contract_ready": true,
+    "mount_contract": "exact_five_new_root_sources_from_live_readback",
+    "source_commit": "a1b61194a8382f5b1a247b9cd9b140645ff2aeb8",
+    "source_tree": "53001c43fbbb165c0a1f2c71f9cbd4c81b9d0ced",
+    "launcher_sha256": "3c4c83dc5c02b5b9ef780530589e22c4b451a2ab446f043112b224c2c715990a",
+    "libero_config_sha256": "528990e0cdd466a063def065fddb835fe2f37609cfef305d1910a1bf91a353ce",
+    "demo_sha256": {
+      "open_the_middle_drawer_of_the_cabinet": "20252c7cf98cd7437061f7f200ae7b6cb6219fabbd53b4536dfaa8abda6ab737",
+      "put_the_bowl_on_the_plate": "e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406",
+      "put_the_wine_bottle_on_the_rack": "f9092aa70734fc4083e97fc58c3ba25f87c614d18326182ddc7a455f0ab4da2e"
+    },
+    "demo_size_bytes": {
+      "open_the_middle_drawer_of_the_cabinet": 702223367,
+      "put_the_bowl_on_the_plate": 468246288,
+      "put_the_wine_bottle_on_the_rack": 878958730
+    },
+    "application_run_id": "r16p14-libero-stage1-pilot-v1",
+    "checkpoint_lineage": "/mnt/cpfs/zbl-cpfs-new/CKPT/leon/torch/r16_p14_libero_stage1/r16p14-libero-stage1-pilot-v1",
+    "cache_root": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/cache/r16_p14_libero_stage1/pilot-v1",
+    "checkpoint_cadence_steps": 2000,
+    "full_state_resume": true,
+    "train_steps_per_task_seed": 8000,
+    "batch_size_per_process": 256,
+    "policy_seeds": [7, 17, 29],
+    "chunk_length": 16,
+    "execution_horizons": [1, 4, 8, 16],
+    "clean_episodes_per_seed_per_horizon": 10,
+    "oracle_policy_seed": 7,
+    "oracle_candidates_per_task": 30,
+    "oracle_insertion_prefixes": [2, 6, 10],
+    "oracle_prefix_stride": 2,
+    "oracle_branch_budget": 96,
+    "tasks": [
+      "open_the_middle_drawer_of_the_cabinet",
+      "put_the_bowl_on_the_plate",
+      "put_the_wine_bottle_on_the_rack"
+    ],
+    "gpu_execution": "gpu0_drawer_plus_gpu1_bowl_then_gpu0_wine_for_train_and_eval",
+    "wandb_mode": "online_training_exact_entity_resume_same_lineage",
+    "experiment_scope": "preliminary_stage1_oracle_pilot_not_final_algorithm_claim",
+    "expected_first_work_uid": 2254,
+    "expected_first_work_gid": 2254
+  },
+  "submission": {
+    "priority": 9,
+    "disable_ecs_stock_check": false,
+    "job_reserved_policy": "",
+    "job_reserved_minutes": 0,
+    "job_max_running_time_minutes": 0,
+    "tags": {
+      "managed_by": "pai-job-registry",
+      "purpose": "formal-training-evaluation",
+      "task": "r16p14-libero-stage1-oracle-prefix-20260812",
+      "model": "state-observation-chunk-bc-mlp-h16",
+      "dataset": "libero-goal-three-task-locked",
+      "hardware": "2xa800-dedicated",
+      "resource_pool": "exp-efficiency",
+      "experiment_role": "stage1-oracle-prefix-feasibility"
+    }
+  }
+}

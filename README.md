@@ -1,0 +1,76 @@
+# R16-P14: Earliest-Irreversible-Prefix Intervention
+
+Reproducible Stage-1 oracle-prefix feasibility audit on **LIBERO-GOAL**. This
+repository contains the complete implementation, preregistration, tests, PAI
+launch contract, raw rollout/oracle records, training logs, final full-state
+checkpoints, and the experimental report.
+
+> **Decision: `REVISE_TASKS_OR_PERTURBATIONS`.** The pilot found a useful
+> intervention window on one task, but only 1 of 7 preregistered gates passed.
+> It does not justify training a learned prefix-risk model yet.
+
+## Main result
+
+| Task | Clean success | Usable oracle chunks | Median window | Safe-prefix retention | Unsafe reduction | Replay |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Open middle drawer | 10/120 | 27/30 | 0 | 0% | 3.7% | 100% |
+| Bowl on plate | 6/120 | 17/30 | 4 | 50% | 64.7% | 86.7% |
+| Wine bottle on rack | 11/120 | 28/30 | 0 | 0% | 14.3% | 100% |
+
+Across tasks, unsafe outcomes fell from 72 to 56 (22.2%), median relative
+rework reduction was 4.1%, and only one task had a median intervention window
+of at least two actions. The detailed interpretation is in
+[the experiment report](docs/EXPERIMENT_REPORT.md).
+
+## What is included
+
+- [`experiments/r16_p14_libero_stage1`](experiments/r16_p14_libero_stage1):
+  chunked state-BC training, deterministic snapshot replay, controlled
+  perturbations, five policy-side intervention operators, physical-recovery
+  proxy, aggregation, preregistration, and tests.
+- [`artifacts/formal_pilot`](artifacts/formal_pilot): all 360 clean rollouts,
+  all 90 oracle candidates, schedules, parity records, logs, summaries, and
+  completion markers from the successful PAI run.
+- [`artifacts/checkpoints`](artifacts/checkpoints): nine final step-8000
+  full-state checkpoints, including model, optimizer, scheduler, RNG,
+  normalization, and SHA-256 completeness markers.
+- [`infra/pai`](infra/pai): sanitized formal PAI launcher/template and exact
+  success/recovery provenance. No credential value is committed.
+- [`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md): environment, dataset
+  hashes, commands, and verification procedure.
+- [`scripts/verify_r16p14_release.py`](scripts/verify_r16p14_release.py):
+  independent integrity and count validator for this release.
+- [`artifacts/SHA256SUMS`](artifacts/SHA256SUMS): SHA-256 manifest covering
+  every committed checkpoint, formal result, log, raw record, and test result.
+
+## Quick verification
+
+```bash
+python scripts/verify_r16p14_release.py
+sha256sum -c artifacts/SHA256SUMS
+
+PYTHONPATH="$PWD:$PWD/experiments/r16_p14_libero_stage1" \
+LIBERO_CONFIG_PATH="$PWD/experiments/r16_p14_libero_stage1/libero_config" \
+python -m pytest experiments/r16_p14_libero_stage1/tests -q
+```
+
+The formal PAI job was `dlc1l9akne34qq7k` on 2×A800 and finished with
+`Succeeded`. The frozen experiment source was commit
+`a1b61194a8382f5b1a247b9cd9b140645ff2aeb8`, tree
+`53001c43fbbb165c0a1f2c71f9cbd4c81b9d0ced`.
+
+## Evidence boundary
+
+This is a bounded Stage-1 pilot: 10 clean episodes per policy seed and
+execution horizon, rather than the final preregistered 50. Oracle evaluation
+uses policy seed 7; clean evaluation covers seeds 7, 17, and 29. The policy is
+a small state-observation BC model—not a VLA, learned risk head, or world
+model. Physical recoverability is a privileged scripted proxy, not an
+exhaustive proof of the dynamics.
+
+The corresponding Feishu report is available
+[here](https://icnbwz7kd1ui.feishu.cn/wiki/DOVIwBUrZi4RAskJW6CcJpOLnif).
+
+The embedded LIBERO source retains its upstream license and provenance; the
+original upstream README is preserved at
+[`docs/UPSTREAM_LIBERO_README.md`](docs/UPSTREAM_LIBERO_README.md).

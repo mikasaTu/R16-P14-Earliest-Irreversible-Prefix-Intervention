@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "cleanup_target_count": 0,
+  "pre_create_failures": [
+    {
+      "registry_run_id": "r16p14-libero-stage1-20260812-142940",
+      "state": "preflight_failed_sealed",
+      "job_id": null,
+      "cause": "checkpoint/cache resume directories did not yet exist"
+    },
+    {
+      "registry_run_id": "r16p14-libero-stage1-20260812-143219",
+      "state": "preflight_failed_sealed",
+      "job_id": null,
+      "cause": "artifact parent directory did not yet exist"
+    }
+  ],
+  "terminal_failed_jobs": [
+    {
+      "registry_run_id": "r16p14-libero-stage1-20260812-143238",
+      "job_id": "dlc14vubd6v06sf1",
+      "job_status": "Failed",
+      "pod_status": "Failed",
+      "first_real_step_persisted": false,
+      "cause": "CUDA 13 runtime incompatible with the PAI driver; second-GPU EGL mapping was also incorrect"
+    },
+    {
+      "registry_run_id": "r16p14-libero-stage1-20260812-144014",
+      "job_id": "dlcp2k9oqvjv387x",
+      "job_status": "Failed",
+      "pod_status": "Failed",
+      "first_real_step_persisted": false,
+      "cause": "overlay hash preflight inherited an inaccessible /root working directory after setpriv"
+    },
+    {
+      "registry_run_id": "r16p14-libero-stage1-20260812-144307",
+      "job_id": "dlc2biyvecx46r02",
+      "job_status": "Failed",
+      "pod_status": "Failed",
+      "first_real_step_persisted": false,
+      "cause": "LIBERO source assertion incorrectly treated the first PYTHONPATH entry as the source root"
+    }
+  ],
+  "successful_recovery": {
+    "registry_run_id": "r16p14-libero-stage1-20260812-144626",
+    "job_id": "dlc1l9akne34qq7k",
+    "job_status": "Succeeded",
+    "pod_status": "Succeeded",
+    "complete_checkpoints": 9,
+    "clean_rollouts": 360,
+    "oracle_candidates": 90
+  }
+}

@@ -1,0 +1,91 @@
+experiment_id: r16_p14_libero_stage1
+title: Oracle Prefix Feasibility Audit on LIBERO
+registered_at_utc: "2026-08-12T00:00:00Z"
+scope:
+  train_learned_risk_head: false
+  use_pi05: false
+  use_world_model: false
+  claim_final_algorithm: false
+platform:
+  simulator: LIBERO
+  suite: libero_goal
+  policy: state_observation_chunked_bc_mlp
+  observation:
+    keys: [robot0_proprio-state, object-state]
+    oracle_state_excluded_from_policy: true
+  action_chunk_length: 16
+  default_execution_horizon: 8
+  fixed_execution_horizons: [1, 4, 8, 16]
+tasks:
+  development:
+    - open_the_middle_drawer_of_the_cabinet
+    - put_the_bowl_on_the_plate
+    - put_the_wine_bottle_on_the_rack
+  held_out:
+    - open_the_top_drawer_and_put_the_bowl_inside
+causes:
+  open_the_middle_drawer_of_the_cabinet: mechanism_path_obstacle
+  put_the_bowl_on_the_plate: target_shift_or_premature_release
+  put_the_wine_bottle_on_the_rack: grasp_slip_or_contact_misalignment
+policy_training:
+  seeds: [7, 17, 29]
+  train_demo_count: 50
+  optimizer: AdamW
+  learning_rate: 0.0003
+  batch_size: 256
+  train_steps: 8000
+  checkpoint_interval_optimizer_steps: 2000
+  checkpoint_contract: model_optimizer_scheduler_rng_global_step
+baseline_gate:
+  clean_eval_episodes_per_seed: 50
+  preferred_success_interval: [0.30, 0.90]
+  accept_stable_prefix_late_failure: true
+  minimum_effective_chunk_actions: 8
+replay_gate:
+  repeated_suffix_replays: 3
+  max_state_abs_error: 1.0e-9
+  minimum_determinism_rate: 0.99
+perturbations:
+  insertion_prefixes: [2, 6, 10]
+  severities:
+    low: 0.015
+    medium: 0.03
+    high: 0.05
+  environment_only: true
+  action_token_corruption: false
+oracle:
+  model_seed: 7
+  operators:
+    - nominal_continue
+    - trim_and_replan
+    - hold_and_replan
+    - bounded_rollback_and_replan
+    - cause_specific_local_repair
+  equal_branch_budget: true
+  branch_budget_steps: 96
+pilot_execution:
+  purpose: preliminary_mechanism_qualification_not_final_gate
+  clean_eval_episodes_per_seed_per_horizon: 10
+  oracle_candidates_per_task: 30
+  oracle_prefix_stride: 2
+  full_gate_shortfall:
+    clean_eval_episodes_per_seed: 40
+decision_gate:
+  minimum_usable_unsafe_chunks_per_task: 30
+  minimum_tasks_with_median_window_ge_2: 2
+  minimum_relative_violation_reduction: 0.30
+  minimum_relative_rework_reduction_vs_same_trigger_full_replan: 0.20
+  minimum_median_safe_prefix_retention_fraction: 0.30
+  require_distinct_best_operator_for_two_causes: true
+  minimum_replay_determinism: 0.99
+storage:
+  code_root: /mnt/cpfs/zbl-cpfs-new/USERS/leon/code
+  dataset_root: /mnt/cpfs/zbl-cpfs-new/dataset/leon
+  cache_root: /mnt/cpfs/zbl-cpfs-new/USERS/leon/cache/r16_p14_libero_stage1
+  log_root: /mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_libero_stage1
+  checkpoint_root: /mnt/cpfs/zbl-cpfs-new/CKPT/leon/torch/r16_p14_libero_stage1
+allowed_decisions:
+  - PROCEED_TO_LEARNED_RISK
+  - REVISE_TASKS_OR_PERTURBATIONS
+  - KILL_PREFIX_HYPOTHESIS
+  - BLOCKED_BY_INFRA
