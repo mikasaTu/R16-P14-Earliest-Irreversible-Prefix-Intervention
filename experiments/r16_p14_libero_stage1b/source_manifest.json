@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "experiment_id": "r16_p14_libero_stage1b",
+  "frozen_at_utc": "2026-08-13T07:04:49Z",
+  "repository": {
+    "commit": "ee56aa096e308214c38132d0e6d2a9e576c29792",
+    "tree": "50e56b84c5e867447b22f81e31454646a12a9eb8",
+    "branch": "main",
+    "remote": "git@github.com:mikasaTu/R16-P14-Earliest-Irreversible-Prefix-Intervention.git"
+  },
+  "stage1_frozen_source": {
+    "commit": "a1b61194a8382f5b1a247b9cd9b140645ff2aeb8",
+    "tree": "53001c43fbbb165c0a1f2c71f9cbd4c81b9d0ced",
+    "artifact_manifest_sha256": "df18d6394dc2ed263523c7ca1c948f4a3baf3195f0067760495b953b694a53a4"
+  },
+  "runtime": {
+    "python": "3.11.11",
+    "torch": "2.12.1+cu130",
+    "torch_cuda": "13.0",
+    "mujoco": "3.6.0",
+    "robosuite": "1.4.0",
+    "numpy": "2.4.6",
+    "h5py": "3.16.0"
+  },
+  "phase_b_exact_action_reconstruction_runtime": {
+    "python": "3.11.11",
+    "torch": "2.5.1+cu124",
+    "torch_cuda": "12.4",
+    "device": "cuda:0",
+    "gpu_role": "frozen_mlp_forward_only",
+    "simulator_execution": "cpu",
+    "action_chunk_hash_matches": "30/30"
+  },
+  "libero_config_sha256": "528990e0cdd466a063def065fddb835fe2f37609cfef305d1910a1bf91a353ce",
+  "raw_oracle_records": {
+    "open_the_middle_drawer_of_the_cabinet": "1e4ceaaf7156d5e86d908c4e08c704da326005e6c166d548842f2f369cc62bd5",
+    "put_the_bowl_on_the_plate": "0b12c58eee2f1b275ff3d3d9dea77ccb924a5920da0e956453e452ce93165031",
+    "put_the_wine_bottle_on_the_rack": "65a700ccf9d3d89aa30c8959f54d20b95ad37b77ce047b3314b5aa1e214a8e1f"
+  },
+  "clean_rollout_records": {
+    "open_the_middle_drawer_of_the_cabinet": "1041a289d007bad28e6f8eab363ff475f5fd80ce681e518249bd8b57edcedf9b",
+    "put_the_bowl_on_the_plate": "63af1f624b46fcbcf1b067cc6f89b9c223ab39ee9c979c8f4b3aff20cd0e7291",
+    "put_the_wine_bottle_on_the_rack": "314cdd7bc0714eb3648bc713788ae739fdafa56f9060fad84e97f66548cecba3"
+  },
+  "demonstrations": {
+    "open_the_middle_drawer_of_the_cabinet_demo.hdf5": {
+      "size_bytes": 702223367,
+      "sha256": "20252c7cf98cd7437061f7f200ae7b6cb6219fabbd53b4536dfaa8abda6ab737"
+    },
+    "put_the_bowl_on_the_plate_demo.hdf5": {
+      "size_bytes": 468246288,
+      "sha256": "e69528b0cf10dfc59b20698e12ec2affc03f3887309034d3eb74cac3ec929406"
+    },
+    "put_the_wine_bottle_on_the_rack_demo.hdf5": {
+      "size_bytes": 878958730,
+      "sha256": "f9092aa70734fc4083e97fc58c3ba25f87c614d18326182ddc7a455f0ab4da2e"
+    },
+    "put_the_cream_cheese_in_the_bowl_demo.hdf5": {
+      "size_bytes": 535715512,
+      "sha256": "ee58a7d72c143a71bf1448674e70940ac7781c1d1bb10a1b0c7a5c69b26abbef",
+      "role": "single_preregistered_bounded_replacement_for_static_wine_rack_target"
+    }
+  },
+  "checkpoint_sha256": {
+    "open_the_middle_drawer_of_the_cabinet/seed_7": "6eb95e4ab8f0a8495936d64eab6bf58e853a7384ca0d6c8c4421c4f2fb3aa4fd",
+    "open_the_middle_drawer_of_the_cabinet/seed_17": "adff0d67f391e343e8de91c5d4e41bb74497c829ef1a0c3ef23dad25b2b2c925",
+    "open_the_middle_drawer_of_the_cabinet/seed_29": "da682da6a972a145805f85588e343ddd55419f248e3bf7318f3fcbf70cbc88b6",
+    "put_the_bowl_on_the_plate/seed_7": "7f77dd754215d5e977dfa4606bf42476e6151a9811e31dd8e8c033c3a2ad8867",
+    "put_the_bowl_on_the_plate/seed_17": "c069db21fd5c139108ea5b90df7bbb7d7dab1e3885fcfbf723adb3caa2c428cb",
+    "put_the_bowl_on_the_plate/seed_29": "1623028ad7ce660eb3764504d6cb5c137e65eb263896e6162322fce3e51601ac",
+    "put_the_wine_bottle_on_the_rack/seed_7": "0f16717f698a57832b8d596c133d5c90ce9d88a8b3912dceeda8a74b7ad286f8",
+    "put_the_wine_bottle_on_the_rack/seed_17": "01bd8b3ca6aa3eb9b5c3e0d134dbec6bdce76224eeb7a208b4a64c7a22893663",
+    "put_the_wine_bottle_on_the_rack/seed_29": "8bfd239f5bc6f86cf65a37b1dceba1aaa6ae95b6a4b6a611b4fbb9df1ab8f1bd"
+  }
+}

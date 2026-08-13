@@ -5,11 +5,29 @@ repository contains the complete implementation, preregistration, tests, PAI
 launch contract, raw rollout/oracle records, training logs, final full-state
 checkpoints, and the experimental report.
 
-> **Decision: `REVISE_TASKS_OR_PERTURBATIONS`.** The pilot found a useful
-> intervention window on one task, but only 1 of 7 preregistered gates passed.
-> It does not justify training a learned prefix-risk model yet.
+> **Stage-1b decision: `KILL_CORE_HYPOTHESIS`.** Correcting the metric removes
+> the Stage-1 Bowl signal. Prefix reconstruction repairs replay to 100%, but a
+> policy-free expert-chunk calibration produces a qualified window on only one
+> task; the preregistered gate requires two. No new policy or risk model was
+> trained.
 
 ## Main result
+
+### Stage-1b contract-repair result
+
+| Evidence layer | Result |
+| --- | --- |
+| Metric correction | Bowl median window 4 → 0; post-detection retention 50% → 0% |
+| Replay correctness | fresh-env reconstruction 180/180 branch points; old snapshot control 147/180 |
+| Expert mechanism | 1/3 tasks qualified in calibration; gate requires at least 2 |
+| Policy substrate / revised oracle | not executed by the Phase C stopping rule |
+| Learned/deployable evidence | none |
+
+The complete Stage-1b report is in
+[`experiments/r16_p14_libero_stage1b/reports/REPORT.md`](experiments/r16_p14_libero_stage1b/reports/REPORT.md),
+with raw outputs under [`artifacts/stage1b`](artifacts/stage1b).
+
+### Original Stage-1 result
 
 | Task | Clean success | Usable oracle chunks | Median window | Safe-prefix retention | Unsafe reduction | Replay |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -23,6 +41,13 @@ of at least two actions. The detailed interpretation is in
 [the experiment report](docs/EXPERIMENT_REPORT.md).
 
 ## What is included
+
+- [`experiments/r16_p14_libero_stage1b`](experiments/r16_p14_libero_stage1b):
+  corrected metric contract, prefix-reconstruction replay gate, policy-free
+  expert-chunk calibration, tests, exact commands, and final stopping decision.
+- [`artifacts/stage1b`](artifacts/stage1b): all corrected records, 30×5 Bowl
+  replay evidence, 44-config expert calibration records, paired metrics, test
+  output, and a SHA-256 manifest.
 
 - [`experiments/r16_p14_libero_stage1`](experiments/r16_p14_libero_stage1):
   chunked state-BC training, deterministic snapshot replay, controlled

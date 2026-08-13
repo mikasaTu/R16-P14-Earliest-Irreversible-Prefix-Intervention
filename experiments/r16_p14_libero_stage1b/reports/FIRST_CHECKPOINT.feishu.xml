@@ -1,0 +1,55 @@
+<title>实验报告</title>
+<h1>R16-P14 Stage-1b：A+B 首次检查点</h1>
+<p>日期：2026-08-13 UTC。当前报告严格区分指标修正与 replay correctness；它不是 learned detector、可部署 intervention policy 或最终算法的有效性证据。</p>
+<h2>结论摘要</h2>
+<ul>
+  <li><b>Phase A：旧 Bowl 正信号不成立。</b>修正 cause_violation 与 retention 定义后，Bowl 的 median window 从 4 降为 0，median post-detection retention 从 50% 降为 0%。</li>
+  <li><b>Phase B：Replay gate 通过。</b>fresh-env prefix reconstruction 在 180/180 个分支点完全一致，contact/outcome 180/180 一致，最大终态误差为 0。</li>
+  <li>旧 snapshot-restore 对照仅 147/180 个分支点通过，contact/outcome 为 149/180，最大终态误差为 3.7161693483379317。</li>
+  <li>没有 replay 或基础设施 blocker；下一步只能进入不使用 BC 的 expert action-chunk calibration。</li>
+</ul>
+<h2>1. 冻结边界</h2>
+<ul>
+  <li>当前 main freeze：commit ee56aa096e308214c38132d0e6d2a9e576c29792；tree 50e56b84c5e867447b22f81e31454646a12a9eb8。</li>
+  <li>Stage-1 frozen source：commit a1b61194a8382f5b1a247b9cd9b140645ff2aeb8；tree 53001c43fbbb165c0a1f2c71f9cbd4c81b9d0ced。</li>
+  <li>独立 branch/worktree：agent/stage1b-contract-repair，/workspace/leon/R16-P14-stage1b。</li>
+  <li>Stage-1 source 与原 artifacts 未修改。</li>
+</ul>
+<h2>2. Phase A：90 条记录的修正复算</h2>
+<p>Phase A 离线重读全部 90 条 immutable Stage-1 candidate records，没有启动 simulator 或 GPU。cause_violation 现在只统计明确的目标 cause；task_failure、timeout、safe_success 分开保存。</p>
+<h3>旧指标与修正指标</h3>
+<ul>
+  <li>Drawer：old mixed unsafe 27；explicit cause violation 6；failure-only inclusion 21；corrected median window 0；retention 0%；完整 M0/M1/M2 pair 为 0。</li>
+  <li>Bowl：old mixed unsafe 17；explicit cause violation 5；failure-only inclusion 12；old median window 4，corrected median window 0；old retention 50%，corrected post-detection retention 0%；完整 pair 为 2。</li>
+  <li>Wine：old mixed unsafe 28；explicit cause violation 28；corrected median window 0；retention 0%；完整 pair 为 4。</li>
+</ul>
+<p>修正 retention 主定义为 (k_last_safe - d) / (chunk_length - d)。旧实现使用 k_last_safe / chunk_length，并把预算内未完成任务混入 safety violation。</p>
+<h3>Bowl 正信号判定</h3>
+<p><b>不再存在。</b>只有 5/30 个 Bowl candidates 具有显式 nominal cause violation，且仅 2 个具有完整 M0/M1/M2 比较。这两个 pair 的 cause-violation 计数分别为 0/1/1，因此 intervention 没有在 safety 上超过 immediate full replan。</p>
+<p>M1 在这个仅有两个 pair 的子集上，detection 后 newly executed non-nominal actions 的中位数为 41.5，M0 为 60；但样本极小且 M1 safety 更差，只能记录为弱 rework observation，不能视为正结果。</p>
+<h2>3. Phase B：Bowl replay reconstruction repair</h2>
+<p>repaired initializer 使用 fresh independent environment，恢复 demonstration phase anchor，精确重放 nominal prefix，在 d 注入已记录 perturbation，再继续至指定 branch point。每个 operator/repetition 均不复用执行过的 mutable environment。</p>
+<h3>Snapshot restore 对比 prefix reconstruction</h3>
+<ul>
+  <li>Published Stage-1 snapshot restore：insertion pass 26/30，即 86.7%。</li>
+  <li>Snapshot-restore control，5 repeats：insertion pass 26/30；all branch-point pass 147/180，即 81.7%；contact/outcome 149/180，即 82.8%；max error 3.7161693483379317。</li>
+  <li>Fresh-env prefix reconstruction，5 repeats：insertion pass 30/30；all branch-point pass 180/180；contact/outcome 180/180；max error 0。</li>
+</ul>
+<p>只有 57/180 个 reconstructed branch hashes 等于旧 Stage-1 snapshot hash。这表明旧 initializer 丢失了 trajectory/controller history，是对照问题而非新 reconstruction contract 失败。</p>
+<h3>Replay gate</h3>
+<p><b>PASS。</b>预注册门禁要求 overall pass rate 不低于 99%，contact/outcome 100%，final-state max absolute error 不高于 1e-9；正式结果分别为 100%、100%、0。30/30 candidate 的 Stage-1 exact action-chunk hash 全部匹配。</p>
+<p>仅为保持 Stage-1 frozen MLP 动作字节一致，使用一张本地 A800 执行 PyTorch 2.5.1+cu124 frozen forward；simulation/replay execution 在 CPU。没有训练模型。</p>
+<h2>4. 产物</h2>
+<ul>
+  <li>实验 contract：preregistration.yaml、metric_contract.md、source_manifest.json、decision.json、commands.sh。</li>
+  <li>Phase A：reanalysis.jsonl、summary.json、paired_metrics.csv、old_to_new_metrics.csv、report.md。</li>
+  <li>Phase B：branch_reconstructions.jsonl、summary.json、report.md。</li>
+  <li>代码与测试：offline_reanalysis.py、replay_reconstruction.py 及对应 pytest。</li>
+  <li>本检查点：reports/FIRST_CHECKPOINT.md。</li>
+</ul>
+<h2>5. Blocker 与下一步</h2>
+<p>没有 replay 或 infrastructure blocker。指标修正后的科学信号目前为负，因此只能按预注册流程进入 disjoint expert-action audit；Phase D/E 仍未获准。</p>
+<p><b>下一条 scientific command：</b></p>
+<p>cd /workspace/leon/R16-P14-stage1b</p>
+<p>R16P14_PYTHON=/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/libero_sft/bin/python MUJOCO_GL=egl PYOPENGL_PLATFORM=egl ./experiments/r16_p14_libero_stage1b/commands.sh phase-c-calibrate</p>
+<p>该命令只允许在 demo IDs 0–9 上冻结 revised environment-only perturbation，不训练模型，不得用 evaluation 或 held-out demos 调参。</p>

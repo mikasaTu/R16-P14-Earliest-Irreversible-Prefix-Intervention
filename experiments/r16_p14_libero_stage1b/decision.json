@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "decision": "KILL_CORE_HYPOTHESIS",
+  "completed_phases": [
+    "A_offline_reanalysis",
+    "B_replay_reconstruction_repair",
+    "C_expert_chunk_calibration_and_gate"
+  ],
+  "phase_gates": {
+    "phase_a_metric_correction": "complete_negative_signal",
+    "phase_b_replay_reconstruction": "pass",
+    "phase_c_expert_chunk_feasibility": "fail_only_one_qualified_task",
+    "phase_d_policy_substrate": "not_executed_by_phase_c_stop_rule",
+    "phase_e_revised_policy_oracle": "not_executed_by_phase_c_stop_rule"
+  },
+  "stop_reason": "Only one task produced a preregistration-qualified expert-chunk perturbation; at least two are required. Evaluation-data retuning cannot rescue this gate without violating the frozen calibration contract.",
+  "training_executed": false,
+  "learned_risk_executed": false,
+  "pi05_executed": false,
+  "world_model_executed": false,
+  "allowed_final_decisions": [
+    "PROCEED_TO_LEARNED_RISK",
+    "REVISE_POLICY_SUBSTRATE",
+    "REVISE_TASKS_ONCE",
+    "KILL_CORE_HYPOTHESIS",
+    "BLOCKED_BY_REPLAY",
+    "BLOCKED_BY_INFRA"
+  ]
+}

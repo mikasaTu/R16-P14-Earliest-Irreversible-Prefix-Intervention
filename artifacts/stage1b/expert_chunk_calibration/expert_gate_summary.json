@@ -1,0 +1,89 @@
+{
+  "calibration_demo_ids": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "calibration_prefix_replay": {
+    "branch_point_count": 885,
+    "pass_count": 885,
+    "pass_rate": 1.0
+  },
+  "decision": "KILL_CORE_HYPOTHESIS",
+  "evaluation_demo_ids_inspected": [],
+  "failure_is_monotonic_at_calibration": true,
+  "gate_checks": {
+    "calibration_replay_ge_0_99": true,
+    "disjoint_evaluation_30_candidates_per_task": false,
+    "minimum_two_qualified_tasks": false,
+    "minimum_two_tasks_median_retention_ge_0_30": false,
+    "minimum_two_tasks_median_window_ge_2": false,
+    "nonempty_operator_comparison": true,
+    "nonempty_timing_comparison": true,
+    "relative_cause_violation_reduction_ge_0_30": null
+  },
+  "gate_passed": false,
+  "grid_config_count": 44,
+  "heldout_demo_ids_inspected": [],
+  "learned_risk_used": false,
+  "phase": "C_expert_action_chunk_feasibility",
+  "phase_d_executed": false,
+  "phase_e_executed": false,
+  "policy_used": false,
+  "qualified_task_count": 1,
+  "qualified_tasks": [
+    "put_the_cream_cheese_in_the_bowl"
+  ],
+  "schema_version": 1,
+  "selected_pair_count": 6,
+  "status": "stopped_after_calibration_gate_failure",
+  "stop_reason": "Only one task has any preregistration-qualified perturbation. The expert gate requires at least two tasks, so no disjoint evaluation result can rescue the gate without violating the frozen calibration rule.",
+  "task_metrics": {
+    "open_the_middle_drawer_of_the_cabinet": {
+      "calibration_status": "no_qualifying_configuration",
+      "median_intervention_window": null,
+      "median_post_detection_retention": null,
+      "paired_candidate_count": 0,
+      "selected_config_id": null
+    },
+    "put_the_bowl_on_the_plate": {
+      "calibration_status": "no_qualifying_configuration",
+      "median_intervention_window": null,
+      "median_post_detection_retention": null,
+      "paired_candidate_count": 0,
+      "selected_config_id": null
+    },
+    "put_the_cream_cheese_in_the_bowl": {
+      "calibration_status": "qualified",
+      "median_intervention_window": 7.0,
+      "median_post_detection_retention": 0.5,
+      "methods": {
+        "M0": {
+          "cause_violation_count": 1,
+          "median_new_non_nominal_actions": 34.0,
+          "safe_success_count": 5
+        },
+        "M1": {
+          "cause_violation_count": 1,
+          "median_new_non_nominal_actions": 33.5,
+          "safe_success_count": 5
+        },
+        "M2": {
+          "cause_violation_count": 3,
+          "median_new_non_nominal_actions": 7.0,
+          "safe_success_count": 2
+        }
+      },
+      "oracle_best_safe_success_count": 6,
+      "paired_candidate_count": 6,
+      "selected_config_id": "lead08_shift040mm"
+    }
+  }
+}

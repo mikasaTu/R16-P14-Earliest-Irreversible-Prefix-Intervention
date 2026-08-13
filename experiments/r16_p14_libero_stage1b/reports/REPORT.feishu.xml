@@ -1,0 +1,71 @@
+<h1>Phase C 与最终决策</h1>
+<p><b>最终决策：KILL_CORE_HYPOTHESIS。</b></p>
+<p>Stage-1b 修复了 metric 与 replay contract，但 expert action-chunk 机制未能在至少两个任务上成立。该结论只否定本轮预注册的跨任务 core hypothesis，不代表所有 prefix intervention 都无效。</p>
+<h2>6. Phase C：完全 policy-free 的 expert action chunk</h2>
+<p>Phase C 只使用 demonstration actions[t:t+16]，不使用 BC、policy checkpoint、learned risk、RGB 或 privileged perturbation metadata。Calibration 只读取 demo IDs 0–9；evaluation IDs 10–39 与 held-out IDs 40–49 均未读取。</p>
+<h3>任务与 bounded replacement</h3>
+<ul>
+  <li>Bowl：保留主任务，只移动 target plate，不移动 held bowl。</li>
+  <li>Drawer：重新标定无注入接触的 obstacle placement。</li>
+  <li>Wine-rack：rack 是静态模型几何，没有可移动 target joint；直接 teleport manipulated bottle 又被本轮禁止，因此标记不适用。</li>
+  <li>唯一一次 bounded replacement：LIBERO-GOAL task 6，put_the_cream_cheese_in_the_bowl。它在 calibration 前按 suite order 规则选定，具有 stable grasp、late release、movable target bowl。</li>
+</ul>
+<p>在正式 grid 前记录了两项 amendment，只使用 demos 0–1 的 injection phase/contact smoke，未查看 recovery gain，未读取 evaluation 或 held-out demos：把 target shift 提前到已有 target contact 之前；fixed-magnitude x shift 的方向固定为远离 held object。完整原因与边界已写入 preregistration.yaml。</p>
+<h3>正式 calibration 规模</h3>
+<ul>
+  <li>44 个 fixed configurations：Bowl 16、Drawer 12、replacement 16。</li>
+  <li>440 条 nominal calibration records。</li>
+  <li>59 个 cause-positive candidates 完成 prefix-stride-1 audit。</li>
+  <li>885/885 个 independent prefix reconstructions 完全一致。</li>
+  <li>每个 branch 先 hard reset，再 restore demo anchor、重放 exact expert prefix，operator 之间不共享 mutable state。</li>
+</ul>
+<p>合格 contract：injection-instant violation 不高于 10%，delayed nominal violation 在 30%–80%，实际 median recoverable window 在 2–8，replay 不低于 99%。Violation onset delay 不得替代真实 recovery window。</p>
+<h3>Task-level calibration 结果</h3>
+<ul>
+  <li><b>Bowl：0/16 configurations qualified。</b>没有配置同时满足十个 demo 的 phase validity、immediate contact、rate 与实际 window contract。</li>
+  <li><b>Drawer：0/12 configurations qualified。</b>最接近的 offset+00 / clearance35mm 配置为 0% immediate、30% delayed、100% replay，但实际 median recoverable window=0。</li>
+  <li><b>Cream cheese in bowl：3/16 configurations qualified。</b>按冻结规则选择 lead=8 / target shift magnitude=40mm；0% immediate、60% delayed、median window=7、median post-detection retention=50%。</li>
+</ul>
+<h3>Selected replacement 的 M0/M1/M2（calibration only，n=6）</h3>
+<ul>
+  <li>M0 immediate full replan：cause violation 1/6，safe success 5/6，median new non-nominal actions=34。</li>
+  <li>M1 continue-to-last-safe then same full replan：cause violation 1/6，safe success 5/6，median new actions=33.5。</li>
+  <li>M2 same-trigger cause-specific local repair：cause violation 3/6，safe success 2/6，median new actions=7。</li>
+</ul>
+<p>Timing comparison 非空，但 M0 与 M1 aggregate safety 完全相同，new actions 只差 0.5。M2 动作更少但 safety 显著更差，因此没有 operator win。Oracle best-of-three 可在 6/6 calibration pairs 上 safe-success，但这是 privileged calibration observation，不能修复跨任务 gate。</p>
+<h2>7. Expert gate 与停止规则</h2>
+<p><b>FAIL。</b>只有 1 个任务具有任何 preregistration-qualified perturbation，而 expert gate 要求至少 2 个任务 median window≥2 且 retention≥30%。Calibration parameters 必须在 evaluation 前冻结，因此单一 qualified task 的 evaluation 不可能产生第二个 qualified task；继续调 failed tasks 会违反协议。</p>
+<p>因此 failure 在 calibration 阶段已经 monotonic，按预注册停止规则写入 KILL_CORE_HYPOTHESIS。Evaluation/held-out split 保持未读。</p>
+<h2>8. Phase D/E 执行状态</h2>
+<ul>
+  <li>Phase D policy substrate：未执行。没有 PAI job、没有新模型训练、没有 policy inference。</li>
+  <li>Phase E revised policy oracle：未执行。没有 policy-seed oracle records 或 bootstrap CI。</li>
+  <li>Learned/deployable evidence：不存在。</li>
+</ul>
+<h2>9. 六个科学问题的回答</h2>
+<ol>
+  <li>修正指标后 Stage-1 正信号是否存在？<b>否。</b>Bowl window 与 retention 均变为 0。</li>
+  <li>Bowl replay&lt;99% 能否修复？<b>能。</b>prefix reconstruction 达到 180/180，终态误差 0。</li>
+  <li>Expert chunk 是否有 detection→safe prefix→no-return 窗口？单一 replacement calibration task 有；要求的至少两个任务没有。</li>
+  <li>等待 last-safe 是否比 immediate replan 减少返工？没有有意义的证据；33.5 vs 34 new actions，aggregate safety 相同。</li>
+  <li>Same-trigger local repair 是否优于 full replan？<b>否。</b>M2 safety 更差。</li>
+  <li>更强小型 policy 能否复现？未测试；Phase C stop rule 禁止进入 Phase D。</li>
+</ol>
+<h2>10. 交付物</h2>
+<ul>
+  <li>GitHub repository：<a href="https://github.com/mikasaTu/R16-P14-Earliest-Irreversible-Prefix-Intervention">R16-P14-Earliest-Irreversible-Prefix-Intervention</a>。</li>
+  <li>Final report：experiments/r16_p14_libero_stage1b/reports/REPORT.md。</li>
+  <li>Raw outputs：artifacts/stage1b/offline_reanalysis、replay_gate、expert_chunk_calibration。</li>
+  <li>Paired metrics：selected_config_paired_metrics.csv。</li>
+  <li>Test result：artifacts/stage1b/test_results/pytest.xml。</li>
+  <li>Integrity：artifacts/stage1b/SHA256SUMS。</li>
+</ul>
+<h2>11. 证据分层</h2>
+<ul>
+  <li>Metric correction：旧 Bowl claim 为负。</li>
+  <li>Replay correctness：修复并通过。</li>
+  <li>Expert mechanism feasibility：仅单任务 calibration signal；跨任务 gate 失败。</li>
+  <li>Policy substrate adequacy：未知，因 gate 未到达。</li>
+  <li>Oracle mechanism result：未运行 revised policy oracle。</li>
+  <li>Learned/deployable evidence：本轮不存在。</li>
+</ul>

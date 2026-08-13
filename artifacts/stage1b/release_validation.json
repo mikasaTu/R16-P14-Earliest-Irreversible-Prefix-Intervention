@@ -1,0 +1,39 @@
+{
+  "checks": {
+    "evaluation_and_heldout_uninspected": true,
+    "final_decision": true,
+    "phase_a_90_records": true,
+    "phase_a_bowl_signal_does_not_survive": true,
+    "phase_b_gate_pass": true,
+    "phase_c_gate_fail_one_task": true,
+    "phase_c_record_counts": true,
+    "phase_c_replay_exact": true,
+    "phase_d_e_not_executed": true,
+    "required_files_present": true
+  },
+  "counts": {
+    "phase_a_records": 90,
+    "phase_b_branch_points": 180,
+    "phase_b_candidates": 30,
+    "phase_c_record_types": {
+      "calibration_nominal": 440,
+      "calibration_prefix_audit": 59
+    },
+    "phase_c_records": 499,
+    "phase_c_replay_branch_points": 885
+  },
+  "failed_checks": [],
+  "schema_version": 1,
+  "status": "pass",
+  "tests": {
+    "command": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/libero_sft/bin/python -m pytest experiments/r16_p14_libero_stage1b/tests -q --junitxml=artifacts/stage1b/test_results/pytest.xml",
+    "elapsed_seconds": 103.862,
+    "errors": 0,
+    "failures": 0,
+    "junit_xml": "artifacts/stage1b/test_results/pytest.xml",
+    "schema_version": 1,
+    "skipped": 0,
+    "status": "pass",
+    "tests": 9
+  }
+}

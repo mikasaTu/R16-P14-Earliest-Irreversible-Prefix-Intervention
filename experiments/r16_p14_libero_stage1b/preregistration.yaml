@@ -1,0 +1,166 @@
+experiment_id: r16_p14_libero_stage1b
+title: "Contract Repair, Expert-Chunk Calibration, and Revised Oracle Audit"
+registered_at_utc: "2026-08-13T07:04:49Z"
+frozen_parent:
+  repository_commit: ee56aa096e308214c38132d0e6d2a9e576c29792
+  repository_tree: 50e56b84c5e867447b22f81e31454646a12a9eb8
+  stage1_source_commit: a1b61194a8382f5b1a247b9cd9b140645ff2aeb8
+  stage1_source_tree: 53001c43fbbb165c0a1f2c71f9cbd4c81b9d0ced
+scope:
+  learned_risk_head: forbidden
+  pi05: forbidden
+  world_model: forbidden
+  rgb: forbidden
+  privileged_test_policy_input: forbidden
+  final_algorithm_claim: forbidden
+  novelty_grade_change: forbidden
+  stage1_artifact_mutation: forbidden
+phase_a_offline_reanalysis:
+  simulator_allowed: false
+  gpu_allowed: false
+  source_candidates: 90
+  primary_cohort: explicit_nominal_cause_violation
+  metric_contract: metric_contract.md
+phase_b_replay_gate:
+  task: put_the_bowl_on_the_plate
+  candidates: 30
+  branch_point_reconstructions: 5
+  old_control: snapshot_restore
+  new_initializer: fresh_env_prefix_reconstruction
+  max_final_state_abs_error: 1.0e-9
+  require_contact_and_outcome_match: 1.0
+  minimum_overall_pass_rate: 0.99
+  stop_decision_on_failure: BLOCKED_BY_REPLAY
+phase_c_expert_chunks:
+  requires_phase_b_pass: true
+  chunk_length: 16
+  policy_used: false
+  splits:
+    calibration_demo_ids: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    evaluation_demo_ids: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39]
+    held_out_demo_ids: [40, 41, 42, 43, 44, 45, 46, 47, 48, 49]
+  evaluation_candidates_per_task: 30
+  calibration_selection:
+    immediate_violation_rate_max: 0.10
+    nominal_delayed_violation_rate_range: [0.30, 0.80]
+    median_window_target_range: [2, 8]
+    ranking:
+      - feasible_under_all_constraints
+      - minimum_absolute_distance_to_delayed_violation_rate_0.55
+      - lower_immediate_violation_rate
+      - lower_severity
+    optimize_proposed_method_gain: false
+    candidate_window_definition: "actual k_last_safe - d from prefix-stride-1 recovery branches"
+    violation_onset_is_not_a_window_proxy: true
+    no_manual_retuning_if_grid_has_no_qualifying_configuration: true
+  calibration_grid:
+    shared:
+      chunk_length: 16
+      insertion_prefix: 2
+      branch_budget: 48
+      prefix_stride: 1
+    target_shift_tasks:
+      release_lead_actions: [8, 10, 12, 14]
+      target_shift_x_magnitude_meters: [0.04, 0.06, 0.08, 0.10]
+      direction_rule: "along x, move the target away from the held object's current x position"
+    drawer:
+      insertion_offset_from_first_drawer_motion: [-2, 0, 2]
+      obstacle_clearance_meters: [0.035, 0.05, 0.065, 0.08]
+  expert_operators:
+    immediate_full_replan_at_d: "discard expert remainder and run fixed generic observation-feedback waypoint recovery"
+    continue_to_last_safe_then_full_replan: "execute original expert prefix through k_last_safe, then the same generic recovery"
+    continue_to_last_safe_then_cause_specific_repair: "execute to the identical k_last_safe, run a bounded target/contact-specific correction, then the remaining expert actions"
+    policy_or_model_calls: 0
+  preregistration_amendments:
+    - id: phase_c_target_shift_phase_contract_fix_1
+      recorded_before_formal_calibration: true
+      evidence_scope: "calibration demos 0–1 phase/contact smoke only"
+      evaluation_or_heldout_demos_inspected: false
+      recovery_or_method_gain_inspected: false
+      change: "release-lead grid [4,6,8] -> [8,10,12,14]; require no object-target contact at injection"
+      reason: "4–8-step pre-release Bowl states can already be in plate contact, so moving the target creates an injection-instant collision and violates the requested stable transport phase"
+    - id: phase_c_target_shift_direction_fix_2
+      recorded_before_formal_calibration: true
+      evidence_scope: "calibration demos 0–1 injection-contact smoke only"
+      evaluation_or_heldout_demos_inspected: false
+      recovery_or_method_gain_inspected: false
+      change: "fixed +x shift -> fixed-magnitude x shift directed away from the held object"
+      reason: "fixed +x moved the target toward the object in some layouts and created injection-instant collision; the away rule preserves severity while enforcing a delayed environment-only perturbation"
+  tasks:
+    primary: put_the_bowl_on_the_plate
+    revised:
+      - open_the_middle_drawer_of_the_cabinet
+      - put_the_cream_cheese_in_the_bowl
+    inapplicable:
+      task: put_the_wine_bottle_on_the_rack
+      reason: "rack target is static model geometry with no target free joint; moving the manipulated bottle is forbidden"
+    bounded_replacement:
+      used: true
+      original: put_the_wine_bottle_on_the_rack
+      replacement: put_the_cream_cheese_in_the_bowl
+      suite_task_id: 6
+      selection_rule: "first unused LIBERO-GOAL task in suite order with stable grasp, late target/contact/release failure, and a movable target free joint"
+      selected_before_calibration: true
+    maximum_bounded_replacements: 1
+  gate:
+    replay_minimum: 0.99
+    minimum_tasks_median_window_ge_2: 2
+    minimum_tasks_median_post_detection_retention_ge_0_30: 2
+    minimum_relative_cause_violation_reduction: 0.30
+    require_nonempty_timing_comparison: true
+    require_nonempty_operator_comparison: true
+    stop_decision_on_failure: KILL_CORE_HYPOTHESIS
+phase_d_policy_substrate:
+  requires_expert_gate_pass: true
+  models:
+    - current_chunked_bc_mlp_reference
+    - fixed_history_conditioned_state_chunk_policy
+  history_observations: 4
+  history_actions: 3
+  maximum_parameters: 10000000
+  chunk_length: 16
+  seeds: [7, 17, 29]
+  hyperparameter_search: forbidden
+  maximum_gpus: 2
+  maximum_concurrent_gpu_workers: 2
+  qualification:
+    minimum_tasks: 2
+    clean_success_range: [0.30, 0.90]
+    alternative_phase_reach_rate_minimum: 0.70
+    require_late_failure_if_alternative: true
+  stop_decision_on_failure: REVISE_POLICY_SUBSTRATE
+phase_e_revised_policy_oracle:
+  requires_policy_substrate_pass: true
+  minimum_tasks: 2
+  minimum_policy_seeds: 2
+  candidates_per_task_seed: 30
+  prefix_stride: 1
+  paired_seeds: true
+  bootstrap_ci:
+    confidence: 0.95
+    resamples: 10000
+    seed: 1614
+  methods:
+    - nominal_continue
+    - immediate_full_replan_at_detection
+    - continue_to_last_safe_then_full_replan
+    - continue_to_last_safe_then_generic_trim
+    - continue_to_last_safe_then_cause_specific_repair
+    - privileged_physical_recovery_upper_bound
+final_gate:
+  replay_determinism_minimum: 0.99
+  expert_minimum_tasks_median_window_ge_2: 2
+  policy_minimum_tasks_median_window_ge_2: 2
+  median_post_detection_retention_minimum: 0.30
+  relative_cause_violation_reduction_minimum: 0.30
+  new_non_nominal_action_reduction_vs_immediate_replan_minimum: 0.15
+  require_timing_and_operator_gain: true
+  require_two_policy_seeds_directionally_consistent: true
+  require_no_test_time_privileged_state: true
+allowed_final_decisions:
+  - PROCEED_TO_LEARNED_RISK
+  - REVISE_POLICY_SUBSTRATE
+  - REVISE_TASKS_ONCE
+  - KILL_CORE_HYPOTHESIS
+  - BLOCKED_BY_REPLAY
+  - BLOCKED_BY_INFRA
