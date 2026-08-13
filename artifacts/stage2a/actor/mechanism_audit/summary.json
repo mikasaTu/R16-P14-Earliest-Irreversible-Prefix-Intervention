@@ -1,0 +1,300 @@
+{
+  "affects_actor_gate": false,
+  "affects_task_or_perturbation_selection": false,
+  "checkpoint_seeds": [
+    7,
+    17,
+    29
+  ],
+  "conditions": [
+    "full",
+    "repeat_current_state",
+    "zero_action_history",
+    "cyclic_task_id"
+  ],
+  "creates_new_idea": false,
+  "limitations": [
+    "Teacher-forced cache error is not rollout success.",
+    "The weak comparison identifies the actor/training bundle, not an individual component.",
+    "Only two tasks have an exact matched Stage-1 weak reference.",
+    "No ablation was used for tuning, task selection, perturbation selection, or checkpoint gating."
+  ],
+  "sample_scope": "deterministic_evenly_spaced_training_cache_rows",
+  "samples_per_task_seed": 256,
+  "schema_version": 1,
+  "status": "POST_HOC_NON_GATE_MECHANISM_AUDIT",
+  "tasks": {
+    "open_the_middle_drawer_of_the_cabinet": {
+      "act_clean_success_rate": 0.23333333333333334,
+      "act_minus_weak_success_rate": 0.2,
+      "act_per_seed_success_rates": [
+        0.1,
+        0.3,
+        0.3
+      ],
+      "act_seed_success_range": 0.19999999999999998,
+      "dominant_offline_input_dependency": "zero_action_history",
+      "first_action_position_mae_delta_percent": {
+        "cyclic_task_id": 57.757610526305015,
+        "repeat_current_state": 3.363160125991138,
+        "zero_action_history": 692.3639979123341
+      },
+      "mechanistic_reading": "Matched clean success increased by 0.200 as an architecture-and-training bundle; the largest offline first-action dependence is `zero_action_history` (+692.36%). Rollouts localize the first coarse bottleneck to `early_grasp_or_articulation_entry` and the seed success range is 0.200. This supports a bounded mechanism diagnosis, not a single-component causal claim.",
+      "phase_bottleneck": "early_grasp_or_articulation_entry",
+      "teacher_forced_metrics": {
+        "cyclic_task_id": {
+          "chunk_gripper_accuracy": 0.9997384945551554,
+          "chunk_position_mae": 0.09061847627162933,
+          "first_action_gripper_accuracy": 1.0,
+          "first_action_position_mae": 0.03348996862769127
+        },
+        "full": {
+          "chunk_gripper_accuracy": 1.0,
+          "chunk_position_mae": 0.0322416586180528,
+          "first_action_gripper_accuracy": 1.0,
+          "first_action_position_mae": 0.02122874992589156
+        },
+        "repeat_current_state": {
+          "chunk_gripper_accuracy": 1.0,
+          "chunk_position_mae": 0.03593572601675987,
+          "first_action_gripper_accuracy": 1.0,
+          "first_action_position_mae": 0.021942706778645515
+        },
+        "zero_action_history": {
+          "chunk_gripper_accuracy": 1.0,
+          "chunk_position_mae": 0.1344357132911682,
+          "first_action_gripper_accuracy": 1.0,
+          "first_action_position_mae": 0.16820897161960602
+        }
+      },
+      "weak_reference_success_rate": 0.03333333333333333
+    },
+    "open_the_top_drawer_and_put_the_bowl_inside": {
+      "act_clean_success_rate": 0.13333333333333333,
+      "act_minus_weak_success_rate": null,
+      "act_per_seed_success_rates": [
+        0.0,
+        0.2,
+        0.2
+      ],
+      "act_seed_success_range": 0.2,
+      "dominant_offline_input_dependency": "zero_action_history",
+      "first_action_position_mae_delta_percent": {
+        "cyclic_task_id": 91.44601373180284,
+        "repeat_current_state": 3.852299635896017,
+        "zero_action_history": 590.829844389468
+      },
+      "mechanistic_reading": "No exact Stage-1 weak baseline exists for this task; the largest offline first-action dependence is `zero_action_history` (+590.83%). Rollouts localize the first coarse bottleneck to `early_grasp_or_articulation_entry` and the seed success range is 0.200. This supports a bounded mechanism diagnosis, not a single-component causal claim.",
+      "phase_bottleneck": "early_grasp_or_articulation_entry",
+      "teacher_forced_metrics": {
+        "cyclic_task_id": {
+          "chunk_gripper_accuracy": 0.9404269854227701,
+          "chunk_position_mae": 0.11673018336296082,
+          "first_action_gripper_accuracy": 0.9908854166666666,
+          "first_action_position_mae": 0.04697169611851374
+        },
+        "full": {
+          "chunk_gripper_accuracy": 0.9970729947090149,
+          "chunk_position_mae": 0.04345207413037618,
+          "first_action_gripper_accuracy": 0.9908854166666666,
+          "first_action_position_mae": 0.02453521763285001
+        },
+        "repeat_current_state": {
+          "chunk_gripper_accuracy": 0.9866563280423483,
+          "chunk_position_mae": 0.04761752113699913,
+          "first_action_gripper_accuracy": 0.9895833333333334,
+          "first_action_position_mae": 0.02548038773238659
+        },
+        "zero_action_history": {
+          "chunk_gripper_accuracy": 0.8848140438397726,
+          "chunk_position_mae": 0.11845255146423976,
+          "first_action_gripper_accuracy": 0.828125,
+          "first_action_position_mae": 0.16949660579363504
+        }
+      },
+      "weak_reference_success_rate": null
+    },
+    "push_the_plate_to_the_front_of_the_stove": {
+      "act_clean_success_rate": 0.4,
+      "act_minus_weak_success_rate": null,
+      "act_per_seed_success_rates": [
+        0.9,
+        0.0,
+        0.3
+      ],
+      "act_seed_success_range": 0.9,
+      "dominant_offline_input_dependency": "zero_action_history",
+      "first_action_position_mae_delta_percent": {
+        "cyclic_task_id": 110.67654928900326,
+        "repeat_current_state": 3.313888810229826,
+        "zero_action_history": 962.4563517340592
+      },
+      "mechanistic_reading": "No exact Stage-1 weak baseline exists for this task; the largest offline first-action dependence is `zero_action_history` (+962.46%). Rollouts localize the first coarse bottleneck to `late_approach_or_contact_entry` and the seed success range is 0.900. This supports a bounded mechanism diagnosis, not a single-component causal claim.",
+      "phase_bottleneck": "late_approach_or_contact_entry",
+      "teacher_forced_metrics": {
+        "cyclic_task_id": {
+          "chunk_gripper_accuracy": 0.9662902156511942,
+          "chunk_position_mae": 0.10267334431409836,
+          "first_action_gripper_accuracy": 0.99609375,
+          "first_action_position_mae": 0.042035394658644996
+        },
+        "full": {
+          "chunk_gripper_accuracy": 1.0,
+          "chunk_position_mae": 0.03661583736538887,
+          "first_action_gripper_accuracy": 1.0,
+          "first_action_position_mae": 0.019952574123938877
+        },
+        "repeat_current_state": {
+          "chunk_gripper_accuracy": 1.0,
+          "chunk_position_mae": 0.0405191940565904,
+          "first_action_gripper_accuracy": 1.0,
+          "first_action_position_mae": 0.0206137802451849
+        },
+        "zero_action_history": {
+          "chunk_gripper_accuracy": 1.0,
+          "chunk_position_mae": 0.14467543363571167,
+          "first_action_gripper_accuracy": 1.0,
+          "first_action_position_mae": 0.21198739111423492
+        }
+      },
+      "weak_reference_success_rate": null
+    },
+    "put_the_bowl_on_the_plate": {
+      "act_clean_success_rate": 0.3333333333333333,
+      "act_minus_weak_success_rate": 0.26666666666666666,
+      "act_per_seed_success_rates": [
+        0.4,
+        0.3,
+        0.3
+      ],
+      "act_seed_success_range": 0.10000000000000003,
+      "dominant_offline_input_dependency": "zero_action_history",
+      "first_action_position_mae_delta_percent": {
+        "cyclic_task_id": 68.65408438380673,
+        "repeat_current_state": 6.358508135629659,
+        "zero_action_history": 548.1052913169822
+      },
+      "mechanistic_reading": "Matched clean success increased by 0.267 as an architecture-and-training bundle; the largest offline first-action dependence is `zero_action_history` (+548.11%). Rollouts localize the first coarse bottleneck to `lift_or_transport_transition` and the seed success range is 0.100. This supports a bounded mechanism diagnosis, not a single-component causal claim.",
+      "phase_bottleneck": "lift_or_transport_transition",
+      "teacher_forced_metrics": {
+        "cyclic_task_id": {
+          "chunk_gripper_accuracy": 0.9598520795504252,
+          "chunk_position_mae": 0.11296075582504272,
+          "first_action_gripper_accuracy": 0.9895833333333334,
+          "first_action_position_mae": 0.04105407123764356
+        },
+        "full": {
+          "chunk_gripper_accuracy": 0.9995597998301188,
+          "chunk_position_mae": 0.03582909951607386,
+          "first_action_gripper_accuracy": 0.99609375,
+          "first_action_position_mae": 0.02434217433134715
+        },
+        "repeat_current_state": {
+          "chunk_gripper_accuracy": 0.9781651894251505,
+          "chunk_position_mae": 0.042950997749964394,
+          "first_action_gripper_accuracy": 0.9921875,
+          "first_action_position_mae": 0.025889973466595013
+        },
+        "zero_action_history": {
+          "chunk_gripper_accuracy": 0.8620355725288391,
+          "chunk_position_mae": 0.10901554177204768,
+          "first_action_gripper_accuracy": 0.7369791666666666,
+          "first_action_position_mae": 0.1577629198630651
+        }
+      },
+      "weak_reference_success_rate": 0.06666666666666667
+    },
+    "put_the_bowl_on_the_stove": {
+      "act_clean_success_rate": 0.9,
+      "act_minus_weak_success_rate": null,
+      "act_per_seed_success_rates": [
+        0.9,
+        1.0,
+        0.8
+      ],
+      "act_seed_success_range": 0.19999999999999996,
+      "dominant_offline_input_dependency": "zero_action_history",
+      "first_action_position_mae_delta_percent": {
+        "cyclic_task_id": 90.04776082766762,
+        "repeat_current_state": 9.947599259684958,
+        "zero_action_history": 648.1889699487286
+      },
+      "mechanistic_reading": "No exact Stage-1 weak baseline exists for this task; the largest offline first-action dependence is `zero_action_history` (+648.19%). Rollouts localize the first coarse bottleneck to `no_single_phase_bottleneck_at_gate_resolution` and the seed success range is 0.200. This supports a bounded mechanism diagnosis, not a single-component causal claim.",
+      "phase_bottleneck": "no_single_phase_bottleneck_at_gate_resolution",
+      "teacher_forced_metrics": {
+        "cyclic_task_id": {
+          "chunk_gripper_accuracy": 0.9500089287757874,
+          "chunk_position_mae": 0.10076214621464412,
+          "first_action_gripper_accuracy": 0.9869791666666666,
+          "first_action_position_mae": 0.04170668497681618
+        },
+        "full": {
+          "chunk_gripper_accuracy": 0.9995536605517069,
+          "chunk_position_mae": 0.036627888679504395,
+          "first_action_gripper_accuracy": 1.0,
+          "first_action_position_mae": 0.021945370361208916
+        },
+        "repeat_current_state": {
+          "chunk_gripper_accuracy": 0.9759864409764608,
+          "chunk_position_mae": 0.04268813754121462,
+          "first_action_gripper_accuracy": 0.98828125,
+          "first_action_position_mae": 0.024128407860795658
+        },
+        "zero_action_history": {
+          "chunk_gripper_accuracy": 0.8478842973709106,
+          "chunk_position_mae": 0.11007236937681834,
+          "first_action_gripper_accuracy": 0.6796875,
+          "first_action_position_mae": 0.16419284045696259
+        }
+      },
+      "weak_reference_success_rate": null
+    },
+    "put_the_cream_cheese_in_the_bowl": {
+      "act_clean_success_rate": 0.43333333333333335,
+      "act_minus_weak_success_rate": null,
+      "act_per_seed_success_rates": [
+        0.2,
+        0.5,
+        0.6
+      ],
+      "act_seed_success_range": 0.39999999999999997,
+      "dominant_offline_input_dependency": "zero_action_history",
+      "first_action_position_mae_delta_percent": {
+        "cyclic_task_id": 52.13482768621161,
+        "repeat_current_state": 9.044359867086582,
+        "zero_action_history": 571.3124516512347
+      },
+      "mechanistic_reading": "No exact Stage-1 weak baseline exists for this task; the largest offline first-action dependence is `zero_action_history` (+571.31%). Rollouts localize the first coarse bottleneck to `late_approach_or_contact_entry` and the seed success range is 0.400. This supports a bounded mechanism diagnosis, not a single-component causal claim.",
+      "phase_bottleneck": "late_approach_or_contact_entry",
+      "teacher_forced_metrics": {
+        "cyclic_task_id": {
+          "chunk_gripper_accuracy": 0.9723952809969584,
+          "chunk_position_mae": 0.08481152852376302,
+          "first_action_gripper_accuracy": 0.9986979166666666,
+          "first_action_position_mae": 0.035879225780566536
+        },
+        "full": {
+          "chunk_gripper_accuracy": 0.999048133691152,
+          "chunk_position_mae": 0.03651020427544912,
+          "first_action_gripper_accuracy": 0.9986979166666666,
+          "first_action_position_mae": 0.023583834369977314
+        },
+        "repeat_current_state": {
+          "chunk_gripper_accuracy": 0.9772412578264872,
+          "chunk_position_mae": 0.04369755710164706,
+          "first_action_gripper_accuracy": 0.9869791666666666,
+          "first_action_position_mae": 0.025716841220855713
+        },
+        "zero_action_history": {
+          "chunk_gripper_accuracy": 0.8598130941390991,
+          "chunk_position_mae": 0.09909846633672714,
+          "first_action_gripper_accuracy": 0.7486979166666666,
+          "first_action_position_mae": 0.15832121670246124
+        }
+      },
+      "weak_reference_success_rate": null
+    }
+  },
+  "track_b_diagnostic_probe": false,
+  "trains_model_or_probe": false
+}

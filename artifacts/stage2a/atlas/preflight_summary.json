@@ -1,0 +1,122 @@
+{
+  "actor_seeds": [
+    7,
+    17,
+    29
+  ],
+  "branch_prefix_count": 14,
+  "branch_prefixes": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "count_excludes_source_prefix_reconstruction_overhead": true,
+  "detection_prefix": 2,
+  "eligible_task_count": 2,
+  "eligible_tasks": [
+    "put_the_bowl_on_the_stove",
+    "put_the_cream_cheese_in_the_bowl"
+  ],
+  "estimated_total_branch_run_count_max": 6900,
+  "event_count": 100,
+  "full_atlas_launched": false,
+  "methods_B0_B5_A_original_N_oracle_derived_from_same_R_branches": true,
+  "primary_R_branch_run_count": 4200,
+  "schema_version": 1,
+  "secondary_operator_branch_run_count_max": 2700,
+  "secondary_operators": [
+    "hold_and_replan",
+    "bounded_rollback_and_replan",
+    "cause_specific_local_repair"
+  ],
+  "secondary_positions": [
+    "d",
+    "k_best",
+    "k_last_safe"
+  ],
+  "selection_uses_method_gain": false,
+  "status": "PREFLIGHT_ONLY_NOT_LAUNCHED",
+  "tasks": {
+    "put_the_bowl_on_the_stove": {
+      "evaluation_event_count": 30,
+      "event_count": 50,
+      "events_per_severity": {
+        "lead14_lateral050mm": 25,
+        "lead14_lateral075mm": 25
+      },
+      "heldout_event_count": 20,
+      "severities": [
+        {
+          "calibration_delayed_nominal_violation_rate": 0.6,
+          "calibration_immediate_violation_rate": 0.0,
+          "calibration_replay_rate": 1.0,
+          "config_id": "lead14_lateral050mm",
+          "parameters": {
+            "blocker_lateral_offset_m": 0.05,
+            "release_lead_actions": 14
+          },
+          "role": "primary",
+          "severity_value": 0.05
+        },
+        {
+          "calibration_delayed_nominal_violation_rate": 0.7,
+          "calibration_immediate_violation_rate": 0.0,
+          "calibration_replay_rate": 1.0,
+          "config_id": "lead14_lateral075mm",
+          "parameters": {
+            "blocker_lateral_offset_m": 0.075,
+            "release_lead_actions": 14
+          },
+          "role": "secondary",
+          "severity_value": 0.075
+        }
+      ]
+    },
+    "put_the_cream_cheese_in_the_bowl": {
+      "evaluation_event_count": 30,
+      "event_count": 50,
+      "events_per_severity": {
+        "lead08_shift040mm": 25,
+        "lead10_shift060mm": 25
+      },
+      "heldout_event_count": 20,
+      "severities": [
+        {
+          "calibration_delayed_nominal_violation_rate": 0.6,
+          "calibration_immediate_violation_rate": 0.0,
+          "calibration_replay_rate": 1.0,
+          "config_id": "lead08_shift040mm",
+          "parameters": {
+            "release_lead_actions": 8,
+            "shift_magnitude_m": 0.04
+          },
+          "role": "primary",
+          "severity_value": 0.04
+        },
+        {
+          "calibration_delayed_nominal_violation_rate": 0.6,
+          "calibration_immediate_violation_rate": 0.0,
+          "calibration_replay_rate": 1.0,
+          "config_id": "lead10_shift060mm",
+          "parameters": {
+            "release_lead_actions": 10,
+            "shift_magnitude_m": 0.06
+          },
+          "role": "secondary",
+          "severity_value": 0.06
+        }
+      ]
+    }
+  }
+}

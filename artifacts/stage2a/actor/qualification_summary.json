@@ -1,0 +1,221 @@
+{
+  "actor": "HistoryConditionedStateACT",
+  "actor_gate": "PASS",
+  "clean_rollout_episode_count": 180,
+  "episodes_per_task_seed": 10,
+  "minimum_qualified_tasks": 3,
+  "parameter_count": 3146503,
+  "qualified_task_count": 4,
+  "schema_version": 1,
+  "tasks": {
+    "open_the_middle_drawer_of_the_cabinet": {
+      "clean_success_rate": 0.23333333333333334,
+      "episodes": 30,
+      "failed_episode_count": 23,
+      "failure_after_target_phase_fraction": 0.043478260869565216,
+      "grasp_or_open_phase_reach_rate": 0.3,
+      "lift_or_transport_phase_reach_rate": 0.3,
+      "mean_chunk_smoothness": 0.044475823640823364,
+      "mean_episode_length": 322.23333333333335,
+      "mean_policy_calls": 322.23333333333335,
+      "per_seed": {
+        "17": {
+          "late_phase_reach_rate": 0.4,
+          "success_rate": 0.3
+        },
+        "29": {
+          "late_phase_reach_rate": 0.3,
+          "success_rate": 0.3
+        },
+        "7": {
+          "late_phase_reach_rate": 0.1,
+          "success_rate": 0.1
+        }
+      },
+      "policy_seeds": [
+        7,
+        17,
+        29
+      ],
+      "pre_release_or_contact_phase_reach_rate": 0.26666666666666666,
+      "qualification_status": "not_qualified",
+      "qualifies_clean_success_A": false,
+      "qualifies_late_phase_B": false
+    },
+    "open_the_top_drawer_and_put_the_bowl_inside": {
+      "clean_success_rate": 0.13333333333333333,
+      "episodes": 30,
+      "failed_episode_count": 26,
+      "failure_after_target_phase_fraction": 0.19230769230769232,
+      "grasp_or_open_phase_reach_rate": 0.36666666666666664,
+      "lift_or_transport_phase_reach_rate": 0.5,
+      "mean_chunk_smoothness": 0.05275443196296692,
+      "mean_episode_length": 563.6666666666666,
+      "mean_policy_calls": 563.6666666666666,
+      "per_seed": {
+        "17": {
+          "late_phase_reach_rate": 0.5,
+          "success_rate": 0.2
+        },
+        "29": {
+          "late_phase_reach_rate": 0.4,
+          "success_rate": 0.2
+        },
+        "7": {
+          "late_phase_reach_rate": 0.0,
+          "success_rate": 0.0
+        }
+      },
+      "policy_seeds": [
+        7,
+        17,
+        29
+      ],
+      "pre_release_or_contact_phase_reach_rate": 0.3,
+      "qualification_status": "not_qualified",
+      "qualifies_clean_success_A": false,
+      "qualifies_late_phase_B": false
+    },
+    "push_the_plate_to_the_front_of_the_stove": {
+      "clean_success_rate": 0.4,
+      "episodes": 30,
+      "failed_episode_count": 18,
+      "failure_after_target_phase_fraction": 0.16666666666666666,
+      "grasp_or_open_phase_reach_rate": 1.0,
+      "lift_or_transport_phase_reach_rate": 1.0,
+      "mean_chunk_smoothness": 0.05269418309132258,
+      "mean_episode_length": 311.7,
+      "mean_policy_calls": 311.7,
+      "per_seed": {
+        "17": {
+          "late_phase_reach_rate": 0.0,
+          "success_rate": 0.0
+        },
+        "29": {
+          "late_phase_reach_rate": 0.5,
+          "success_rate": 0.3
+        },
+        "7": {
+          "late_phase_reach_rate": 1.0,
+          "success_rate": 0.9
+        }
+      },
+      "policy_seeds": [
+        7,
+        17,
+        29
+      ],
+      "pre_release_or_contact_phase_reach_rate": 0.5,
+      "qualification_status": "qualified",
+      "qualifies_clean_success_A": true,
+      "qualifies_late_phase_B": false
+    },
+    "put_the_bowl_on_the_plate": {
+      "clean_success_rate": 0.3333333333333333,
+      "episodes": 30,
+      "failed_episode_count": 20,
+      "failure_after_target_phase_fraction": 0.35,
+      "grasp_or_open_phase_reach_rate": 0.5,
+      "lift_or_transport_phase_reach_rate": 0.3333333333333333,
+      "mean_chunk_smoothness": 0.07402840952078502,
+      "mean_episode_length": 245.46666666666667,
+      "mean_policy_calls": 245.46666666666667,
+      "per_seed": {
+        "17": {
+          "late_phase_reach_rate": 0.7,
+          "success_rate": 0.3
+        },
+        "29": {
+          "late_phase_reach_rate": 0.4,
+          "success_rate": 0.3
+        },
+        "7": {
+          "late_phase_reach_rate": 0.6,
+          "success_rate": 0.4
+        }
+      },
+      "policy_seeds": [
+        7,
+        17,
+        29
+      ],
+      "pre_release_or_contact_phase_reach_rate": 0.5666666666666667,
+      "qualification_status": "qualified",
+      "qualifies_clean_success_A": true,
+      "qualifies_late_phase_B": false
+    },
+    "put_the_bowl_on_the_stove": {
+      "clean_success_rate": 0.9,
+      "episodes": 30,
+      "failed_episode_count": 3,
+      "failure_after_target_phase_fraction": 0.0,
+      "grasp_or_open_phase_reach_rate": 0.8666666666666667,
+      "lift_or_transport_phase_reach_rate": 0.7666666666666667,
+      "mean_chunk_smoothness": 0.08550378791987896,
+      "mean_episode_length": 138.33333333333334,
+      "mean_policy_calls": 138.33333333333334,
+      "per_seed": {
+        "17": {
+          "late_phase_reach_rate": 1.0,
+          "success_rate": 1.0
+        },
+        "29": {
+          "late_phase_reach_rate": 0.8,
+          "success_rate": 0.8
+        },
+        "7": {
+          "late_phase_reach_rate": 0.9,
+          "success_rate": 0.9
+        }
+      },
+      "policy_seeds": [
+        7,
+        17,
+        29
+      ],
+      "pre_release_or_contact_phase_reach_rate": 0.9,
+      "qualification_status": "qualified",
+      "qualifies_clean_success_A": true,
+      "qualifies_late_phase_B": false
+    },
+    "put_the_cream_cheese_in_the_bowl": {
+      "clean_success_rate": 0.43333333333333335,
+      "episodes": 30,
+      "failed_episode_count": 17,
+      "failure_after_target_phase_fraction": 0.4117647058823529,
+      "grasp_or_open_phase_reach_rate": 0.6,
+      "lift_or_transport_phase_reach_rate": 0.6,
+      "mean_chunk_smoothness": 0.08064680825918913,
+      "mean_episode_length": 265.03333333333336,
+      "mean_policy_calls": 265.03333333333336,
+      "per_seed": {
+        "17": {
+          "late_phase_reach_rate": 0.7,
+          "success_rate": 0.5
+        },
+        "29": {
+          "late_phase_reach_rate": 0.8,
+          "success_rate": 0.6
+        },
+        "7": {
+          "late_phase_reach_rate": 0.5,
+          "success_rate": 0.2
+        }
+      },
+      "policy_seeds": [
+        7,
+        17,
+        29
+      ],
+      "pre_release_or_contact_phase_reach_rate": 0.6666666666666666,
+      "qualification_status": "qualified",
+      "qualifies_clean_success_A": true,
+      "qualifies_late_phase_B": false
+    }
+  },
+  "training_seeds": [
+    7,
+    17,
+    29
+  ]
+}

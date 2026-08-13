@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "passed": 10,
+  "failed": 0,
+  "errors": 0,
+  "warnings": 2,
+  "duration_seconds": 4.91,
+  "python": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/libero_sim/bin/python",
+  "junit_xml": "artifacts/stage2a/test_results/pytest.xml",
+  "command": "PYTHONPATH=<repo>:<stage1>:<stage1b>:<stage2a> python -m pytest experiments/r16_p14_stage2a/tests -q --junitxml=artifacts/stage2a/test_results/pytest.xml",
+  "warnings_detail": "Two identical PyTorch Transformer nested-tensor optimization warnings caused by norm_first=True; no correctness failure.",
+  "portable_checkpoint_validation": {
+    "status": "PASS",
+    "seeds": [7, 17, 29],
+    "steps": 6000,
+    "parameter_count": 3146503,
+    "loaded_on_cpu": true
+  },
+  "archival_invocation_incident": {
+    "occurred": true,
+    "first_exit_code": 2,
+    "failure_stage": "test collection",
+    "cause": "The first direct JUnit archival invocation omitted the commands.sh PYTHONPATH and could not import r16_p14_stage2a.",
+    "test_body_executed": false,
+    "final_xml_overwrote_failed_collection_xml": true,
+    "final_reproduction_passed": true
+  }
+}

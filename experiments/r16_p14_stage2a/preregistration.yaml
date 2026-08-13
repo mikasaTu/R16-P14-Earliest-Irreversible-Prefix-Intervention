@@ -1,0 +1,167 @@
+experiment_id: r16_p14_stage2a
+title: "Conditional Prefix Replication and Safe-Replanability Atlas"
+registered_at_utc: "2026-08-13T18:06:06Z"
+stage_boundary:
+  current_checkpoint_only: true
+  full_atlas_launch_forbidden_before_checkpoint_report: true
+  stage1b_universal_hypothesis: KILLED_IMMUTABLE
+  immutable_stage1b_decision: KILL_CORE_HYPOTHESIS
+  accepted_claim_forbidden: true
+  learned_irreversibility_head_forbidden: true
+  pi05_forbidden: true
+  world_model_forbidden: true
+frozen_parent:
+  repository_commit: e29e3ead42fd1799b412a4968e6a67aac3784874
+  repository_tree: 4016b05942e6dfb291f1bc3a2644e177a208b608
+  branch: agent/stage2a-safe-replanability-atlas
+  stage1_frozen_commit: a1b61194a8382f5b1a247b9cd9b140645ff2aeb8
+  stage1_frozen_tree: 53001c43fbbb165c0a1f2c71f9cbd4c81b9d0ced
+  stage1b_commit: e29e3ead42fd1799b412a4968e6a67aac3784874
+  stage1b_tree: 4016b05942e6dfb291f1bc3a2644e177a208b608
+hypotheses:
+  track_a: >-
+    In a preregistered deferred-invalidation task family, continuing a
+    still-valid nominal prefix and replanning at the last physically safe
+    state reduces rework without degrading safety relative to immediate
+    replanning.
+  track_b: >-
+    Physical safety and frozen-policy replanability are different. The best
+    replanning prefix is the safe state with maximum probability of successful
+    replanning, not necessarily the detection state or the last physically
+    safe state.
+task_roster:
+  - put_the_cream_cheese_in_the_bowl
+  - put_the_bowl_on_the_plate
+  - open_the_middle_drawer_of_the_cabinet
+  - open_the_top_drawer_and_put_the_bowl_inside
+  - push_the_plate_to_the_front_of_the_stove
+  - put_the_bowl_on_the_stove
+  maximum_structural_replacements: 1
+  replacement_due_to_gain_forbidden: true
+splits:
+  calibration_demo_ids: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  evaluation_demo_ids: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39]
+  held_out_demo_ids: [40, 41, 42, 43, 44, 45, 46, 47, 48, 49]
+  actor_clean_init_state_ids: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  pairwise_disjoint_perturbation_splits_required: true
+perturbations:
+  environment_only: true
+  manipulated_object_teleport_forbidden: true
+  insertion_prefix: 2
+  chunk_length: 16
+  target_shift_grid:
+    release_lead_actions: [8, 10, 12, 14]
+    shift_magnitude_m: [0.04, 0.06, 0.08, 0.10]
+    direction_rule: target_x_away_from_manipulated_object_x
+  drawer_obstacle_grid:
+    insertion_offset_from_first_motion: [-2, 0, 2]
+    obstacle_clearance_m: [0.035, 0.05, 0.065, 0.08]
+  target_region_blocker_grid:
+    release_lead_actions: [8, 10, 12, 14]
+    blocker_lateral_offset_m: [0.00, 0.025, 0.050, 0.075]
+  swept_path_blocker_grid:
+    target_path_progress_fraction: [0.70, 0.80, 0.90, 1.00]
+    blocker_lateral_offset_m: [0.00, 0.025, 0.050, 0.075]
+    anchor_rule: first_plate_motion
+  qualification:
+    immediate_violation_rate_max: 0.10
+    delayed_nominal_violation_rate_range: [0.30, 0.80]
+    replay_rate_min: 0.99
+    selection_uses_method_gain: false
+    no_eval_split_retuning: true
+  preregistration_amendments:
+    - id: swept_path_structural_anchor_fix_1
+      recorded_before_formal_calibration: true
+      evidence_scope: calibration injection-instant structural screen only
+      recovery_or_method_gain_inspected: false
+      evaluation_or_heldout_demos_inspected: false
+      change: >-
+        Swept-path grid future leads [2,4,6,8] and first-motion anchor changed
+        to leads [8,10,12,14] anchored at the first state reaching 65% of the
+        demonstration plate path; lateral offsets changed from
+        [0,0.015,0.030,0.045] to [0,0.025,0.050,0.075] m.
+      reason: >-
+        At the first-motion anchor the plate displacement over 2-8 actions is
+        smaller than the combined plate/blocker footprint, so every fixed-grid
+        placement is already in cause contact at injection and violates the
+        environment-only delayed-invalidation contract.
+    - id: swept_path_target_region_fix_2
+      recorded_before_formal_calibration: true
+      evidence_scope: calibration injection-instant structural screen only
+      recovery_or_method_gain_inspected: false
+      evaluation_or_heldout_demos_inspected: false
+      change: >-
+        The swept-path blocker grid was expressed as target path-progress
+        fractions [0.70,0.80,0.90,1.00] from the first-motion chunk anchor,
+        replacing 8-14 action leads.
+      reason: >-
+        Even 14 demonstration actions did not separate the large plate from
+        the blocker footprint at injection. A later target-region blocker is
+        structurally valid; if it does not yield 30-80% delayed nominal
+        violations on calibration, the task remains a frozen negative result.
+actor:
+  weak_reference: ChunkedBCMLP
+  only_new_model: HistoryConditionedStateACT
+  shared_multitask_actor: true
+  input_state_history: 4
+  input_action_history: 3
+  task_id_input: true
+  state_dim: 95
+  action_dim: 7
+  chunk_length: 16
+  d_model: 192
+  nhead: 6
+  encoder_layers: 3
+  decoder_layers: 3
+  dim_feedforward: 768
+  dropout: 0.10
+  parameters_max: 10000000
+  rgb: false
+  privileged_input: false
+  demonstration_count_per_task: 50
+  training_seeds: [7, 17, 29]
+  training_steps: 6000
+  batch_size: 256
+  learning_rate: 0.0003
+  weight_decay: 0.0001
+  gradient_clip_norm: 10.0
+  save_interval_steps: 2000
+  hyperparameter_sweep: false
+  clean_rollout_execution_horizon: 1
+  clean_rollout_episodes_per_task_seed: 10
+  qualification:
+    clean_success_range: [0.30, 0.90]
+    late_phase_reach_min: 0.70
+    failed_episode_late_phase_fraction_min: 0.50
+    minimum_qualified_tasks: 3
+  smoke:
+    tasks:
+      - put_the_cream_cheese_in_the_bowl
+      - open_the_middle_drawer_of_the_cabinet
+    demos_per_task: 2
+    maximum_states_per_demo: 32
+    steps: 3
+    batch_size: 4
+resources:
+  cpu_first_for_replay: true
+  maximum_gpus: 2
+  maximum_concurrent_gpu_workers: 2
+  local_dev14_before_pai: true
+  pai_probe_forbidden_by_default: true
+  checkpoint_cadence_is_1000: false
+replay_gate:
+  initializer: fresh_independent_env_prefix_reconstruction
+  snapshot_restore_primary_forbidden: true
+  repeats_per_branch_point: 3
+  minimum_branch_state_match: 0.99
+  contact_and_outcome_agreement: 1.0
+  max_state_error: 1.0e-9
+  action_chunk_hash_exact: true
+  anchors:
+    positive: put_the_cream_cheese_in_the_bowl
+    negative: open_the_middle_drawer_of_the_cabinet
+statistics:
+  unit: episode_or_event
+  paired_bootstrap_resamples: 10000
+  confidence: 0.95
+  bootstrap_seed: 1614

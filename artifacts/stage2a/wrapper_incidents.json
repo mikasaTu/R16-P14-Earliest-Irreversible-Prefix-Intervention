@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "incident_count": 2,
+  "incidents": [
+    {
+      "component": "perturbation_qualification",
+      "module_completion_observed": true,
+      "module_outputs_atomic": true,
+      "outer_wrapper_exit_code": 127,
+      "outer_wrapper_error": "commands.sh: line 94: ns: command not found",
+      "cause": "commands.sh was edited while the long-running Bash process was active; after the Python module completed, the old process read shifted case-statement bytes from the modified file.",
+      "integrity_checks": {
+        "calibration_records": 880,
+        "grid_configurations": 88,
+        "frozen_summary_status": "complete",
+        "evaluation_demo_ids_inspected": [],
+        "heldout_demo_ids_inspected": []
+      },
+      "rerun_performed": false,
+      "reason_not_rerun": "All atomic outputs and exact expected counts passed schema checks; rerunning would only duplicate expensive deterministic calibration."
+    },
+    {
+      "component": "actor_eval_seed_29",
+      "module_completion_observed": true,
+      "module_outputs_atomic": true,
+      "outer_wrapper_exit_code": 127,
+      "outer_wrapper_error": "commands.sh: line 94: ns: command not found",
+      "cause": "commands.sh was edited while the long-running Bash process was active; after the Python module completed, the old process read shifted case-statement bytes from the modified file.",
+      "integrity_checks": {
+        "episode_records": 60,
+        "expected_episode_records": 60,
+        "summary_episode_count": 60,
+        "task_group_count": 6,
+        "policy_seed": 29
+      },
+      "rerun_performed": false,
+      "reason_not_rerun": "The append-only episode file and atomic summary both have exact expected cardinality and seed/task contracts."
+    }
+  ],
+  "prevention": "No experiment source or outer command wrapper will be edited while a future long-running command is active."
+}

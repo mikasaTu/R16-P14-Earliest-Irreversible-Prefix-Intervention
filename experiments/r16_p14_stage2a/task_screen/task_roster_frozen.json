@@ -1,0 +1,74 @@
+{
+  "all_tasks_eligible": true,
+  "eligible_task_count": 6,
+  "frozen_roster": [
+    "put_the_cream_cheese_in_the_bowl",
+    "put_the_bowl_on_the_plate",
+    "open_the_middle_drawer_of_the_cabinet",
+    "open_the_top_drawer_and_put_the_bowl_inside",
+    "push_the_plate_to_the_front_of_the_stove",
+    "put_the_bowl_on_the_stove"
+  ],
+  "initial_roster": [
+    "put_the_cream_cheese_in_the_bowl",
+    "put_the_bowl_on_the_plate",
+    "open_the_middle_drawer_of_the_cabinet",
+    "open_the_top_drawer_and_put_the_bowl_inside",
+    "push_the_plate_to_the_front_of_the_stove",
+    "put_the_bowl_on_the_stove"
+  ],
+  "replacement_count": 0,
+  "replacement_due_to_gain": false,
+  "replacement_used": false,
+  "schema_version": 1,
+  "structural_smoke_configs": {
+    "open_the_middle_drawer_of_the_cabinet": {
+      "config_id": "offset-02_clear035mm",
+      "demo_id": 0,
+      "parameters": {
+        "insertion_offset": -2,
+        "obstacle_clearance_m": 0.035
+      }
+    },
+    "open_the_top_drawer_and_put_the_bowl_inside": {
+      "config_id": "offset-02_clear035mm",
+      "demo_id": 0,
+      "parameters": {
+        "insertion_offset": -2,
+        "obstacle_clearance_m": 0.035
+      }
+    },
+    "push_the_plate_to_the_front_of_the_stove": {
+      "config_id": "progress070_lateral000mm",
+      "demo_id": 0,
+      "parameters": {
+        "blocker_lateral_offset_m": 0.0,
+        "target_path_progress_fraction": 0.7
+      }
+    },
+    "put_the_bowl_on_the_plate": {
+      "config_id": "lead08_shift100mm",
+      "demo_id": 1,
+      "parameters": {
+        "release_lead_actions": 8,
+        "shift_magnitude_m": 0.1
+      }
+    },
+    "put_the_bowl_on_the_stove": {
+      "config_id": "lead08_lateral000mm",
+      "demo_id": 1,
+      "parameters": {
+        "blocker_lateral_offset_m": 0.0,
+        "release_lead_actions": 8
+      }
+    },
+    "put_the_cream_cheese_in_the_bowl": {
+      "config_id": "lead08_shift040mm",
+      "demo_id": 0,
+      "parameters": {
+        "release_lead_actions": 8,
+        "shift_magnitude_m": 0.04
+      }
+    }
+  }
+}

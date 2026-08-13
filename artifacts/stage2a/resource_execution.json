@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-08-13T19:31:58Z",
+  "execution_environment": "PAI DSW local development machine",
+  "host_gpu_inventory": [
+    "NVIDIA A800-SXM4-80GB",
+    "NVIDIA A800-SXM4-80GB",
+    "NVIDIA A800-SXM4-80GB",
+    "NVIDIA A800-SXM4-80GB"
+  ],
+  "resource_contract": {
+    "maximum_gpus_allowed": 2,
+    "maximum_concurrent_gpu_workers_allowed": 2,
+    "maximum_concurrent_gpu_workers_observed": 1,
+    "cpu_first_replay": true
+  },
+  "gpu_work": {
+    "actor_smoke": "one local A800",
+    "actor_training": "seeds 7, 17, and 29 sequentially on one local A800",
+    "actor_clean_evaluation": "seeds 7, 17, and 29 sequentially on one local A800",
+    "posthoc_mechanism_audit": "one local A800",
+    "full_atlas": "not launched"
+  },
+  "pai_external_job": {
+    "submitted": false,
+    "dlc_job_id": null,
+    "spot_job": false,
+    "web_orchestrator_job": false,
+    "reason": "The bounded first checkpoint completed locally within the preregistered two-GPU ceiling; local-first validation did not justify an external PAI probe or job."
+  },
+  "checkpointing": {
+    "run_id": "r16p14-stage2a-act-v1",
+    "save_interval_steps": 2000,
+    "complete_state_contains": [
+      "model",
+      "optimizer",
+      "scheduler",
+      "python_rng",
+      "numpy_rng",
+      "torch_cpu_rng",
+      "torch_cuda_rng",
+      "sampling_generator_rng"
+    ],
+    "complete_state_root": "/mnt/cpfs/zbl-cpfs-new/CKPT/leon/torch/r16_p14_stage2a",
+    "portable_model_checkpoints_tracked_in_git": true,
+    "auto_resume_scans_only_complete_checkpoints": true
+  },
+  "uid": 2254,
+  "gid": 2254
+}
