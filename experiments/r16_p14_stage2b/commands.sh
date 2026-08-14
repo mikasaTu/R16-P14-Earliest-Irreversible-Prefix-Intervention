@@ -17,9 +17,14 @@ case "${1:-help}" in
     "$r16p14_python" -m r16_p14_stage2b.freeze --output-dir "$artifact_root/source_freeze"
     ;;
   chunk-seed)
-    seed=${2:?usage: commands.sh chunk-seed SEED [DEVICE]}
+    seed=${2:?usage: commands.sh chunk-seed SEED [DEVICE] [TASK]}
     device=${3:-cuda}
-    "$r16p14_python" -m r16_p14_stage2b.chunk_executability --seed "$seed" --device "$device"
+    task=${4:-}
+    task_args=()
+    if [[ -n "$task" ]]; then
+      task_args=(--task "$task")
+    fi
+    "$r16p14_python" -m r16_p14_stage2b.chunk_executability --seed "$seed" --device "$device" "${task_args[@]}"
     ;;
   chunk-aggregate)
     "$r16p14_python" -m r16_p14_stage2b.chunk_executability --aggregate
@@ -77,6 +82,6 @@ case "${1:-help}" in
     "$r16p14_python" -m r16_p14_stage2b.test_runner
     ;;
   help|*)
-    printf '%s\n' 'usage: commands.sh {freeze|chunk-seed SEED [DEVICE]|chunk-aggregate|events-seed SEED [DEVICE]|events-aggregate|perturbations [DEVICE]|replay [DEVICE]|checkpoint-report|atlas-smoke [DEVICE]|atlas-seed SEED [DEVICE]|atlas-aggregate|operator-seed SEED [DEVICE]|operator-aggregate|mechanism-audit [DEVICE]|report|checksums|test}'
+    printf '%s\n' 'usage: commands.sh {freeze|chunk-seed SEED [DEVICE] [TASK]|chunk-aggregate|events-seed SEED [DEVICE]|events-aggregate|perturbations [DEVICE]|replay [DEVICE]|checkpoint-report|atlas-smoke [DEVICE]|atlas-seed SEED [DEVICE]|atlas-aggregate|operator-seed SEED [DEVICE]|operator-aggregate|mechanism-audit [DEVICE]|report|checksums|test}'
     ;;
 esac

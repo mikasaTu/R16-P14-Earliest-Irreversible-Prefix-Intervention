@@ -204,7 +204,31 @@ def rollout(
     }, prefix_records
 
 
-def run_seed(seed: int, device: str) -> None:
+def episode_checkpoint_path(output: Path, seed: int, task: str, horizon: int, init_id: int) -> Path:
+    return (
+        output
+        / "episode_checkpoints"
+        / f"seed_{seed}"
+        / f"{task}__h{horizon:02d}__init{init_id:02d}.json"
+    )
+
+
+def consolidate_seed_checkpoints(output: Path, seed: int) -> tuple[list[dict[str, Any]], list[dict[str, Any]]] | None:
+    episodes: list[dict[str, Any]] = []
+    prefixes: list[dict[str, Any]] = []
+    for task in PRIMARY_TASKS:
+        for horizon in EXECUTION_HORIZONS:
+            for init_id in range(20):
+                checkpoint = episode_checkpoint_path(output, seed, task, horizon, init_id)
+                if not checkpoint.is_file():
+                    return None
+                saved = json.loads(checkpoint.read_text())
+                episodes.append(saved["episode"])
+                prefixes.extend(saved["prefix_records"])
+    return episodes, prefixes
+
+
+def run_seed(seed: int, device: str, tasks: tuple[str, ...] = PRIMARY_TASKS) -> None:
     output = ARTIFACT_ROOT / "chunk_executability/shards"
     episode_path = output / f"seed_{seed}.episodes.jsonl"
     prefix_path = output / f"seed_{seed}.prefix_records.jsonl"
@@ -212,9 +236,7 @@ def run_seed(seed: int, device: str) -> None:
         print(f"CHUNK_SEED_ALREADY_COMPLETE seed={seed}")
         return
     bundle = ActorBundle.load(seed, device)
-    episodes: list[dict[str, Any]] = []
-    prefixes: list[dict[str, Any]] = []
-    for task in PRIMARY_TASKS:
+    for task in tasks:
         env, _, init_states = init_state_and_suite(task)
         try:
             hashes = [sha256_array(init_states[index], np.float64) for index in range(20)]
@@ -222,16 +244,9 @@ def run_seed(seed: int, device: str) -> None:
                 raise ValueError(f"duplicate init-state hashes for {task}")
             for horizon in EXECUTION_HORIZONS:
                 for init_id in range(20):
-                    checkpoint = (
-                        output
-                        / "episode_checkpoints"
-                        / f"seed_{seed}"
-                        / f"{task}__h{horizon:02d}__init{init_id:02d}.json"
-                    )
+                    checkpoint = episode_checkpoint_path(output, seed, task, horizon, init_id)
                     if checkpoint.is_file():
                         saved = json.loads(checkpoint.read_text())
-                        episodes.append(saved["episode"])
-                        prefixes.extend(saved["prefix_records"])
                         print(
                             f"CHUNK_EPISODE_RESUME seed={seed} task={task} h={horizon} init={init_id}",
                             flush=True,
@@ -246,8 +261,6 @@ def run_seed(seed: int, device: str) -> None:
                             execution_horizon=horizon,
                             bundle=bundle,
                         )
-                        episodes.append(episode)
-                        prefixes.extend(records)
                         write_once_json(
                             checkpoint,
                             {"episode": episode, "prefix_records": records, "complete": True},
@@ -274,13 +287,17 @@ def run_seed(seed: int, device: str) -> None:
                                 "error": f"{type(exc).__name__}: {exc}",
                                 "traceback": traceback.format_exc(),
                             }
-                        episodes.append(episode)
                         write_once_json(
                             checkpoint,
                             {"episode": episode, "prefix_records": [], "complete": True},
                         )
         finally:
             env.close()
+    consolidated = consolidate_seed_checkpoints(output, seed)
+    if consolidated is None:
+        print(f"CHUNK_SEED_PARTIAL seed={seed} tasks={','.join(tasks)}", flush=True)
+        return
+    episodes, prefixes = consolidated
     write_once_jsonl(episode_path, episodes)
     write_once_jsonl(prefix_path, prefixes)
     atomic_write_json(
@@ -416,12 +433,13 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--seed", type=int, choices=ACTOR_SEEDS)
     parser.add_argument("--device", default="cuda")
+    parser.add_argument("--task", choices=PRIMARY_TASKS)
     parser.add_argument("--aggregate", action="store_true")
     args = parser.parse_args()
     if args.aggregate:
         aggregate()
     elif args.seed is not None:
-        run_seed(args.seed, args.device)
+        run_seed(args.seed, args.device, (args.task,) if args.task else PRIMARY_TASKS)
     else:
         parser.error("provide --seed or --aggregate")
 
