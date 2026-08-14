@@ -48,9 +48,12 @@ execution_override:
     as mechanism failures.
   fallback_analysis_horizon: 8
   fallback_rule: >-
-    Use H_valid when it is at least d. Otherwise execute the preregistered
-    horizon 8 solely to complete descriptive downstream experiments; all
-    downstream claims become gate-conditional/inconclusive.
+    Use H_valid only when it satisfies the Phase-A requirement H_valid>=8.
+    Otherwise execute the preregistered horizon 8 solely to complete the
+    four-position replay and descriptive downstream experiments; all
+    downstream claims become gate-conditional/inconclusive. This operational
+    clarification was frozen while Phase A was still running and before its
+    aggregate result was read.
 
 splits:
   actor_qualification_init_ids: [0,1,2,3,4,5,6,7,8,9]

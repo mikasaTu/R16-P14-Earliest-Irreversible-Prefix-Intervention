@@ -22,7 +22,7 @@ from r16_p14_stage2b.atlas_runner import (
 from r16_p14_stage2b.baselines import k_best, k_last_safe, method_positions, strongest_baseline, validate_prefix_index
 from r16_p14_stage2b.bootstrap import paired_event_bootstrap
 from r16_p14_stage2b.io_utils import atomic_write_json, sha256_array, write_once_jsonl
-from r16_p14_stage2b.runtime import CauseTracker, chunk_hash, validate_event_contract
+from r16_p14_stage2b.runtime import ActorHistory, CauseTracker, chunk_hash, validate_event_contract
 from r16_p14_stage2b.settings import (
     ACTOR_QUALIFICATION_IDS,
     ACTION_DIM,
@@ -250,3 +250,20 @@ def test_25_changed_anchor_state_bytes_rejected() -> None:
     event["anchor_state"][0] += 0.25
     with pytest.raises(ValueError, match="anchor_state_bytes"):
         validate_event_contract(event)
+
+
+def test_26_action_free_injection_refreshes_current_observation_in_place() -> None:
+    history = ActorHistory(
+        states=[np.zeros(95, dtype=np.float32) for _ in range(4)],
+        actions=[np.zeros(7, dtype=np.float32) for _ in range(3)],
+    )
+    observation = {
+        "robot0_proprio-state": np.ones(10, dtype=np.float32),
+        "object-state": np.full(85, 2.0, dtype=np.float32),
+    }
+    before_actions = history.action_array().copy()
+    history.refresh_latest_observation(observation)
+    assert np.all(history.state_array()[:3] == 0)
+    assert np.all(history.state_array()[-1, :10] == 1)
+    assert np.all(history.state_array()[-1, 10:] == 2)
+    assert np.array_equal(history.action_array(), before_actions)

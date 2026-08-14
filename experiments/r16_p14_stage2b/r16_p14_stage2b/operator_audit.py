@@ -117,7 +117,7 @@ def run_operator(
             op_record = execute_operator_action(context, op_action)
         operator_action_count = int(op_record["action"] is not None)
         remaining = max(0, available_after_prefix - operator_action_count)
-        if pre_violation or context.tracker.violation or context.env.check_success() or remaining == 0:
+        if pre_violation or context.env.check_success() or remaining == 0:
             completion = {
                 "task_success": bool(context.env.check_success()),
                 "cause_violation": bool(context.tracker.violation),
@@ -142,7 +142,7 @@ def run_operator(
             )
         spent = retained + operator_action_count + int(completion["new_non_nominal_actions"])
         timeout = bool(
-            not completion["task_success"] and not completion["cause_violation"] and spent >= budget
+            not completion["task_success"] and spent >= budget
         )
         return {
             "schema_version": 1,

@@ -12,6 +12,10 @@ relax any scientific gate or permit a positive label after an upstream block.
 - `k=d` is immediate replan. `k=H_valid` executes the full validated prefix.
 - Every branch receives `B_post=min(200, task_horizon-anchor_step-d)`. Old
   actions retained after detection consume the same budget as new actions.
+- Injection consumes no control step. Immediately after the environment-only
+  joint change, the current-time observation feature is refreshed in place;
+  therefore the actor at `k=d` sees the perturbed state while the four-frame
+  history length and three executed-action history remain unchanged.
 
 ## Actor action disagreement
 
@@ -48,6 +52,10 @@ over clean Phase-A intermediate records only; evaluation outcomes are not read.
   registered plate blocker is a cause violation.
 - Cause violation is absorbing. Timeout and ordinary failure are never cause
   violations.
+- Absorbing means the violation label can never return to zero; it is not a
+  simulator terminal. A violation after a valid replan point does not truncate
+  the rollout, which continues to the same budget so task success, rework, and
+  policy-call accounting remain comparable.
 - `S(k)=1` iff no target cause violation has occurred before the replan call.
 - `safe_success=task_success AND no cause violation`.
 
@@ -73,9 +81,11 @@ with task-macro, task, actor-seed and severity-stratified readouts.
 ## Gate-failure continuation
 
 All downstream runs are completed even if a gate fails. When `H_valid` is
-missing or below `d`, descriptive downstream execution uses horizon 8. Such
-results are marked `upstream_gate_override=true`; they cannot receive Track A,
-Track B, or operator positive labels.
+missing or below the required value 8, descriptive downstream execution uses
+horizon 8 so the four-position replay and bounded Atlas remain executable.
+Such results are marked `upstream_gate_override=true`; they cannot receive
+Track A, Track B, or operator positive labels. This clarification was frozen
+before the Phase-A aggregate result was read.
 
 If perturbation qualification is blocked, two distinct diagnostic severities
 are frozen without reading any replan/method outcome. Ranking uses replay rate,

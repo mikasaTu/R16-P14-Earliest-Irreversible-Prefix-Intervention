@@ -15,6 +15,7 @@ from r16_p14_stage2a.envs import (
     array_sha256,
     contact_pairs,
     contact_sha256,
+    current_observation,
     feature_from_obs,
     joint_qpos,
     make_env,
@@ -92,6 +93,10 @@ class ActorHistory:
         action_array = np.asarray(action, dtype=np.float32).copy()
         self.states = self.states[1:] + [feature_from_obs(observation)]
         self.actions = self.actions[1:] + [action_array]
+
+    def refresh_latest_observation(self, observation: dict[str, Any]) -> None:
+        """Replace the current-time feature after an action-free world change."""
+        self.states[-1] = feature_from_obs(observation)
 
     def state_array(self) -> np.ndarray:
         return np.asarray(self.states, dtype=np.float32)
@@ -483,6 +488,10 @@ def reconstruct_to_prefix(
             if index + 1 == DETECTION_PREFIX:
                 perturbation = apply_actor_perturbation(env, event, severity_m)
                 tracker.observe_injection(env, tuple(perturbation["before_contacts"]))
+                # Injection changes object state without consuming a control
+                # step. The actor at k=d must see s_d after that change while
+                # retaining the same four-time-step history length.
+                history.refresh_latest_observation(current_observation(env))
         if perturbation is None:
             raise RuntimeError("perturbation not applied")
         state = np.asarray(env.get_sim_state(), dtype=np.float64).copy()

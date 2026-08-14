@@ -60,7 +60,7 @@ def effective_horizon() -> tuple[int, bool, int | None]:
     summary_path = ARTIFACT_ROOT / "chunk_executability/summary.json"
     summary = json.loads(summary_path.read_text())
     h_valid = summary["H_valid"]
-    if h_valid is not None and int(h_valid) >= 2:
+    if h_valid is not None and int(h_valid) >= 8:
         return int(h_valid), False, int(h_valid)
     return FALLBACK_ANALYSIS_HORIZON, True, h_valid
 
@@ -75,6 +75,7 @@ def build_event(
     bundle: ActorBundle,
     horizon: int,
     upstream_override: bool,
+    h_valid: int | None,
 ) -> tuple[dict[str, Any] | None, dict[str, Any]]:
     spec = TASK_SPECS[task]
     assert spec.manipulated_joint
@@ -160,7 +161,7 @@ def build_event(
                 "original_chunk_hash": chunk_hash(chunk),
                 "original_chunk_length": CHUNK_LENGTH,
                 "effective_horizon": horizon,
-                "H_valid_at_build": None if upstream_override else horizon,
+                "H_valid_at_build": h_valid,
                 "upstream_gate_override": upstream_override,
                 "phase": {
                     "ever_stably_lifted": bool(monitor.ever_stably_lifted),
@@ -268,6 +269,7 @@ def run_seed(seed: int, device: str) -> None:
                         bundle=bundle,
                         horizon=horizon,
                         upstream_override=override,
+                        h_valid=h_valid,
                     )
                     attempts.append(attempt)
                     if event is not None:

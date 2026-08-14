@@ -115,7 +115,10 @@ def complete_with_h1_replan(
     contact_step_count = 0
     success = bool(context.env.check_success())
     next_chunk = np.asarray(first_chunk, dtype=np.float32)
-    while len(actions) < action_budget and not success and not context.tracker.violation:
+    # A cause violation is absorbing as a label, not a simulator terminal.
+    # Continue to the common budget so task success, rework, and policy calls
+    # remain comparable rather than being artificially truncated at failure.
+    while len(actions) < action_budget and not success:
         if actions:
             next_chunk = bundle.predict(
                 context.history.state_array(), context.history.action_array(), event["task"]
@@ -210,7 +213,6 @@ def run_branch(
         post_actions = contract["old_nominal_actions_retained_after_detection"] + completion["new_non_nominal_actions"]
         timeout = bool(
             not completion["task_success"]
-            and not completion["cause_violation"]
             and post_actions >= budget
         )
         old_actions = old_chunk[DETECTION_PREFIX:prefix_k]
