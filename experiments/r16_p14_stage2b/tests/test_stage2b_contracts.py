@@ -11,7 +11,7 @@ import pytest
 
 from r16_p14_stage2a.envs import state_sha256
 
-from r16_p14_stage2b import actor_perturbation_qualification, atlas_runner
+from r16_p14_stage2b import actor_perturbation_qualification, atlas_runner, operator_audit
 from r16_p14_stage2b.atlas_runner import (
     assign_severity,
     branch_contract,
@@ -22,7 +22,7 @@ from r16_p14_stage2b.atlas_runner import (
 )
 from r16_p14_stage2b.baselines import k_best, k_last_safe, method_positions, strongest_baseline, validate_prefix_index
 from r16_p14_stage2b.bootstrap import paired_event_bootstrap
-from r16_p14_stage2b.io_utils import atomic_write_json, sha256_array, write_once_jsonl
+from r16_p14_stage2b.io_utils import atomic_write_csv, atomic_write_json, sha256_array, write_once_jsonl
 from r16_p14_stage2b.runtime import (
     ActorHistory,
     CauseTracker,
@@ -335,3 +335,26 @@ def test_28_intended_stove_placement_descent_is_not_a_catastrophic_drop() -> Non
     }
     assert not is_catastrophic_object_drop(target_distance_value=0.08, **common)
     assert is_catastrophic_object_drop(target_distance_value=0.20, **common)
+
+
+def test_29_csv_and_qualification_errors_are_unambiguous(tmp_path: Path) -> None:
+    path = tmp_path / "rows.csv"
+    atomic_write_csv(path, ["value"], [{"value": 1}])
+    assert path.read_bytes() == b"value\n1\n"
+
+    source = inspect.getsource(actor_perturbation_qualification)
+    assert source.count('"proposed_method_outcome_read": False') == 3
+    assert source.count('"immediate_replan_outcome_read": False') == 3
+    assert source.count('"last_safe_or_k_best_read": False') == 3
+
+
+def test_30_failed_upstream_gate_blocks_operator_positive_labels() -> None:
+    permitted, checks = operator_audit.positive_label_gate(
+        {
+            "all_upstream_gates_pass": False,
+            "minimum_valid_data": {"passed": True},
+            "invalid_events": {},
+        }
+    )
+    assert not permitted
+    assert checks["minimum_valid_data_pass"]

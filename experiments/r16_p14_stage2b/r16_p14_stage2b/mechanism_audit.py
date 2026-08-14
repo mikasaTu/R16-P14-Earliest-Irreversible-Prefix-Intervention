@@ -156,6 +156,13 @@ def main() -> None:
         "operator_outcome": {
             "operator_router": operators["operator_router"],
             "local_repair": operators["track_a_local_repair"],
+            "positive_labels_permitted": operators["positive_labels_permitted"],
+            "descriptive_operator_router_criteria_met": operators[
+                "descriptive_operator_router_criteria_met"
+            ],
+            "descriptive_local_repair_criteria_met": operators[
+                "descriptive_local_repair_criteria_met"
+            ],
             "unique_safe_win_rates": operators["unique_safe_win_event_rates"],
         },
         "interpretation_limits": [

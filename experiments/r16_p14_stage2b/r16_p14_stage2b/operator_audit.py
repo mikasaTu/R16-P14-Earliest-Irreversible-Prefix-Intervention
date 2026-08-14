@@ -27,6 +27,17 @@ OPERATORS = (
 )
 
 
+def positive_label_gate(atlas_summary: dict[str, Any]) -> tuple[bool, dict[str, bool]]:
+    checks = {
+        "all_upstream_gates_pass": bool(atlas_summary.get("all_upstream_gates_pass")),
+        "minimum_valid_data_pass": bool(
+            atlas_summary.get("minimum_valid_data", {}).get("passed")
+        ),
+        "no_invalid_atlas_events": not bool(atlas_summary.get("invalid_events")),
+    }
+    return all(checks.values()), checks
+
+
 def position_contract(event_metric: dict[str, Any]) -> list[tuple[str, int | None]]:
     return [
         ("d", DETECTION_PREFIX),
@@ -308,6 +319,8 @@ def aggregate() -> dict[str, Any]:
         for task in PRIMARY_TASKS
     }
     local_repair_signal = repair_rate > full_rate and all(repair_tasks.values())
+    atlas_summary = json.loads((ARTIFACT_ROOT / "atlas_pilot/summary.json").read_text())
+    labels_permitted, label_gate_checks = positive_label_gate(atlas_summary)
     summary = {
         "schema_version": 1,
         "record_count": len(records),
@@ -318,8 +331,16 @@ def aggregate() -> dict[str, Any]:
         "unique_winner_tasks": {operator: sorted(values) for operator, values in winner_tasks.items()},
         "qualifying_operators": qualifying,
         "checks": checks,
-        "operator_router": "PILOT_SIGNAL" if signal else "NO_OPERATOR_ROUTING_SIGNAL",
-        "track_a_local_repair": "PILOT_SIGNAL" if local_repair_signal else "NO_SIGNAL",
+        "descriptive_operator_router_criteria_met": signal,
+        "descriptive_local_repair_criteria_met": local_repair_signal,
+        "positive_labels_permitted": labels_permitted,
+        "positive_label_gate_checks": label_gate_checks,
+        "operator_router": (
+            "PILOT_SIGNAL" if signal and labels_permitted else "NO_OPERATOR_ROUTING_SIGNAL"
+        ),
+        "track_a_local_repair": (
+            "PILOT_SIGNAL" if local_repair_signal and labels_permitted else "NO_SIGNAL"
+        ),
         "full_replan_safe_success_rate": full_rate,
         "local_repair_safe_success_rate": repair_rate,
         "local_repair_task_direction": repair_tasks,
@@ -332,6 +353,8 @@ def aggregate() -> dict[str, Any]:
         "",
         f"Operator-router result: **{summary['operator_router']}** from {len(events)} events.",
         f"Cause-specific local-repair result: **{summary['track_a_local_repair']}**.",
+        f"Positive labels permitted: **{labels_permitted}**; descriptive router criteria met: "
+        f"**{signal}**; descriptive local-repair criteria met: **{local_repair_signal}**.",
         "",
         "| operator | unique-safe-win events | rate | tasks |",
         "|---|---:|---:|---|",

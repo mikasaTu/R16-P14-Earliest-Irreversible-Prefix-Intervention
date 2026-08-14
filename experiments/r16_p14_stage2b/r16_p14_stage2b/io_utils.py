@@ -72,7 +72,7 @@ def atomic_write_csv(path: Path, fieldnames: Sequence[str], records: Iterable[di
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = _atomic_path(path)
     with temporary.open("w", encoding="utf-8", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=fieldnames)
+        writer = csv.DictWriter(stream, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows(records)
         stream.flush()

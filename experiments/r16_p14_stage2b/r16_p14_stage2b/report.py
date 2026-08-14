@@ -183,6 +183,7 @@ def main() -> None:
             "## Phase F — Local repair / operator",
             "",
             f"Operator branches=`{operator['record_count']}`，events=`{operator['event_count']}`；router=`{operator['operator_router']}`，local repair=`{operator['track_a_local_repair']}`。Unique-safe-win rates=`{json.dumps(operator['unique_safe_win_event_rates'], sort_keys=True)}`。所有 operator action 都消耗相同 event budget，没有额外 policy-call allowance。",
+            f"Phase-F positive labels permitted=`{operator['positive_labels_permitted']}`；descriptive router criteria met=`{operator['descriptive_operator_router_criteria_met']}`；descriptive local-repair criteria met=`{operator['descriptive_local_repair_criteria_met']}`。当上游或最小样本 gate 失败时，即使描述性条件满足也不会发放正标签。",
             "",
             "## 提升/降低机理反解",
             "",

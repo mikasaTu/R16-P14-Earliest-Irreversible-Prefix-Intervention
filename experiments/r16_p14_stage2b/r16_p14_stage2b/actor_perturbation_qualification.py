@@ -158,6 +158,8 @@ def main() -> None:
                             "error": f"{type(exc).__name__}: {exc}",
                             "traceback": traceback.format_exc(),
                             "proposed_method_outcome_read": False,
+                            "immediate_replan_outcome_read": False,
+                            "last_safe_or_k_best_read": False,
                         }
                     )
         initial_summaries = [
@@ -187,6 +189,8 @@ def main() -> None:
                                 "error": f"{type(exc).__name__}: {exc}",
                                 "traceback": traceback.format_exc(),
                                 "proposed_method_outcome_read": False,
+                                "immediate_replan_outcome_read": False,
+                                "last_safe_or_k_best_read": False,
                             }
                         )
         tested = sorted({float(row["severity_m"]) for row in records if row["task"] == task})
