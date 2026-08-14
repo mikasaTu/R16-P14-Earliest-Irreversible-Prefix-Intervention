@@ -73,6 +73,7 @@ def main() -> None:
         "overall": overall,
         "full_stage2b_experiments_completed": True,
         "upstream_gate_early_stop_overridden_by_user": True,
+        "post_registration_measurement_repair": "PHASE_A_TARGET_AWARE_DROP_V2_DISCLOSED",
         "downstream_results_descriptive_when_upstream_blocked": not atlas["all_upstream_gates_pass"],
         "novelty_boundary": "N2_ORACLE_PROTOCOL_BOUNDARY_ONLY",
         "learned_or_deployable_evidence": "NONE",
@@ -122,6 +123,8 @@ def main() -> None:
         )
     lines.extend(
         [
+            "",
+            "Phase A 使用 target-aware object-drop monitor v2。这是一项透明的 post-registration measurement repair：首轮完整 aggregate 将 stove 的正确 placement descent 误标为 drop；旧证据已按 SHA256 隔离，修复发生在 Phase B 和任何扰动/replan outcome 之前。详见 `reports/phase_a_monitor_bug_audit.md`。",
             "",
             "若该 gate 被阻断，它只说明冻结 ACT substrate 不适于 prefix 实验，不解释为 R16-P14 mechanism failure。",
             "",
