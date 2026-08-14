@@ -1,0 +1,161 @@
+{
+  "atlas_counterfactual_summary": {
+    "A_original_vs_B0": {
+      "all_budgets_equal": true,
+      "categories": {
+        "cause_safety_gain": 4,
+        "cause_safety_loss": 3,
+        "equal_outcome_efficiency_gain": 15,
+        "safe_success_gain": 13,
+        "safe_success_loss": 5
+      },
+      "event_count": 40,
+      "mean_delay_difference": 13.625,
+      "mean_new_action_difference": -57.525,
+      "mean_policy_call_difference": -57.525
+    },
+    "N_oracle_vs_A_original": {
+      "all_budgets_equal": true,
+      "categories": {
+        "no_observed_difference": 33,
+        "safe_success_gain": 7
+      },
+      "event_count": 40,
+      "mean_delay_difference": -1.7,
+      "mean_new_action_difference": -23.25,
+      "mean_policy_call_difference": -23.25
+    }
+  },
+  "chunk_executability_diagnostics": {
+    "put_the_bowl_on_the_stove": {
+      "1": {
+        "fresh_disagreement_count": 0,
+        "fresh_disagreement_median": null,
+        "fresh_disagreement_p95": null,
+        "object_drop_rate": 0.0,
+        "phase_regression_rate": 0.0,
+        "success_change_from_h1": 0.0,
+        "success_rate": 0.85,
+        "wrong_release_rate": 0.0
+      },
+      "16": {
+        "fresh_disagreement_count": 6724,
+        "fresh_disagreement_median": 0.08177556470036507,
+        "fresh_disagreement_p95": 0.16118216216564174,
+        "object_drop_rate": 0.0,
+        "phase_regression_rate": 0.0,
+        "success_change_from_h1": 0.09999999999999998,
+        "success_rate": 0.95,
+        "wrong_release_rate": 0.0
+      },
+      "2": {
+        "fresh_disagreement_count": 3364,
+        "fresh_disagreement_median": 0.06504378467798233,
+        "fresh_disagreement_p95": 0.13511869683861732,
+        "object_drop_rate": 0.016666666666666666,
+        "phase_regression_rate": 0.016666666666666666,
+        "success_change_from_h1": 0.09999999999999998,
+        "success_rate": 0.95,
+        "wrong_release_rate": 0.016666666666666666
+      },
+      "4": {
+        "fresh_disagreement_count": 5218,
+        "fresh_disagreement_median": 0.07192913442850113,
+        "fresh_disagreement_p95": 0.13974744006991383,
+        "object_drop_rate": 0.0,
+        "phase_regression_rate": 0.0,
+        "success_change_from_h1": 0.08333333333333337,
+        "success_rate": 0.9333333333333333,
+        "wrong_release_rate": 0.0
+      },
+      "8": {
+        "fresh_disagreement_count": 5711,
+        "fresh_disagreement_median": 0.06952172517776489,
+        "fresh_disagreement_p95": 0.14315015077590942,
+        "object_drop_rate": 0.0,
+        "phase_regression_rate": 0.0,
+        "success_change_from_h1": 0.1166666666666667,
+        "success_rate": 0.9666666666666667,
+        "wrong_release_rate": 0.0
+      }
+    },
+    "put_the_cream_cheese_in_the_bowl": {
+      "1": {
+        "fresh_disagreement_count": 0,
+        "fresh_disagreement_median": null,
+        "fresh_disagreement_p95": null,
+        "object_drop_rate": 0.03333333333333333,
+        "phase_regression_rate": 0.06666666666666667,
+        "success_change_from_h1": 0.0,
+        "success_rate": 0.48333333333333334,
+        "wrong_release_rate": 0.03333333333333333
+      },
+      "16": {
+        "fresh_disagreement_count": 7371,
+        "fresh_disagreement_median": 0.10188601166009903,
+        "fresh_disagreement_p95": 0.23270787298679352,
+        "object_drop_rate": 0.0,
+        "phase_regression_rate": 0.0,
+        "success_change_from_h1": 0.4333333333333333,
+        "success_rate": 0.9166666666666666,
+        "wrong_release_rate": 0.016666666666666666
+      },
+      "2": {
+        "fresh_disagreement_count": 5371,
+        "fresh_disagreement_median": 0.07312769442796707,
+        "fresh_disagreement_p95": 0.17865611612796783,
+        "object_drop_rate": 0.0,
+        "phase_regression_rate": 0.03333333333333333,
+        "success_change_from_h1": 0.26666666666666666,
+        "success_rate": 0.75,
+        "wrong_release_rate": 0.016666666666666666
+      },
+      "4": {
+        "fresh_disagreement_count": 7774,
+        "fresh_disagreement_median": 0.08746910840272903,
+        "fresh_disagreement_p95": 0.2280348204076288,
+        "object_drop_rate": 0.016666666666666666,
+        "phase_regression_rate": 0.06666666666666667,
+        "success_change_from_h1": 0.26666666666666666,
+        "success_rate": 0.75,
+        "wrong_release_rate": 0.016666666666666666
+      },
+      "8": {
+        "fresh_disagreement_count": 8257,
+        "fresh_disagreement_median": 0.08496680110692978,
+        "fresh_disagreement_p95": 0.2310573399066925,
+        "object_drop_rate": 0.016666666666666666,
+        "phase_regression_rate": 0.0,
+        "success_change_from_h1": 0.3166666666666667,
+        "success_rate": 0.8,
+        "wrong_release_rate": 0.016666666666666666
+      }
+    }
+  },
+  "interpretation_limits": [
+    "N_oracle gains, if any, are selection gains over fully observed realized branches and are not deployable-policy evidence.",
+    "A_original gains/losses are conditional on the two late-placement perturbation families and cannot reverse the immutable Stage-1b universal kill.",
+    "Action-count changes are not a larger-budget artifact because all compared rows share the same event budget.",
+    "No learned mechanism, learned router, new probe, VLA, or pi0.5 model was introduced."
+  ],
+  "method": "code-first realized-branch reverse explanation; no new idea generated",
+  "operator_outcome": {
+    "descriptive_local_repair_criteria_met": false,
+    "descriptive_operator_router_criteria_met": false,
+    "local_repair": "NO_SIGNAL",
+    "operator_router": "NO_OPERATOR_ROUTING_SIGNAL",
+    "positive_labels_permitted": false,
+    "unique_safe_win_rates": {
+      "bounded_rollback_replan": 0.0,
+      "cause_specific_local_repair": 0.15,
+      "full_replan": 0.1,
+      "hold_one_step_replan": 0.025
+    }
+  },
+  "perturbation_mechanism": {
+    "cream": "only the target bowl free joint is shifted; the absorbing label fires on a post-lift misaligned release",
+    "qualification_status": "BLOCKED",
+    "stove": "the registered existing plate is placed relative to the actor chunk's nominal future bowl position; the absorbing label fires on bowl-plate contact"
+  },
+  "schema_version": 1
+}
