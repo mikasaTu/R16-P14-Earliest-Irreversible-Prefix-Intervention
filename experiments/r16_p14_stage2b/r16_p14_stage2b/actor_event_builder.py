@@ -226,7 +226,28 @@ def build_event(
     }
 
 
-def run_seed(seed: int, device: str) -> None:
+def event_checkpoint_path(output: Path, seed: int, task: str, init_id: int) -> Path:
+    return output / "episode_checkpoints" / f"seed_{seed}" / f"{task}__init{init_id:02d}.json"
+
+
+def consolidate_seed_checkpoints(
+    output: Path, seed: int
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]] | None:
+    events: list[dict[str, Any]] = []
+    attempts: list[dict[str, Any]] = []
+    for task in PRIMARY_TASKS:
+        for init_id in range(30):
+            checkpoint = event_checkpoint_path(output, seed, task, init_id)
+            if not checkpoint.is_file():
+                return None
+            saved = json.loads(checkpoint.read_text())
+            attempts.append(saved["attempt"])
+            if saved["event"] is not None:
+                events.append(saved["event"])
+    return events, attempts
+
+
+def run_seed(seed: int, device: str, tasks: tuple[str, ...] = PRIMARY_TASKS) -> None:
     output = ARTIFACT_ROOT / "actor_events/shards"
     events_path = output / f"seed_{seed}.events.jsonl"
     attempts_path = output / f"seed_{seed}.attempts.jsonl"
@@ -235,24 +256,14 @@ def run_seed(seed: int, device: str) -> None:
         return
     horizon, override, h_valid = effective_horizon()
     bundle = ActorBundle.load(seed, device)
-    events: list[dict[str, Any]] = []
-    attempts: list[dict[str, Any]] = []
-    for task in PRIMARY_TASKS:
+    for task in tasks:
         env, _, init_states = init_state_and_suite(task)
         nominal_env, _, _ = init_state_and_suite(task)
         try:
             for init_id in range(30):
-                checkpoint = (
-                    output
-                    / "episode_checkpoints"
-                    / f"seed_{seed}"
-                    / f"{task}__init{init_id:02d}.json"
-                )
+                checkpoint = event_checkpoint_path(output, seed, task, init_id)
                 if checkpoint.is_file():
                     saved = json.loads(checkpoint.read_text())
-                    attempts.append(saved["attempt"])
-                    if saved["event"] is not None:
-                        events.append(saved["event"])
                     print(
                         f"ACTOR_EVENT_RESUME seed={seed} task={task} init={init_id} "
                         f"eligible={int(saved['event'] is not None)}",
@@ -271,9 +282,6 @@ def run_seed(seed: int, device: str) -> None:
                         upstream_override=override,
                         h_valid=h_valid,
                     )
-                    attempts.append(attempt)
-                    if event is not None:
-                        events.append(event)
                     write_once_json(
                         checkpoint,
                         {"event": event, "attempt": attempt, "complete": True},
@@ -294,7 +302,6 @@ def run_seed(seed: int, device: str) -> None:
                             "reason": f"error:{type(exc).__name__}:{exc}",
                             "traceback": traceback.format_exc(),
                         }
-                    attempts.append(attempt)
                     write_once_json(
                         checkpoint,
                         {"event": None, "attempt": attempt, "complete": True},
@@ -302,6 +309,11 @@ def run_seed(seed: int, device: str) -> None:
         finally:
             env.close()
             nominal_env.close()
+    consolidated = consolidate_seed_checkpoints(output, seed)
+    if consolidated is None:
+        print(f"EVENT_SEED_PARTIAL seed={seed} tasks={','.join(tasks)}", flush=True)
+        return
+    events, attempts = consolidated
     write_once_jsonl(events_path, events)
     write_once_jsonl(attempts_path, attempts)
     atomic_write_json(
@@ -411,12 +423,13 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--seed", type=int, choices=ACTOR_SEEDS)
     parser.add_argument("--device", default="cuda")
+    parser.add_argument("--task", choices=PRIMARY_TASKS)
     parser.add_argument("--aggregate", action="store_true")
     args = parser.parse_args()
     if args.aggregate:
         aggregate()
     elif args.seed is not None:
-        run_seed(args.seed, args.device)
+        run_seed(args.seed, args.device, (args.task,) if args.task else PRIMARY_TASKS)
     else:
         parser.error("provide --seed or --aggregate")
 
