@@ -58,6 +58,14 @@ def main() -> None:
     replay_error_events = sorted({row["event_id"] for row in replay_error_rows})
     replay_error_signatures = sorted({row["error"] for row in replay_error_rows})
     atlas = read(ARTIFACT_ROOT / "atlas_pilot/summary.json")
+    atlas_rows = [
+        json.loads(line)
+        for line in (ARTIFACT_ROOT / "atlas_pilot/raw_branches.jsonl").read_text().splitlines()
+        if line.strip()
+    ]
+    atlas_error_rows = [row for row in atlas_rows if row.get("error") is not None]
+    atlas_error_events = sorted({row["event_id"] for row in atlas_error_rows})
+    atlas_error_signatures = sorted({row["error"] for row in atlas_error_rows})
     readouts = read(ARTIFACT_ROOT / "atlas_pilot/readouts.json")
     operator = read(ARTIFACT_ROOT / "operator_audit/summary.json")
     mechanism = read(ARTIFACT_ROOT / "mechanism_audit/summary.json")
@@ -203,6 +211,7 @@ def main() -> None:
             "",
             f"Formal valid events=`{atlas['valid_event_count']}`，branches=`{atlas['formal_branch_count']}`；strongest baseline=`{atlas['strongest_baseline']}`。Track B = **{atlas['track_b']['status']}**：safe-success difference=`{atlas['track_b']['safe_success_difference']:.3f}`，cause relative reduction=`{atlas['track_b']['cause_violation_relative_reduction']:.3f}`，`k_best!=d`=`{atlas['track_b']['k_best_not_d_rate']:.3f}`，`k_best!=k_last_safe`=`{atlas['track_b']['k_best_not_k_last_safe_rate']:.3f}`，interior best=`{atlas['track_b']['interior_k_best_rate']:.3f}`，mean policy-call difference=`{atlas['track_b']['mean_policy_call_difference']}`。",
             f"Minimum-data pass=`{atlas['minimum_valid_data']['passed']}`；checks=`{json.dumps(atlas['minimum_valid_data']['checks'], sort_keys=True)}`；invalid Atlas events=`{json.dumps(atlas['invalid_events'], sort_keys=True)}`。",
+            f"Invalid Atlas branch records=`{len(atlas_error_rows)}`；affected event IDs=`{json.dumps(atlas_error_events, sort_keys=True)}`；failure signatures=`{json.dumps(atlas_error_signatures, sort_keys=True)}`。",
             "",
             "N_oracle 是在完整 realized R(k) 后进行的 oracle protocol 选择，不是 deployable algorithm；相同事件的所有 prefix 使用完全相同 B_post，旧动作同样消耗预算。统计以 event 为独立单位，使用 task-stratified paired bootstrap 10,000 次，不把 prefix rows 当独立样本。",
             "",
