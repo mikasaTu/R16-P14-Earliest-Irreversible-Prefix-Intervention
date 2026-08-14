@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "status": "BLOCKED",
+  "tasks": {
+    "put_the_bowl_on_the_stove": {
+      "forced_for_continuation": true,
+      "qualifying_severity_count": 0,
+      "selection_uses_replan_or_method_outcomes": false,
+      "severities": [
+        {
+          "metrics": {
+            "actor_seed_event_counts": {
+              "17": 9,
+              "29": 8,
+              "7": 6
+            },
+            "checks": {
+              "delayed_violation_in_0_30_0_80": false,
+              "immediate_violation_le_0_10": true,
+              "median_first_violation_offset_ge_2": true,
+              "replay_rate_ge_0_99": true,
+              "two_seeds_contribute_ge_5": true,
+              "valid_events_ge_20": true
+            },
+            "delayed_nominal_cause_violation_rate": 0.21739130434782608,
+            "error_count": 1,
+            "immediate_cause_violation_rate": 0.0,
+            "median_first_violation_offset_after_d": 10.0,
+            "qualifies": false,
+            "record_count": 24,
+            "replay_rate": 1.0,
+            "severity_id": "lateral040mm",
+            "severity_m": 0.04,
+            "task": "put_the_bowl_on_the_stove",
+            "valid_event_count": 23
+          },
+          "qualifies": false,
+          "severity_id": "lateral040mm",
+          "severity_m": 0.04
+        },
+        {
+          "metrics": {
+            "actor_seed_event_counts": {
+              "17": 9,
+              "29": 8,
+              "7": 6
+            },
+            "checks": {
+              "delayed_violation_in_0_30_0_80": false,
+              "immediate_violation_le_0_10": true,
+              "median_first_violation_offset_ge_2": true,
+              "replay_rate_ge_0_99": true,
+              "two_seeds_contribute_ge_5": true,
+              "valid_events_ge_20": true
+            },
+            "delayed_nominal_cause_violation_rate": 0.13043478260869565,
+            "error_count": 1,
+            "immediate_cause_violation_rate": 0.0,
+            "median_first_violation_offset_after_d": 8.0,
+            "qualifies": false,
+            "record_count": 24,
+            "replay_rate": 1.0,
+            "severity_id": "lateral075mm",
+            "severity_m": 0.075,
+            "task": "put_the_bowl_on_the_stove",
+            "valid_event_count": 23
+          },
+          "qualifies": false,
+          "severity_id": "lateral075mm",
+          "severity_m": 0.075
+        }
+      ],
+      "status": "blocked_diagnostic_continuation"
+    },
+    "put_the_cream_cheese_in_the_bowl": {
+      "forced_for_continuation": false,
+      "qualifying_severity_count": 2,
+      "selection_uses_replan_or_method_outcomes": false,
+      "severities": [
+        {
+          "metrics": {
+            "actor_seed_event_counts": {
+              "17": 7,
+              "29": 8,
+              "7": 5
+            },
+            "checks": {
+              "delayed_violation_in_0_30_0_80": true,
+              "immediate_violation_le_0_10": true,
+              "median_first_violation_offset_ge_2": true,
+              "replay_rate_ge_0_99": true,
+              "two_seeds_contribute_ge_5": true,
+              "valid_events_ge_20": true
+            },
+            "delayed_nominal_cause_violation_rate": 0.65,
+            "error_count": 0,
+            "immediate_cause_violation_rate": 0.0,
+            "median_first_violation_offset_after_d": 14.0,
+            "qualifies": true,
+            "record_count": 20,
+            "replay_rate": 1.0,
+            "severity_id": "shift060mm",
+            "severity_m": 0.06,
+            "task": "put_the_cream_cheese_in_the_bowl",
+            "valid_event_count": 20
+          },
+          "qualifies": true,
+          "severity_id": "shift060mm",
+          "severity_m": 0.06
+        },
+        {
+          "metrics": {
+            "actor_seed_event_counts": {
+              "17": 7,
+              "29": 8,
+              "7": 5
+            },
+            "checks": {
+              "delayed_violation_in_0_30_0_80": true,
+              "immediate_violation_le_0_10": true,
+              "median_first_violation_offset_ge_2": true,
+              "replay_rate_ge_0_99": true,
+              "two_seeds_contribute_ge_5": true,
+              "valid_events_ge_20": true
+            },
+            "delayed_nominal_cause_violation_rate": 0.3,
+            "error_count": 0,
+            "immediate_cause_violation_rate": 0.0,
+            "median_first_violation_offset_after_d": 14.0,
+            "qualifies": true,
+            "record_count": 20,
+            "replay_rate": 1.0,
+            "severity_id": "shift040mm",
+            "severity_m": 0.04,
+            "task": "put_the_cream_cheese_in_the_bowl",
+            "valid_event_count": 20
+          },
+          "qualifies": true,
+          "severity_id": "shift040mm",
+          "severity_m": 0.04
+        }
+      ],
+      "status": "qualified"
+    }
+  }
+}

@@ -57,6 +57,7 @@ def main() -> None:
     tests_path = ARTIFACT_ROOT / "tests/summary.json"
     tests = read(tests_path) if tests_path.is_file() else {"status": "NOT_RECORDED"}
     overall = overall_decision(phase_a, events, phase_c, phase_d, atlas)
+    failed_replay_groups = [group for group in phase_d["groups"] if not group["passed"]]
     decision = {
         "schema_version": 1,
         "stage": "R16-P14 Stage-2B",
@@ -150,6 +151,21 @@ def main() -> None:
             "",
             "选择只读取 phase validity、immediate/delayed cause、first offset 与 replay；没有读取 immediate-replan、last-safe、k_best 或 method gain。",
             "",
+            "| task | tested severity | valid | errors | immediate | delayed | median offset | replay | qualifies |",
+            "|---|---|---:|---:|---:|---:|---:|---:|:---:|",
+        ]
+    )
+    for task in PRIMARY_TASKS:
+        for row in phase_c["task_summaries"][task]:
+            lines.append(
+                f"| {task} | {row['severity_id']} | {row['valid_event_count']} | {row['error_count']} | "
+                f"{row['immediate_cause_violation_rate']:.3f} | {row['delayed_nominal_cause_violation_rate']:.3f} | "
+                f"{row['median_first_violation_offset_after_d']} | {row['replay_rate']:.3f} | "
+                f"{'yes' if row['qualifies'] else 'no'} |"
+            )
+    lines.extend(
+        [
+            "",
             "| task | frozen severity | qualifies | forced diagnostic continuation |",
             "|---|---|:---:|:---:|",
         ]
@@ -167,6 +183,7 @@ def main() -> None:
             "## Phase D — Full actor-history replay",
             "",
             f"Status **{phase_d['status']}**；`{phase_d['reconstruction_record_count']}` fresh reconstructions / `{phase_d['comparison_group_count']}` groups。State/history/chunk reconstruction=`{phase_d['state_history_chunk_reconstruction_rate']:.6f}`；contact/outcome agreement=`{phase_d['contact_outcome_agreement']:.6f}`；max state error=`{phase_d['max_numerical_state_error']}`；no order dependence=`{phase_d['no_branch_order_dependence']}`。",
+            f"Failed replay groups=`{len(failed_replay_groups)}`；affected event IDs=`{json.dumps(sorted({group.get('event_id') for group in failed_replay_groups}), sort_keys=True)}`。",
             "",
             "## Phase E — Conditional Track A",
             "",
@@ -177,6 +194,7 @@ def main() -> None:
             "## Phase E — Track B oracle replanability",
             "",
             f"Formal valid events=`{atlas['valid_event_count']}`，branches=`{atlas['formal_branch_count']}`；strongest baseline=`{atlas['strongest_baseline']}`。Track B = **{atlas['track_b']['status']}**：safe-success difference=`{atlas['track_b']['safe_success_difference']:.3f}`，cause relative reduction=`{atlas['track_b']['cause_violation_relative_reduction']:.3f}`，`k_best!=d`=`{atlas['track_b']['k_best_not_d_rate']:.3f}`，`k_best!=k_last_safe`=`{atlas['track_b']['k_best_not_k_last_safe_rate']:.3f}`，interior best=`{atlas['track_b']['interior_k_best_rate']:.3f}`，mean policy-call difference=`{atlas['track_b']['mean_policy_call_difference']}`。",
+            f"Minimum-data pass=`{atlas['minimum_valid_data']['passed']}`；checks=`{json.dumps(atlas['minimum_valid_data']['checks'], sort_keys=True)}`；invalid Atlas events=`{json.dumps(atlas['invalid_events'], sort_keys=True)}`。",
             "",
             "N_oracle 是在完整 realized R(k) 后进行的 oracle protocol 选择，不是 deployable algorithm；相同事件的所有 prefix 使用完全相同 B_post，旧动作同样消耗预算。统计以 event 为独立单位，使用 task-stratified paired bootstrap 10,000 次，不把 prefix rows 当独立样本。",
             "",
