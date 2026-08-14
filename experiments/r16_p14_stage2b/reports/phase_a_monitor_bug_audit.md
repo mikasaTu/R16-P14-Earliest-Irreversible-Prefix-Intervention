@@ -22,13 +22,13 @@ task-specific catastrophic event.
 
 ## Root cause and bounded repair
 
-`TaskMonitor.observe` previously marked any post-lift descent below a height
+`TaskMonitor.observe` previously marked any post-lift descent below its drop-height
 threshold as a drop. However, the BDDL goal is `On(akita_black_bowl_1,
 flat_stove_1_cook_region)`: the intended behavior itself requires the bowl to
 descend and contact the stove, and `On` may be registered one simulator step
 after the height crossing.
 
-The repaired detector preserves the preregistered height test but additionally
+The repaired detector preserves the existing height test but additionally
 requires the object to be outside the task target region. It uses the existing
 cream placement tolerance and the already frozen 0.12 m stove nominal-future
 tolerance. No horizon, actor, seed, task, success threshold, or downstream

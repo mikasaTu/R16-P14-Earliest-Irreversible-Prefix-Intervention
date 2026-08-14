@@ -38,9 +38,10 @@ over clean Phase-A intermediate records only; evaluation outcomes are not read.
 - Task progress is reduction in manipulated-object distance to the registered
   target (XY for cream->bowl; XYZ to the frozen demonstration goal for
   bowl->stove).
-- Object drop means stable lift was achieved and height later falls below the
-  frozen lift threshold while the task is not successful **and** the object is
-  outside the registered target region. The target-region clause is a
+- Object drop means stable lift was achieved and height later falls at least
+  2 cm below the stable-lift height (with a 5 mm floor above initial z) while
+  the task is not successful **and** the object is outside the registered
+  target region. The target-region clause is a
   post-registration measurement repair frozen before Phase B: the first
   aggregate revealed that the height-only implementation labeled successful
   stove placement itself as a drop (see `reports/phase_a_monitor_bug_audit.md`).

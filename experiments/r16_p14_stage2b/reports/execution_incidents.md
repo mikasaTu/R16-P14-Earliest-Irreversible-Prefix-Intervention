@@ -27,9 +27,9 @@ bowl to descend onto the stove and LIBERO's `On` predicate can become true one
 simulator step later. This was diagnosed before Phase B or any perturbed outcome
 was run.
 
-The monitor now requires both descent below the lift threshold and distance
-outside the preregistered task target region (cream placement tolerance; 0.12 m
-stove nominal-future tolerance). A pure contract test covers intended stove
+The monitor now requires both descent below its existing drop-height threshold
+and distance outside the preregistered task target region (cream placement
+tolerance; 0.12 m stove nominal-future tolerance). A pure contract test covers intended stove
 placement versus an off-target drop. The invalidated first aggregate and raw
 files were quarantined locally; the canonical Phase-A evidence was regenerated
 from the frozen actors and the same seeds/init states. No threshold, task,

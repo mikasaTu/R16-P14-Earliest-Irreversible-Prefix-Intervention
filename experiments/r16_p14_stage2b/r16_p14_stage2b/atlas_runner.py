@@ -17,9 +17,11 @@ from .runtime import (
     ActorBundle,
     BranchContext,
     branch_snapshot,
+    is_catastrophic_object_drop,
     normalized_disagreement,
     reconstruct_to_prefix,
     severity_id,
+    target_distance,
 )
 from .settings import (
     ACTOR_SEEDS,
@@ -98,8 +100,20 @@ def object_drop(context: BranchContext, event: dict[str, Any]) -> bool:
     assert spec.manipulated_joint
     position = joint_qpos(context.env, spec.manipulated_joint)
     initial = np.asarray(event["initial_manipulated_qpos"], dtype=np.float64)
-    threshold = float(initial[2]) + max(0.005, float(spec.lift_delta) - 0.02)
-    return bool(context.tracker.ever_lifted and not context.env.check_success() and position[2] < threshold)
+    success = bool(context.env.check_success())
+    return is_catastrophic_object_drop(
+        task=event["task"],
+        initial_object_z=float(initial[2]),
+        current_object_z=float(position[2]),
+        target_distance_value=target_distance(
+            context.env,
+            event["task"],
+            np.asarray(event["goal_qpos"], dtype=np.float64),
+        ),
+        ever_stably_lifted=bool(context.tracker.ever_lifted),
+        valid_release=False,
+        success=success,
+    )
 
 
 def complete_with_h1_replan(

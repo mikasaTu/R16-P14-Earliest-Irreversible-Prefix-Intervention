@@ -15,6 +15,11 @@ def main() -> None:
                 continue
             if "__pycache__" in path.parts or path.suffix == ".pyc":
                 continue
+            if root == ARTIFACT_ROOT and (
+                "quarantine" in path.relative_to(ARTIFACT_ROOT).parts
+                or "episode_checkpoints" in path.relative_to(ARTIFACT_ROOT).parts
+            ):
+                continue
             targets.append(path)
     records = []
     lines = []
@@ -24,7 +29,13 @@ def main() -> None:
         records.append({"path": str(relative), "size_bytes": path.stat().st_size, "sha256": digest})
         lines.append(f"{digest}  {relative}\n")
     atomic_write_text(ARTIFACT_ROOT / "SHA256SUMS", "".join(lines))
-    manifest = {"schema_version": 1, "algorithm": "SHA256", "file_count": len(records), "files": records}
+    manifest = {
+        "schema_version": 1,
+        "algorithm": "SHA256",
+        "file_count": len(records),
+        "excluded_local_classes": ["quarantine", "transient_episode_checkpoints"],
+        "files": records,
+    }
     atomic_write_json(ARTIFACT_ROOT / "checksum_manifest.json", manifest)
     atomic_write_json(EXPERIMENT_ROOT / "reports/checksum_manifest.json", manifest)
     print(json.dumps({"file_count": len(records), "sha256sums": str(ARTIFACT_ROOT / 'SHA256SUMS')}, indent=2))
