@@ -15,6 +15,7 @@ from r16_p14_stage2b import actor_perturbation_qualification, atlas_runner
 from r16_p14_stage2b.atlas_runner import (
     assign_severity,
     branch_contract,
+    complete_with_h1_replan,
     event_budget,
     pending_event_ids,
     select_evaluation_events,
@@ -267,3 +268,51 @@ def test_26_action_free_injection_refreshes_current_observation_in_place() -> No
     assert np.all(history.state_array()[-1, :10] == 1)
     assert np.all(history.state_array()[-1, 10:] == 2)
     assert np.array_equal(history.action_array(), before_actions)
+
+
+def test_27_post_replan_cause_label_does_not_truncate_common_budget() -> None:
+    observation = {
+        "robot0_proprio-state": np.zeros(10, dtype=np.float32),
+        "object-state": np.zeros(85, dtype=np.float32),
+    }
+
+    class FakeEnv:
+        def __init__(self) -> None:
+            self.sim = SimpleNamespace(data=SimpleNamespace(ncon=0), model=SimpleNamespace())
+
+        def check_success(self) -> bool:
+            return False
+
+        def step(self, action):
+            return observation, 0.0, False, {}
+
+    class FakeTracker:
+        task = "put_the_cream_cheese_in_the_bowl"
+        violation = True
+        violation_type = "absorbing_test_cause"
+
+        def observe_action(self, env, action) -> None:
+            return None
+
+    class FakeBundle:
+        def predict(self, states, actions, task):
+            return np.zeros((16, 7), dtype=np.float32)
+
+    context = SimpleNamespace(
+        env=FakeEnv(),
+        history=ActorHistory(
+            states=[np.zeros(95, dtype=np.float32) for _ in range(4)],
+            actions=[np.zeros(7, dtype=np.float32) for _ in range(3)],
+        ),
+        tracker=FakeTracker(),
+    )
+    result = complete_with_h1_replan(
+        context,
+        event={"task": "put_the_cream_cheese_in_the_bowl"},
+        bundle=FakeBundle(),
+        first_chunk=np.zeros((16, 7), dtype=np.float32),
+        action_budget=2,
+    )
+    assert result["cause_violation"] is True
+    assert result["new_non_nominal_actions"] == 2
+    assert result["policy_calls"] == 2
