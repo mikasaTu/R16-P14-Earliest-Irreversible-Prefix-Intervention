@@ -49,6 +49,14 @@ def main() -> None:
     phase_c = read(ARTIFACT_ROOT / "perturbation_qualification/summary.json")
     frozen = read(ARTIFACT_ROOT / "perturbation_qualification/frozen_parameters.json")
     phase_d = read(ARTIFACT_ROOT / "replay/summary.json")
+    replay_rows = [
+        json.loads(line)
+        for line in (ARTIFACT_ROOT / "replay/raw_reconstructions.jsonl").read_text().splitlines()
+        if line.strip()
+    ]
+    replay_error_rows = [row for row in replay_rows if row.get("error") is not None]
+    replay_error_events = sorted({row["event_id"] for row in replay_error_rows})
+    replay_error_signatures = sorted({row["error"] for row in replay_error_rows})
     atlas = read(ARTIFACT_ROOT / "atlas_pilot/summary.json")
     readouts = read(ARTIFACT_ROOT / "atlas_pilot/readouts.json")
     operator = read(ARTIFACT_ROOT / "operator_audit/summary.json")
@@ -183,7 +191,7 @@ def main() -> None:
             "## Phase D — Full actor-history replay",
             "",
             f"Status **{phase_d['status']}**；`{phase_d['reconstruction_record_count']}` fresh reconstructions / `{phase_d['comparison_group_count']}` groups。State/history/chunk reconstruction=`{phase_d['state_history_chunk_reconstruction_rate']:.6f}`；contact/outcome agreement=`{phase_d['contact_outcome_agreement']:.6f}`；max state error=`{phase_d['max_numerical_state_error']}`；no order dependence=`{phase_d['no_branch_order_dependence']}`。",
-            f"Failed replay groups=`{len(failed_replay_groups)}`；affected event IDs=`{json.dumps(sorted({group.get('event_id') for group in failed_replay_groups}), sort_keys=True)}`。",
+            f"Failed replay groups=`{len(failed_replay_groups)}`，error records=`{len(replay_error_rows)}`；affected event IDs=`{json.dumps(replay_error_events, sort_keys=True)}`；failure signatures=`{json.dumps(replay_error_signatures, sort_keys=True)}`。",
             "",
             "## Phase E — Conditional Track A",
             "",
