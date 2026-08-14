@@ -190,6 +190,40 @@ def gripper_release_index(chunk: Any, previous_gripper: float, horizon: int) -> 
     return None
 
 
+def is_catastrophic_object_drop(
+    *,
+    task: str,
+    initial_object_z: float,
+    current_object_z: float,
+    target_distance_value: float,
+    ever_stably_lifted: bool,
+    valid_release: bool,
+    success: bool,
+) -> bool:
+    """Separate a failed drop from the task's intended placement descent.
+
+    Both primary tasks require the manipulated object to descend after a lift.
+    Height alone therefore cannot identify a catastrophic drop: in particular,
+    a bowl settling on the stove may satisfy LIBERO's ``On`` predicate one
+    simulator step after it first falls below the lift threshold. A descent is
+    catastrophic only while it is also outside the registered target region.
+    """
+    spec = TASK_SPECS[task]
+    drop_threshold = float(initial_object_z) + max(0.005, float(spec.lift_delta) - 0.02)
+    target_tolerance = (
+        float(spec.placement_xy_tolerance)
+        if task == "put_the_cream_cheese_in_the_bowl"
+        else 0.12
+    )
+    return bool(
+        ever_stably_lifted
+        and not success
+        and not valid_release
+        and float(current_object_z) < drop_threshold
+        and float(target_distance_value) > target_tolerance
+    )
+
+
 @dataclass
 class TaskMonitor:
     task: str
@@ -233,10 +267,16 @@ class TaskMonitor:
                 self.valid_release = True
             else:
                 self.wrong_release = True
-        if self.ever_stably_lifted and not success and not self.valid_release:
-            drop_threshold = self.initial_object[2] + max(0.005, spec.lift_delta - 0.02)
-            if manipulated[2] < drop_threshold:
-                self.object_drop = True
+        if is_catastrophic_object_drop(
+            task=self.task,
+            initial_object_z=float(self.initial_object[2]),
+            current_object_z=float(manipulated[2]),
+            target_distance_value=distance,
+            ever_stably_lifted=self.ever_stably_lifted,
+            valid_release=self.valid_release,
+            success=success,
+        ):
+            self.object_drop = True
         if self.late_phase_reached and distance > self.best_distance + 0.05:
             self.phase_regression = True
         self.best_distance = min(self.best_distance, distance)

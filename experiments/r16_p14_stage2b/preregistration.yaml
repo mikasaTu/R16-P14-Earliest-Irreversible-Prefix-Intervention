@@ -55,6 +55,20 @@ execution_override:
     clarification was frozen while Phase A was still running and before its
     aggregate result was read.
 
+measurement_repair:
+  phase_a_object_drop_monitor:
+    timing: after_first_phase_a_aggregate_before_phase_b_or_perturbed_outcomes
+    trigger: >-
+      In the stove task, 58/60 h=8 episodes were both successful and labelled
+      object_drop; all 37 prefixes completing the task inside h=8 were marked
+      unfaithful.
+    repair: >-
+      A post-lift height descent is catastrophic only when the object is also
+      outside the registered target region. Intended placement descent is not
+      a drop.
+    downstream_outcomes_read: false
+    invalidated_evidence_report: reports/phase_a_monitor_bug_audit.md
+
 splits:
   actor_qualification_init_ids: [0,1,2,3,4,5,6,7,8,9]
   perturbation_calibration_init_ids: [10,11,12,13,14,15,16,17,18,19]

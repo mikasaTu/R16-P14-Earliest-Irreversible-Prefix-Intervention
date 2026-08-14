@@ -15,3 +15,22 @@ Workers were restarted in persistent local `tmux` sessions with at most two
 concurrent A800 processes. Recovery checkpoints are operational duplicates and
 are ignored by Git after their contents are consolidated into canonical JSONL
 shards.
+
+## 2026-08-14 — Phase-A catastrophic-drop monitor repair
+
+The first complete Phase-A aggregate exposed a semantic impossibility in the
+stove task: at horizon 8, clean success and `object_drop` were both 58/60, and
+all 37 late prefixes that completed the LIBERO task inside the prefix were
+marked unfaithful. Code inspection showed that the monitor treated any descent
+below the lift threshold as a drop, although the task explicitly requires the
+bowl to descend onto the stove and LIBERO's `On` predicate can become true one
+simulator step later. This was diagnosed before Phase B or any perturbed outcome
+was run.
+
+The monitor now requires both descent below the lift threshold and distance
+outside the preregistered task target region (cream placement tolerance; 0.12 m
+stove nominal-future tolerance). A pure contract test covers intended stove
+placement versus an off-target drop. The invalidated first aggregate and raw
+files were quarantined locally; the canonical Phase-A evidence was regenerated
+from the frozen actors and the same seeds/init states. No threshold, task,
+actor, horizon, or outcome was selected using downstream results.

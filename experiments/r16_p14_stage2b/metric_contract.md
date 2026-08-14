@@ -38,10 +38,15 @@ over clean Phase-A intermediate records only; evaluation outcomes are not read.
 - Task progress is reduction in manipulated-object distance to the registered
   target (XY for cream->bowl; XYZ to the frozen demonstration goal for
   bowl->stove).
-- Object drop means stable lift was achieved and height later falls more than
-  2 cm while the task is not successful. Wrong release is a gripper opening
-  with target distance above the task tolerance. Phase regression is a
-  progress decrease greater than 5 cm after late phase was reached.
+- Object drop means stable lift was achieved and height later falls below the
+  frozen lift threshold while the task is not successful **and** the object is
+  outside the registered target region. The target-region clause is a
+  post-registration measurement repair frozen before Phase B: the first
+  aggregate revealed that the height-only implementation labeled successful
+  stove placement itself as a drop (see `reports/phase_a_monitor_bug_audit.md`).
+  Wrong release is a gripper opening with target distance above the task
+  tolerance. Phase regression is a progress decrease greater than 5 cm after
+  late phase was reached.
 
 ## Cause safety
 

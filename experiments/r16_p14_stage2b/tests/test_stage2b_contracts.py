@@ -23,7 +23,13 @@ from r16_p14_stage2b.atlas_runner import (
 from r16_p14_stage2b.baselines import k_best, k_last_safe, method_positions, strongest_baseline, validate_prefix_index
 from r16_p14_stage2b.bootstrap import paired_event_bootstrap
 from r16_p14_stage2b.io_utils import atomic_write_json, sha256_array, write_once_jsonl
-from r16_p14_stage2b.runtime import ActorHistory, CauseTracker, chunk_hash, validate_event_contract
+from r16_p14_stage2b.runtime import (
+    ActorHistory,
+    CauseTracker,
+    chunk_hash,
+    is_catastrophic_object_drop,
+    validate_event_contract,
+)
 from r16_p14_stage2b.settings import (
     ACTOR_QUALIFICATION_IDS,
     ACTION_DIM,
@@ -316,3 +322,16 @@ def test_27_post_replan_cause_label_does_not_truncate_common_budget() -> None:
     assert result["cause_violation"] is True
     assert result["new_non_nominal_actions"] == 2
     assert result["policy_calls"] == 2
+
+
+def test_28_intended_stove_placement_descent_is_not_a_catastrophic_drop() -> None:
+    common = {
+        "task": "put_the_bowl_on_the_stove",
+        "initial_object_z": 0.90,
+        "current_object_z": 0.90,
+        "ever_stably_lifted": True,
+        "valid_release": False,
+        "success": False,
+    }
+    assert not is_catastrophic_object_drop(target_distance_value=0.08, **common)
+    assert is_catastrophic_object_drop(target_distance_value=0.20, **common)
