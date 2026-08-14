@@ -1,0 +1,133 @@
+{
+  "all_upstream_gates_pass": false,
+  "clean_disagreement_calibration": {
+    "evaluation_outcomes_read": false,
+    "init_ids": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "quantile": 0.95,
+    "record_count": 24168,
+    "source": "Phase-A clean, unperturbed intermediate actor calls",
+    "threshold": 0.18999069333076474
+  },
+  "evaluation_init_ids_only": true,
+  "formal_branch_count": 660,
+  "gate_override_descriptive_only": true,
+  "invalid_events": {
+    "put_the_bowl_on_the_stove__seed07__init29": [
+      "branch_error"
+    ],
+    "put_the_bowl_on_the_stove__seed29__init27": [
+      "branch_error"
+    ],
+    "put_the_bowl_on_the_stove__seed29__init28": [
+      "branch_error"
+    ],
+    "put_the_bowl_on_the_stove__seed29__init29": [
+      "branch_error"
+    ]
+  },
+  "maximum_event_contract": 60,
+  "minimum_valid_data": {
+    "checks": {
+      "events_ge_20_each_task": false,
+      "events_ge_5_each_task_seed": false,
+      "events_ge_8_each_task_severity": true
+    },
+    "passed": false,
+    "task_counts": {
+      "put_the_bowl_on_the_stove": 19,
+      "put_the_cream_cheese_in_the_bowl": 21
+    },
+    "task_seed_counts": {
+      "put_the_bowl_on_the_stove/seed17": 10,
+      "put_the_bowl_on_the_stove/seed29": 2,
+      "put_the_bowl_on_the_stove/seed7": 7,
+      "put_the_cream_cheese_in_the_bowl/seed17": 9,
+      "put_the_cream_cheese_in_the_bowl/seed29": 9,
+      "put_the_cream_cheese_in_the_bowl/seed7": 3
+    },
+    "task_severity_counts": {
+      "put_the_bowl_on_the_stove/lateral040mm": 9,
+      "put_the_bowl_on_the_stove/lateral075mm": 10,
+      "put_the_cream_cheese_in_the_bowl/shift040mm": 8,
+      "put_the_cream_cheese_in_the_bowl/shift060mm": 13
+    }
+  },
+  "schema_version": 1,
+  "strongest_baseline": "A_original",
+  "track_a": {
+    "allowed_positive_label": null,
+    "checks": {
+      "both_tasks_median_delay_ge_2": true,
+      "direction_consistent_two_of_three_seeds": true,
+      "new_non_nominal_actions_reduction_ge_15pct": true,
+      "not_one_task_or_seed": false,
+      "safe_success_ci_lower_ge_minus_0_05": true,
+      "same_direction_both_severities": false
+    },
+    "mean_A_original_new_actions": 94.225,
+    "mean_B0_new_actions": 151.75,
+    "median_k_last_safe_minus_d": {
+      "put_the_bowl_on_the_stove": 14.0,
+      "put_the_cream_cheese_in_the_bowl": 14.0
+    },
+    "minimum_data_pass": false,
+    "new_non_nominal_actions_reduction": 0.37907742998352556,
+    "seed_direction": {
+      "17": true,
+      "29": true,
+      "7": true
+    },
+    "severity_direction": {
+      "lateral040mm": true,
+      "lateral075mm": true,
+      "shift040mm": false,
+      "shift060mm": true
+    },
+    "status": "INCONCLUSIVE",
+    "task_direction": {
+      "put_the_bowl_on_the_stove": true,
+      "put_the_cream_cheese_in_the_bowl": false
+    },
+    "upstream_pass": false
+  },
+  "track_b": {
+    "allowed_positive_label": null,
+    "baseline_cause_violation_rate": 0.15,
+    "cause_violation_relative_reduction": 0.16666666666666663,
+    "checks": {
+      "effect_in_both_tasks": true,
+      "identical_post_detection_budget": true,
+      "interior_k_best_ge_15pct": true,
+      "k_best_not_d_ge_20pct": true,
+      "k_best_not_k_last_safe_ge_20pct": true,
+      "policy_call_difference_reported": true,
+      "safe_success_plus_10pp_or_cause_reduction_ge_25pct": true
+    },
+    "interior_k_best_rate": 0.35,
+    "k_best_not_d_rate": 0.975,
+    "k_best_not_k_last_safe_rate": 0.375,
+    "mean_policy_call_difference": -23.25,
+    "minimum_data_pass": false,
+    "oracle_cause_violation_rate": 0.125,
+    "safe_success_difference": 0.175,
+    "status": "INCONCLUSIVE",
+    "strongest_baseline": "A_original",
+    "task_effect": {
+      "put_the_bowl_on_the_stove": true,
+      "put_the_cream_cheese_in_the_bowl": true
+    },
+    "upstream_pass": false
+  },
+  "valid_event_count": 40
+}
