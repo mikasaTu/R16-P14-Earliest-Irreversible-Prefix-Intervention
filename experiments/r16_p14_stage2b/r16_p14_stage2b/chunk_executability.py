@@ -391,6 +391,13 @@ def aggregate() -> dict[str, Any]:
         "h1_aggregate_success": base_success,
         "h1_aggregate_late_phase_reach": base_late,
         "horizons": by_horizon,
+        "object_drop_monitor": {
+            "version": "target_aware_v2",
+            "post_registration_measurement_repair": True,
+            "repair_timing": "after_first_phase_a_aggregate_before_phase_b",
+            "invalidated_evidence_report": "experiments/r16_p14_stage2b/reports/phase_a_monitor_bug_audit.md",
+            "downstream_perturbed_outcomes_read_before_repair": False,
+        },
         "early_stop_applied": False,
         "downstream_continuation_required_by_user": True,
     }
@@ -417,6 +424,7 @@ def aggregate() -> dict[str, Any]:
         [
             "",
             "A blocked result identifies an unsuitable frozen chunk substrate; it is not interpreted as an R16-P14 mechanism failure.",
+            "Object-drop metrics use target-aware monitor v2; the height-only first pass was invalidated before Phase B (see the monitor-bug audit).",
             "The explicit user override requires later phases to run regardless of this gate.",
             "",
         ]
