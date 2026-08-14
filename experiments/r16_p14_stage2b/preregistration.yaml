@@ -1,0 +1,130 @@
+experiment_id: r16_p14_stage2b
+title: "Action-Chunk Faithfulness and Actor-Conditioned Replanability Pilot"
+registered_at_utc: "2026-08-14T05:00:56Z"
+parent_commit: dd86afbb445169ecef6eb25fb0a73d09763585b5
+branch: agent/stage2b-actor-conditioned-atlas-pilot
+
+immutable_evidence:
+  stage1_commit: ee56aa096e308214c38132d0e6d2a9e576c29792
+  stage1_tree: 50e56b84c5e867447b22f81e31454646a12a9eb8
+  stage1b_commit: e29e3ead42fd1799b412a4968e6a67aac3784874
+  stage1b_tree: 4016b05942e6dfb291f1bc3a2644e177a208b608
+  stage1b_universal_hypothesis: KILLED_IMMUTABLE
+  stage2a_evidence_commit: df20e31cefc4db22ba23f2b61284469e781d5558
+  stage2a_evidence_tree: bfe056abce8550cfc3ece69cfd3198f690728dfa
+  stage2a_checkpoint: PASS_READY_FOR_BOUNDED_ATLAS
+  stage2a_track_a: INCONCLUSIVE
+  stage2a_track_b: INCONCLUSIVE
+  novelty_ceiling: N2_ORACLE_PROTOCOL_BOUNDARY_ONLY
+  accepted: false
+
+scope:
+  actor: frozen HistoryConditionedStateACT
+  actor_seeds: [7, 17, 29]
+  retraining: false
+  tuning: false
+  primary_tasks:
+    - put_the_cream_cheese_in_the_bowl
+    - put_the_bowl_on_the_stove
+  action_chunk_length: 16
+  detection_prefix: 2
+  forbidden:
+    - pi0.5
+    - RGB_or_VLA
+    - world_model
+    - learned_irreversibility_head
+    - learned_replanability_head
+    - operator_router_training
+    - novelty_upgrade
+    - accepted_true
+    - HTML
+
+execution_override:
+  source: explicit_latest_user_instruction
+  continue_after_failed_gate: true
+  rationale: >-
+    Every Phase A-F experiment is executed even when A-D gate thresholds are
+    missed. Gate failures still block positive labels and are never relabelled
+    as mechanism failures.
+  fallback_analysis_horizon: 8
+  fallback_rule: >-
+    Use H_valid when it is at least d. Otherwise execute the preregistered
+    horizon 8 solely to complete descriptive downstream experiments; all
+    downstream claims become gate-conditional/inconclusive.
+
+splits:
+  actor_qualification_init_ids: [0,1,2,3,4,5,6,7,8,9]
+  perturbation_calibration_init_ids: [10,11,12,13,14,15,16,17,18,19]
+  atlas_evaluation_init_ids: [20,21,22,23,24,25,26,27,28,29]
+  reserved_uninspected_init_ids: [30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49]
+  label: perturbation-selection-splits
+  policy_held_out_label_forbidden: true
+
+phase_a:
+  execution_horizons: [1,2,4,8,16]
+  init_ids_per_task_seed_horizon: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
+  H_valid_rules:
+    aggregate_success_drop_max: 0.15
+    aggregate_late_phase_drop_max: 0.15
+    prefix_faithful_rate_min: 0.80
+    seed_success_drop_max: 0.20
+    minimum_passing_seeds: 2
+    simulator_or_action_contract_errors: 0
+    required_minimum: 8
+
+event_eligibility:
+  stable_lift_consecutive_steps: 3
+  gripper_closed_threshold: 0.0
+  plausible_release_requires_negative_gripper_within_effective_horizon: true
+  cream_target_xy_anchor_distance_max_m: 0.16
+  stove_goal_xyz_anchor_distance_max_m: 0.18
+  stove_nominal_future_goal_distance_max_m: 0.12
+  task_already_successful_forbidden: true
+  one_event_per_episode: true
+
+perturbation_qualification:
+  test_stage2a_frozen_first: true
+  cream_stage2a_magnitudes_m: [0.04,0.06]
+  stove_stage2a_offsets_m: [0.05,0.075]
+  one_allowed_fallback_grid:
+    cream_m: [0.03,0.04,0.05,0.06]
+    stove_m: [0.04,0.05,0.06,0.075]
+  selection_order: [qualifies, delayed_rate_distance_to_0.55, lower_severity]
+  immediate_violation_rate_max: 0.10
+  delayed_violation_rate_range: [0.30,0.80]
+  median_first_violation_offset_min: 2
+  replay_rate_min: 0.99
+  required_distinct_severities: 2
+  proposed_method_gain_read_forbidden: true
+  blocked_continuation_rule: >-
+    If fewer than two severities qualify, freeze two distinct diagnostic
+    severities using replay validity first, then immediate-gate satisfaction,
+    delayed-rate distance to 0.55, median-offset satisfaction, Stage-2A-frozen
+    membership, and lower severity. These branches are descriptive only and
+    cannot support a positive Track label.
+
+atlas:
+  evaluation_init_ids: [20,21,22,23,24,25,26,27,28,29]
+  maximum_events: 60
+  prefix_stride: 1
+  post_detection_budget_cap: 200
+  nominal_source: frozen_actor_generated_chunk_only
+  demonstration_chunk_forbidden: true
+  secondary_operator_positions: [d,k_best,k_last_safe]
+
+statistics:
+  unit_of_independence: event
+  paired_bootstrap_resamples: 10000
+  bootstrap_seed: 260814
+  confidence: 0.95
+  strata: [task, actor_seed, severity]
+
+resources:
+  cpu_first_simulation_and_replay: true
+  local_dsw_before_external_pai: true
+  external_pai_only_if_local_impossible: true
+  maximum_concurrent_gpu_workers: 2
+  user_authorized_a800_range_if_external_needed: [2,8]
+  training_required: false
+  checkpoint_cadence_1000_applicable: false
+  pai_probe_created: false

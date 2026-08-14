@@ -33,3 +33,9 @@ venv/
 # Formal release artifacts are intentionally tracked, except caches and scratch.
 artifacts/formal_pilot/cache/
 artifacts/formal_pilot/tmp/
+
+# Stage-2B interruption caches are duplicated into canonical JSONL shards once
+# a seed completes. Keep the canonical shards/results, not these transient
+# per-episode recovery copies.
+artifacts/stage2b/chunk_executability/shards/episode_checkpoints/
+artifacts/stage2b/actor_events/shards/episode_checkpoints/
