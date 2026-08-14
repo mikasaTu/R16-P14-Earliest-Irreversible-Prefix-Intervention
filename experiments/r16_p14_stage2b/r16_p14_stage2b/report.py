@@ -132,7 +132,8 @@ def main() -> None:
         "| h | success | late reach | prefix faithful | late anchors | errors | pass |",
         "|---:|---:|---:|---:|---:|---:|:---:|",
     ]
-    for horizon, row in phase_a["horizons"].items():
+    for horizon in sorted(phase_a["horizons"], key=int):
+        row = phase_a["horizons"][horizon]
         lines.append(
             f"| {horizon} | {row['clean_success_rate']:.3f} | {row['late_phase_reach_rate']:.3f} | "
             f"{row['prefix_faithful_rate']:.3f} | {row['late_anchor_count']} | "
@@ -204,6 +205,7 @@ def main() -> None:
             "## Phase E — Conditional Track A",
             "",
             f"Track A = **{atlas['track_a']['status']}**。A_original vs B0 的 new-action reduction=`{atlas['track_a']['new_non_nominal_actions_reduction']:.3f}`；两任务 median `(k_last_safe-d)`=`{json.dumps(atlas['track_a']['median_k_last_safe_minus_d'], sort_keys=True)}`；seed directions=`{json.dumps(atlas['track_a']['seed_direction'], sort_keys=True)}`。",
+            f"Task directions=`{json.dumps(atlas['track_a']['task_direction'], sort_keys=True)}`；severity directions=`{json.dumps(atlas['track_a']['severity_direction'], sort_keys=True)}`；checks=`{json.dumps(atlas['track_a']['checks'], sort_keys=True)}`。",
             "",
             "该结果只测试两个 late-target-invalidation family；即使有 pilot signal，也不反转 universal kill。",
             "",
@@ -211,6 +213,7 @@ def main() -> None:
             "",
             f"Formal valid events=`{atlas['valid_event_count']}`，branches=`{atlas['formal_branch_count']}`；strongest baseline=`{atlas['strongest_baseline']}`。Track B = **{atlas['track_b']['status']}**：safe-success difference=`{atlas['track_b']['safe_success_difference']:.3f}`，cause relative reduction=`{atlas['track_b']['cause_violation_relative_reduction']:.3f}`，`k_best!=d`=`{atlas['track_b']['k_best_not_d_rate']:.3f}`，`k_best!=k_last_safe`=`{atlas['track_b']['k_best_not_k_last_safe_rate']:.3f}`，interior best=`{atlas['track_b']['interior_k_best_rate']:.3f}`，mean policy-call difference=`{atlas['track_b']['mean_policy_call_difference']}`。",
             f"Minimum-data pass=`{atlas['minimum_valid_data']['passed']}`；checks=`{json.dumps(atlas['minimum_valid_data']['checks'], sort_keys=True)}`；invalid Atlas events=`{json.dumps(atlas['invalid_events'], sort_keys=True)}`。",
+            f"Minimum-data task counts=`{json.dumps(atlas['minimum_valid_data']['task_counts'], sort_keys=True)}`；task/seed counts=`{json.dumps(atlas['minimum_valid_data']['task_seed_counts'], sort_keys=True)}`。",
             f"Invalid Atlas branch records=`{len(atlas_error_rows)}`；affected event IDs=`{json.dumps(atlas_error_events, sort_keys=True)}`；failure signatures=`{json.dumps(atlas_error_signatures, sort_keys=True)}`。",
             "",
             "N_oracle 是在完整 realized R(k) 后进行的 oracle protocol 选择，不是 deployable algorithm；相同事件的所有 prefix 使用完全相同 B_post，旧动作同样消耗预算。统计以 event 为独立单位，使用 task-stratified paired bootstrap 10,000 次，不把 prefix rows 当独立样本。",
@@ -218,11 +221,14 @@ def main() -> None:
             "## Phase F — Local repair / operator",
             "",
             f"Operator branches=`{operator['record_count']}`，events=`{operator['event_count']}`；router=`{operator['operator_router']}`，local repair=`{operator['track_a_local_repair']}`。Unique-safe-win rates=`{json.dumps(operator['unique_safe_win_event_rates'], sort_keys=True)}`。所有 operator action 都消耗相同 event budget，没有额外 policy-call allowance。",
+            f"Full-replan safe-success=`{operator['full_replan_safe_success_rate']:.3f}`；local-repair safe-success=`{operator['local_repair_safe_success_rate']:.3f}`；local-repair task directions=`{json.dumps(operator['local_repair_task_direction'], sort_keys=True)}`；unique-winner tasks=`{json.dumps(operator['unique_winner_tasks'], sort_keys=True)}`。",
             f"Phase-F positive labels permitted=`{operator['positive_labels_permitted']}`；descriptive router criteria met=`{operator['descriptive_operator_router_criteria_met']}`；descriptive local-repair criteria met=`{operator['descriptive_local_repair_criteria_met']}`。当上游或最小样本 gate 失败时，即使描述性条件满足也不会发放正标签。",
             "",
             "## 提升/降低机理反解",
             "",
             "反解直接基于冻结代码路径和同事件真实 branch counterfactual，而非新 idea：收益路径是继续执行仍然 task-directed 的 cached suffix，在 ACT h=1 feedback 前保留进度，因而可能减少新动作和 policy calls；下降路径是相同 suffix 在 replanning 前越过 absorbing misaligned-release / bowl-blocker-contact cause boundary。N_oracle 的额外提升还包含看完全部分支后的选择优势，因此绝不能解释成 learned/deployable replanability。具体事件分类与 action/policy-call 差值见 `artifacts/stage2b/mechanism_audit/counterfactual_cases.jsonl`。",
+            f"A_original vs B0 真实类别与均值=`{json.dumps(mechanism['atlas_counterfactual_summary']['A_original_vs_B0'], sort_keys=True)}`。",
+            f"N_oracle vs A_original 真实类别与均值=`{json.dumps(mechanism['atlas_counterfactual_summary']['N_oracle_vs_A_original'], sort_keys=True)}`。",
             "",
             "## Learned / deployable evidence 与 novelty",
             "",
