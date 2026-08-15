@@ -9,6 +9,7 @@ import pytest
 
 from r16_p14_stage2b.io_utils import write_once_jsonl
 from r16_p14_stage2c import goal_geometry
+from r16_p14_stage2c.checksums import build_manifest
 from r16_p14_stage2c.events import persist_first_completed_event_marker
 from r16_p14_stage2c.contracts import (
     admit_event_replay,
@@ -239,3 +240,11 @@ def test_30_first_work_marker_rejects_exception_attempt(tmp_path):
     assert payload["schema_version"] == 2
     assert payload["record_type"] == "error_free_completed_actor_event_attempt"
     assert payload["attempt_error"] is None
+
+
+def test_31_checksum_manifest_excludes_itself(tmp_path):
+    (tmp_path / "result.json").write_text("{}\n")
+    (tmp_path / "SHA256SUMS").write_text("stale\n")
+    manifest = build_manifest(tmp_path)
+    assert "result.json" in manifest
+    assert "SHA256SUMS" not in manifest
