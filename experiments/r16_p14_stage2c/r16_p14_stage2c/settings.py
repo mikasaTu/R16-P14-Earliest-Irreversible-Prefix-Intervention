@@ -9,6 +9,7 @@ EXPERIMENT_ROOT = Path(__file__).resolve().parents[1]
 ARTIFACT_ROOT = Path(
     os.environ.get("R16_P14_STAGE2C_ARTIFACT_ROOT", PROJECT_ROOT / "artifacts/stage2c")
 ).resolve()
+MIRROR_EXPERIMENT_OUTPUTS = os.environ.get("R16_P14_STAGE2C_MIRROR_EXPERIMENT_OUTPUTS", "1") == "1"
 
 ACTOR_SEEDS = (7, 17, 29)
 CALIBRATION_IDS = tuple(range(30, 40))
@@ -43,4 +44,3 @@ RECOVERY_OPERATORS = (
     "hold_one_step_then_fresh_h16",
     "rollback_one_step_then_fresh_h16",
 )
-

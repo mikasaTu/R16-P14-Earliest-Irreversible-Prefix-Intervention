@@ -28,6 +28,7 @@ from .settings import (
     PATH_TASK_CANDIDATES,
     TARGET_SHIFT_GRID,
     TARGET_SHIFT_TASK,
+    MIRROR_EXPERIMENT_OUTPUTS,
 )
 
 
@@ -209,15 +210,17 @@ def consolidate() -> None:
     write_once_jsonl(output / "prefix_safety.jsonl", prefix_rows)
     atomic_write_json(output / "summary.json", summary)
     atomic_write_json(output / "frozen_parameters.json", {"schema_version": 1, "selected_tasks": [TARGET_SHIFT_TASK, selected_second], "upstream_qualification_pass": upstream_pass, "tasks": frozen})
-    exp = EXPERIMENT_ROOT / "task_qualification"
-    exp.mkdir(parents=True, exist_ok=True)
-    atomic_write_json(exp / "summary.json", summary)
-    atomic_write_json(exp / "frozen_parameters.json", {"schema_version": 1, "selected_tasks": [TARGET_SHIFT_TASK, selected_second], "upstream_qualification_pass": upstream_pass, "tasks": frozen})
     lines = ["# Stage-2C perturbation qualification", "", f"Status: **{summary['status']}**; downstream matrices continue regardless, as requested.", "", "| task | parameter | valid | immediate | delayed | interior | replay | errors | qualifies |", "|---|---|---:|---:|---:|---:|---:|---:|:---:|"]
     for item in cells:
         lines.append(f"| {item['task']} | {item['parameter_id']} | {item['valid_event_count']} | {item['immediate_cause_violation_rate']:.3f} | {item['delayed_cause_violation_rate']:.3f} | {item['interior_violation_fraction']:.3f} | {item['replay_rate']:.3f} | {item['error_count']} | {'yes' if item['qualifies'] else 'no'} |")
     lines.append("")
-    atomic_write_text(exp / "report.md", "\n".join(lines))
+    atomic_write_text(output / "report.md", "\n".join(lines))
+    if MIRROR_EXPERIMENT_OUTPUTS:
+        exp = EXPERIMENT_ROOT / "task_qualification"
+        exp.mkdir(parents=True, exist_ok=True)
+        atomic_write_json(exp / "summary.json", summary)
+        atomic_write_json(exp / "frozen_parameters.json", {"schema_version": 1, "selected_tasks": [TARGET_SHIFT_TASK, selected_second], "upstream_qualification_pass": upstream_pass, "tasks": frozen})
+        atomic_write_text(exp / "report.md", "\n".join(lines))
     print(json.dumps({"status": summary["status"], "attempts": len(attempts), "second_task": selected_second}, sort_keys=True))
 
 
@@ -238,4 +241,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

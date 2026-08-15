@@ -5,7 +5,7 @@ from pathlib import Path
 
 from r16_p14_stage2b.io_utils import atomic_write_json, atomic_write_text
 
-from .settings import ARTIFACT_ROOT, EXPERIMENT_ROOT
+from .settings import ARTIFACT_ROOT, EXPERIMENT_ROOT, MIRROR_EXPERIMENT_OUTPUTS
 
 
 def fmt(value, digits=3):
@@ -78,15 +78,15 @@ def main() -> None:
     ]
     report = "\n".join(lines)
     atomic_write_text(ARTIFACT_ROOT / "REPORT.md", report)
-    destination = EXPERIMENT_ROOT / "reports"
-    destination.mkdir(parents=True, exist_ok=True)
-    atomic_write_text(destination / "REPORT.md", report)
-    atomic_write_json(EXPERIMENT_ROOT / "decision.json", decision)
-    atomic_write_json(destination / "statistics.json", stats)
-    atomic_write_json(destination / "mechanism_audit.json", mechanism)
+    if MIRROR_EXPERIMENT_OUTPUTS:
+        destination = EXPERIMENT_ROOT / "reports"
+        destination.mkdir(parents=True, exist_ok=True)
+        atomic_write_text(destination / "REPORT.md", report)
+        atomic_write_json(EXPERIMENT_ROOT / "decision.json", decision)
+        atomic_write_json(destination / "statistics.json", stats)
+        atomic_write_json(destination / "mechanism_audit.json", mechanism)
     print(json.dumps({"status": "complete", "report": str(ARTIFACT_ROOT / "REPORT.md")}, sort_keys=True))
 
 
 if __name__ == "__main__":
     main()
-

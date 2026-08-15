@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import traceback
 from pathlib import Path
 from typing import Any
@@ -189,6 +190,32 @@ def run_shard(seed: int, task: str, split: str, device: str) -> None:
         except Exception as exc:
             payload = {"event": None, "candidate_event": None, "attempt": {"task": task, "actor_seed": seed, "init_state_id": init_id, "split": split, "eligible": False, "reason": "exception", "error": f"{type(exc).__name__}: {exc}", "traceback": traceback.format_exc()}, "complete": True}
         atomic_write_json(path, payload)
+        marker = ARTIFACT_ROOT / "first_completed_event.json"
+        marker.parent.mkdir(parents=True, exist_ok=True)
+        marker_payload = {
+            "schema_version": 1,
+            "status": "complete",
+            "record_type": "completed_actor_event_attempt",
+            "event_id": f"{task}__seed{seed:02d}__init{init_id:02d}",
+            "task": task,
+            "actor_seed": seed,
+            "init_state_id": init_id,
+            "split": split,
+            "admitted": payload["event"] is not None,
+            "registry_run_id": os.environ.get("PAI_CANARY_RUN_ID"),
+            "uid": os.getuid(),
+            "gid": os.getgid(),
+        }
+        try:
+            descriptor = os.open(marker, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+        except FileExistsError:
+            pass
+        else:
+            with os.fdopen(descriptor, "w") as handle:
+                json.dump(marker_payload, handle, indent=2, sort_keys=True)
+                handle.write("\n")
+                handle.flush()
+                os.fsync(handle.fileno())
         print(f"EVENT_DONE seed={seed} task={task} split={split} init={init_id} admitted={int(payload['event'] is not None)}", flush=True)
 
 
@@ -246,4 +273,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
