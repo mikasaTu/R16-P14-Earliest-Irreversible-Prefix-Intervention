@@ -1,0 +1,91 @@
+{
+  "continue_after_minimum_data_failure": true,
+  "minimum_data_pass": true,
+  "schema_version": 1,
+  "splits": {
+    "calibration": {
+      "put_the_bowl_on_the_stove": {
+        "available_admitted_events": 29,
+        "by_generator_seed": {
+          "17": 8,
+          "29": 8,
+          "7": 8
+        },
+        "by_severity": {
+          "future_06_lateral_040mm": 12,
+          "future_14_lateral_020mm": 12
+        },
+        "checks": {
+          "each_generator_seed_ge_6": true,
+          "each_severity_ge_8": true,
+          "events_ge_24": true
+        },
+        "passes": true,
+        "selected_events": 24
+      },
+      "put_the_cream_cheese_in_the_bowl": {
+        "available_admitted_events": 30,
+        "by_generator_seed": {
+          "17": 8,
+          "29": 8,
+          "7": 8
+        },
+        "by_severity": {
+          "shift_040mm": 12,
+          "shift_060mm": 12
+        },
+        "checks": {
+          "each_generator_seed_ge_6": true,
+          "each_severity_ge_8": true,
+          "events_ge_24": true
+        },
+        "passes": true,
+        "selected_events": 24
+      }
+    },
+    "evaluation": {
+      "put_the_bowl_on_the_stove": {
+        "available_admitted_events": 29,
+        "by_generator_seed": {
+          "17": 8,
+          "29": 8,
+          "7": 8
+        },
+        "by_severity": {
+          "future_06_lateral_040mm": 12,
+          "future_14_lateral_020mm": 12
+        },
+        "checks": {
+          "each_generator_seed_ge_6": true,
+          "each_severity_ge_8": true,
+          "events_ge_24": true
+        },
+        "passes": true,
+        "selected_events": 24
+      },
+      "put_the_cream_cheese_in_the_bowl": {
+        "available_admitted_events": 30,
+        "by_generator_seed": {
+          "17": 8,
+          "29": 8,
+          "7": 8
+        },
+        "by_severity": {
+          "shift_040mm": 12,
+          "shift_060mm": 12
+        },
+        "checks": {
+          "each_generator_seed_ge_6": true,
+          "each_severity_ge_8": true,
+          "events_ge_24": true
+        },
+        "passes": true,
+        "selected_events": 24
+      }
+    }
+  },
+  "tasks": [
+    "put_the_cream_cheese_in_the_bowl",
+    "put_the_bowl_on_the_stove"
+  ]
+}

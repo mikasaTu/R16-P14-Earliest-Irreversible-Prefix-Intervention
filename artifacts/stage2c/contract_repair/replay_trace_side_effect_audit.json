@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "scope": "Stage-2C v6/v7 cross-process replay infrastructure failure",
+  "distinct_from_immutable_stage2b_failure": true,
+  "failed_source_job": {
+    "job_id": "dlcrl340ah8k5uya",
+    "run_id": "r16p14-stage2c-formal-20260816-v6",
+    "event_shards_completed": 240,
+    "admitted_events": 238,
+    "qualification_attempts": 891,
+    "qualification_rejected_for_replay": 891
+  },
+  "independent_process_probe": {
+    "job_id": "dlckxv47eepcwle3",
+    "run_id": "r16p14-stage2c-replay-probe-20260816-v1",
+    "event_id": "put_the_cream_cheese_in_the_bowl__seed07__init30",
+    "fresh_python_processes": 3,
+    "exact_checks_per_process": 4,
+    "passes": 3,
+    "failures": 0,
+    "maximum_state_difference": 0.0,
+    "maximum_chunk_difference": 0.0,
+    "first_trace_divergence": null
+  },
+  "root_cause": {
+    "classification": "OBSERVABLE_CACHE_REFRESH_SCHEDULE_SIDE_EFFECT",
+    "code_path": "runtime_trace_row -> current_observation(env)",
+    "mechanism": "LIBERO current_observation refreshes the observable cache. Event construction and capture_trace=true reconstruction executed this refresh at the initial state and every replayed action, while the old capture_trace=false path skipped runtime_trace_row entirely. The flag therefore changed simulator-observation execution, not only trace storage.",
+    "legacy_no_refresh_reproduction": {
+      "first_divergent_global_step": 1,
+      "first_divergent_key": "state_history_hash",
+      "anchor_state_exact": true,
+      "action_history_exact": true,
+      "state_history_byte_exact": false,
+      "state_history_max_abs_difference": 0.09566748142242432,
+      "state_history_nonzero_count": 276,
+      "state_history_first_difference_index": [0, 0],
+      "original_chunk_byte_exact": false,
+      "original_chunk_max_abs_difference": 0.022699713706970215,
+      "original_chunk_nonzero_count": 96,
+      "original_chunk_first_difference_index": [0, 0]
+    }
+  },
+  "repair": {
+    "commit": "55c180bfd1abb9767e146cbd7ec5554e6760a0d5",
+    "description": "Always execute runtime_trace_row so the observable refresh schedule is invariant; capture_trace controls only whether the already-computed row is retained.",
+    "exact_gates_relaxed": false,
+    "dev14_capture_sequence": [true, false, false, true],
+    "dev14_exact_passes": 4,
+    "dev14_failures": 0,
+    "test": "test_34_trace_capture_flag_does_not_change_observable_refresh_schedule"
+  },
+  "scientific_effect": "The repair removes an instrumentation-induced replay mismatch. It does not improve a policy, reinterpret Stage-2B, or provide evidence for either Stage-2C hypothesis."
+}
