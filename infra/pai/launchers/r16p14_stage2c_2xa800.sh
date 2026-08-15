@@ -7,7 +7,7 @@ SOURCE_ROOT=/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16-p14-stage2c-20260816
 EXPERIMENT_ROOT=$SOURCE_ROOT/experiments/r16_p14_stage2c
 PYTHON=/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/libero_sft/bin/python
 PYTHON_OVERLAY=/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/r22p10-libero-pai-overlay/site-packages
-APPLICATION_RUN_ID=r16p14-stage2c-formal-20260816-v7
+APPLICATION_RUN_ID=r16p14-stage2c-formal-20260816-v8
 CACHE_ROOT=/mnt/cpfs/zbl-cpfs-new/USERS/leon/cache/r16_p14_stage2c/formal-v1
 ARTIFACT_DIR=${PAI_CANARY_RUN_DIR:?PAI_CANARY_RUN_DIR is required}
 ARTIFACT_ROOT=$ARTIFACT_DIR/stage2c_artifacts
@@ -15,8 +15,8 @@ REGISTRY_RUN_ID=${PAI_CANARY_RUN_ID:?PAI_CANARY_RUN_ID is required}
 NONCE=${PAI_CANARY_NONCE:?PAI_CANARY_NONCE is required}
 REUSED_EVENT_SHARDS=/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2c/pai/r16p14-stage2c-formal-20260816-v6/stage2c_artifacts/actor_events/shards
 
-EXPECTED_SOURCE_COMMIT=ba5ddf68e15fec4db34e38547e8a57721e7fe5ba
-EXPECTED_SOURCE_TREE=4f9761c860b05d4d7642ea0275bfa0f658926fc2
+EXPECTED_SOURCE_COMMIT=55c180bfd1abb9767e146cbd7ec5554e6760a0d5
+EXPECTED_SOURCE_TREE=a1e2caee307b2270bc167f26164d473e7908baf0
 EXPECTED_REUSED_EVENT_SHARDS_SHA=4fe57054d32c439201b81da0e433c9c0566c3222b21e28f994f584724474697c
 EXPECTED_REUSED_EVENT_SHARD_COUNT=240
 EXPECTED_PYTHON_SHA=89b2f5166fb529c259aedd43e5f718c60e35d58e630cb40ae6accb48fc4f961a
@@ -250,7 +250,7 @@ root = pathlib.Path(os.environ["R16_P14_STAGE2C_ARTIFACT_ROOT"])
 payload = {
     "schema_version": 1,
     "status": "completed_all_planned_attempts",
-    "application_run_id": "r16p14-stage2c-formal-20260816-v7",
+    "application_run_id": "r16p14-stage2c-formal-20260816-v8",
     "registry_run_id": os.environ["PAI_CANARY_RUN_ID"],
     "uid": os.getuid(),
     "gid": os.getgid(),
