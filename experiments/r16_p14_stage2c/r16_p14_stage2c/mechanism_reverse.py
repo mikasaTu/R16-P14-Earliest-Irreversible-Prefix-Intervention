@@ -236,10 +236,10 @@ def named_arm_summary(root: Path, matched: list[dict[str, Any]], recovery: list[
     evaluation = [row for row in matched if row["split"] == "evaluation"]
     specs = {
         "immediate_fresh_h16": ("FRESH_MATCHED", DETECTION_PREFIX),
-        "fixed_delay_1": ("FRESH_MATCHED", DETECTION_PREFIX + 1),
-        "fixed_delay_2": ("FRESH_MATCHED", DETECTION_PREFIX + 2),
-        "fixed_delay_4": ("FRESH_MATCHED", DETECTION_PREFIX + 4),
-        "fixed_delay_8": ("FRESH_MATCHED", DETECTION_PREFIX + 8),
+        "fixed_delay_1": ("CACHED_MATCHED", DETECTION_PREFIX + 1),
+        "fixed_delay_2": ("CACHED_MATCHED", DETECTION_PREFIX + 2),
+        "fixed_delay_4": ("CACHED_MATCHED", DETECTION_PREFIX + 4),
+        "fixed_delay_8": ("CACHED_MATCHED", DETECTION_PREFIX + 8),
         "full_old_chunk": ("CACHED_MATCHED", H_VALID),
         "full_old_chunk_noquery": ("CACHED_NOQUERY", H_VALID),
     }

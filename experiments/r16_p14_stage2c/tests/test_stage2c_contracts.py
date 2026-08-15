@@ -13,7 +13,7 @@ from r16_p14_stage2c import goal_geometry
 from r16_p14_stage2c.checksums import build_manifest
 from r16_p14_stage2c.detailed_statistics import macro_task_bootstrap
 from r16_p14_stage2c.events import exclusion_metrics, persist_first_completed_event_marker
-from r16_p14_stage2c.mechanism_reverse import paired_prefix_rows, target_shift_activation
+from r16_p14_stage2c.mechanism_reverse import named_arm_summary, paired_prefix_rows, target_shift_activation
 from r16_p14_stage2c.runtime import numeric_difference
 from r16_p14_stage2c.contracts import (
     admit_event_replay,
@@ -399,3 +399,30 @@ def test_37_macro_task_bootstrap_averages_clusters_before_tasks():
     assert result["cluster_count_by_task"] == {"a": 2, "b": 2}
     assert result["estimate_by_task"] == {"a": 0.75, "b": -0.5}
     assert result["estimate"] == pytest.approx(0.125)
+
+
+def test_38_fixed_delay_summary_executes_cached_prefix(tmp_path):
+    common = {
+        "event_instance_id": "event",
+        "task": "put_the_cream_cheese_in_the_bowl",
+        "split": "evaluation",
+        "parameter_id": "shift_040mm",
+        "generator_actor_seed": 7,
+        "init_state_id": 40,
+        "task_success": True,
+        "cause_violation": False,
+        "safe_success": True,
+        "new_non_nominal_actions": 10,
+        "actor_calls": 2,
+        "completion_steps": 12,
+        "eef_path_length": 1.0,
+        "object_path_length": 0.5,
+        "contact_count": 1,
+    }
+    matched = [
+        {**common, "branch": "CACHED_MATCHED", "prefix_k": 3},
+        {**common, "branch": "FRESH_MATCHED", "prefix_k": 3, "safe_success": False},
+    ]
+    summary = named_arm_summary(tmp_path, matched, [])
+    assert summary["named_generator_actor_arms"]["fixed_delay_1"]["rows"] == 1
+    assert summary["named_generator_actor_arms"]["fixed_delay_1"]["safe_success_rate"] == 1.0
