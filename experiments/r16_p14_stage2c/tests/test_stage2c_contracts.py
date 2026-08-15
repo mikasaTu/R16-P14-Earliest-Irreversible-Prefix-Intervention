@@ -11,6 +11,7 @@ from r16_p14_stage2b.io_utils import write_once_jsonl
 from r16_p14_stage2c import goal_geometry
 from r16_p14_stage2c.checksums import build_manifest
 from r16_p14_stage2c.events import exclusion_metrics, persist_first_completed_event_marker
+from r16_p14_stage2c.runtime import numeric_difference
 from r16_p14_stage2c.contracts import (
     admit_event_replay,
     assert_no_physical_irreversibility_label,
@@ -261,3 +262,16 @@ def test_32_ineligible_event_is_not_replay_instability():
     assert metrics["unstable_replay_exclusions"] == 1
     assert metrics["unstable_event_exclusion_rate"] == 0.5
     assert metrics["total_event_exclusion_rate"] == pytest.approx(2 / 3)
+
+
+def test_33_replay_difference_is_exact_and_locates_first_delta():
+    saved = np.asarray([[1.0, 2.0], [3.0, 4.0]], dtype=np.float32)
+    exact = numeric_difference(saved, saved.copy())
+    assert exact["byte_exact"] and exact["nonzero_count"] == 0
+    fresh = saved.copy()
+    fresh[0, 1] += np.float32(0.25)
+    changed = numeric_difference(saved, fresh)
+    assert not changed["byte_exact"]
+    assert changed["nonzero_count"] == 1
+    assert changed["max_abs_difference"] == pytest.approx(0.25)
+    assert changed["first_difference"]["index"] == [0, 1]

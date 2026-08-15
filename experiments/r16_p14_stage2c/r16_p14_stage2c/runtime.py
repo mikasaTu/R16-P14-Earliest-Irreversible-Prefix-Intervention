@@ -163,7 +163,15 @@ def reconstruct_anchor(event: dict[str, Any], bundle: ActorBundle, *, capture_tr
             "action_history_exact": sha256_array(actions, np.float32) == event["action_history_hash"],
             "original_chunk_exact": chunk_hash(chunk) == event["original_chunk_hash"],
         }
-        return env, history, {"state": state, "chunk": chunk, "trace": trace, "checks": checks, "passed": all(checks.values())}
+        return env, history, {
+            "state": state,
+            "states": states,
+            "actions": actions,
+            "chunk": chunk,
+            "trace": trace,
+            "checks": checks,
+            "passed": all(checks.values()),
+        }
     except Exception:
         env.close()
         raise
@@ -181,6 +189,56 @@ def first_trace_divergence(saved: list[dict[str, Any]], fresh: list[dict[str, An
             if saved[index].get(key) != fresh[index].get(key):
                 return {"global_step": int(fresh[index]["global_step"]), "key": key, "saved": saved[index].get(key), "fresh": fresh[index].get(key)}
     return None
+
+
+def numeric_difference(saved: Any, fresh: Any) -> dict[str, Any]:
+    """Return a compact, JSON-safe exactness audit for two numeric tensors."""
+    left = np.asarray(saved)
+    right = np.asarray(fresh)
+    result: dict[str, Any] = {
+        "saved_shape": list(left.shape),
+        "fresh_shape": list(right.shape),
+        "shape_exact": left.shape == right.shape,
+    }
+    if left.shape != right.shape:
+        result.update({"byte_exact": False, "nonzero_count": None, "max_abs_difference": None, "first_difference": None})
+        return result
+    byte_exact = (
+        left.dtype == right.dtype
+        and np.ascontiguousarray(left).tobytes() == np.ascontiguousarray(right).tobytes()
+    )
+    difference = np.abs(left.astype(np.float64) - right.astype(np.float64))
+    indices = np.argwhere(difference != 0)
+    first = None
+    if len(indices):
+        index = tuple(int(item) for item in indices[0])
+        first = {
+            "index": list(index),
+            "saved": float(left[index]),
+            "fresh": float(right[index]),
+            "absolute_difference": float(difference[index]),
+        }
+    result.update({
+        "byte_exact": bool(byte_exact),
+        "saved_dtype": str(left.dtype),
+        "fresh_dtype": str(right.dtype),
+        "nonzero_count": int(len(indices)),
+        "max_abs_difference": float(difference.max()) if difference.size else 0.0,
+        "first_difference": first,
+    })
+    return result
+
+
+def replay_failure_diagnostic(event: dict[str, Any], audit: dict[str, Any]) -> dict[str, Any]:
+    """Explain a strict replay rejection without changing any admission gate."""
+    return {
+        "checks": dict(audit["checks"]),
+        "first_trace_divergence": first_trace_divergence(event["pre_anchor_trace"], audit.get("trace", [])),
+        "anchor_state": numeric_difference(np.asarray(event["anchor_state"], dtype=np.float64), audit["state"]),
+        "state_history": numeric_difference(np.asarray(event["state_history"], dtype=np.float32), audit["states"]),
+        "action_history": numeric_difference(np.asarray(event["action_history"], dtype=np.float32), audit["actions"]),
+        "original_chunk": numeric_difference(np.asarray(event["original_chunk"], dtype=np.float32), audit["chunk"]),
+    }
 
 
 @dataclass
@@ -339,4 +397,3 @@ def hold_action(last_action: np.ndarray) -> np.ndarray:
     action = np.zeros(ACTION_DIM, dtype=np.float32)
     action[-1] = float(np.asarray(last_action, dtype=np.float32)[-1])
     return action
-

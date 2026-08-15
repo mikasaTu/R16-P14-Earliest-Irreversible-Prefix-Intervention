@@ -15,7 +15,7 @@ from r16_p14_stage2b.io_utils import atomic_write_json, atomic_write_text, load_
 from r16_p14_stage2b.runtime import ActorBundle
 
 from .contracts import monotone_observed_safety, qualify_cell, select_second_failure_family
-from .runtime import CauseTracker, apply_perturbation, reconstruct_anchor
+from .runtime import CauseTracker, apply_perturbation, reconstruct_anchor, replay_failure_diagnostic
 from .settings import (
     ACTOR_SEEDS,
     ALL_CANDIDATE_TASKS,
@@ -120,12 +120,27 @@ def run_shard(seed: int, task: str, device: str) -> None:
     ]
     bundle = ActorBundle.load(seed, device)
     for event in events:
+        preflight_env = None
+        try:
+            preflight_env, _, preflight = reconstruct_anchor(event, bundle, capture_trace=True)
+            preflight_diagnostic = None if preflight["passed"] else replay_failure_diagnostic(event, preflight)
+        except Exception as exc:
+            preflight = {"passed": False, "checks": {}}
+            preflight_diagnostic = {
+                "error": f"{type(exc).__name__}: {exc}",
+                "traceback": traceback.format_exc(),
+            }
+        finally:
+            if preflight_env is not None:
+                preflight_env.close()
         for parameter in parameters(task):
             path = shard_path(seed, task, event["event_id"], parameter["parameter_id"])
             if path.is_file():
                 print(f"QUALIFY_RESUME {path.name}", flush=True)
                 continue
             try:
+                if not preflight["passed"]:
+                    raise ValueError(f"cross-process event replay rejected: {preflight['checks']}")
                 row, prefix_rows = run_attempt(event, parameter, bundle)
             except Exception as exc:
                 row = {
@@ -136,6 +151,7 @@ def run_shard(seed: int, task: str, device: str) -> None:
                     "monotonicity_valid": False,
                     "intervention_method_outcome_read": False,
                     "error": f"{type(exc).__name__}: {exc}", "traceback": traceback.format_exc(),
+                    "replay_diagnostic": preflight_diagnostic,
                 }
                 prefix_rows = []
             atomic_write_json(path, {"complete": True, "attempt": row, "prefix_rows": prefix_rows})
