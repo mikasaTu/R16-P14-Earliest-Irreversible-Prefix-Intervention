@@ -147,12 +147,14 @@ def reconstruct_anchor(event: dict[str, Any], bundle: ActorBundle, *, capture_tr
         env.reset()
         observation = restore_state(env, np.asarray(event["init_state"], dtype=np.float64))
         history = ActorHistory.initial(observation)
-        trace = [runtime_trace_row(env, history, global_step=0, action=None)] if capture_trace else []
+        initial_trace = runtime_trace_row(env, history, global_step=0, action=None)
+        trace = [initial_trace] if capture_trace else []
         for global_step, action in enumerate(np.asarray(event["pre_anchor_actions"], dtype=np.float32), start=1):
             observation, _, _, _ = env.step(action)
             history.update(observation, action)
+            trace_row = runtime_trace_row(env, history, global_step=global_step, action=action)
             if capture_trace:
-                trace.append(runtime_trace_row(env, history, global_step=global_step, action=action))
+                trace.append(trace_row)
         state = np.ascontiguousarray(env.get_sim_state(), dtype=np.float64)
         states = np.ascontiguousarray(history.state_array(), dtype=np.float32)
         actions = np.ascontiguousarray(history.action_array(), dtype=np.float32)

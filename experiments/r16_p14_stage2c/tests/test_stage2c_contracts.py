@@ -7,6 +7,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
+import r16_p14_stage2c.runtime as stage2c_runtime
 from r16_p14_stage2b.io_utils import write_once_jsonl
 from r16_p14_stage2c import goal_geometry
 from r16_p14_stage2c.checksums import build_manifest
@@ -275,3 +276,59 @@ def test_33_replay_difference_is_exact_and_locates_first_delta():
     assert changed["nonzero_count"] == 1
     assert changed["max_abs_difference"] == pytest.approx(0.25)
     assert changed["first_difference"]["index"] == [0, 1]
+
+
+def test_34_trace_capture_flag_does_not_change_observable_refresh_schedule(monkeypatch):
+    observation = {
+        "robot0_proprio-state": np.zeros(39, dtype=np.float32),
+        "object-state": np.zeros(56, dtype=np.float32),
+    }
+
+    class FakeEnv:
+        def seed(self, _seed):
+            return None
+
+        def reset(self):
+            return observation
+
+        def step(self, _action):
+            return observation, 0.0, False, {}
+
+        def get_sim_state(self):
+            return np.asarray([1.0], dtype=np.float64)
+
+        def close(self):
+            return None
+
+    class FakeBundle:
+        def predict(self, _states, _actions, _task):
+            return np.zeros((16, 7), dtype=np.float32)
+
+    refreshes = []
+
+    def trace_row(_env, _history, *, global_step, action):
+        refreshes.append((global_step, action is None))
+        return {"global_step": global_step}
+
+    states = np.zeros((4, 95), dtype=np.float32)
+    actions = np.zeros((3, 7), dtype=np.float32)
+    chunk = np.zeros((16, 7), dtype=np.float32)
+    event = {
+        "task": "put_the_cream_cheese_in_the_bowl",
+        "init_state": [0.0],
+        "pre_anchor_actions": np.zeros((2, 7), dtype=np.float32).tolist(),
+        "anchor_state": [1.0],
+        "anchor_state_hash": stage2c_runtime.state_sha256(np.asarray([1.0], dtype=np.float64)),
+        "state_history_hash": stage2c_runtime.sha256_array(states, np.float32),
+        "action_history_hash": stage2c_runtime.sha256_array(actions, np.float32),
+        "original_chunk_hash": stage2c_runtime.chunk_hash(chunk),
+    }
+    monkeypatch.setattr(stage2c_runtime, "validate_event_bytes", lambda *_args, **_kwargs: None)
+    monkeypatch.setattr(stage2c_runtime, "make_env", lambda *_args, **_kwargs: (FakeEnv(), None))
+    monkeypatch.setattr(stage2c_runtime, "restore_state", lambda *_args, **_kwargs: observation)
+    monkeypatch.setattr(stage2c_runtime, "runtime_trace_row", trace_row)
+    env, _, audit = stage2c_runtime.reconstruct_anchor(event, FakeBundle(), capture_trace=False)
+    env.close()
+    assert audit["passed"]
+    assert audit["trace"] == []
+    assert refreshes == [(0, True), (1, False), (2, False)]
