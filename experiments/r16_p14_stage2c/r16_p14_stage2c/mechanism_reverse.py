@@ -255,9 +255,25 @@ def named_arm_summary(root: Path, matched: list[dict[str, Any]], recovery: list[
     named["fresh_matched_all_prefixes"] = _arm_metrics(
         [row for row in evaluation if row["branch"] == "FRESH_MATCHED"]
     )
+    named["cached_noquery_all_prefixes"] = _arm_metrics(
+        [row for row in evaluation if row["branch"] == "CACHED_NOQUERY"]
+    )
     named["hold_prefix_matched_control"] = _arm_metrics(
         [row for row in evaluation if row["branch"] == "HOLD_PREFIX_MATCHED"]
     )
+    prefix_grid = {
+        branch: {
+            str(prefix): _arm_metrics(
+                [
+                    row
+                    for row in evaluation
+                    if row["branch"] == branch and int(row["prefix_k"]) == prefix
+                ]
+            )
+            for prefix in range(DETECTION_PREFIX, H_VALID + 1)
+        }
+        for branch in ("CACHED_MATCHED", "FRESH_MATCHED", "CACHED_NOQUERY", "HOLD_PREFIX_MATCHED")
+    }
     baseline_path = root / "crossfit_replanability/baseline_rows.jsonl"
     deployable = {}
     if baseline_path.is_file():
@@ -272,6 +288,7 @@ def named_arm_summary(root: Path, matched: list[dict[str, Any]], recovery: list[
             }
     return {
         "named_generator_actor_arms": named,
+        "generator_actor_prefix_grid": prefix_grid,
         "deployable_baselines_over_three_recovery_actors": deployable,
         "recovery_operators": operator_mechanism(recovery),
         "note": "Fixed delays and heuristic baselines are materialized from their preregistered rows; no evaluation outcome chooses a task, severity, threshold, or baseline name.",

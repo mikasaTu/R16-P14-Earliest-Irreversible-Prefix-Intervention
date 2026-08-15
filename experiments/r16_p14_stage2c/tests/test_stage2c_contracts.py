@@ -426,3 +426,7 @@ def test_38_fixed_delay_summary_executes_cached_prefix(tmp_path):
     summary = named_arm_summary(tmp_path, matched, [])
     assert summary["named_generator_actor_arms"]["fixed_delay_1"]["rows"] == 1
     assert summary["named_generator_actor_arms"]["fixed_delay_1"]["safe_success_rate"] == 1.0
+    assert summary["generator_actor_prefix_grid"]["FRESH_MATCHED"]["3"]["safe_success_rate"] == 0.0
+    assert set(summary["generator_actor_prefix_grid"]["CACHED_MATCHED"]) == {
+        str(prefix) for prefix in range(2, 17)
+    }
