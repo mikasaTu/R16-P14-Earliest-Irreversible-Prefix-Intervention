@@ -1,0 +1,18 @@
+/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/libero_sft/lib/python3.11/site-packages/torch/nn/modules/transformer.py:379: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  warnings.warn(
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16-p14-stage2c-20260816/experiments/r16_p14_stage2c/r16_p14_stage2c/evaluation.py", line 471, in <module>
+    main()
+  File "/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16-p14-stage2c-20260816/experiments/r16_p14_stage2c/r16_p14_stage2c/evaluation.py", line 467, in main
+    run_worker(args.device, args.worker_index, args.worker_count, args.split, args.smoke)
+  File "/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16-p14-stage2c-20260816/experiments/r16_p14_stage2c/r16_p14_stage2c/evaluation.py", line 428, in run_worker
+    run_event(item, events, bundles, smoke=smoke)
+  File "/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16-p14-stage2c-20260816/experiments/r16_p14_stage2c/r16_p14_stage2c/evaluation.py", line 386, in run_event
+    runtime = EventRuntime(event, bundles[int(event["actor_seed"])])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16-p14-stage2c-20260816/experiments/r16_p14_stage2c/r16_p14_stage2c/evaluation.py", line 133, in __init__
+    raise ValueError(f"event replay rejected before matrix: {audit['checks']}")
+ValueError: event replay rejected before matrix: {'anchor_state_exact': True, 'state_history_exact': False, 'action_history_exact': True, 'original_chunk_exact': False}
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
