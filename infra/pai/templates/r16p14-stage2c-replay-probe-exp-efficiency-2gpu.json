@@ -1,0 +1,111 @@
+{
+  "schema_version": 2,
+  "kind": "pytorchjob",
+  "name_prefix": "r16p14-stage2c-replay-probe",
+  "description": "Read-only cross-process exact replay diagnostic for one immutable Stage-2C PAI event; three fresh processes, no intervention outcomes, no training",
+  "resource_alias": "exp-efficiency-a800-2gpu",
+  "workspace_id": "179169",
+  "provenance": {
+    "contract_source_job_id": "dlcfp1szuc2cgqfp",
+    "resource_source_job_id": "dlc1j2p8ui63ulps",
+    "submission_method": "cli_create",
+    "pai_clone_performed": false,
+    "source_role": "readback_reference"
+  },
+  "network": {},
+  "storage": {
+    "data_sources": [
+      {"id": "d-mkixtohdn75dp8x9tb", "version": "v1", "mount_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon", "options": ""},
+      {"id": "d-lg9t2b6xajpukeqqeb", "version": "v1", "mount_path": "/mnt/cpfs/zbl-cpfs-new/SHARE/leon", "options": ""},
+      {"id": "d-36p023eg0f2vuqny8y", "version": "v1", "mount_path": "/mnt/cpfs/zbl-cpfs-new/CKPT/leon", "options": ""},
+      {"id": "d-ejgj2ej7io1t2t32uc", "version": "v1", "mount_path": "/mnt/cpfs/zbl-cpfs-new/dataset/leon", "options": ""},
+      {"id": "d-7fi8hehav247qi6x5o", "version": "v1", "mount_path": "/mnt/cpfs/zbl-cpfs-new/Models/", "options": ""}
+    ],
+    "output_root": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2c/pai"
+  },
+  "worker": {
+    "count": 1,
+    "image": "dsw-registry-vpc.cn-wulanchabu.cr.aliyuncs.com/pai/modelscope:1.29.0-pytorch2.3.1tensorflow2.16.1-gpu-py311-cu121-ubuntu22.04",
+    "gpu": 2,
+    "cpu": 12,
+    "memory": "200Gi",
+    "shared_memory": "200Gi"
+  },
+  "runtime": {
+    "command_file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/pai-job-registry/launchers/r16p14_stage2c_replay_probe.sh",
+    "identity_mechanism": "controller_inline_bootstrap_then_setpriv",
+    "uid": 2254,
+    "gid": 2254,
+    "pod_env": {},
+    "secret_env_names": [],
+    "write_paths": [
+      "{{ARTIFACT_DIR}}",
+      "/mnt/cpfs/zbl-cpfs-new/USERS/leon/cache/r16_p14_stage2c/replay-probe-v1"
+    ],
+    "output_mode": "resume",
+    "create_artifact_dir": true,
+    "recursive_repair": false,
+    "payload_transport": "base64"
+  },
+  "fault_tolerance": {
+    "aimaster_args": "",
+    "maximum_platform_restarts": 0,
+    "expected_platform_restarts": 0,
+    "launcher_attempts": 1,
+    "retry_sleep_seconds": 30,
+    "pai_automatic_fault_tolerance": false
+  },
+  "evidence": {
+    "kind": "r16p14_stage2c_cross_process_replay_diagnostic",
+    "resource_contract": "dedicated_2gpu_v1",
+    "workload_type": "read_only_replay_diagnostic",
+    "task_id": "r16p14-stage2c-cross-process-replay-20260816",
+    "model_id": "frozen-libero-act-seed7-h16",
+    "success_gate": "three_independent_process_diagnostics_persisted",
+    "validation_method": "static+33_contract_tests+dev14_same_event_exact_replay",
+    "validation_status": "passed_no_pai_gpu_probe",
+    "pai_probe_created": true,
+    "first_work_evidence_path": "{{ARTIFACT_DIR}}/replay_probe/slot_0.json",
+    "completed_evidence_path": "{{ARTIFACT_DIR}}/replay_probe/PROBE_COMPLETE.json",
+    "report_path": "{{ARTIFACT_DIR}}/replay_probe/summary.json",
+    "contract_ready": true,
+    "mount_contract": "exact_five_new_root_sources_from_live_readback",
+    "source_commit": "ba5ddf68e15fec4db34e38547e8a57721e7fe5ba",
+    "source_tree": "4f9761c860b05d4d7642ea0275bfa0f658926fc2",
+    "launcher_sha256": "8387109f79af17eb439ca11c196be11e731e829e7a40685c85e88f551982fd89",
+    "python_sha256": "89b2f5166fb529c259aedd43e5f718c60e35d58e630cb40ae6accb48fc4f961a",
+    "overlay_manifest_sha256": "64dfffdaf464d1a37be19b038cca919a252dba573eb2d0f8aa442b91a4099459",
+    "overlay_file_count": 1688,
+    "checkpoint_sha256": "821177a82cc470e108082fd3c0f6913983236a2fdf142de2fe51fc37c44240ca",
+    "source_events_sha256": "3fd1d6ede6dddbbd381c9aa749339b46aeef701c795b1047e11b7011b286a495",
+    "source_job_id": "dlcrl340ah8k5uya",
+    "source_run_id": "r16p14-stage2c-formal-20260816-v6",
+    "event_id": "put_the_cream_cheese_in_the_bowl__seed07__init30",
+    "independent_processes": 3,
+    "application_run_id": "r16p14-stage2c-replay-probe-20260816-v1",
+    "cache_root": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/cache/r16_p14_stage2c/replay-probe-v1",
+    "training": false,
+    "learned_models": false,
+    "wandb_mode": "disabled_eval_only",
+    "gpu_execution": "one_pod_gpu0_three_sequential_fresh_processes",
+    "expected_first_work_uid": 2254,
+    "expected_first_work_gid": 2254
+  },
+  "submission": {
+    "priority": 9,
+    "disable_ecs_stock_check": false,
+    "job_reserved_policy": "",
+    "job_reserved_minutes": 0,
+    "job_max_running_time_minutes": 0,
+    "tags": {
+      "managed_by": "pai-job-registry",
+      "purpose": "diagnostic-evaluation",
+      "task": "r16p14-stage2c-cross-process-replay-20260816",
+      "model": "frozen-libero-act-seed7-h16",
+      "dataset": "immutable-v6-stage2c-event",
+      "hardware": "2xa800-dedicated",
+      "resource_pool": "exp-efficiency",
+      "experiment_role": "stage2c-cross-process-replay-diagnostic"
+    }
+  }
+}
