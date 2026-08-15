@@ -47,6 +47,7 @@ test "$(realpath -e "$ARTIFACT_DIR")" = "$ARTIFACT_DIR"
 test "$(stat -c '%u:%g' "$ARTIFACT_DIR")" = 2254:2254
 test "$(stat -c '%u:%g' "$CACHE_ROOT")" = 2254:2254
 test "$(sha256sum "$PAI_MOUNT_SENTINEL" | awk '{print $1}')" = "$PAI_MOUNT_SENTINEL_SHA256"
+cd "$ARTIFACT_DIR"
 
 test "$(git -C "$SOURCE_ROOT" rev-parse HEAD)" = "$EXPECTED_SOURCE_COMMIT"
 test "$(git -C "$SOURCE_ROOT" rev-parse 'HEAD^{tree}')" = "$EXPECTED_SOURCE_TREE"
