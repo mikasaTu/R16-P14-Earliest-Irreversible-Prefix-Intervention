@@ -217,6 +217,67 @@ def operator_mechanism(recovery: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def _arm_metrics(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    return {
+        "rows": len(rows),
+        "safe_success_rate": _rate(rows, "safe_success"),
+        "task_success_rate": _rate(rows, "task_success"),
+        "cause_violation_rate": _rate(rows, "cause_violation"),
+        "mean_new_non_nominal_actions": _mean(rows, "new_non_nominal_actions"),
+        "mean_actor_calls": _mean(rows, "actor_calls"),
+        "mean_completion_steps": _mean(rows, "completion_steps"),
+        "mean_eef_path_length": _mean(rows, "eef_path_length"),
+        "mean_object_path_length": _mean(rows, "object_path_length"),
+        "mean_contact_count": _mean(rows, "contact_count"),
+    }
+
+
+def named_arm_summary(root: Path, matched: list[dict[str, Any]], recovery: list[dict[str, Any]]) -> dict[str, Any]:
+    evaluation = [row for row in matched if row["split"] == "evaluation"]
+    specs = {
+        "immediate_fresh_h16": ("FRESH_MATCHED", DETECTION_PREFIX),
+        "fixed_delay_1": ("FRESH_MATCHED", DETECTION_PREFIX + 1),
+        "fixed_delay_2": ("FRESH_MATCHED", DETECTION_PREFIX + 2),
+        "fixed_delay_4": ("FRESH_MATCHED", DETECTION_PREFIX + 4),
+        "fixed_delay_8": ("FRESH_MATCHED", DETECTION_PREFIX + 8),
+        "full_old_chunk": ("CACHED_MATCHED", H_VALID),
+        "full_old_chunk_noquery": ("CACHED_NOQUERY", H_VALID),
+    }
+    named = {
+        name: _arm_metrics(
+            [row for row in evaluation if row["branch"] == branch and int(row["prefix_k"]) == prefix]
+        )
+        for name, (branch, prefix) in specs.items()
+    }
+    named["cached_matched_all_prefixes"] = _arm_metrics(
+        [row for row in evaluation if row["branch"] == "CACHED_MATCHED"]
+    )
+    named["fresh_matched_all_prefixes"] = _arm_metrics(
+        [row for row in evaluation if row["branch"] == "FRESH_MATCHED"]
+    )
+    named["hold_prefix_matched_control"] = _arm_metrics(
+        [row for row in evaluation if row["branch"] == "HOLD_PREFIX_MATCHED"]
+    )
+    baseline_path = root / "crossfit_replanability/baseline_rows.jsonl"
+    deployable = {}
+    if baseline_path.is_file():
+        baseline_rows = [row for row in load_jsonl(baseline_path) if row["split"] == "evaluation"]
+        for method, rows in sorted(_group(baseline_rows, "method").items()):
+            deployable[str(method[0])] = {
+                "rows": len(rows),
+                "safe_success_rate": _rate(rows, "safe_success"),
+                "mean_new_non_nominal_actions": _mean(rows, "new_non_nominal_actions"),
+                "mean_actor_calls": _mean(rows, "actor_calls"),
+                "mean_selected_prefix": _mean(rows, "prefix_k"),
+            }
+    return {
+        "named_generator_actor_arms": named,
+        "deployable_baselines_over_three_recovery_actors": deployable,
+        "recovery_operators": operator_mechanism(recovery),
+        "note": "Fixed delays and heuristic baselines are materialized from their preregistered rows; no evaluation outcome chooses a task, severity, threshold, or baseline name.",
+    }
+
+
 def selection_mechanism(root: Path) -> dict[str, Any]:
     path = root / "crossfit_replanability/crossfit_rows.jsonl"
     if not path.is_file():
@@ -291,6 +352,7 @@ def main() -> None:
         "qualification": qualification_mechanism(qualification, events),
         "matched_prefix": matched_mechanism(matched),
         "recovery_operators": operator_mechanism(recovery),
+        "all_required_arms": named_arm_summary(root, matched, recovery),
         "crossfit_selection": selection_mechanism(root),
         "new_idea_generated": False,
     }

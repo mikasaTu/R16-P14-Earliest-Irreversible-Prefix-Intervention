@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "scope": "R16-P14 Stage-2C PAI attempts only",
+  "attempts": [
+    {
+      "run_id": "r16p14-stage2c-formal-20260816-v1",
+      "job_id": null,
+      "status": "PREFLIGHT_FAILED_SEALED",
+      "reason": "Required cache root was absent; no CreateJob call was made.",
+      "scientific_evidence": false
+    },
+    {
+      "run_id": "r16p14-stage2c-formal-20260816-v2",
+      "job_id": null,
+      "status": "PREFLIGHT_FAILED_SEALED",
+      "reason": "Required output root was absent; no CreateJob call was made.",
+      "scientific_evidence": false
+    },
+    {
+      "run_id": "r16p14-stage2c-formal-20260816-v3",
+      "job_id": "dlcy1vkaxo51zllw",
+      "pod_uid": "7b60a8e6-ad15-411d-a427-57231654896d",
+      "status": "Failed",
+      "duration_seconds": 79,
+      "reason": "The image resolved torch 2.12.1+cu130, incompatible with the available driver. The formal runtime was subsequently pinned to torch 2.5.1+cu124.",
+      "scientific_evidence": false
+    },
+    {
+      "run_id": "r16p14-stage2c-formal-20260816-v4",
+      "job_id": "dlc3pz7yilr3s3mo",
+      "pod_uid": "601c9a41-ec3c-489d-94f2-4dc421bd56ba",
+      "status": "Failed",
+      "duration_seconds": 71,
+      "reason": "The launcher changed identity before leaving /root; UID 2254 could not access the working directory.",
+      "scientific_evidence": false
+    },
+    {
+      "run_id": "r16p14-stage2c-formal-20260816-v5",
+      "job_id": "dlc1j1w3relstvzb",
+      "pod_uid": "6e3f87e7-bb75-4227-918a-7662c31c9d83",
+      "status": "Stopped",
+      "duration_seconds": 388,
+      "reason": "Invalid first-work marker semantics and GPU-1 EGL device mismatch. This owned invalid job was stopped after the faults were confirmed.",
+      "scientific_evidence": false
+    },
+    {
+      "run_id": "r16p14-stage2c-formal-20260816-v6",
+      "job_id": "dlcrl340ah8k5uya",
+      "pod_uid": "cc3c37ca-5a56-4cad-9de1-52912d3aa909",
+      "status": "Failed",
+      "duration_seconds": 2807,
+      "reason": "Completed 240 event attempts and 891 qualification attempts, but cross-process replay qualification rejected every row because trace/no-trace observable-refresh schedules differed.",
+      "scientific_evidence": "The 240 immutable actor-event shards are retained and hash-locked; the failed qualification/formal outputs are not used."
+    },
+    {
+      "run_id": "r16p14-stage2c-replay-probe-20260816-v1",
+      "job_id": "dlckxv47eepcwle3",
+      "pod_uid": "56f9a77b-b57b-453f-ac27-67dfe4ae1378",
+      "status": "Succeeded",
+      "duration_seconds": 104,
+      "reason": "Three fresh PAI Python processes reconstructed one hash-locked v6 event; each passed 4/4 exact replay checks with zero state/chunk difference.",
+      "scientific_evidence": true
+    },
+    {
+      "run_id": "r16p14-stage2c-formal-20260816-v7",
+      "job_id": "dlczdbeoa10aapan",
+      "pod_uid": "8c8d6f38-0eb4-4572-848e-1a0edc0e4cf8",
+      "status": "Stopped",
+      "duration_seconds": 319,
+      "reason": "The trace-enabled preflight passed, while the trace-disabled attempt failed. The owned invalid job was stopped after 154 records because continuing could only repeat instrumentation-invalid evidence.",
+      "scientific_evidence": false
+    },
+    {
+      "run_id": "r16p14-stage2c-formal-20260816-v8",
+      "job_id": "dlcb8djiituf7gt3",
+      "pod_uid": "23a1b24a-47f4-4299-9d70-69e2065693bf",
+      "status": "Running",
+      "duration_seconds": null,
+      "reason": "Formal trace-inert run using source commit 55c180b and the hash-locked v6 event shards.",
+      "scientific_evidence": "PENDING"
+    }
+  ],
+  "unrelated_jobs_modified": false,
+  "maximum_gpus": 2,
+  "concurrent_gpu_workers": 2,
+  "actor_training": false,
+  "wandb_used": false
+}

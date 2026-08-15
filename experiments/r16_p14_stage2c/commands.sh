@@ -30,6 +30,9 @@ case "${1:-help}" in
   aggregate)
     exec "$PYTHON_BIN" -m r16_p14_stage2c.aggregate "${@:2}"
     ;;
+  detailed-statistics)
+    exec "$PYTHON_BIN" -m r16_p14_stage2c.detailed_statistics "${@:2}"
+    ;;
   report)
     exec "$PYTHON_BIN" -m r16_p14_stage2c.report
     ;;
@@ -37,7 +40,7 @@ case "${1:-help}" in
     exec "$PYTHON_BIN" -m r16_p14_stage2c.mechanism_reverse "${@:2}"
     ;;
   *)
-    echo "usage: $0 {test|freeze|contract-audit|events|qualify|evaluate|aggregate|report|mechanism-reverse} [args...]" >&2
+    echo "usage: $0 {test|freeze|contract-audit|events|qualify|evaluate|aggregate|detailed-statistics|report|mechanism-reverse} [args...]" >&2
     exit 2
     ;;
 esac

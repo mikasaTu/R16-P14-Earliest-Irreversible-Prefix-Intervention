@@ -11,6 +11,7 @@ import r16_p14_stage2c.runtime as stage2c_runtime
 from r16_p14_stage2b.io_utils import write_once_jsonl
 from r16_p14_stage2c import goal_geometry
 from r16_p14_stage2c.checksums import build_manifest
+from r16_p14_stage2c.detailed_statistics import macro_task_bootstrap
 from r16_p14_stage2c.events import exclusion_metrics, persist_first_completed_event_marker
 from r16_p14_stage2c.mechanism_reverse import paired_prefix_rows, target_shift_activation
 from r16_p14_stage2c.runtime import numeric_difference
@@ -384,3 +385,17 @@ def test_36_target_shift_activation_requires_release_after_lift():
     audit = target_shift_activation([base])
     assert audit["events_with_post_detection_release"] == 1
     assert audit["events_with_cause_eligible_release"] == 0
+
+
+def test_37_macro_task_bootstrap_averages_clusters_before_tasks():
+    rows = [
+        {"task": "a", "init_state_id": 1, "delta": 0.0},
+        {"task": "a", "init_state_id": 1, "delta": 1.0},
+        {"task": "a", "init_state_id": 2, "delta": 1.0},
+        {"task": "b", "init_state_id": 1, "delta": -1.0},
+        {"task": "b", "init_state_id": 2, "delta": 0.0},
+    ]
+    result = macro_task_bootstrap(rows, lambda row: row["delta"], replicates=100, seed=3)
+    assert result["cluster_count_by_task"] == {"a": 2, "b": 2}
+    assert result["estimate_by_task"] == {"a": 0.75, "b": -0.5}
+    assert result["estimate"] == pytest.approx(0.125)
