@@ -10,7 +10,7 @@ import pytest
 from r16_p14_stage2b.io_utils import write_once_jsonl
 from r16_p14_stage2c import goal_geometry
 from r16_p14_stage2c.checksums import build_manifest
-from r16_p14_stage2c.events import persist_first_completed_event_marker
+from r16_p14_stage2c.events import exclusion_metrics, persist_first_completed_event_marker
 from r16_p14_stage2c.contracts import (
     admit_event_replay,
     assert_no_physical_irreversibility_label,
@@ -248,3 +248,16 @@ def test_31_checksum_manifest_excludes_itself(tmp_path):
     manifest = build_manifest(tmp_path)
     assert "result.json" in manifest
     assert "SHA256SUMS" not in manifest
+
+
+def test_32_ineligible_event_is_not_replay_instability():
+    attempts = [
+        {"admission": {"admitted": True, "failure_label": None}},
+        {"admission": {"admitted": False, "failure_label": "NO_ACTOR_EVENT"}},
+        {"admission": {"admitted": False, "failure_label": "REPLAY_ERROR"}},
+    ]
+    metrics = exclusion_metrics(attempts, admitted_count=1)
+    assert metrics["ineligible_event_exclusions"] == 1
+    assert metrics["unstable_replay_exclusions"] == 1
+    assert metrics["unstable_event_exclusion_rate"] == 0.5
+    assert metrics["total_event_exclusion_rate"] == pytest.approx(2 / 3)

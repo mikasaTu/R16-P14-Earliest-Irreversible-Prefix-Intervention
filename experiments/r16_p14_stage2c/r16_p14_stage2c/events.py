@@ -230,6 +230,20 @@ def run_shard(seed: int, task: str, split: str, device: str) -> None:
         print(f"EVENT_DONE seed={seed} task={task} split={split} init={init_id} admitted={int(payload['event'] is not None)}", flush=True)
 
 
+def exclusion_metrics(attempts: list[dict[str, Any]], admitted_count: int) -> dict[str, Any]:
+    candidate_attempts = [payload for payload in attempts if payload.get("admission", {}).get("failure_label") != "NO_ACTOR_EVENT"]
+    unstable_exclusions = [payload for payload in candidate_attempts if not payload.get("admission", {}).get("admitted")]
+    ineligible_attempts = [payload for payload in attempts if payload.get("admission", {}).get("failure_label") == "NO_ACTOR_EVENT"]
+    return {
+        "candidate_event_attempts": len(candidate_attempts),
+        "ineligible_event_exclusions": len(ineligible_attempts),
+        "unstable_replay_exclusions": len(unstable_exclusions),
+        "total_event_exclusion_rate": 1.0 - admitted_count / len(attempts) if attempts else 1.0,
+        "ineligible_event_exclusion_rate": len(ineligible_attempts) / len(attempts) if attempts else 1.0,
+        "unstable_event_exclusion_rate": len(unstable_exclusions) / len(candidate_attempts) if candidate_attempts else 1.0,
+    }
+
+
 def consolidate() -> None:
     output = ARTIFACT_ROOT / "actor_events"
     events, attempts, replay = [], [], []
@@ -262,7 +276,15 @@ def consolidate() -> None:
             }
             for task in ALL_CANDIDATE_TASKS
         }
-    atomic_write_json(output / "summary.json", {"schema_version": 1, "expected_attempts": expected, "completed_attempts": len(attempts), "admitted_events": len(events), "unstable_event_exclusion_rate": 1.0 - len(events) / len(attempts) if attempts else 1.0, "counts": counts, "outcome_blind_admission": True})
+    atomic_write_json(output / "summary.json", {
+        "schema_version": 2,
+        "expected_attempts": expected,
+        "completed_attempts": len(attempts),
+        "admitted_events": len(events),
+        **exclusion_metrics(attempts, len(events)),
+        "counts": counts,
+        "outcome_blind_admission": True,
+    })
     print(json.dumps({"expected": expected, "completed": len(attempts), "admitted": len(events)}, sort_keys=True))
 
 
