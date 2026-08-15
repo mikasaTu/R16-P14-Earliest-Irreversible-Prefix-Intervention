@@ -33,9 +33,11 @@ case "${1:-help}" in
   report)
     exec "$PYTHON_BIN" -m r16_p14_stage2c.report
     ;;
+  mechanism-reverse)
+    exec "$PYTHON_BIN" -m r16_p14_stage2c.mechanism_reverse "${@:2}"
+    ;;
   *)
-    echo "usage: $0 {test|freeze|contract-audit|events|qualify|evaluate|aggregate|report} [args...]" >&2
+    echo "usage: $0 {test|freeze|contract-audit|events|qualify|evaluate|aggregate|report|mechanism-reverse} [args...]" >&2
     exit 2
     ;;
 esac
-

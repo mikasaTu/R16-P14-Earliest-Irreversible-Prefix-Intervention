@@ -12,6 +12,7 @@ from r16_p14_stage2b.io_utils import write_once_jsonl
 from r16_p14_stage2c import goal_geometry
 from r16_p14_stage2c.checksums import build_manifest
 from r16_p14_stage2c.events import exclusion_metrics, persist_first_completed_event_marker
+from r16_p14_stage2c.mechanism_reverse import paired_prefix_rows, target_shift_activation
 from r16_p14_stage2c.runtime import numeric_difference
 from r16_p14_stage2c.contracts import (
     admit_event_replay,
@@ -332,3 +333,54 @@ def test_34_trace_capture_flag_does_not_change_observable_refresh_schedule(monke
     assert audit["passed"]
     assert audit["trace"] == []
     assert refreshes == [(0, True), (1, False), (2, False)]
+
+
+def test_35_mechanism_reverse_pairs_only_matched_cached_and_fresh():
+    common = {
+        "event_instance_id": "event",
+        "task": "put_the_cream_cheese_in_the_bowl",
+        "split": "evaluation",
+        "parameter_id": "shift_040mm",
+        "generator_actor_seed": 7,
+        "init_state_id": 40,
+        "prefix_k": 6,
+        "task_success": True,
+        "cause_violation": False,
+        "task_progress_retained_at_k": 0.1,
+        "completion_steps": 100,
+        "eef_path_length": 1.0,
+        "object_path_length": 0.5,
+        "contact_count": 2,
+        "cached_fresh_action_displacement": 0.25,
+        "allocated_actor_call_budget": 8,
+        "total_post_detection_action_budget": 100,
+    }
+    cached = {**common, "branch": "CACHED_MATCHED", "safe_success": True, "new_non_nominal_actions": 80}
+    fresh = {**common, "branch": "FRESH_MATCHED", "safe_success": False, "new_non_nominal_actions": 84}
+    pairs = paired_prefix_rows([cached, fresh])
+    assert len(pairs) == 1
+    assert pairs[0]["safe_success_delta"] == 1
+    assert pairs[0]["fresh_minus_cached_new_actions"] == 4
+    assert pairs[0]["compute_matched"] and pairs[0]["budget_matched"]
+
+
+def test_36_target_shift_activation_requires_release_after_lift():
+    base = {
+        "split": "calibration",
+        "task": "put_the_cream_cheese_in_the_bowl",
+        "event_id": "event",
+        "actor_seed": 7,
+        "init_state_id": 30,
+        "action_history": np.zeros((3, 7), dtype=np.float32).tolist(),
+        "original_chunk": np.zeros((16, 7), dtype=np.float32).tolist(),
+        "initial_manipulated_qpos": np.zeros(7, dtype=np.float64).tolist(),
+        "nominal_trace": {"positions": np.zeros((17, 7), dtype=np.float64).tolist()},
+        "phase": {"ever_lifted": False},
+    }
+    base["action_history"][-1][-1] = 1.0
+    for index in range(4):
+        base["original_chunk"][index][-1] = 1.0
+    base["original_chunk"][4][-1] = -1.0
+    audit = target_shift_activation([base])
+    assert audit["events_with_post_detection_release"] == 1
+    assert audit["events_with_cause_eligible_release"] == 0
