@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import inspect
+import json
 from pathlib import Path
 
 import numpy as np
@@ -8,6 +9,7 @@ import pytest
 
 from r16_p14_stage2b.io_utils import write_once_jsonl
 from r16_p14_stage2c import goal_geometry
+from r16_p14_stage2c.events import persist_first_completed_event_marker
 from r16_p14_stage2c.contracts import (
     admit_event_replay,
     assert_no_physical_irreversibility_label,
@@ -225,3 +227,15 @@ def test_29_complete_monotone_grid_reports_last_safe():
     result = monotone_observed_safety(safety_rows([1] * 10 + [0] * 5))
     assert result["passed"] and result["k_last_observed_safe"] == 11
 
+
+def test_30_first_work_marker_rejects_exception_attempt(tmp_path):
+    marker = tmp_path / "first_completed_event.json"
+    failed = {"event": None, "attempt": {"eligible": False, "reason": "exception", "error": "EGL failure"}}
+    assert not persist_first_completed_event_marker(failed, "task", 7, 30, "calibration", marker=marker)
+    assert not marker.exists()
+    passed = {"event": None, "attempt": {"eligible": False, "reason": "no_actor_generated_anchor", "error": None}}
+    assert persist_first_completed_event_marker(passed, "task", 7, 30, "calibration", marker=marker)
+    payload = json.loads(marker.read_text())
+    assert payload["schema_version"] == 2
+    assert payload["record_type"] == "error_free_completed_actor_event_attempt"
+    assert payload["attempt_error"] is None
