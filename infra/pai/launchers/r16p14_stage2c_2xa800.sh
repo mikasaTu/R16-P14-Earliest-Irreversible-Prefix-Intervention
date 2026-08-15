@@ -7,15 +7,18 @@ SOURCE_ROOT=/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16-p14-stage2c-20260816
 EXPERIMENT_ROOT=$SOURCE_ROOT/experiments/r16_p14_stage2c
 PYTHON=/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/libero_sft/bin/python
 PYTHON_OVERLAY=/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/r22p10-libero-pai-overlay/site-packages
-APPLICATION_RUN_ID=r16p14-stage2c-formal-20260816-v1
+APPLICATION_RUN_ID=r16p14-stage2c-formal-20260816-v7
 CACHE_ROOT=/mnt/cpfs/zbl-cpfs-new/USERS/leon/cache/r16_p14_stage2c/formal-v1
 ARTIFACT_DIR=${PAI_CANARY_RUN_DIR:?PAI_CANARY_RUN_DIR is required}
 ARTIFACT_ROOT=$ARTIFACT_DIR/stage2c_artifacts
 REGISTRY_RUN_ID=${PAI_CANARY_RUN_ID:?PAI_CANARY_RUN_ID is required}
 NONCE=${PAI_CANARY_NONCE:?PAI_CANARY_NONCE is required}
+REUSED_EVENT_SHARDS=/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2c/pai/r16p14-stage2c-formal-20260816-v6/stage2c_artifacts/actor_events/shards
 
-EXPECTED_SOURCE_COMMIT=78519ca7f6eabf97c40ef4656275005b10c41ff4
-EXPECTED_SOURCE_TREE=ad27dffb0fa42a485f07c159eb4f46ce714d4b03
+EXPECTED_SOURCE_COMMIT=ba5ddf68e15fec4db34e38547e8a57721e7fe5ba
+EXPECTED_SOURCE_TREE=4f9761c860b05d4d7642ea0275bfa0f658926fc2
+EXPECTED_REUSED_EVENT_SHARDS_SHA=4fe57054d32c439201b81da0e433c9c0566c3222b21e28f994f584724474697c
+EXPECTED_REUSED_EVENT_SHARD_COUNT=240
 EXPECTED_PYTHON_SHA=89b2f5166fb529c259aedd43e5f718c60e35d58e630cb40ae6accb48fc4f961a
 EXPECTED_OVERLAY_MANIFEST_SHA=64dfffdaf464d1a37be19b038cca919a252dba573eb2d0f8aa442b91a4099459
 EXPECTED_OVERLAY_FILE_COUNT=1688
@@ -62,6 +65,9 @@ test "$(sha256sum "$SOURCE_ROOT/artifacts/stage2a/actor/checkpoints/seed_7.pt" |
 test "$(sha256sum "$SOURCE_ROOT/artifacts/stage2a/actor/checkpoints/seed_17.pt" | awk '{print $1}')" = "$EXPECTED_SEED17_SHA"
 test "$(sha256sum "$SOURCE_ROOT/artifacts/stage2a/actor/checkpoints/seed_29.pt" | awk '{print $1}')" = "$EXPECTED_SEED29_SHA"
 test "$(nvidia-smi --query-gpu=name --format=csv,noheader | grep -c '^NVIDIA A800')" = 2
+reused_event_shards_sha=$(find "$REUSED_EVENT_SHARDS" -type f -printf '%P\0' | sort -z | while IFS= read -r -d '' relative; do printf '%s\0' "$relative"; cat "$REUSED_EVENT_SHARDS/$relative"; done | sha256sum | awk '{print $1}')
+test "$reused_event_shards_sha" = "$EXPECTED_REUSED_EVENT_SHARDS_SHA"
+test "$(find "$REUSED_EVENT_SHARDS" -type f -name '*.json' | wc -l)" = "$EXPECTED_REUSED_EVENT_SHARD_COUNT"
 
 export PYTHONPATH="$PYTHON_OVERLAY:$EXPERIMENT_ROOT:$SOURCE_ROOT/experiments/r16_p14_stage2b:$SOURCE_ROOT/experiments/r16_p14_stage2a:$SOURCE_ROOT/experiments/r16_p14_libero_stage1:$SOURCE_ROOT"
 export R16_P14_STAGE2C_ARTIFACT_ROOT="$ARTIFACT_ROOT"
@@ -87,6 +93,41 @@ if [[ ! -f "$ARTIFACT_ROOT/preregistration.yaml" ]]; then
 fi
 if [[ ! -f "$ARTIFACT_ROOT/metric_contract.md" ]]; then
   cp "$EXPERIMENT_ROOT/metric_contract.md" "$ARTIFACT_ROOT/metric_contract.md"
+fi
+if [[ ! -d "$ARTIFACT_ROOT/actor_events/shards" ]]; then
+  mkdir -p "$ARTIFACT_ROOT/actor_events"
+  cp -a "$REUSED_EVENT_SHARDS" "$ARTIFACT_ROOT/actor_events/shards"
+fi
+copied_event_shards_sha=$(find "$ARTIFACT_ROOT/actor_events/shards" -type f -printf '%P\0' | sort -z | while IFS= read -r -d '' relative; do printf '%s\0' "$relative"; cat "$ARTIFACT_ROOT/actor_events/shards/$relative"; done | sha256sum | awk '{print $1}')
+test "$copied_event_shards_sha" = "$EXPECTED_REUSED_EVENT_SHARDS_SHA"
+test "$(find "$ARTIFACT_ROOT/actor_events/shards" -type f -name '*.json' | wc -l)" = "$EXPECTED_REUSED_EVENT_SHARD_COUNT"
+if [[ ! -f "$ARTIFACT_ROOT/first_completed_event.json" ]]; then
+  "$PYTHON" - <<'PY'
+import json
+import os
+import pathlib
+
+root = pathlib.Path(os.environ["R16_P14_STAGE2C_ARTIFACT_ROOT"])
+payload = {
+    "schema_version": 3,
+    "status": "complete",
+    "record_type": "hash_verified_reused_completed_actor_event_shards",
+    "source_job_id": "dlcrl340ah8k5uya",
+    "source_run_id": "r16p14-stage2c-formal-20260816-v6",
+    "source_shard_count": 240,
+    "source_shards_sha256": "4fe57054d32c439201b81da0e433c9c0566c3222b21e28f994f584724474697c",
+    "registry_run_id": os.environ["PAI_CANARY_RUN_ID"],
+    "uid": os.getuid(),
+    "gid": os.getgid(),
+}
+path = root / "first_completed_event.json"
+descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+with os.fdopen(descriptor, "w") as handle:
+    json.dump(payload, handle, indent=2, sort_keys=True)
+    handle.write("\n")
+    handle.flush()
+    os.fsync(handle.fileno())
+PY
 fi
 
 "$PYTHON" - <<'PY'
@@ -133,12 +174,14 @@ run_event_worker() {
   done
 }
 
-run_event_worker 0 0 &
-event_pid0=$!
-run_event_worker 1 1 &
-event_pid1=$!
-wait "$event_pid0"
-wait "$event_pid1"
+if [[ "$(find "$ARTIFACT_ROOT/actor_events/shards" -type f -name '*.json' | wc -l)" -lt 240 ]]; then
+  run_event_worker 0 0 &
+  event_pid0=$!
+  run_event_worker 1 1 &
+  event_pid1=$!
+  wait "$event_pid0"
+  wait "$event_pid1"
+fi
 sync -f "$ARTIFACT_ROOT/first_completed_event.json"
 if [[ ! -f "$ARTIFACT_ROOT/actor_events/summary.json" ]]; then
   "$PYTHON" -m r16_p14_stage2c.events --consolidate >"$ARTIFACT_DIR/logs/events-consolidate.log" 2>&1
@@ -207,7 +250,7 @@ root = pathlib.Path(os.environ["R16_P14_STAGE2C_ARTIFACT_ROOT"])
 payload = {
     "schema_version": 1,
     "status": "completed_all_planned_attempts",
-    "application_run_id": "r16p14-stage2c-formal-20260816-v1",
+    "application_run_id": "r16p14-stage2c-formal-20260816-v7",
     "registry_run_id": os.environ["PAI_CANARY_RUN_ID"],
     "uid": os.getuid(),
     "gid": os.getgid(),
