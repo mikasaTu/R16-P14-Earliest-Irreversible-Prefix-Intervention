@@ -1,0 +1,101 @@
+{
+  "anchor_global_step": 183,
+  "classification": "LONG_HORIZON_NUMERICAL_CONTEXT_DRIFT_AMPLIFIED_BY_ACT",
+  "controller_wrapper_rng_at_first_divergence": {
+    "historical_saved": null,
+    "reason": "Stage2B event schema omitted per-step controller, wrapper, and RNG snapshots.",
+    "stage2c_repair": "persist per-step trace hashes plus admission-time runtime inventory; exclude any event failing 3/3 exact reconstruction"
+  },
+  "event_id": "put_the_bowl_on_the_stove__seed29__init10",
+  "four_state_history": {
+    "byte_exact": false,
+    "different_value_count": 2,
+    "first_different_index": [
+      1,
+      42
+    ],
+    "fresh_value": 0.018408076837658882,
+    "max_abs_difference": 1.862645149230957e-09,
+    "saved_value": 0.018408074975013733,
+    "shape": [
+      4,
+      95
+    ],
+    "value_exact": false
+  },
+  "fresh_reconstruction_pairwise_exact": true,
+  "init_state": {
+    "first_divergence": null,
+    "input_bytes_verified": true
+  },
+  "mechanism": "A 1.86e-9 float32 observation difference at the end of a 183-step replay changes a frozen transformer's 16x7 output by up to roughly 6.5e-5; exact-hash replay therefore fails even though final MuJoCo state error remains below 1e-9.",
+  "observation_feature": {
+    "byte_exact": false,
+    "different_value_count": 2,
+    "feature_tensor": "concatenated robot0_proprio-state/object-state",
+    "first_different_index": [
+      1,
+      42
+    ],
+    "first_observable_divergent_global_step": 181,
+    "fresh_value": 0.018408076837658882,
+    "max_abs_difference": 1.862645149230957e-09,
+    "saved_value": 0.018408074975013733,
+    "shape": [
+      4,
+      95
+    ],
+    "value_exact": false
+  },
+  "original_actor_chunk": {
+    "byte_exact": false,
+    "different_value_count": 96,
+    "first_different_index": [
+      0,
+      0
+    ],
+    "fresh_value": -0.4137633740901947,
+    "max_abs_difference": 6.473064422607422e-05,
+    "saved_value": -0.4137386977672577,
+    "shape": [
+      16,
+      7
+    ],
+    "value_exact": false
+  },
+  "pre_anchor_action_count": 183,
+  "pre_anchor_actions": {
+    "first_divergent_action": null,
+    "input_bytes_verified": true
+  },
+  "repair": "fail-closed outcome-blind admission and exclusion, not tolerance relaxation or reinterpretation of Stage2B",
+  "simulator_state": {
+    "byte_exact": false,
+    "different_value_count": 31,
+    "first_different_index": [
+      1
+    ],
+    "first_divergent_global_step": null,
+    "fresh_value": 0.13377912991754087,
+    "limitation": "Stage2B did not persist per-step simulator states; an earlier sub-float32 divergence cannot be reconstructed after the fact.",
+    "max_abs_difference": 5.0034199006177005e-11,
+    "saved_value": 0.13377912991517313,
+    "shape": [
+      79
+    ],
+    "value_exact": false
+  },
+  "three_action_history": {
+    "byte_exact": true,
+    "different_value_count": 0,
+    "first_different_index": null,
+    "fresh_value": null,
+    "max_abs_difference": 0.0,
+    "saved_value": null,
+    "shape": [
+      3,
+      7
+    ],
+    "value_exact": true
+  }
+}

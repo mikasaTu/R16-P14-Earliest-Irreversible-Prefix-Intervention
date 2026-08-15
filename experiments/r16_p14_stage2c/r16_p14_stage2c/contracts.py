@@ -8,6 +8,34 @@ import numpy as np
 from .settings import DETECTION_PREFIX, H_VALID
 
 
+EXACT_REPLAY_CHECKS = (
+    "anchor_state_exact",
+    "state_history_exact",
+    "action_history_exact",
+    "original_chunk_exact",
+    "branch_order_invariant",
+)
+
+
+def admit_event_replay(attempts: Iterable[dict[str, Any]]) -> dict[str, Any]:
+    rows = list(attempts)
+    checks = {
+        "three_fresh_reconstructions": len(rows) == 3,
+        "no_errors": len(rows) == 3 and all(row.get("error") is None for row in rows),
+        "distinct_order_slots": len(rows) == 3 and {row.get("order_slot") for row in rows} == {0, 1, 2},
+    }
+    for name in EXACT_REPLAY_CHECKS:
+        checks[name] = len(rows) == 3 and all(bool(row.get(name, False)) for row in rows)
+    passed = all(checks.values())
+    return {
+        "passed": passed,
+        "admitted": passed,
+        "outcome_fields_read": False,
+        "checks": checks,
+        "failure_label": None if passed else "UNSTABLE_EVENT_EXCLUDED",
+    }
+
+
 def replay_cell_summary(rows: Iterable[dict[str, Any]]) -> dict[str, Any]:
     attempts = list(rows)
     successes = [
@@ -68,6 +96,16 @@ def matched_branch_contract(prefix_k: int, post_detection_budget: int) -> dict[s
     }
 
 
+def recovery_operator_contract(post_detection_budget: int) -> dict[str, dict[str, Any]]:
+    if post_detection_budget < 1:
+        raise ValueError(post_detection_budget)
+    call_budget = int(np.ceil(post_detection_budget / 4))
+    return {
+        "fresh_h16": {"action_budget": post_detection_budget, "policy_call_budget": call_budget, "execution_horizon": 16, "prelude_actions": 0},
+        "fresh_h4": {"action_budget": post_detection_budget, "policy_call_budget": call_budget, "execution_horizon": 4, "prelude_actions": 0},
+        "hold_one_step_then_fresh_h16": {"action_budget": post_detection_budget, "policy_call_budget": call_budget, "execution_horizon": 16, "prelude_actions": 1},
+        "rollback_one_step_then_fresh_h16": {"action_budget": post_detection_budget, "policy_call_budget": call_budget, "execution_horizon": 16, "prelude_actions": 1},
+    }
 def persistent_irreversibility_prefix(rows: Iterable[dict[str, Any]]) -> int | None:
     by_k = {int(row["prefix_k"]): int(bool(row["R_U"])) for row in rows}
     if sorted(by_k) != list(range(DETECTION_PREFIX, H_VALID + 1)):
@@ -84,7 +122,13 @@ def last_recoverable_prefix(rows: Iterable[dict[str, Any]]) -> int | None:
 
 def qualify_cell(rows: Iterable[dict[str, Any]]) -> dict[str, Any]:
     attempts = list(rows)
-    valid = [row for row in attempts if row.get("error") is None and row.get("replay_valid")]
+    valid = [
+        row for row in attempts
+        if row.get("error") is None
+        and row.get("replay_valid")
+        and row.get("injection_valid", True)
+        and row.get("monotonicity_valid", True)
+    ]
     event_rows: dict[str, dict[str, Any]] = {}
     for row in valid:
         event_rows[str(row["event_id"])] = row
@@ -106,6 +150,8 @@ def qualify_cell(rows: Iterable[dict[str, Any]]) -> dict[str, Any]:
         "interior_fraction_ge_0_20": interior_fraction >= 0.20,
         "replay_rate_ge_0_99": replay["replay_rate"] >= 0.99,
         "error_count_eq_0": replay["error_count"] == 0,
+        "injection_contact_count_eq_0": sum(bool(row.get("injection_contact", False)) for row in attempts) == 0,
+        "nonmonotonic_event_count_eq_0": sum(not bool(row.get("monotonicity_valid", True)) for row in attempts) == 0,
     }
     return {
         "attempt_count": len(attempts),
@@ -165,6 +211,34 @@ def positive_label_allowed(upstream: dict[str, bool]) -> bool:
     return all(bool(value) for value in upstream.values())
 
 
+def select_second_failure_family(cells: Iterable[dict[str, Any]], candidate_order: Iterable[str]) -> str | None:
+    rows = list(cells)
+    forbidden = {"safe_success", "method_gain", "track_a_gain", "track_b_gain", "oracle"}
+    if any(forbidden.intersection(row) for row in rows):
+        raise ValueError("method outcomes are forbidden during failure-family selection")
+    by_task: dict[str, int] = Counter(
+        str(row["task"]) for row in rows if bool(row.get("qualifies", False))
+    )
+    for task in candidate_order:
+        if by_task[str(task)] >= 2:
+            return str(task)
+    return None
+
+
+def pending_shard_ids(expected_ids: Iterable[str], completed_ids: Iterable[str]) -> list[str]:
+    expected = list(expected_ids)
+    completed = set(completed_ids)
+    if len(expected) != len(set(expected)):
+        raise ValueError("duplicate expected shard id")
+    return [item for item in expected if item not in completed]
+
+
+def assert_no_physical_irreversibility_label(payload: Any) -> None:
+    normalized = str(payload).lower().replace("-", "_").replace(" ", "_")
+    if "physical_irreversibility" in normalized:
+        raise ValueError("physical irreversibility labels are forbidden")
+
+
 def hierarchical_cluster_bootstrap(
     paired_rows: Iterable[dict[str, Any]],
     delta: Callable[[dict[str, Any]], float],
@@ -196,4 +270,3 @@ def hierarchical_cluster_bootstrap(
         "replicates": replicates,
         "seed": seed,
     }
-

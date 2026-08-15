@@ -1,0 +1,309 @@
+{
+  "error_count_gate_added": true,
+  "goal_geometry": [
+    {
+      "center": [
+        -0.09086684759258713,
+        -0.0020413368328179703,
+        0.97
+      ],
+      "demo_endpoint_used": false,
+      "horizontal_support_radius_m": 0.03,
+      "manipulated_joint": "cream_cheese_1_joint0",
+      "manipulated_name": "cream_cheese_1",
+      "predicate_source": "ObjectState.check_ontop",
+      "relation": "on",
+      "source": "env.env.parsed_problem.goal_state",
+      "target_kind": "object",
+      "target_name": "akita_black_bowl_1",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "center": [
+        -0.25438941647427094,
+        0.20236548851737868,
+        0.905
+      ],
+      "demo_endpoint_used": false,
+      "manipulated_joint": "akita_black_bowl_1_joint0",
+      "manipulated_name": "akita_black_bowl_1",
+      "parent_name": "flat_stove_1",
+      "predicate_source": "SiteObject.under",
+      "relation": "on",
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size": [
+        0.075,
+        0.075,
+        0.0025
+      ],
+      "source": "env.env.parsed_problem.goal_state",
+      "target_kind": "site",
+      "target_name": "flat_stove_1_cook_region",
+      "task": "put_the_bowl_on_the_stove"
+    },
+    {
+      "center": [
+        -0.05,
+        0.21,
+        0.895
+      ],
+      "demo_endpoint_used": false,
+      "manipulated_joint": "plate_1_joint0",
+      "manipulated_name": "plate_1",
+      "parent_name": null,
+      "predicate_source": "SiteObject.under",
+      "relation": "on",
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "size": [
+        0.039999999999999994,
+        0.04000000000000001,
+        0.007
+      ],
+      "source": "env.env.parsed_problem.goal_state",
+      "target_kind": "site",
+      "target_name": "main_table_stove_front_region",
+      "task": "push_the_plate_to_the_front_of_the_stove"
+    },
+    {
+      "center": [
+        0.03629236684465528,
+        -0.24529682871566555,
+        1.09063
+      ],
+      "demo_endpoint_used": false,
+      "manipulated_joint": "akita_black_bowl_1_joint0",
+      "manipulated_name": "akita_black_bowl_1",
+      "parent_name": "wooden_cabinet_1",
+      "predicate_source": "SiteObject.in_box",
+      "relation": "in",
+      "rotation": [
+        [
+          0.0,
+          -1.2246467991473535e-16,
+          -1.0000000000000002
+        ],
+        [
+          0.0,
+          -1.0000000000000002,
+          1.2246467991473535e-16
+        ],
+        [
+          -1.0000000000000002,
+          0.0,
+          0.0
+        ]
+      ],
+      "size": [
+        0.02993,
+        0.07561,
+        0.10224
+      ],
+      "source": "env.env.parsed_problem.goal_state",
+      "target_kind": "site",
+      "target_name": "wooden_cabinet_1_top_region",
+      "task": "open_the_top_drawer_and_put_the_bowl_inside"
+    }
+  ],
+  "goal_geometry_demo0_removed": true,
+  "old_vs_corrected_replay": [
+    {
+      "attempt_count": 24,
+      "corrected_rate_all_attempts": 0.9583333333333334,
+      "error_count": 1,
+      "formal_cell_pass": false,
+      "legacy_rate_excluding_errors": 1.0,
+      "severity_m": 0.04,
+      "task": "put_the_bowl_on_the_stove"
+    },
+    {
+      "attempt_count": 24,
+      "corrected_rate_all_attempts": 0.9583333333333334,
+      "error_count": 1,
+      "formal_cell_pass": false,
+      "legacy_rate_excluding_errors": 1.0,
+      "severity_m": 0.05,
+      "task": "put_the_bowl_on_the_stove"
+    },
+    {
+      "attempt_count": 24,
+      "corrected_rate_all_attempts": 0.9583333333333334,
+      "error_count": 1,
+      "formal_cell_pass": false,
+      "legacy_rate_excluding_errors": 1.0,
+      "severity_m": 0.06,
+      "task": "put_the_bowl_on_the_stove"
+    },
+    {
+      "attempt_count": 24,
+      "corrected_rate_all_attempts": 0.9583333333333334,
+      "error_count": 1,
+      "formal_cell_pass": false,
+      "legacy_rate_excluding_errors": 1.0,
+      "severity_m": 0.075,
+      "task": "put_the_bowl_on_the_stove"
+    },
+    {
+      "attempt_count": 20,
+      "corrected_rate_all_attempts": 1.0,
+      "error_count": 0,
+      "formal_cell_pass": true,
+      "legacy_rate_excluding_errors": 1.0,
+      "severity_m": 0.04,
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "attempt_count": 20,
+      "corrected_rate_all_attempts": 1.0,
+      "error_count": 0,
+      "formal_cell_pass": true,
+      "legacy_rate_excluding_errors": 1.0,
+      "severity_m": 0.06,
+      "task": "put_the_cream_cheese_in_the_bowl"
+    }
+  ],
+  "prefix_safety_monotonicity_repaired": true,
+  "replay_denominator_repaired": true,
+  "root_cause": {
+    "anchor_global_step": 183,
+    "classification": "LONG_HORIZON_NUMERICAL_CONTEXT_DRIFT_AMPLIFIED_BY_ACT",
+    "controller_wrapper_rng_at_first_divergence": {
+      "historical_saved": null,
+      "reason": "Stage2B event schema omitted per-step controller, wrapper, and RNG snapshots.",
+      "stage2c_repair": "persist per-step trace hashes plus admission-time runtime inventory; exclude any event failing 3/3 exact reconstruction"
+    },
+    "event_id": "put_the_bowl_on_the_stove__seed29__init10",
+    "four_state_history": {
+      "byte_exact": false,
+      "different_value_count": 2,
+      "first_different_index": [
+        1,
+        42
+      ],
+      "fresh_value": 0.018408076837658882,
+      "max_abs_difference": 1.862645149230957e-09,
+      "saved_value": 0.018408074975013733,
+      "shape": [
+        4,
+        95
+      ],
+      "value_exact": false
+    },
+    "fresh_reconstruction_pairwise_exact": true,
+    "init_state": {
+      "first_divergence": null,
+      "input_bytes_verified": true
+    },
+    "mechanism": "A 1.86e-9 float32 observation difference at the end of a 183-step replay changes a frozen transformer's 16x7 output by up to roughly 6.5e-5; exact-hash replay therefore fails even though final MuJoCo state error remains below 1e-9.",
+    "observation_feature": {
+      "byte_exact": false,
+      "different_value_count": 2,
+      "feature_tensor": "concatenated robot0_proprio-state/object-state",
+      "first_different_index": [
+        1,
+        42
+      ],
+      "first_observable_divergent_global_step": 181,
+      "fresh_value": 0.018408076837658882,
+      "max_abs_difference": 1.862645149230957e-09,
+      "saved_value": 0.018408074975013733,
+      "shape": [
+        4,
+        95
+      ],
+      "value_exact": false
+    },
+    "original_actor_chunk": {
+      "byte_exact": false,
+      "different_value_count": 96,
+      "first_different_index": [
+        0,
+        0
+      ],
+      "fresh_value": -0.4137633740901947,
+      "max_abs_difference": 6.473064422607422e-05,
+      "saved_value": -0.4137386977672577,
+      "shape": [
+        16,
+        7
+      ],
+      "value_exact": false
+    },
+    "pre_anchor_action_count": 183,
+    "pre_anchor_actions": {
+      "first_divergent_action": null,
+      "input_bytes_verified": true
+    },
+    "repair": "fail-closed outcome-blind admission and exclusion, not tolerance relaxation or reinterpretation of Stage2B",
+    "simulator_state": {
+      "byte_exact": false,
+      "different_value_count": 31,
+      "first_different_index": [
+        1
+      ],
+      "first_divergent_global_step": null,
+      "fresh_value": 0.13377912991754087,
+      "limitation": "Stage2B did not persist per-step simulator states; an earlier sub-float32 divergence cannot be reconstructed after the fact.",
+      "max_abs_difference": 5.0034199006177005e-11,
+      "saved_value": 0.13377912991517313,
+      "shape": [
+        79
+      ],
+      "value_exact": false
+    },
+    "three_action_history": {
+      "byte_exact": true,
+      "different_value_count": 0,
+      "first_different_index": null,
+      "fresh_value": null,
+      "max_abs_difference": 0.0,
+      "saved_value": null,
+      "shape": [
+        3,
+        7
+      ],
+      "value_exact": true
+    }
+  },
+  "schema_version": 1,
+  "stage2b_monotonicity_audit": {
+    "event_severity_cells": 34,
+    "scope": "descriptive_stage2b_four_prefix_grid",
+    "stage2c_complete_grid_required": true,
+    "violations": [],
+    "zero_to_one_transition_count": 0
+  },
+  "stage2b_result_modified": false,
+  "status": "PASS"
+}
