@@ -5,7 +5,8 @@ umask 077
 
 SOURCE_ROOT=/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16-p14-stage2c-20260816
 EXPERIMENT_ROOT=$SOURCE_ROOT/experiments/r16_p14_stage2c
-PYTHON=/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/libero_sim/bin/python
+PYTHON=/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/libero_sft/bin/python
+PYTHON_OVERLAY=/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/r22p10-libero-pai-overlay/site-packages
 APPLICATION_RUN_ID=r16p14-stage2c-formal-20260816-v1
 CACHE_ROOT=/mnt/cpfs/zbl-cpfs-new/USERS/leon/cache/r16_p14_stage2c/formal-v1
 ARTIFACT_DIR=${PAI_CANARY_RUN_DIR:?PAI_CANARY_RUN_DIR is required}
@@ -16,6 +17,8 @@ NONCE=${PAI_CANARY_NONCE:?PAI_CANARY_NONCE is required}
 EXPECTED_SOURCE_COMMIT=47e9648da463487bd3c35d5ea55d56ec15be7848
 EXPECTED_SOURCE_TREE=910edceb0ab24a00f266af6d35c29f3ee778a87a
 EXPECTED_PYTHON_SHA=89b2f5166fb529c259aedd43e5f718c60e35d58e630cb40ae6accb48fc4f961a
+EXPECTED_OVERLAY_MANIFEST_SHA=64dfffdaf464d1a37be19b038cca919a252dba573eb2d0f8aa442b91a4099459
+EXPECTED_OVERLAY_FILE_COUNT=1688
 EXPECTED_LIBERO_CONFIG_SHA=528990e0cdd466a063def065fddb835fe2f37609cfef305d1910a1bf91a353ce
 EXPECTED_SEED7_SHA=821177a82cc470e108082fd3c0f6913983236a2fdf142de2fe51fc37c44240ca
 EXPECTED_SEED17_SHA=83ee61e31ffdae6f2ef57203a2c0085df41e284039cd81c6ecf1210694521604
@@ -29,7 +32,7 @@ on_error() {
 }
 trap on_error ERR
 
-for required in git sha256sum nvidia-smi stat realpath awk grep find sort sync; do
+for required in git sha256sum nvidia-smi stat realpath awk grep find sort sync cat wc; do
   command -v "$required" >/dev/null
 done
 test "$(id -u):$(id -g)" = 2254:2254
@@ -50,13 +53,16 @@ test "$(git -C "$SOURCE_ROOT" rev-parse 'HEAD^{tree}')" = "$EXPECTED_SOURCE_TREE
 test -z "$(git -C "$SOURCE_ROOT" status --porcelain)"
 test -x "$PYTHON"
 test "$(sha256sum "$(realpath -e "$PYTHON")" | awk '{print $1}')" = "$EXPECTED_PYTHON_SHA"
+overlay_manifest_sha=$(find "$PYTHON_OVERLAY" -type f -printf '%P\0' | sort -z | while IFS= read -r -d '' relative; do printf '%s\0' "$relative"; cat "$PYTHON_OVERLAY/$relative"; done | sha256sum | awk '{print $1}')
+test "$overlay_manifest_sha" = "$EXPECTED_OVERLAY_MANIFEST_SHA"
+test "$(find "$PYTHON_OVERLAY" -type f | wc -l)" = "$EXPECTED_OVERLAY_FILE_COUNT"
 test "$(sha256sum "$SOURCE_ROOT/experiments/r16_p14_libero_stage1/libero_config/config.yaml" | awk '{print $1}')" = "$EXPECTED_LIBERO_CONFIG_SHA"
 test "$(sha256sum "$SOURCE_ROOT/artifacts/stage2a/actor/checkpoints/seed_7.pt" | awk '{print $1}')" = "$EXPECTED_SEED7_SHA"
 test "$(sha256sum "$SOURCE_ROOT/artifacts/stage2a/actor/checkpoints/seed_17.pt" | awk '{print $1}')" = "$EXPECTED_SEED17_SHA"
 test "$(sha256sum "$SOURCE_ROOT/artifacts/stage2a/actor/checkpoints/seed_29.pt" | awk '{print $1}')" = "$EXPECTED_SEED29_SHA"
 test "$(nvidia-smi --query-gpu=name --format=csv,noheader | grep -c '^NVIDIA A800')" = 2
 
-export PYTHONPATH="$EXPERIMENT_ROOT:$SOURCE_ROOT/experiments/r16_p14_stage2b:$SOURCE_ROOT/experiments/r16_p14_stage2a:$SOURCE_ROOT/experiments/r16_p14_libero_stage1:$SOURCE_ROOT"
+export PYTHONPATH="$PYTHON_OVERLAY:$EXPERIMENT_ROOT:$SOURCE_ROOT/experiments/r16_p14_stage2b:$SOURCE_ROOT/experiments/r16_p14_stage2a:$SOURCE_ROOT/experiments/r16_p14_libero_stage1:$SOURCE_ROOT"
 export R16_P14_STAGE2C_ARTIFACT_ROOT="$ARTIFACT_ROOT"
 export R16_P14_STAGE2C_MIRROR_EXPERIMENT_OUTPUTS=0
 export LIBERO_CONFIG_PATH="$SOURCE_ROOT/experiments/r16_p14_libero_stage1/libero_config"
@@ -92,6 +98,7 @@ from r16_p14_stage2c.settings import ARTIFACT_ROOT
 
 assert os.getuid() == 2254 and os.getgid() == 2254
 assert torch.cuda.is_available() and torch.cuda.device_count() == 2
+assert torch.__version__ == "2.5.1+cu124" and torch.version.cuda == "12.4"
 assert pathlib.Path(ARTIFACT_ROOT).is_dir()
 for seed in (7, 17, 29):
     assert ActorBundle.load(seed, "cpu").seed == seed
