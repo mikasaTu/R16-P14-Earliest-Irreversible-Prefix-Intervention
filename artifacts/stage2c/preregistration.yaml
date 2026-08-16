@@ -1,0 +1,106 @@
+schema_version: 1
+stage: R16-P14 Stage-2C
+title: Recoverability-Defined and Compute-Matched Validation
+immutable_parent:
+  commit: 6eae66d23313cc97231249bfa1c40dc1767ea727
+  tree: ddcedd60f4f4e2878f8a4400d65e9e888f00cdd1
+immutable_conclusions:
+  stage1b_universal_hypothesis: KILLED_IMMUTABLE
+  stage2b_chunk_executability: PASS
+  stage2b_h_valid: 16
+  stage2b_actor_conditioned_perturbation: BLOCKED
+  stage2b_actor_history_replay: BLOCKED
+  stage2b_track_a: INCONCLUSIVE
+  stage2b_track_b: INCONCLUSIVE
+  stage2b_local_repair: NO_SIGNAL
+  stage2b_operator_router: NO_OPERATOR_ROUTING_SIGNAL
+  novelty_ceiling: N2_ORACLE_PROTOCOL_BOUNDARY_ONLY
+  accepted: false
+actors:
+  family: frozen_ACT
+  checkpoints: [7, 17, 29]
+  retraining: forbidden
+data:
+  calibration_init_ids: [30, 31, 32, 33, 34, 35, 36, 37, 38, 39]
+  evaluation_init_ids: [40, 41, 42, 43, 44, 45, 46, 47, 48, 49]
+  cluster_unit: [task, init_state_id]
+  one_event_per_actor_rollout: true
+perturbations:
+  detection_prefix: 2
+  target_shift:
+    task: put_the_cream_cheese_in_the_bowl
+    target: bowl
+    magnitudes_m: [0.04, 0.06, 0.08]
+  future_path_obstacle:
+    candidate_tasks:
+      - put_the_bowl_on_the_stove
+      - push_the_plate_to_the_front_of_the_stove
+      - open_the_top_drawer_and_put_the_bowl_inside
+    future_indices: [6, 10, 14]
+    lateral_clearances_m: [0.00, 0.02, 0.04]
+    manipulated_object_teleport: forbidden
+    injection_contact: forbidden
+qualification:
+  valid_events_min: 20
+  actor_seeds_min: 2
+  events_per_contributing_seed_min: 5
+  immediate_violation_max: 0.10
+  delayed_violation_min: 0.30
+  delayed_violation_max: 0.80
+  median_first_violation_offset_min: 2
+  interior_violation_fraction_min: 0.20
+  replay_rate_min: 0.99
+  error_count: 0
+  distinct_severities_min: 2
+  continue_diagnostics_after_gate_failure: true
+replay_admission:
+  fresh_reconstructions: 3
+  exact_anchor_state: true
+  exact_state_history: true
+  exact_action_history: true
+  exact_original_chunk: true
+  branch_order_invariant: true
+  outcome_blind: true
+matched_prefix:
+  prefix_indices: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+  primary_pair: [CACHED_MATCHED, FRESH_MATCHED]
+  tail_execution_horizon: 16
+  secondary: CACHED_NOQUERY
+  baselines:
+    - immediate_fresh_h16
+    - fixed_delay_1
+    - fixed_delay_2
+    - fixed_delay_4
+    - fixed_delay_8
+    - velocity_phase
+    - action_disagreement
+    - full_old_chunk
+    - hold_prefix_matched
+recoverability:
+  operators:
+    - fresh_h16
+    - fresh_h4
+    - hold_one_step_then_fresh_h16
+    - rollback_one_step_then_fresh_h16
+  recovery_actor_seeds: [7, 17, 29]
+  family_threshold: 0.6666666666666666
+crossfit:
+  method: leave_one_recovery_actor_out
+  baseline_selection_split: calibration_only
+statistics:
+  bootstrap: paired_hierarchical_cluster
+  bootstrap_replicates: 10000
+  bootstrap_seed: 160214
+resources:
+  cpu_first: true
+  maximum_gpus: 2
+  maximum_concurrent_gpu_workers: 2
+forbidden:
+  - pi0.5
+  - rgb_vla
+  - world_model
+  - learned_replanability_head
+  - learned_irreversibility_head
+  - operator_router_training
+  - physical_irreversibility_label
+

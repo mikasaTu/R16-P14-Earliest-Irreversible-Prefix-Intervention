@@ -33,14 +33,23 @@ case "${1:-help}" in
   detailed-statistics)
     exec "$PYTHON_BIN" -m r16_p14_stage2c.detailed_statistics "${@:2}"
     ;;
+  replay-contract-diagnostic)
+    exec "$PYTHON_BIN" -m r16_p14_stage2c.replay_contract_diagnostic "${@:2}"
+    ;;
   report)
     exec "$PYTHON_BIN" -m r16_p14_stage2c.report
     ;;
   mechanism-reverse)
     exec "$PYTHON_BIN" -m r16_p14_stage2c.mechanism_reverse "${@:2}"
     ;;
+  checksums)
+    exec "$PYTHON_BIN" -m r16_p14_stage2c.checksums "${@:2}"
+    ;;
+  verify)
+    exec "$PYTHON_BIN" "$PROJECT_ROOT/scripts/verify_r16p14_stage2c.py" "${@:2}"
+    ;;
   *)
-    echo "usage: $0 {test|freeze|contract-audit|events|qualify|evaluate|aggregate|detailed-statistics|report|mechanism-reverse} [args...]" >&2
+    echo "usage: $0 {test|freeze|contract-audit|events|qualify|evaluate|aggregate|detailed-statistics|replay-contract-diagnostic|report|mechanism-reverse|checksums|verify} [args...]" >&2
     exit 2
     ;;
 esac

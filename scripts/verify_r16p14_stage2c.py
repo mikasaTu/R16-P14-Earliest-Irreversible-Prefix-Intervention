@@ -91,6 +91,8 @@ def verify(root: Path, *, skip_checksums: bool) -> dict[str, Any]:
     aggregate = read_json(artifact / "aggregate_summary.json")
     assert aggregate["atlas_rows"] == 1440
     assert aggregate["boundary_rows"] == 96
+    assert aggregate["invalid_events"] == 33
+    assert line_count(artifact / "recoverability_atlas/invalid_events.jsonl") == 33
     decision = read_json(artifact / "decision.json")
     assert decision["stage1b_universal_hypothesis"] == "KILLED_IMMUTABLE"
     assert decision["stage2b_status"] == "BLOCKED_UPSTREAM"
@@ -99,7 +101,10 @@ def verify(root: Path, *, skip_checksums: bool) -> dict[str, Any]:
     assert decision["track_b_crossfit_replanability"] == "INCONCLUSIVE"
     assert decision["local_repair"] == "RETIRED_NO_SIGNAL"
     assert decision["operator_router"] == "RETIRED_NO_SIGNAL"
-    assert decision["overall"] == "BLOCKED_BY_SECOND_FAILURE_FAMILY"
+    assert decision["contract_repair"] == "PASS"
+    assert decision["replay_contract"] == "BLOCKED"
+    assert not decision["upstream_gates"]["replay_contract"]
+    assert decision["overall"] == "BLOCKED_BY_REPLAY_CONTRACT"
     assert decision["accepted"] is False
     assert decision["novelty"] == "N2_ORACLE_PROTOCOL_BOUNDARY_ONLY"
     assert decision["all_experiments_continued_after_failed_gates"]
@@ -110,6 +115,35 @@ def verify(root: Path, *, skip_checksums: bool) -> dict[str, Any]:
     assert complete["decision"] == decision
     mechanism = read_json(artifact / "mechanism_reverse_audit.json")
     assert mechanism["new_idea_generated"] is False
+    replay = read_json(artifact / "replay_contract_diagnostic.json")
+    assert replay["status"] == "BLOCKED"
+    assert replay["classification"] == "SHARED_RUNTIME_RESET_INCOMPLETE_OR_ORDER_DEPENDENT"
+    assert replay["recovery_prefix_cells"]["total"] == 1440
+    assert replay["recovery_prefix_cells"]["all_have_expected_rows"]
+    assert replay["events"]["total"] == 96
+    assert replay["events"]["with_inconsistent_recovery_S_obs"] == 33
+    assert replay["interpretation"]["repair_applied"] is False
+    assert replay["interpretation"]["new_idea_generated"] is False
+
+    pai = read_json(artifact / "pai_attempt_audit.json")
+    v8 = next(row for row in pai["attempts"] if row["run_id"] == "r16p14-stage2c-formal-20260816-v8")
+    assert v8["job_id"] == "dlcb8djiituf7gt3"
+    assert v8["status"] == "Succeeded"
+    assert v8["duration_seconds"] == 56098
+    cleanup = read_json(artifact / "pai/cleanup/cleanup_summary.json")
+    assert cleanup["target_count"] == 5
+    assert cleanup["all_prepared_before_first_delete"]
+    assert cleanup["all_deleted"] and cleanup["all_verified_absent"]
+    assert cleanup["cpfs_and_registry_evidence_preserved"]
+    assert not cleanup["unrelated_jobs_modified"]
+    assert {row["job_id"] for row in cleanup["retained_jobs"]} == {
+        "dlcb8djiituf7gt3",
+        "dlckxv47eepcwle3",
+    }
+    for row in cleanup["targets"]:
+        evidence = artifact / "pai/cleanup" / row["run_id"] / "pai-task-delete-evidence.json"
+        assert sha256(evidence) == row["evidence_sha256"]
+        assert row["verified_absent"]
 
     oversized = [
         str(path.relative_to(root))
@@ -125,6 +159,8 @@ def verify(root: Path, *, skip_checksums: bool) -> dict[str, Any]:
         "formal_event_files": 96,
         "matched_rows": 5760,
         "recovery_rows": 17280,
+        "replay_invalid_events": 33,
+        "superseded_pai_records_deleted": 5,
         "checksum_entries": checksummed,
         "decision": decision["overall"],
     }

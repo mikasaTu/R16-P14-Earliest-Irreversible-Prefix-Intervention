@@ -5,6 +5,14 @@ repository contains the complete implementation, preregistration, tests, PAI
 launch contract, raw rollout/oracle records, training logs, final full-state
 checkpoints, and the experimental report.
 
+> **Latest Stage-2C decision: `BLOCKED_BY_REPLAY_CONTRACT`.** The 2×A800
+> formal job completed all 96/96 event files (5,760 matched-prefix rows plus
+> 17,280 recovery rows, zero execution errors), but 33 events produced
+> contradictory pre-operator `S_obs(k)` values when ordered branches reused a
+> mutable LIBERO runtime. All planned arms and statistics were still run and
+> are preserved as diagnostics; no positive, causal, learned, or deployable
+> evidence is claimed.
+
 > **Stage-1b decision: `KILL_CORE_HYPOTHESIS`.** Correcting the metric removes
 > the Stage-1 Bowl signal. Prefix reconstruction repairs replay to 100%, but a
 > policy-free expert-chunk calibration produces a qualified window on only one
@@ -12,6 +20,28 @@ checkpoints, and the experimental report.
 > trained.
 
 ## Main result
+
+### Stage-2C recoverability/compute-matched result
+
+| Evidence layer | Result |
+| --- | --- |
+| Contract repair before formal run | PASS |
+| Perturbation-family qualification | BLOCKED |
+| Formal execution completeness | 96/96 events; 23,040 rows; 0 errors |
+| Formal replay contract | BLOCKED; 33/96 events inconsistent |
+| Track A / Track B | INCONCLUSIVE / INCONCLUSIVE |
+| Accepted / novelty | false / at most N2 |
+
+The complete Chinese report is in
+[`experiments/r16_p14_stage2c/reports/REPORT.md`](experiments/r16_p14_stage2c/reports/REPORT.md).
+Raw PAI output, the fail-closed decision, every arm, 10,000-draw clustered
+statistics, and the code-first reset/order diagnostic are under
+[`artifacts/stage2c`](artifacts/stage2c).
+
+```bash
+PYTHONPATH="$PWD/experiments/r16_p14_stage2c:$PWD/experiments/r16_p14_stage2b:$PWD/experiments/r16_p14_stage2a" \
+  python scripts/verify_r16p14_stage2c.py
+```
 
 ### Stage-1b contract-repair result
 

@@ -74,12 +74,28 @@
       "run_id": "r16p14-stage2c-formal-20260816-v8",
       "job_id": "dlcb8djiituf7gt3",
       "pod_uid": "23a1b24a-47f4-4299-9d70-69e2065693bf",
-      "status": "Running",
-      "duration_seconds": null,
-      "reason": "Formal trace-inert run using source commit 55c180b and the hash-locked v6 event shards.",
-      "scientific_evidence": "PENDING"
+      "status": "Succeeded",
+      "duration_seconds": 56098,
+      "reason": "Completed all 96/96 formal events using source commit 55c180b and the hash-locked v6 event shards: 5,760 matched rows plus 17,280 recovery rows with zero execution errors. Aggregation then failed closed because 33 events had contradictory pre-operator S_obs(k) labels under shared-runtime branch resets.",
+      "scientific_evidence": "Accepted as complete diagnostic execution evidence; not accepted as causal/deployable method evidence because replay_contract=BLOCKED and second_failure_family=BLOCKED."
     }
   ],
+  "superseded_service_record_cleanup": {
+    "status": "COMPLETE",
+    "targets": [
+      "r16p14-stage2c-formal-20260816-v3",
+      "r16p14-stage2c-formal-20260816-v4",
+      "r16p14-stage2c-formal-20260816-v5",
+      "r16p14-stage2c-formal-20260816-v6",
+      "r16p14-stage2c-formal-20260816-v7"
+    ],
+    "deleted_count": 5,
+    "verified_absent_count": 5,
+    "successful_formal_job_retained": "dlcb8djiituf7gt3",
+    "successful_replay_probe_retained": "dlckxv47eepcwle3",
+    "cpfs_and_registry_evidence_preserved": true,
+    "receipt": "artifacts/stage2c/pai/cleanup/cleanup_summary.json"
+  },
   "unrelated_jobs_modified": false,
   "maximum_gpus": 2,
   "concurrent_gpu_workers": 2,

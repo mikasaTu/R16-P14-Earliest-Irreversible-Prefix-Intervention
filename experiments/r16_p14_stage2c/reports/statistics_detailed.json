@@ -1,0 +1,628 @@
+{
+  "actor_seed_role": "repeated measurement within cluster",
+  "bootstrap_replicates": 10000,
+  "bootstrap_seed": 160214,
+  "evaluation_outcomes_used_for_selection": false,
+  "independent_cluster": [
+    "task",
+    "init_state_id"
+  ],
+  "note": "This file adds preregistered reporting strata only; it does not refit a baseline, task, severity, threshold, or decision.",
+  "schema_version": 1,
+  "track_a": {
+    "new_non_nominal_actions": {
+      "all_clusters": {
+        "ci95": [
+          28.649166666666666,
+          121.4
+        ],
+        "cluster_count": 10,
+        "estimate": 73.91666666666667,
+        "replicates": 10000,
+        "row_count": 18,
+        "seed": 170216,
+        "unit": "task_init_state_cluster"
+      },
+      "by_actor_seed": {
+        "17": {
+          "ci95": [
+            43.57142857142857,
+            218.42857142857142
+          ],
+          "cluster_count": 7,
+          "estimate": 116.42857142857143,
+          "replicates": 10000,
+          "row_count": 7,
+          "seed": 172214,
+          "unit": "task_init_state_cluster"
+        },
+        "29": {
+          "ci95": [
+            54.2,
+            241.4
+          ],
+          "cluster_count": 5,
+          "estimate": 147.8,
+          "replicates": 10000,
+          "row_count": 5,
+          "seed": 172215,
+          "unit": "task_init_state_cluster"
+        },
+        "7": {
+          "ci95": [
+            -128.33333333333334,
+            10.833333333333334
+          ],
+          "cluster_count": 6,
+          "estimate": -37.0,
+          "replicates": 10000,
+          "row_count": 6,
+          "seed": 172216,
+          "unit": "task_init_state_cluster"
+        }
+      },
+      "by_task": {
+        "put_the_bowl_on_the_stove": {
+          "ci95": [
+            12.894270833333335,
+            89.875
+          ],
+          "cluster_count": 8,
+          "estimate": 48.958333333333336,
+          "replicates": 10000,
+          "row_count": 15,
+          "seed": 170234,
+          "unit": "task_init_state_cluster"
+        },
+        "put_the_cream_cheese_in_the_bowl": {
+          "ci95": [
+            122.5,
+            225.0
+          ],
+          "cluster_count": 2,
+          "estimate": 173.75,
+          "replicates": 10000,
+          "row_count": 3,
+          "seed": 170235,
+          "unit": "task_init_state_cluster"
+        }
+      },
+      "by_task_severity": {
+        "put_the_bowl_on_the_stove/future_06_lateral_040mm": {
+          "ci95": [
+            8.285714285714286,
+            152.28571428571428
+          ],
+          "cluster_count": 7,
+          "estimate": 78.85714285714286,
+          "replicates": 10000,
+          "row_count": 8,
+          "seed": 170414,
+          "unit": "task_init_state_cluster"
+        },
+        "put_the_bowl_on_the_stove/future_14_lateral_020mm": {
+          "ci95": [
+            -105.91666666666667,
+            157.08333333333334
+          ],
+          "cluster_count": 6,
+          "estimate": 27.583333333333332,
+          "replicates": 10000,
+          "row_count": 7,
+          "seed": 170415,
+          "unit": "task_init_state_cluster"
+        },
+        "put_the_cream_cheese_in_the_bowl/shift_040mm": {
+          "ci95": [
+            14.0,
+            225.0
+          ],
+          "cluster_count": 2,
+          "estimate": 119.5,
+          "replicates": 10000,
+          "row_count": 2,
+          "seed": 170416,
+          "unit": "task_init_state_cluster"
+        },
+        "put_the_cream_cheese_in_the_bowl/shift_060mm": {
+          "ci95": [
+            231.0,
+            231.0
+          ],
+          "cluster_count": 1,
+          "estimate": 231.0,
+          "replicates": 10000,
+          "row_count": 1,
+          "seed": 170417,
+          "unit": "task_init_state_cluster"
+        }
+      },
+      "macro_task": {
+        "ci95": [
+          72.43671875,
+          150.3677083333333
+        ],
+        "cluster_count_by_task": {
+          "put_the_bowl_on_the_stove": 8,
+          "put_the_cream_cheese_in_the_bowl": 2
+        },
+        "estimate": 111.35416666666667,
+        "estimate_by_task": {
+          "put_the_bowl_on_the_stove": 48.958333333333336,
+          "put_the_cream_cheese_in_the_bowl": 173.75
+        },
+        "replicates": 10000,
+        "row_count": 18,
+        "seed": 170217,
+        "tasks": [
+          "put_the_bowl_on_the_stove",
+          "put_the_cream_cheese_in_the_bowl"
+        ],
+        "unit": "macro_average_of_task_specific_init_state_cluster_means"
+      }
+    },
+    "row_count": 18,
+    "safe_success": {
+      "all_clusters": {
+        "ci95": [
+          0.05,
+          0.3333333333333333
+        ],
+        "cluster_count": 10,
+        "estimate": 0.18333333333333332,
+        "replicates": 10000,
+        "row_count": 18,
+        "seed": 170214,
+        "unit": "task_init_state_cluster"
+      },
+      "by_actor_seed": {
+        "17": {
+          "ci95": [
+            0.14285714285714285,
+            0.8571428571428571
+          ],
+          "cluster_count": 7,
+          "estimate": 0.42857142857142855,
+          "replicates": 10000,
+          "row_count": 7,
+          "seed": 171214,
+          "unit": "task_init_state_cluster"
+        },
+        "29": {
+          "ci95": [
+            0.0,
+            0.8
+          ],
+          "cluster_count": 5,
+          "estimate": 0.4,
+          "replicates": 10000,
+          "row_count": 5,
+          "seed": 171215,
+          "unit": "task_init_state_cluster"
+        },
+        "7": {
+          "ci95": [
+            -0.5,
+            0.0
+          ],
+          "cluster_count": 6,
+          "estimate": -0.16666666666666666,
+          "replicates": 10000,
+          "row_count": 6,
+          "seed": 171216,
+          "unit": "task_init_state_cluster"
+        }
+      },
+      "by_task": {
+        "put_the_bowl_on_the_stove": {
+          "ci95": [
+            0.041666666666666664,
+            0.3333333333333333
+          ],
+          "cluster_count": 8,
+          "estimate": 0.16666666666666666,
+          "replicates": 10000,
+          "row_count": 15,
+          "seed": 170224,
+          "unit": "task_init_state_cluster"
+        },
+        "put_the_cream_cheese_in_the_bowl": {
+          "ci95": [
+            0.0,
+            0.5
+          ],
+          "cluster_count": 2,
+          "estimate": 0.25,
+          "replicates": 10000,
+          "row_count": 3,
+          "seed": 170225,
+          "unit": "task_init_state_cluster"
+        }
+      },
+      "by_task_severity": {
+        "put_the_bowl_on_the_stove/future_06_lateral_040mm": {
+          "ci95": [
+            0.0,
+            0.5714285714285714
+          ],
+          "cluster_count": 7,
+          "estimate": 0.2857142857142857,
+          "replicates": 10000,
+          "row_count": 8,
+          "seed": 170314,
+          "unit": "task_init_state_cluster"
+        },
+        "put_the_bowl_on_the_stove/future_14_lateral_020mm": {
+          "ci95": [
+            -0.4166666666666667,
+            0.5
+          ],
+          "cluster_count": 6,
+          "estimate": 0.08333333333333333,
+          "replicates": 10000,
+          "row_count": 7,
+          "seed": 170315,
+          "unit": "task_init_state_cluster"
+        },
+        "put_the_cream_cheese_in_the_bowl/shift_040mm": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "cluster_count": 2,
+          "estimate": 0.0,
+          "replicates": 10000,
+          "row_count": 2,
+          "seed": 170316,
+          "unit": "task_init_state_cluster"
+        },
+        "put_the_cream_cheese_in_the_bowl/shift_060mm": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "cluster_count": 1,
+          "estimate": 1.0,
+          "replicates": 10000,
+          "row_count": 1,
+          "seed": 170317,
+          "unit": "task_init_state_cluster"
+        }
+      },
+      "macro_task": {
+        "ci95": [
+          0.03125,
+          0.38541666666666663
+        ],
+        "cluster_count_by_task": {
+          "put_the_bowl_on_the_stove": 8,
+          "put_the_cream_cheese_in_the_bowl": 2
+        },
+        "estimate": 0.20833333333333331,
+        "estimate_by_task": {
+          "put_the_bowl_on_the_stove": 0.16666666666666666,
+          "put_the_cream_cheese_in_the_bowl": 0.25
+        },
+        "replicates": 10000,
+        "row_count": 18,
+        "seed": 170215,
+        "tasks": [
+          "put_the_bowl_on_the_stove",
+          "put_the_cream_cheese_in_the_bowl"
+        ],
+        "unit": "macro_average_of_task_specific_init_state_cluster_means"
+      }
+    }
+  },
+  "track_b": {
+    "new_non_nominal_actions": {
+      "all_clusters": {
+        "ci95": [
+          -58.700833333333335,
+          6.544583333333331
+        ],
+        "cluster_count": 10,
+        "estimate": -24.672222222222224,
+        "replicates": 10000,
+        "row_count": 54,
+        "seed": 180216,
+        "unit": "task_init_state_cluster"
+      },
+      "by_actor_seed": {
+        "17": {
+          "ci95": [
+            -103.55,
+            8.933333333333334
+          ],
+          "cluster_count": 10,
+          "estimate": -43.016666666666666,
+          "replicates": 10000,
+          "row_count": 18,
+          "seed": 182214,
+          "unit": "task_init_state_cluster"
+        },
+        "29": {
+          "ci95": [
+            -85.65,
+            22.45
+          ],
+          "cluster_count": 10,
+          "estimate": -26.15,
+          "replicates": 10000,
+          "row_count": 18,
+          "seed": 182215,
+          "unit": "task_init_state_cluster"
+        },
+        "7": {
+          "ci95": [
+            -48.85,
+            38.1
+          ],
+          "cluster_count": 10,
+          "estimate": -4.85,
+          "replicates": 10000,
+          "row_count": 18,
+          "seed": 182216,
+          "unit": "task_init_state_cluster"
+        }
+      },
+      "by_task": {
+        "put_the_bowl_on_the_stove": {
+          "ci95": [
+            -30.583333333333336,
+            19.62621527777776
+          ],
+          "cluster_count": 8,
+          "estimate": -4.923611111111112,
+          "replicates": 10000,
+          "row_count": 45,
+          "seed": 180234,
+          "unit": "task_init_state_cluster"
+        },
+        "put_the_cream_cheese_in_the_bowl": {
+          "ci95": [
+            -121.33333333333333,
+            -86.0
+          ],
+          "cluster_count": 2,
+          "estimate": -103.66666666666666,
+          "replicates": 10000,
+          "row_count": 9,
+          "seed": 180235,
+          "unit": "task_init_state_cluster"
+        }
+      },
+      "by_task_severity": {
+        "put_the_bowl_on_the_stove/future_06_lateral_040mm": {
+          "ci95": [
+            -26.05714285714285,
+            84.66666666666664
+          ],
+          "cluster_count": 7,
+          "estimate": 25.66666666666666,
+          "replicates": 10000,
+          "row_count": 24,
+          "seed": 180414,
+          "unit": "task_init_state_cluster"
+        },
+        "put_the_bowl_on_the_stove/future_14_lateral_020mm": {
+          "ci95": [
+            -43.22361111111112,
+            0.2222222222222222
+          ],
+          "cluster_count": 6,
+          "estimate": -14.777777777777779,
+          "replicates": 10000,
+          "row_count": 21,
+          "seed": 180415,
+          "unit": "task_init_state_cluster"
+        },
+        "put_the_cream_cheese_in_the_bowl/shift_040mm": {
+          "ci95": [
+            -94.0,
+            -86.0
+          ],
+          "cluster_count": 2,
+          "estimate": -90.0,
+          "replicates": 10000,
+          "row_count": 6,
+          "seed": 180416,
+          "unit": "task_init_state_cluster"
+        },
+        "put_the_cream_cheese_in_the_bowl/shift_060mm": {
+          "ci95": [
+            -148.66666666666666,
+            -148.66666666666666
+          ],
+          "cluster_count": 1,
+          "estimate": -148.66666666666666,
+          "replicates": 10000,
+          "row_count": 3,
+          "seed": 180417,
+          "unit": "task_init_state_cluster"
+        }
+      },
+      "macro_task": {
+        "ci95": [
+          -71.61458333333333,
+          -37.42708333333333
+        ],
+        "cluster_count_by_task": {
+          "put_the_bowl_on_the_stove": 8,
+          "put_the_cream_cheese_in_the_bowl": 2
+        },
+        "estimate": -54.295138888888886,
+        "estimate_by_task": {
+          "put_the_bowl_on_the_stove": -4.923611111111112,
+          "put_the_cream_cheese_in_the_bowl": -103.66666666666666
+        },
+        "replicates": 10000,
+        "row_count": 54,
+        "seed": 180217,
+        "tasks": [
+          "put_the_bowl_on_the_stove",
+          "put_the_cream_cheese_in_the_bowl"
+        ],
+        "unit": "macro_average_of_task_specific_init_state_cluster_means"
+      }
+    },
+    "row_count": 54,
+    "safe_success": {
+      "all_clusters": {
+        "ci95": [
+          -0.23333333333333334,
+          0.03333333333333334
+        ],
+        "cluster_count": 10,
+        "estimate": -0.09444444444444444,
+        "replicates": 10000,
+        "row_count": 54,
+        "seed": 180214,
+        "unit": "task_init_state_cluster"
+      },
+      "by_actor_seed": {
+        "17": {
+          "ci95": [
+            -0.4,
+            0.03333333333333333
+          ],
+          "cluster_count": 10,
+          "estimate": -0.16666666666666669,
+          "replicates": 10000,
+          "row_count": 18,
+          "seed": 181214,
+          "unit": "task_init_state_cluster"
+        },
+        "29": {
+          "ci95": [
+            -0.35,
+            0.1
+          ],
+          "cluster_count": 10,
+          "estimate": -0.1,
+          "replicates": 10000,
+          "row_count": 18,
+          "seed": 181215,
+          "unit": "task_init_state_cluster"
+        },
+        "7": {
+          "ci95": [
+            -0.2,
+            0.16666666666666666
+          ],
+          "cluster_count": 10,
+          "estimate": -0.01666666666666667,
+          "replicates": 10000,
+          "row_count": 18,
+          "seed": 181216,
+          "unit": "task_init_state_cluster"
+        }
+      },
+      "by_task": {
+        "put_the_bowl_on_the_stove": {
+          "ci95": [
+            -0.125,
+            0.09722222222222221
+          ],
+          "cluster_count": 8,
+          "estimate": -0.013888888888888888,
+          "replicates": 10000,
+          "row_count": 45,
+          "seed": 180224,
+          "unit": "task_init_state_cluster"
+        },
+        "put_the_cream_cheese_in_the_bowl": {
+          "ci95": [
+            -0.5,
+            -0.3333333333333333
+          ],
+          "cluster_count": 2,
+          "estimate": -0.41666666666666663,
+          "replicates": 10000,
+          "row_count": 9,
+          "seed": 180225,
+          "unit": "task_init_state_cluster"
+        }
+      },
+      "by_task_severity": {
+        "put_the_bowl_on_the_stove/future_06_lateral_040mm": {
+          "ci95": [
+            -0.11904761904761904,
+            0.35714285714285715
+          ],
+          "cluster_count": 7,
+          "estimate": 0.11904761904761904,
+          "replicates": 10000,
+          "row_count": 24,
+          "seed": 180314,
+          "unit": "task_init_state_cluster"
+        },
+        "put_the_bowl_on_the_stove/future_14_lateral_020mm": {
+          "ci95": [
+            -0.16666666666666666,
+            0.0
+          ],
+          "cluster_count": 6,
+          "estimate": -0.05555555555555555,
+          "replicates": 10000,
+          "row_count": 21,
+          "seed": 180315,
+          "unit": "task_init_state_cluster"
+        },
+        "put_the_cream_cheese_in_the_bowl/shift_040mm": {
+          "ci95": [
+            -0.3333333333333333,
+            -0.3333333333333333
+          ],
+          "cluster_count": 2,
+          "estimate": -0.3333333333333333,
+          "replicates": 10000,
+          "row_count": 6,
+          "seed": 180316,
+          "unit": "task_init_state_cluster"
+        },
+        "put_the_cream_cheese_in_the_bowl/shift_060mm": {
+          "ci95": [
+            -0.6666666666666666,
+            -0.6666666666666666
+          ],
+          "cluster_count": 1,
+          "estimate": -0.6666666666666666,
+          "replicates": 10000,
+          "row_count": 3,
+          "seed": 180317,
+          "unit": "task_init_state_cluster"
+        }
+      },
+      "macro_task": {
+        "ci95": [
+          -0.2916666666666667,
+          -0.1388888888888889
+        ],
+        "cluster_count_by_task": {
+          "put_the_bowl_on_the_stove": 8,
+          "put_the_cream_cheese_in_the_bowl": 2
+        },
+        "estimate": -0.21527777777777776,
+        "estimate_by_task": {
+          "put_the_bowl_on_the_stove": -0.013888888888888888,
+          "put_the_cream_cheese_in_the_bowl": -0.41666666666666663
+        },
+        "replicates": 10000,
+        "row_count": 54,
+        "seed": 180215,
+        "tasks": [
+          "put_the_bowl_on_the_stove",
+          "put_the_cream_cheese_in_the_bowl"
+        ],
+        "unit": "macro_average_of_task_specific_init_state_cluster_means"
+      }
+    }
+  },
+  "validity": {
+    "causal_or_deployable_inference_allowed": false,
+    "interpretation": "All planned rows are reported, but these post-hoc stratified intervals are descriptive diagnostics because the replay and perturbation-family gates are blocked.",
+    "replay_contract": "BLOCKED",
+    "second_failure_family": "BLOCKED"
+  }
+}

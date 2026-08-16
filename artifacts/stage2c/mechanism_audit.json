@@ -1,0 +1,59 @@
+{
+  "code_path_explanation": {
+    "cached": "executes the immutable actor chunk A[d:k], then replans with h=16",
+    "compute_control": "both primary paths make one detection-time call, one call at k, and use the same h=16 tail/action budget",
+    "decrease_test": "whether stale-prefix cause violations or large cached/fresh action displacement account for lower safe success",
+    "fresh": "executes the detection-time ACT chunk for exactly k-d actions, then replans with h=16",
+    "improvement_test": "whether preserved nominal progress and fewer newly generated actions occur without additional target-cause violations"
+  },
+  "new_idea_generated": false,
+  "operator_summary": {
+    "fresh_h16": {
+      "cause_violation": 0.5983796296296297,
+      "new_actions": 233.91458333333333,
+      "safe_success": 0.10601851851851851
+    },
+    "fresh_h4": {
+      "cause_violation": 0.5916666666666667,
+      "new_actions": 240.53564814814814,
+      "safe_success": 0.07800925925925926
+    },
+    "hold_one_step_then_fresh_h16": {
+      "cause_violation": 0.5666666666666667,
+      "new_actions": 228.09189814814815,
+      "safe_success": 0.12430555555555556
+    },
+    "rollback_one_step_then_fresh_h16": {
+      "cause_violation": 0.6148148148148148,
+      "new_actions": 241.03425925925927,
+      "safe_success": 0.07847222222222222
+    }
+  },
+  "outcome_groups": {
+    "cached_improves": {
+      "count": 113,
+      "mean_action_disagreement": 0.16063799540949078,
+      "mean_cached_minus_fresh_cause": -0.9292035398230089,
+      "mean_cached_minus_fresh_progress": 0.028087227600004917,
+      "mean_fresh_minus_cached_new_actions": 239.30088495575222
+    },
+    "cached_worsens": {
+      "count": 60,
+      "mean_action_disagreement": 0.1677992715810736,
+      "mean_cached_minus_fresh_cause": 0.8833333333333333,
+      "mean_cached_minus_fresh_progress": -0.019132806152526646,
+      "mean_fresh_minus_cached_new_actions": -210.71666666666667
+    },
+    "same_safe_outcome": {
+      "count": 1267,
+      "mean_action_disagreement": 0.21923159431275083,
+      "mean_cached_minus_fresh_cause": -0.014206787687450671,
+      "mean_cached_minus_fresh_progress": -0.0008437037957101374,
+      "mean_fresh_minus_cached_new_actions": 6.49171270718232
+    }
+  },
+  "paired_prefix_count": 1440,
+  "purpose": "reverse-explain observed increases/decreases from frozen code paths; no new idea generated",
+  "schema_version": 1,
+  "track_a_boundary_rows": 39
+}

@@ -131,12 +131,19 @@ def main() -> None:
     root = args.artifact_root.resolve()
     track_a = load_jsonl(root / "matched_prefix/track_a_rows.jsonl")
     track_b = load_jsonl(root / "crossfit_replanability/crossfit_rows.jsonl")
+    decision = json.loads((root / "decision.json").read_text())
     payload = {
         "schema_version": 1,
         "independent_cluster": ["task", "init_state_id"],
         "actor_seed_role": "repeated measurement within cluster",
         "bootstrap_replicates": args.bootstrap_replicates,
         "bootstrap_seed": BOOTSTRAP_SEED,
+        "validity": {
+            "replay_contract": decision["replay_contract"],
+            "second_failure_family": decision["second_failure_family"],
+            "causal_or_deployable_inference_allowed": False,
+            "interpretation": "All planned rows are reported, but these post-hoc stratified intervals are descriptive diagnostics because the replay and perturbation-family gates are blocked.",
+        },
         "track_a": track_statistics(
             track_a,
             safe_key="safe_success_difference",

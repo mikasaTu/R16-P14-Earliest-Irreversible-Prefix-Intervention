@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "scope": "exact superseded Stage-2C formal PAI service records",
+  "completed_at_utc": "2026-08-16T18:28:30Z",
+  "target_count": 5,
+  "all_prepared_before_first_delete": true,
+  "all_deleted": true,
+  "all_verified_absent": true,
+  "cpfs_and_registry_evidence_preserved": true,
+  "unrelated_jobs_modified": false,
+  "retained_jobs": [
+    {
+      "run_id": "r16p14-stage2c-formal-20260816-v8",
+      "job_id": "dlcb8djiituf7gt3",
+      "reason": "successful formal result"
+    },
+    {
+      "run_id": "r16p14-stage2c-replay-probe-20260816-v1",
+      "job_id": "dlckxv47eepcwle3",
+      "reason": "successful independent diagnostic probe"
+    }
+  ],
+  "targets": [
+    {
+      "run_id": "r16p14-stage2c-formal-20260816-v3",
+      "job_id": "dlcy1vkaxo51zllw",
+      "pre_delete_status": "Failed",
+      "expected_purpose": "formal-evaluation",
+      "delete_request_id": "01A00BD3-F62F-578E-8D04-34DBCCD024B3",
+      "evidence_sha256": "86b7be908c8d41a71c68a6cee45124ae31c3c5a6440dad8176bad900811a48b7",
+      "verified_absent": true
+    },
+    {
+      "run_id": "r16p14-stage2c-formal-20260816-v4",
+      "job_id": "dlc3pz7yilr3s3mo",
+      "pre_delete_status": "Failed",
+      "expected_purpose": "formal-evaluation",
+      "delete_request_id": "01A00BD4-1541-5E08-BC7E-FFAF12F28D6A",
+      "evidence_sha256": "33e3c5409b121511e18a9048a6b26fbd2ce7dcd7958bd7e2e717d4a8e58aaf51",
+      "verified_absent": true
+    },
+    {
+      "run_id": "r16p14-stage2c-formal-20260816-v5",
+      "job_id": "dlc1j1w3relstvzb",
+      "pre_delete_status": "Stopped",
+      "expected_purpose": "formal-evaluation",
+      "delete_request_id": "01A00BD4-34B4-5255-8977-3CFFF7E31C0E",
+      "evidence_sha256": "04a98a2f31dd763d1c28b97fdec34637e1800ba1af6bdc84e79c75179711196c",
+      "verified_absent": true
+    },
+    {
+      "run_id": "r16p14-stage2c-formal-20260816-v6",
+      "job_id": "dlcrl340ah8k5uya",
+      "pre_delete_status": "Failed",
+      "expected_purpose": "formal-evaluation",
+      "delete_request_id": "01A00BD4-55BA-5ECE-995E-26AE644A5DA5",
+      "evidence_sha256": "c1bbea148771c6d493adfe9cfeb827f4c3366483e0e5166a7dbbbe6d120ed7b4",
+      "verified_absent": true
+    },
+    {
+      "run_id": "r16p14-stage2c-formal-20260816-v7",
+      "job_id": "dlczdbeoa10aapan",
+      "pre_delete_status": "Stopped",
+      "expected_purpose": "formal-evaluation",
+      "delete_request_id": "01A00BD4-7F2F-519F-9570-5AB9110A6304",
+      "evidence_sha256": "464ae1b63506de7dc8a93f5f640cc4680da511c38d6df19bddd143dde7ed1693",
+      "verified_absent": true
+    }
+  ],
+  "toolchain": {
+    "delete_helper_sha256": "1bba192a8f0678816e646c0853986f8ed7d9ef46b02da4085a72850e9b3ccdcb",
+    "openapi_common_sha256": "f99687fc7ad276ef087d1c1062673554141a48696b223001d75f0622fef54fa9",
+    "toolchain_snapshot_sha256": "a5fad7f90269cc82082bf2e37cc046166faf29449aa59cb8f655b17e3a3aff90"
+  },
+  "mode_audit": {
+    "initial_prepare_refused_before_external_mutation": true,
+    "initial_refusal": "toolchain.json was mode 0600 while the pinned helper requires 0644",
+    "resolution": "temporarily set only toolchain.json to 0644 around each pinned helper call and restored its original 0600 mode via an EXIT trap",
+    "final_toolchain_mode": "0600"
+  }
+}

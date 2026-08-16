@@ -10,6 +10,7 @@ import numpy as np
 
 from r16_p14_stage2b.io_utils import atomic_write_json, atomic_write_text, load_jsonl
 
+from .replay_contract_diagnostic import build_replay_contract_audit
 from .settings import ARTIFACT_ROOT, DETECTION_PREFIX, H_VALID, TARGET_SHIFT_TASK
 
 
@@ -276,20 +277,40 @@ def named_arm_summary(root: Path, matched: list[dict[str, Any]], recovery: list[
     }
     baseline_path = root / "crossfit_replanability/baseline_rows.jsonl"
     deployable = {}
+    baseline_coverage = {}
+    baseline_coverage_by_split: dict[str, dict[str, int]] = {}
     if baseline_path.is_file():
-        baseline_rows = [row for row in load_jsonl(baseline_path) if row["split"] == "evaluation"]
+        all_baseline_rows = load_jsonl(baseline_path)
+        for (split, method), rows in sorted(_group(all_baseline_rows, "split", "method").items()):
+            baseline_coverage_by_split.setdefault(str(split), {})[str(method)] = len(
+                {row["event_instance_id"] for row in rows}
+            )
+        baseline_rows = [row for row in all_baseline_rows if row["split"] == "evaluation"]
+        expected_events = len({row["event_instance_id"] for row in evaluation})
         for method, rows in sorted(_group(baseline_rows, "method").items()):
+            event_count = len({row["event_instance_id"] for row in rows})
             deployable[str(method[0])] = {
                 "rows": len(rows),
+                "events": event_count,
+                "expected_events": expected_events,
+                "event_coverage_fraction": event_count / expected_events if expected_events else None,
                 "safe_success_rate": _rate(rows, "safe_success"),
                 "mean_new_non_nominal_actions": _mean(rows, "new_non_nominal_actions"),
                 "mean_actor_calls": _mean(rows, "actor_calls"),
                 "mean_selected_prefix": _mean(rows, "prefix_k"),
             }
+            baseline_coverage[str(method[0])] = event_count
     return {
         "named_generator_actor_arms": named,
         "generator_actor_prefix_grid": prefix_grid,
         "deployable_baselines_over_three_recovery_actors": deployable,
+        "baseline_coverage_audit": {
+            "expected_evaluation_events": len({row["event_instance_id"] for row in evaluation}),
+            "event_count_by_method": baseline_coverage,
+            "event_count_by_split_and_method": baseline_coverage_by_split,
+            "equal_coverage": len(set(baseline_coverage.values())) <= 1 if baseline_coverage else False,
+            "selection_bias_warning": "Calibration ranking compares method means on unequal event subsets. Boundary-dependent baselines exist only where their boundary is non-null, so the frozen strongest baseline is not a common-support comparison.",
+        },
         "recovery_operators": operator_mechanism(recovery),
         "note": "Fixed delays and heuristic baselines are materialized from their preregistered rows; no evaluation outcome chooses a task, severity, threshold, or baseline name.",
     }
@@ -323,6 +344,7 @@ def selection_mechanism(root: Path) -> dict[str, Any]:
 def render_markdown(payload: dict[str, Any]) -> str:
     q = payload["qualification"]
     m = payload["matched_prefix"]
+    replay = payload["replay_contract"]
     improve = m["outcome_groups"]["cached_improves"]
     worsen = m["outcome_groups"]["cached_worsens"]
     activation = q["target_shift_activation"]
@@ -338,15 +360,20 @@ def render_markdown(payload: dict[str, Any]) -> str:
             f"For target shift, {activation['events_with_post_detection_release']}/{activation['calibration_events']} chunks contained a post-detection gripper release, and {activation['events_with_cause_eligible_release']} were eligible after the lift condition. This confirms why all frozen target-shift severities had zero delayed cause violations.",
             "Path-obstacle failures are summarized from every frozen cell in the JSON companion; no task or severity was selected using method outcomes.",
             "",
+            "## Formal replay-contract mechanism",
+            "",
+            f"All planned formal rows completed, but {replay['recovery_prefix_cells']['inconsistent_S_obs_cells']}/{replay['recovery_prefix_cells']['total']} recovery prefix cells produced contradictory pre-operator `S_obs(k)` values, affecting {replay['events']['with_inconsistent_recovery_S_obs']}/{replay['events']['total']} events. The replay contract is therefore `{replay['status']}`.",
+            "The recovery code records the prefix label before recovery-actor inference and before operator actions. Because all recovery rows execute the same cached prefix, actor/operator/tail outcomes cannot explain the disagreement. The remaining code boundary is residual mutable state or branch-order dependence in the shared EventRuntime reset path; the artifacts do not identify one hidden field uniquely.",
+            "",
             "## Matched-prefix mechanism",
             "",
-            f"The evaluation contains {m['evaluation_paired_prefix_cells']} exact cached/fresh prefix pairs. Cached improved safe success in {improve['count']} cells and worsened it in {worsen['count']} cells.",
-            "The JSON companion reports action disagreement, retained progress, cause violations, completion steps, paths and contacts separately for improvements and degradations.",
+            f"The evaluation contains {m['evaluation_paired_prefix_cells']} planned cached/fresh prefix pairs. Raw cached outcomes improved safe success in {improve['count']} cells and worsened it in {worsen['count']} cells.",
+            "The JSON companion reports action disagreement, retained progress, cause violations, completion steps, paths and contacts separately for improvements and degradations. These are descriptive partitions, not causal pairs, because the replay contract failed.",
             "`new_non_nominal_actions` is partly structural: cached prefix actions are defined as retained, while fresh-prefix and tail actions are defined as new. A reduction without safe-success improvement is not an independent efficiency mechanism.",
             "",
             "## Causal scope",
             "",
-            "Cached and fresh primary branches match the detection-time call, the call at k, the h=16 tail, action budget, simulator seed, perturbation and actor. Therefore an observed branch difference is isolated to which k-d prefix actions were executed. Associations with disagreement or progress explain the code path but do not establish a universal physical irreversibility mechanism.",
+            "The intended cached/fresh contract matches the detection-time call, call at k, h=16 tail, action budget, simulator seed, perturbation and actor. The observed reset/order dependence means a branch difference is not empirically isolated to the k-d prefix actions in this run. Associations with disagreement or progress only describe the frozen code path and do not establish a universal physical irreversibility mechanism.",
             "",
             "All downstream outcomes remain diagnostic-only when the perturbation-family gate is blocked. `accepted=false`, Stage-1b remains `KILLED_IMMUTABLE`, and novelty remains at most N2.",
             "",
@@ -363,10 +390,12 @@ def main() -> None:
     events = load_jsonl(root / "actor_events/events.jsonl")
     matched = load_jsonl(root / "formal_matrix/matched_prefix_rows.jsonl")
     recovery = load_jsonl(root / "formal_matrix/recovery_operator_rows.jsonl")
+    replay_contract = build_replay_contract_audit(matched, recovery)
     payload = {
         "schema_version": 1,
         "purpose": "code-first reverse explanation of observed gains and losses; no new idea",
         "qualification": qualification_mechanism(qualification, events),
+        "replay_contract": replay_contract,
         "matched_prefix": matched_mechanism(matched),
         "recovery_operators": operator_mechanism(recovery),
         "all_required_arms": named_arm_summary(root, matched, recovery),

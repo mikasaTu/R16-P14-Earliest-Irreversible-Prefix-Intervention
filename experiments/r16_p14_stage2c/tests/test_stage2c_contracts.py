@@ -14,6 +14,7 @@ from r16_p14_stage2c.checksums import build_manifest
 from r16_p14_stage2c.detailed_statistics import macro_task_bootstrap
 from r16_p14_stage2c.events import exclusion_metrics, persist_first_completed_event_marker
 from r16_p14_stage2c.mechanism_reverse import named_arm_summary, paired_prefix_rows, target_shift_activation
+from r16_p14_stage2c.replay_contract_diagnostic import build_replay_contract_audit
 from r16_p14_stage2c.runtime import numeric_difference
 from r16_p14_stage2c.contracts import (
     admit_event_replay,
@@ -430,3 +431,43 @@ def test_38_fixed_delay_summary_executes_cached_prefix(tmp_path):
     assert set(summary["generator_actor_prefix_grid"]["CACHED_MATCHED"]) == {
         str(prefix) for prefix in range(2, 17)
     }
+
+
+def test_39_replay_contract_blocks_when_identical_cached_prefix_has_two_s_obs_values():
+    base = {
+        "event_instance_id": "event",
+        "event_id": "source",
+        "task": "put_the_bowl_on_the_stove",
+        "split": "evaluation",
+        "init_state_id": 40,
+        "generator_actor_seed": 7,
+        "parameter_id": "future_06_lateral_040mm",
+        "prefix_k": 2,
+        "S_obs_at_k": True,
+    }
+    matched = [
+        {**base, "branch": "CACHED_MATCHED"},
+        {**base, "branch": "CACHED_NOQUERY", "S_obs_at_k": False},
+    ]
+    recovery = [
+        {
+            **base,
+            "branch": "RECOVERY_OPERATOR",
+            "operator": operator,
+            "recovery_actor_seed": seed,
+            "S_obs_at_k": not (seed == 29 and operator == "fresh_h16"),
+        }
+        for seed in (7, 17, 29)
+        for operator in (
+            "fresh_h16",
+            "fresh_h4",
+            "hold_one_step_then_fresh_h16",
+            "rollback_one_step_then_fresh_h16",
+        )
+    ]
+    audit = build_replay_contract_audit(matched, recovery)
+    assert audit["status"] == "BLOCKED"
+    assert audit["recovery_prefix_cells"]["all_have_expected_rows"]
+    assert audit["recovery_prefix_cells"]["inconsistent_S_obs_cells"] == 1
+    assert audit["events"]["with_inconsistent_recovery_S_obs"] == 1
+    assert audit["same_nominal_prefix_control"]["S_obs_disagreement_cells"] == 1

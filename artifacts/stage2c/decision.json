@@ -1,0 +1,46 @@
+{
+  "accepted": false,
+  "all_experiments_continued_after_failed_gates": true,
+  "contract_repair": "PASS",
+  "frozen_strongest_baseline": "k_last_recoverable",
+  "local_repair": "RETIRED_NO_SIGNAL",
+  "novelty": "N2_ORACLE_PROTOCOL_BOUNDARY_ONLY",
+  "operator_router": "RETIRED_NO_SIGNAL",
+  "overall": "BLOCKED_BY_REPLAY_CONTRACT",
+  "replay_contract": "BLOCKED",
+  "schema_version": 1,
+  "second_failure_family": "BLOCKED",
+  "stage1b_universal_hypothesis": "KILLED_IMMUTABLE",
+  "stage2b_status": "BLOCKED_UPSTREAM",
+  "track_a_checks": {
+    "all_budget_matched": true,
+    "all_compute_matched": true,
+    "both_tasks_median_window_ge_2": true,
+    "direction_all_severities": false,
+    "direction_both_tasks": false,
+    "direction_two_of_three_generator_seeds": true,
+    "new_actions_reduced_ge_15pct": false,
+    "safe_ci_lower_ge_minus_0_03": true
+  },
+  "track_a_operator_relative_prefix_reuse": "INCONCLUSIVE",
+  "track_a_raw_signal": false,
+  "track_b_checks": {
+    "action_and_call_budgets_equal": false,
+    "claimed_gain_ci_lower_gt_0": false,
+    "interior_selected_ge_20pct": true,
+    "positive_both_tasks": false,
+    "positive_two_of_three_heldout_seeds": false,
+    "primary_gain_threshold": false,
+    "selected_differs_from_d_ge_20pct": true,
+    "selected_differs_from_last_recoverable_ge_20pct": true
+  },
+  "track_b_crossfit_replanability": "INCONCLUSIVE",
+  "track_b_raw_signal": false,
+  "upstream_gates": {
+    "contract_repair": true,
+    "formal_matrix": true,
+    "minimum_data": true,
+    "replay_contract": false,
+    "second_failure_family": false
+  }
+}
