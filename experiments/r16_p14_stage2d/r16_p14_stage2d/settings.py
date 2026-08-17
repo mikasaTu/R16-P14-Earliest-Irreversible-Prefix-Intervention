@@ -9,6 +9,7 @@ EXPERIMENT_ROOT = Path(__file__).resolve().parents[1]
 ARTIFACT_ROOT = Path(
     os.environ.get("R16_P14_STAGE2D_ARTIFACT_ROOT", PROJECT_ROOT / "artifacts/stage2d")
 ).resolve()
+MIRROR_EXPERIMENT_OUTPUTS = os.environ.get("R16_P14_STAGE2D_MIRROR_EXPERIMENT_OUTPUTS", "1") == "1"
 
 IMMUTABLE_PARENT = "74538ae3d9ff76f1c5c2d981da3a3c133829d73b"
 IMMUTABLE_TREE = "93f7f9ae63ff7d2760dc14f65132ee8cdd39e007"
