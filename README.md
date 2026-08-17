@@ -72,6 +72,9 @@ of at least two actions. The detailed interpretation is in
 
 ## What is included
 
+- [`docs/feishu`](docs/feishu): revision-pinned Markdown snapshots of the
+  Feishu Step 1–5 plans and their five experiment reports, with source URLs,
+  document tokens, revision IDs, byte counts, and SHA-256 checksums.
 - [`experiments/r16_p14_libero_stage1b`](experiments/r16_p14_libero_stage1b):
   corrected metric contract, prefix-reconstruction replay gate, policy-free
   expert-chunk calibration, tests, exact commands, and final stopping decision.
