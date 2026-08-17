@@ -1,0 +1,185 @@
+schema_version: 1
+stage: R16-P14 Stage-2D
+title: Fresh-Process Event-Aligned Prefix Reuse
+frozen_before_outcomes: true
+immutable_parent:
+  commit: 74538ae3d9ff76f1c5c2d981da3a3c133829d73b
+  tree: 93f7f9ae63ff7d2760dc14f65132ee8cdd39e007
+  initial_status_short: ""
+source_plan:
+  sha256: 0816abba294faa6e8b12a73660bb819995bb9ee882875496ec795ec87dae8b90
+immutable_conclusions:
+  stage1b_universal_hypothesis: KILLED_IMMUTABLE
+  stage2b_chunk_executability: PASS
+  stage2b_h_valid: 16
+  stage2b_actor_conditioned_perturbation: BLOCKED
+  stage2b_actor_history_replay: BLOCKED
+  stage2b_track_a: INCONCLUSIVE
+  stage2b_track_b: INCONCLUSIVE
+  stage2b_local_repair: NO_SIGNAL
+  stage2b_operator_router: NO_OPERATOR_ROUTING_SIGNAL
+  stage2c_qualification: BLOCKED
+  stage2c_replay_contract: BLOCKED
+  stage2c_track_a: INCONCLUSIVE
+  stage2c_track_b: INCONCLUSIVE
+  accepted: false
+  novelty_ceiling: N2_ORACLE_PROTOCOL_BOUNDARY_ONLY
+hypotheses:
+  h1: nontrivial_observed_safe_window
+  h2: cached_prefix_content_value_at_matched_k
+  h3: outcome_blind_event_aligned_handoff_value
+  h4: nontrivial_interior_selection
+scope:
+  evidence_terms:
+    - observed-safe prefix
+    - policy-relative recoverability
+    - last recoverable prefix
+    - event-aligned handoff
+    - cached-prefix reuse
+    - oracle upper bound
+  forbidden_claims:
+    - physical irreversibility point
+    - universally irreversible prefix
+    - validated VLA method
+    - accepted idea
+    - N3
+    - N4
+actors:
+  family: HistoryConditionedStateACT
+  checkpoints: [7, 17, 29]
+  deterministic_inference: true
+  retraining: forbidden
+  preferred_device: cpu
+tasks:
+  target_shift: put_the_cream_cheese_in_the_bowl
+  path_obstacle: put_the_bowl_on_the_stove
+branch_isolation:
+  start_method: spawn
+  unique_process_per: [event, prefix_k, arm, repeat]
+  shared_runtime_between_branches: forbidden
+  smoke_prefixes: [2, 6, 16]
+  repeats: 3
+  arm_order_permutations_min: 3
+  maximum_state_error: 1.0e-9
+  require_exact_same_action_signature: true
+  require_no_actor_side_effect: true
+init_pool:
+  fresh_states_per_task: 100
+  state_source: deterministic_environment_reset_randomization
+  infrastructure_ids: [0, 9]
+  calibration_ids: [10, 39]
+  evaluation_ids: [40, 79]
+  untouched_reserve_ids: [80, 99]
+  outcome_blind_validation_only: true
+events:
+  one_event_per_rollout: true
+  formal_actor_generated_only: true
+  demonstration_formal_evidence: forbidden
+  global_step_fallback: forbidden
+  detection_prefix: 2
+  chunk_horizon: 16
+  availability_per_task_min: 40
+  availability_per_seed_task_min: 10
+  distinct_init_ids_per_task_min: 30
+  target_shift:
+    stable_lift_steps_min: 2
+    release_index_min: 6
+    release_index_max: 13
+    nominal_transport_progress_required: true
+  path_obstacle:
+    nominal_displacement_m_min: 0.06
+    future_indices: [6, 9, 12]
+    future_point_distance_m_min: 0.05
+perturbations:
+  target_shift:
+    magnitudes_m: [0.04, 0.06, 0.08]
+    direction: lateral_to_nominal_object_to_target_approach
+    moved_entity: target_bowl_only
+  path_obstacle:
+    future_indices: [6, 9, 12]
+    clearance_delta_m: [-0.01, 0.0, 0.01]
+    placement: p_future_plus_lateral_times_radius_sum_plus_clearance_delta
+    radii_source: live_geometry_bounding_sphere
+    injection_contact: forbidden
+  absorbing_cause_label: true
+qualification:
+  valid_events_min: 20
+  contributing_actor_seeds_min: 2
+  events_per_contributing_seed_min: 5
+  injection_contact_rate: 0.0
+  immediate_violation_max: 0.05
+  delayed_violation_min: 0.30
+  delayed_violation_max: 0.80
+  median_first_violation_offset_min: 3
+  interior_violation_fraction_min: 0.30
+  replay_rate: 1.0
+  error_count: 0
+  nonmonotonic_event_count: 0
+  qualified_severities_per_family_min: 2
+calibration_atlas:
+  split: calibration
+  prefix_indices: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+  primary_arms: [IMMEDIATE_FRESH, CACHED_MATCHED, FRESH_MATCHED, HOLD_MATCHED]
+  secondary_arms: [CACHED_NOQUERY, FULL_OLD_CHUNK]
+  tail_horizon: 4
+  dummy_call_padding: forbidden
+  oracle_objective:
+    - safe_success_descending
+    - no_cause_violation_descending
+    - actual_post_detection_actions_ascending
+    - completion_time_ascending
+    - actual_actor_calls_ascending
+    - k_ascending
+frozen_rules:
+  target_shift: clip(release_index_minus_2, d, H)
+  path_obstacle: clip(predicted_path_intersection_index_minus_2, d, H)
+  safety_epsilon: 0.03
+  strongest_fixed_delay_source: calibration_only
+confirmatory:
+  split: evaluation
+  methods:
+    - IMMEDIATE_FRESH
+    - FIXED_DELAY_2
+    - FIXED_DELAY_4
+    - FIXED_DELAY_8
+    - EVENT_ALIGNED_CACHED
+    - FRESH_MATCHED_AT_RULE_K
+    - HOLD_MATCHED_AT_RULE_K
+    - CACHED_NOQUERY_AT_RULE_K
+    - FULL_OLD_CHUNK
+  minimum_events_per_task: 30
+  minimum_events_per_severity: 12
+  minimum_events_per_actor_seed: 8
+  minimum_distinct_init_clusters: 24
+  replay_repeats: 3
+  evaluation_all_k_scan_before_rule: forbidden
+statistics:
+  independent_unit: init_state_rollout_event
+  bootstrap: paired_event
+  bootstrap_replicates: 10000
+  bootstrap_seed: 216214
+  macro_task_average: descriptive_only
+  prefix_rows_are_independent: false
+resources:
+  cpu_first: true
+  maximum_gpus: 2
+  maximum_concurrent_gpu_workers: 2
+  local_real_libero_smoke_before_pai: true
+  actor_retraining: false
+user_override:
+  reason: explicit request to complete every planned experiment even after a failed gate
+  downstream_after_failed_gate: diagnostic_only
+  scientific_gate_decision_remains_failed: true
+  positive_or_accepted_label_after_failure: forbidden
+  accepted_remains_false: true
+forbidden:
+  - pi0.5
+  - RGB_VLA
+  - world_model
+  - learned_risk_head
+  - learned_replanability_head
+  - operator_router_training
+  - actor_retraining
+  - hyperparameter_sweep
+  - evaluation_set_retuning
+  - HTML
