@@ -38,7 +38,9 @@ The cached-versus-fresh comparison matches prefix length, detection-time call re
 
 ## Confirmatory versus appendix oracle
 
-The evaluation all-k appendix status is **NOT_RUN**; rows=None / None; terminal receipt=None; complete matrix=None; it reports `primary_decision_effect=NONE`; primary decision unchanged: None. It cannot retune the rule, baseline, threshold, or decision.
+The evaluation all-k appendix status is **PASS**; rows=2310 / 2310; events=154; errors=0; missing=0; terminal receipt=SUCCEEDED; complete matrix=True; it reports `primary_decision_effect=NONE`; primary decision unchanged: True. It cannot retune the rule, baseline, threshold, or decision.
+
+PAI receipt: run `r16p14-stage2d-phase3-oracle-20260819-v6`, JobId `dlcxqlerueks20h6`, final platform status **Failed**. The platform job failed only during postprocessing because the first pytest ran before SHA256SUMS was rebuilt after the 2310 oracle shards were written (test_29); this is retained as a control-plane failure, not rewritten as Succeeded. The science matrix and terminal receipt above remain complete and diagnostic-only.
 
 ## Mechanism reverse audit
 

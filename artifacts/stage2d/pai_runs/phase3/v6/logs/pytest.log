@@ -1,0 +1,28 @@
+............................F...............                             [100%]
+=================================== FAILURES ===================================
+_______________ test_29_checksum_manifest_covers_every_artifact ________________
+
+    def test_29_checksum_manifest_covers_every_artifact():
+        checksum_path = require(ARTIFACT_ROOT / "SHA256SUMS")
+        listed = {line.split("  ", 1)[1] for line in checksum_path.read_text().splitlines() if line}
+        expected = {
+            str(Path("artifacts/stage2d") / path.relative_to(ARTIFACT_ROOT))
+            for path in ARTIFACT_ROOT.rglob("*")
+            if path.is_file() and path != checksum_path
+        }
+>       assert listed == expected
+E       AssertionError: assert {'artifacts/s...port.md', ...} == {'artifacts/s...port.md', ...}
+E         
+E         Extra items in the right set:
+E         'artifacts/stage2d/oracle_appendix/shards/put_the_bowl_on_the_stove__evaluation__seed07__init63__future_09__clearance_p000mm__k05.json'
+E         'artifacts/stage2d/oracle_appendix/shards/put_the_cream_cheese_in_the_bowl__evaluation__seed29__init63__shift_080mm__k07.json'
+E         'artifacts/stage2d/oracle_appendix/shards/put_the_bowl_on_the_stove__evaluation__seed17__init55__future_09__clearance_p000mm__k05.json'
+E         'artifacts/stage2d/oracle_appendix/shards/put_the_cream_cheese_in_the_bowl__evaluation__seed17__init47__shift_080mm__k06.json'
+E         'artifacts/stage2d/oracle...
+E         
+E         ...Full output truncated (2313 lines hidden), use '-vv' to show
+
+experiments/r16_p14_stage2d/tests/test_contracts.py:227: AssertionError
+=========================== short test summary info ============================
+FAILED experiments/r16_p14_stage2d/tests/test_contracts.py::test_29_checksum_manifest_covers_every_artifact
+1 failed, 43 passed in 17.57s

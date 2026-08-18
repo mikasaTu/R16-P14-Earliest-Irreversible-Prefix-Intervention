@@ -23,6 +23,7 @@ def main() -> None:
     confirm = read_json("confirmatory_evaluation/summary.json", {})
     statistics = read_json("statistics/statistics.json", {})
     oracle = read_json("oracle_appendix/summary.json", {})
+    phase3_job = read_json("pai_runs/phase3/v6/registry/getjob-latest.json", {})
     mechanism = read_json("statistics/mechanism_reverse_audit.json", {})
     signal = statistics.get("diagnostic_error_signal", {})
     qualification_mechanisms = mechanism.get("qualification_failure_mechanisms", {})
@@ -67,7 +68,9 @@ def main() -> None:
         "",
         "## Confirmatory versus appendix oracle",
         "",
-        f"The evaluation all-k appendix status is **{oracle.get('status', 'NOT_RUN')}**; rows={oracle.get('rows')} / {oracle.get('expected_rows')}; terminal receipt={oracle.get('terminal_receipt', {}).get('status')}; complete matrix={oracle.get('complete_matrix')}; it reports `primary_decision_effect=NONE`; primary decision unchanged: {oracle.get('primary_decision_unchanged')}. It cannot retune the rule, baseline, threshold, or decision.",
+        f"The evaluation all-k appendix status is **{oracle.get('status', 'NOT_RUN')}**; rows={oracle.get('rows')} / {oracle.get('expected_rows')}; events={oracle.get('oracle_events')}; errors={oracle.get('error_count')}; missing={len(oracle.get('missing_shards', []))}; terminal receipt={oracle.get('terminal_receipt', {}).get('status')}; complete matrix={oracle.get('complete_matrix')}; it reports `primary_decision_effect=NONE`; primary decision unchanged: {oracle.get('primary_decision_unchanged')}. It cannot retune the rule, baseline, threshold, or decision.",
+        "",
+        f"PAI receipt: run `r16p14-stage2d-phase3-oracle-20260819-v6`, JobId `{phase3_job.get('JobId')}`, final platform status **{phase3_job.get('Status')}**. The platform job failed only during postprocessing because the first pytest ran before SHA256SUMS was rebuilt after the 2310 oracle shards were written (test_29); this is retained as a control-plane failure, not rewritten as Succeeded. The science matrix and terminal receipt above remain complete and diagnostic-only.",
         "",
         "## Mechanism reverse audit",
         "",
