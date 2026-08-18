@@ -138,11 +138,14 @@ PY
 
 import_resume_shards() {
   [[ -n "$RESUME_FROM_RUN" ]] || return 0
+  [[ "$PHASE" = phase2 ]] || { printf 'resume import is phase2-only\n' >&2; exit 73; }
   [[ "$RESUME_FROM_RUN" =~ ^[A-Za-z0-9][A-Za-z0-9._-]{2,63}$ ]]
-  case "$RESUME_ROOT" in
-    /mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2d/pai) ;;
-    *) printf 'resume root escaped Stage2D evidence root: %s\n' "$RESUME_ROOT" >&2; exit 72 ;;
-  esac
+  if [[ "${STAGE2D_RESUME_TEST_MODE:-0}" != 1 ]]; then
+    case "$RESUME_ROOT" in
+      /mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2d/pai) ;;
+      *) printf 'resume root escaped Stage2D evidence root: %s\n' "$RESUME_ROOT" >&2; exit 72 ;;
+    esac
+  fi
   local resume_dir="$RESUME_ROOT/$RESUME_FROM_RUN"
   test -f "$resume_dir/pai_state/RECOVERY_MANIFEST.json"
   "$PYTHON" - "$resume_dir" "$ARTIFACT_ROOT" "$RESUME_SOURCE_COMMIT" "$RESUME_SOURCE_TREE" <<'PY'
@@ -182,8 +185,35 @@ for item in manifest.get("items", []):
         if hashlib.sha256(destination.read_bytes()).hexdigest() != digest:
             raise RuntimeError(f"refusing to overwrite divergent completed shard: {destination}")
     else:
-        shutil.copyfile(source, destination)
-        os.chmod(destination, 0o600)
+        temporary = destination.with_name(
+            f".{destination.name}.{os.getpid()}.tmp"
+        )
+        descriptor = os.open(
+            temporary, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600
+        )
+        try:
+            with source.open("rb") as source_handle, os.fdopen(descriptor, "wb") as destination_handle:
+                shutil.copyfileobj(source_handle, destination_handle)
+                destination_handle.flush()
+                os.fsync(destination_handle.fileno())
+            try:
+                os.link(temporary, destination)
+            except FileExistsError:
+                if hashlib.sha256(destination.read_bytes()).hexdigest() != digest:
+                    raise RuntimeError(
+                        f"refusing to overwrite divergent concurrent shard: {destination}"
+                    )
+            else:
+                directory_descriptor = os.open(destination.parent, os.O_RDONLY)
+                try:
+                    os.fsync(directory_descriptor)
+                finally:
+                    os.close(directory_descriptor)
+        finally:
+            try:
+                temporary.unlink()
+            except FileNotFoundError:
+                pass
     imported.append({"relative_path": str(destination.relative_to(artifact_dir)), "sha256": digest})
 receipt = artifact_dir.parent / "pai_state/RESUME_IMPORT.json"
 receipt.parent.mkdir(parents=True, exist_ok=True)
