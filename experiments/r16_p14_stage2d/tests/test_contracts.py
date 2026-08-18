@@ -7,7 +7,15 @@ from pathlib import Path
 
 import pytest
 
-from r16_p14_stage2d import calibration, confirmatory, events, oracle_appendix, runtime, statistics
+from r16_p14_stage2d import (
+    calibration,
+    checksums,
+    confirmatory,
+    events,
+    oracle_appendix,
+    runtime,
+    statistics,
+)
 from r16_p14_stage2d.contracts import (
     has_zero_to_one,
     maximum_budgets,
@@ -212,7 +220,7 @@ def test_29_checksum_manifest_covers_every_artifact():
     checksum_path = require(ARTIFACT_ROOT / "SHA256SUMS")
     listed = {line.split("  ", 1)[1] for line in checksum_path.read_text().splitlines() if line}
     expected = {
-        str(path.relative_to(ARTIFACT_ROOT.parents[1]))
+        str(Path("artifacts/stage2d") / path.relative_to(ARTIFACT_ROOT))
         for path in ARTIFACT_ROOT.rglob("*")
         if path.is_file() and path != checksum_path
     }
@@ -269,3 +277,11 @@ def test_37_pai_primary_lock_verification_uses_committed_repository_path():
     source = inspect.getsource(oracle_appendix.verify_primary_lock)
     assert 'relative = "artifacts/stage2d/statistics/primary_manifest.json"' in source
     assert "path.relative_to(PROJECT_ROOT)" not in source
+
+
+def test_38_checksum_paths_are_stable_for_external_pai_artifact_root():
+    external_file = ARTIFACT_ROOT / "statistics/statistics.json"
+    assert checksums.canonical_artifact_path(external_file) == Path(
+        "artifacts/stage2d/statistics/statistics.json"
+    )
+    assert "relative_to(PROJECT_ROOT)" not in inspect.getsource(checksums.main)
