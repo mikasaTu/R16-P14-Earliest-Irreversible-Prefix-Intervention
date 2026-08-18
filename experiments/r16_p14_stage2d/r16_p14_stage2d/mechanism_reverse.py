@@ -60,6 +60,80 @@ def source_location(function) -> dict[str, Any]:
     }
 
 
+def qualification_mechanism_audit() -> dict[str, Any]:
+    """Explain the observed qualification failures from frozen rows.
+
+    This is deliberately a code/data audit rather than a new selector.  The
+    qualification gate is upstream of all method outcomes, so these entries
+    only describe why a perturbation cell was weak or malformed.  The values
+    are copied from the preregistered qualification summary and kept
+    diagnostic-only.
+    """
+    path = ARTIFACT_ROOT / "perturbation_qualification/summary.json"
+    if not path.is_file():
+        return {"status": "UNAVAILABLE", "cells": []}
+    summary = json.loads(path.read_text())
+    target_rates = {
+        cell.get("magnitude_m"): cell.get("delayed_violation_rate")
+        for cell in summary.get("grid", [])
+        if cell.get("task") == "put_the_cream_cheese_in_the_bowl"
+    }
+    cells = []
+    for cell in summary.get("grid", []):
+        task = cell.get("task")
+        parameter_id = cell.get("parameter_id")
+        if task == "put_the_bowl_on_the_stove" and cell.get("future_index") == 12:
+            mechanism = (
+                "The future-point eligibility check only guarantees distance from the "
+                "anchor.  The live lateral direction is computed from consecutive "
+                "trajectory points at indices 11 and 12; the observed local XY segment "
+                "is approximately zero, so the lateral vector is undefined and the "
+                "qualification branch records replay/error rows."
+            )
+            root = "event-geometry/qualification-grid mismatch"
+        elif task == "put_the_bowl_on_the_stove" and cell.get("future_index") == 9:
+            mechanism = (
+                "The blocker placement uses the conservative maximum XY radius of the "
+                "live geometry plus the obstacle radius and clearance.  This places "
+                "the centers roughly 0.1584 m apart (about 0.0757 m + 0.0827 m before "
+                "clearance), so the -10/0 mm cells rarely make contact and the delayed "
+                "violation rate remains near 0.0159 rather than entering the preregistered "
+                "0.30--0.80 interval."
+            )
+            root = "conservative radius-sum placement makes the perturbation weak"
+        elif task == "put_the_cream_cheese_in_the_bowl" and cell.get("magnitude_m") in (0.04, 0.08):
+            mechanism = (
+                "The target-shift implementation is geometrically valid, but the chosen "
+                "magnitude is outside the useful delayed-violation band: 40 mm yields "
+                f"{float(target_rates.get(0.04, 0.0)):.4f} delayed violations, while "
+                f"80 mm yields {float(target_rates.get(0.08, 0.0)):.4f}.  The 60 mm "
+                "cell is the only qualified target-shift severity."
+            )
+            root = "severity is respectively too weak or too strong"
+        else:
+            continue
+        cells.append(
+            {
+                "task": task,
+                "parameter_id": parameter_id,
+                "qualified": bool(cell.get("qualified", False)),
+                "delayed_violation_rate": cell.get("delayed_violation_rate"),
+                "error_count": cell.get("error_count"),
+                "valid_events": cell.get("valid_events"),
+                "median_first_violation_offset": cell.get("median_first_violation_offset"),
+                "root_cause_label": root,
+                "mechanistic_account": mechanism,
+                "positive_label_allowed": False,
+            }
+        )
+    return {
+        "status": summary.get("status"),
+        "source": "perturbation_qualification/summary.json plus runtime geometry/placement code",
+        "method_outcomes_read": False,
+        "cells": cells,
+    }
+
+
 def main() -> None:
     rows = [
         row
@@ -151,6 +225,7 @@ def main() -> None:
         },
         "contrasts": contrasts,
         "mechanisms": mechanisms,
+        "qualification_failure_mechanisms": qualification_mechanism_audit(),
         "causal_limits": [
             "The operator uses a frozen state ACT, not RGB or a VLA.",
             "Only two LIBERO task families are observed.",

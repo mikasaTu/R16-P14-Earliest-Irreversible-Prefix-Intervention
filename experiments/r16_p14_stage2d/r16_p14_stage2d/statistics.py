@@ -71,11 +71,28 @@ def bootstrap_mean_difference(left: np.ndarray, right: np.ndarray, seed: int) ->
     rng = np.random.default_rng(seed)
     indices = rng.integers(0, n, size=(BOOTSTRAP_REPLICATES, n))
     draws = difference[indices].mean(axis=1)
+    p_two_sided = float(
+        min(1.0, 2.0 * min(np.mean(draws <= 0), np.mean(draws >= 0)))
+    )
     return {
         "n": n,
         "estimate": float(difference.mean()),
         "ci95": [float(np.quantile(draws, 0.025)), float(np.quantile(draws, 0.975))],
+        "p_two_sided_bootstrap": p_two_sided,
     }
+
+
+def holm_bonferroni(p_values: dict[str, float | None]) -> dict[str, float | None]:
+    """Return Holm-adjusted p values without adding a statistics dependency."""
+    finite = [(name, float(value)) for name, value in p_values.items() if value is not None]
+    ordered = sorted(finite, key=lambda item: item[1])
+    adjusted: dict[str, float | None] = {name: None for name in p_values}
+    running = 0.0
+    count = len(ordered)
+    for index, (name, value) in enumerate(ordered):
+        running = max(running, min(1.0, (count - index) * value))
+        adjusted[name] = running
+    return adjusted
 
 
 def bootstrap_reduction(left: np.ndarray, right: np.ndarray, seed: int) -> dict[str, Any]:
@@ -121,6 +138,7 @@ def comparison(
         "binary_tables": {},
         "differences": {},
         "relative_reductions": {},
+        "holm_adjusted_p_values": {},
     }
     for index, field in enumerate(("safe_success", "cause_violation", "task_success")):
         left, right = paired_values(rows, method, baseline, field)
@@ -136,7 +154,125 @@ def comparison(
         result["relative_reductions"][field] = bootstrap_reduction(
             left, right, BOOTSTRAP_SEED + seed_offset + 100 + index
         )
+    result["holm_adjusted_p_values"] = holm_bonferroni(
+        {
+            field: metrics.get("p_two_sided_bootstrap")
+            for field, metrics in result["differences"].items()
+        }
+    )
     return result
+
+
+def _rankdata(values: np.ndarray) -> np.ndarray:
+    order = np.argsort(values, kind="mergesort")
+    ranks = np.empty(len(values), dtype=np.float64)
+    sorted_values = values[order]
+    start = 0
+    while start < len(values):
+        end = start + 1
+        while end < len(values) and sorted_values[end] == sorted_values[start]:
+            end += 1
+        ranks[order[start:end]] = (start + end - 1) / 2.0 + 1.0
+        start = end
+    return ranks
+
+
+def _spearman(x: list[float], y: list[float]) -> float | None:
+    if len(x) < 3 or len(set(x)) < 2 or len(set(y)) < 2:
+        return None
+    xr, yr = _rankdata(np.asarray(x, dtype=np.float64)), _rankdata(np.asarray(y, dtype=np.float64))
+    return float(np.corrcoef(xr, yr)[0, 1])
+
+
+def _auc(labels: list[bool], scores: list[float]) -> float | None:
+    if not labels or len(set(labels)) < 2:
+        return None
+    positive = [score for label, score in zip(labels, scores) if label]
+    negative = [score for label, score in zip(labels, scores) if not label]
+    return float(
+        (sum(1.0 if p > n else 0.5 if p == n else 0.0 for p in positive for n in negative))
+        / (len(positive) * len(negative))
+    )
+
+
+def diagnostic_error_signal() -> dict[str, Any]:
+    """Summarize observed outcome/error proxies without changing a selector.
+
+    Stage-2D has no learned world model, ensemble uncertainty, or visual
+    encoder.  We therefore report those covariates as unavailable and only
+    use measured branch rows: cached/fresh action disagreement, measured
+    object-path regression, and explicit cause violations.  All values are
+    diagnostic-only because qualification failed upstream.
+    """
+    path = ARTIFACT_ROOT / "calibration_atlas/rows.jsonl"
+    if not path.is_file():
+        return {"status": "UNAVAILABLE", "reason": "calibration atlas absent"}
+    rows = [
+        row
+        for row in load_jsonl(path)
+        if row.get("requested_arm") == "CACHED_MATCHED" and not row.get("error")
+    ]
+    usable = [
+        row
+        for row in rows
+        if row.get("cached_fresh_action_disagreement") is not None
+        and row.get("progress_regression_m") is not None
+    ]
+    if not usable:
+        return {"status": "UNAVAILABLE", "reason": "no usable cached rows"}
+    x = [float(row["cached_fresh_action_disagreement"]) for row in usable]
+    y = [float(row["progress_regression_m"]) for row in usable]
+    grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in usable:
+        grouped[row["event_instance_id"]].append(row)
+    centered_x, centered_y, per_event = [], [], []
+    for event_id, event_rows in sorted(grouped.items()):
+        ex = [float(row["cached_fresh_action_disagreement"]) for row in event_rows]
+        ey = [float(row["progress_regression_m"]) for row in event_rows]
+        centered_x.extend(value - float(np.mean(ex)) for value in ex)
+        centered_y.extend(value - float(np.mean(ey)) for value in ey)
+        corr = _spearman(ex, ey)
+        if corr is not None:
+            per_event.append(corr)
+    threshold = float(np.quantile(y, 0.75))
+    labels = [value >= threshold or bool(row.get("cause_violation")) for row, value in zip(usable, y)]
+    high_error_auc = _auc(labels, x)
+    # A within-event fixed-effect slope is the requested episode random-
+    # intercept diagnostic in a deterministic, dependency-free form.
+    if len(centered_x) >= 3 and float(np.dot(centered_x, centered_x)) > 0:
+        slope = float(np.dot(centered_x, centered_y) / np.dot(centered_x, centered_x))
+    else:
+        slope = None
+    return {
+        "status": "COMPLETE",
+        "diagnostic_only": True,
+        "row_count": len(usable),
+        "event_count": len(grouped),
+        "error_proxy": "progress_regression_m_or_explicit_cause_violation",
+        "score_proxy": "cached_fresh_action_disagreement",
+        "global_spearman": _spearman(x, y),
+        "state_centered_spearman": _spearman(centered_x, centered_y),
+        "within_event_spearman_distribution": {
+            "count": len(per_event),
+            "median": float(np.median(per_event)) if per_event else None,
+            "positive_fraction": float(np.mean(np.asarray(per_event) > 0)) if per_event else None,
+            "values": per_event,
+        },
+        "positive_correlation_event_fraction": float(np.mean(np.asarray(per_event) > 0)) if per_event else None,
+        "high_error_threshold": threshold,
+        "high_error_auroc": high_error_auc,
+        "mixed_effect_episode_intercept_slope": slope,
+        "mixed_effect_controls": {
+            "canonical_task_loss": "unavailable; no learned WM loss in Stage-2D",
+            "ensemble_uncertainty": "unavailable; no ensemble in Stage-2D",
+            "action_magnitude": "unavailable as a direct command norm; EEF path is retained separately",
+            "state_only_variance": "unavailable; no state-only WM branch",
+            "initial_dino_orbit_floor": "not applicable; no DINO branch",
+            "true_future_dino_orbit_floor": "not applicable; no DINO branch",
+            "episode_random_intercept": "demeaned within event_instance_id",
+        },
+        "holm_correction": "applied to paired arm bootstrap p-values; no positive label is inferred",
+    }
 
 
 def grouped_comparisons(rows: list[dict[str, Any]], method: str, baseline: str) -> dict[str, Any]:
@@ -353,6 +489,7 @@ def main() -> None:
         "raw_pass": raw_pass,
         "h1_raw_pass": h1_raw,
         "h4_calibration_oracle_gap": gap,
+        "diagnostic_error_signal": diagnostic_error_signal(),
         "macro_task_average_descriptive_only": True,
         "evaluation_oracle_loaded": False,
     }

@@ -24,6 +24,8 @@ def main() -> None:
     statistics = read_json("statistics/statistics.json", {})
     oracle = read_json("oracle_appendix/summary.json", {})
     mechanism = read_json("statistics/mechanism_reverse_audit.json", {})
+    signal = statistics.get("diagnostic_error_signal", {})
+    qualification_mechanisms = mechanism.get("qualification_failure_mechanisms", {})
     lines = [
         "# R16-P14 Stage-2D — Fresh-Process Event-Aligned Prefix Reuse",
         "",
@@ -71,6 +73,14 @@ def main() -> None:
         "",
         "Any downstream pattern after a failed upstream gate is labeled diagnostic-only and cannot support a positive or accepted claim.",
         "",
+        "## Diagnostic error signal and root-cause audit",
+        "",
+        f"The measured cached-vs-fresh action-disagreement proxy has global Spearman {signal.get('global_spearman')}, state-centered Spearman {signal.get('state_centered_spearman')}, and high-error AUROC {signal.get('high_error_auroc')}. These are observed-outcome diagnostics, not a learned risk score; no world model, ensemble uncertainty, or visual encoder was present.",
+        "",
+        f"The episode-intercept diagnostic slope is {signal.get('mixed_effect_episode_intercept_slope')}; unavailable controls are explicitly listed in statistics.json rather than imputed. Holm-adjusted bootstrap p-values are included for each paired arm comparison.",
+        "",
+        f"Qualification root-cause cells: {len(qualification_mechanisms.get('cells', []))}. The audit attributes the failed cells to severity outside the useful delayed-violation band, conservative radius-sum placement making the path obstacle too weak, and the future-index-12 zero local trajectory segment causing an event-geometry/qualification-grid mismatch. These explanations use frozen qualification rows and runtime code paths; they do not create a new idea.",
+        "",
         "## Statistical contract",
         "",
         f"Paired event bootstrap: {statistics.get('bootstrap_replicates')} resamples with seed {statistics.get('bootstrap_seed')}. The event—not the prefix row—is resampled. Actor checkpoints are reported as repeated model measurements, and two tasks do not justify population-wide cross-task generalization.",
@@ -79,6 +89,41 @@ def main() -> None:
         "",
         "NONE. Stage-2D stops after offline simulator evaluation. It does not validate a learned intervention policy or a VLA method.",
     ]
+    lines.extend(
+        [
+            "",
+            "## Raw diagnostic tables (not confirmatory claims)",
+            "",
+            "The following values are copied from the frozen row-level artifacts. Since the event/qualification gates failed, they are retained for mechanism diagnosis only.",
+            "",
+            f"Calibration status={calibration.get('status')}; completed={calibration.get('completed_rows')}/{calibration.get('expected_rows')}; errors={calibration.get('error_count')}; missing={len(calibration.get('missing_shards', []))}; raw H1={calibration.get('h1_raw_pass')}; raw oracle gate={calibration.get('oracle_mechanism_raw_pass')}; adjudicated oracle={calibration.get('oracle_mechanism_decision')}.",
+            "",
+            f"Confirmatory status={confirm.get('status')}; method rows={confirm.get('method_rows')}/{confirm.get('expected_method_rows')}; replay rows={confirm.get('replay_rows')}/{confirm.get('expected_replay_rows')}; replay-admitted events={confirm.get('replay_admitted_events')}; errors={confirm.get('error_count')}; missing={len(confirm.get('missing_shards', []))}.",
+            "",
+            "Qualification cell summary:",
+            "",
+        ]
+    )
+    for cell in qualification.get("grid", []):
+        lines.append(
+            f"- {cell.get('task')} / {cell.get('parameter_id')}: qualified={cell.get('qualified')}, delayed_violation={cell.get('delayed_violation_rate')}, immediate={cell.get('immediate_violation_rate')}, valid={cell.get('valid_events')}, errors={cell.get('error_count')}, median_onset={cell.get('median_first_violation_offset')}."
+        )
+    lines.extend(["", "Paired comparison estimates (left minus baseline; 95% bootstrap CI):", ""])
+    for name, result in statistics.get("comparisons", {}).items():
+        if name != "overall":
+            continue
+        lines.append(f"- {result.get('method')} vs {result.get('baseline')} (n={result.get('events')}):")
+        for field in ("safe_success", "cause_violation", "actual_post_detection_actions", "actual_actor_calls", "actual_inference_wall_time_s", "eef_path_length_m", "manipulated_object_path_length_m", "total_branch_wall_time_s"):
+            metric = result.get("differences", {}).get(field, {})
+            lines.append(f"  - {field}: estimate={metric.get('estimate')}, CI95={metric.get('ci95')}, Holm-p={result.get('holm_adjusted_p_values', {}).get(field)}")
+    lines.extend(
+        [
+            "",
+            f"Observed diagnostic signal: global Spearman={signal.get('global_spearman')}; state-centered={signal.get('state_centered_spearman')}; high-error AUROC={signal.get('high_error_auroc')}; within-event positive fraction={signal.get('positive_correlation_event_fraction')}; episode-intercept slope={signal.get('mixed_effect_episode_intercept_slope')}.",
+            "",
+            "Actor seed/task/severity strata are preserved in statistics.json under comparisons.task, comparisons.severity, and comparisons.actor_seed; macro task averages are descriptive only.",
+        ]
+    )
     text = "\n".join(lines) + "\n"
     (ARTIFACT_ROOT / "REPORT.md").write_text(text)
     if MIRROR_EXPERIMENT_OUTPUTS:
