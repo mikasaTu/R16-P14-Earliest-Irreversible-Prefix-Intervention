@@ -253,6 +253,8 @@ def main() -> None:
         "# Code-first mechanism reverse audit",
         "",
         "This audit explains the preregistered increases and decreases; it does not generate a new idea.",
+        "All rows are diagnostic-only because event construction and perturbation qualification are upstream blockers; formal_positive_evidence_allowed=false.",
+        "Method-error rows and replay-nonadmitted rows are excluded from the causal contrasts.",
         "",
     ]
     for mechanism in mechanisms:
