@@ -1,0 +1,18 @@
+{
+  "H": 16,
+  "action_disagreement_threshold": 0.13120555970817804,
+  "action_disagreement_threshold_rule": "calibration 75th percentile; analysis only",
+  "bootstrap_seed": 216214,
+  "d": 2,
+  "diagnostic_only": true,
+  "evaluation_outcomes_read": false,
+  "formal_positive_evidence_allowed": false,
+  "frozen_from_split": "calibration",
+  "maximum_action_budget": 18,
+  "maximum_policy_call_budget": 2,
+  "path_obstacle": "clip(predicted_path_intersection_index - 2, d, H)",
+  "safety_tolerance_epsilon": 0.03,
+  "schema_version": 1,
+  "tail_horizon": 4,
+  "target_shift": "clip(release_index - 2, d, H)"
+}

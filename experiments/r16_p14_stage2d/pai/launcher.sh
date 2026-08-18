@@ -94,6 +94,8 @@ payload = {
     "gid": os.getgid(),
     "unix_time": time.time(),
 }
+PY
+}
 
 write_terminal_receipt() {
   local relative_path=$1
@@ -113,16 +115,6 @@ payload = {
     "unix_time": time.time(),
 }
 if not path.exists():
-    descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
-    with os.fdopen(descriptor, "w") as handle:
-        json.dump(payload, handle, indent=2, sort_keys=True)
-        handle.write("\n")
-        handle.flush()
-        os.fsync(handle.fileno())
-PY
-}
-if not path.exists():
-    path.parent.mkdir(parents=True, exist_ok=True)
     descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
     with os.fdopen(descriptor, "w") as handle:
         json.dump(payload, handle, indent=2, sort_keys=True)

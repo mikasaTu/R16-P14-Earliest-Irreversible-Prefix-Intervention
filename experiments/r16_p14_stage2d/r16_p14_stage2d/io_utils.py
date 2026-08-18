@@ -64,5 +64,38 @@ def atomic_write_jsonl(path: Path, rows: Iterable[dict[str, Any]]) -> None:
 
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
-    with path.open() as handle:
-        return [json.loads(line) for line in handle if line.strip()]
+    """Load JSONL, transparently assembling a size-limited shard set.
+
+    GitHub rejects individual files larger than 100 MB.  Large immutable
+    evidence files therefore use a small JSONL pointer at ``path`` and
+    newline-preserving shards in ``<path>.parts``.  The pointer retains the
+    original byte hash and row count; callers continue to use the canonical
+    logical path and receive the same ordered rows.
+    """
+    if path.is_file():
+        with path.open() as handle:
+            lines = [line for line in handle if line.strip()]
+        if len(lines) == 1:
+            candidate = json.loads(lines[0])
+            if isinstance(candidate, dict) and candidate.get("_sharded_jsonl") is True:
+                parts_dir = path.parent / str(candidate["parts_dir"])
+                rows = []
+                for shard in sorted(parts_dir.glob("*.jsonl")):
+                    with shard.open() as handle:
+                        rows.extend(json.loads(line) for line in handle if line.strip())
+                expected_rows = candidate.get("row_count")
+                if expected_rows is not None and len(rows) != int(expected_rows):
+                    raise ValueError(
+                        f"sharded JSONL row count mismatch for {path}: "
+                        f"{len(rows)} != {expected_rows}"
+                    )
+                return rows
+        return [json.loads(line) for line in lines]
+    parts_dir = path.parent / f"{path.name}.parts"
+    if parts_dir.is_dir():
+        rows = []
+        for shard in sorted(parts_dir.glob("*.jsonl")):
+            with shard.open() as handle:
+                rows.extend(json.loads(line) for line in handle if line.strip())
+        return rows
+    raise FileNotFoundError(path)

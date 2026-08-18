@@ -12,7 +12,7 @@ from typing import Any
 import numpy as np
 
 from .fresh_process import run_spawned_branch
-from .io_utils import atomic_write_json, atomic_write_jsonl, load_jsonl
+from .io_utils import atomic_write_json, atomic_write_jsonl, load_jsonl, sha256_file
 from .settings import (
     ARTIFACT_ROOT,
     CALIBRATION_ARMS,
@@ -277,7 +277,19 @@ def consolidate() -> dict[str, Any]:
     )
     summary = {
         "schema_version": 1,
-        "status": "PASS" if complete_matrix and not any(row.get("error") for row in rows) else "INCOMPLETE_OR_ERRORS",
+        "status": "COMPLETE_MATRIX_PASS" if complete_matrix and not any(row.get("error") for row in rows) else "INCOMPLETE_OR_ERRORS",
+        "matrix_status": "PASS" if complete_matrix else "INCOMPLETE",
+        "scientific_gate_status": "BLOCKED_BY_EVENT_CONSTRUCTION_AND_PERTURBATION_QUALIFICATION",
+        "upstream_blockers": [
+            "BLOCKED_BY_EVENT_CONSTRUCTION",
+            "BLOCKED_BY_PERTURBATION_QUALIFICATION",
+        ],
+        "protocol_amendment": {
+            "path": "experiments/r16_p14_stage2d/protocol_amendment.md",
+            "sha256": sha256_file(EXPERIMENT_ROOT / "protocol_amendment.md"),
+            "diagnostic_only_global": True,
+            "formal_positive_evidence_allowed": False,
+        },
         "diagnostic_only": DIAGNOSTIC_ONLY_GLOBAL or not upstream_pass(),
         "formal_positive_evidence_allowed": FORMAL_POSITIVE_EVIDENCE_ALLOWED,
         "expected_rows": expected_rows,
@@ -287,6 +299,7 @@ def consolidate() -> dict[str, Any]:
         "missing_shards": missing,
         "complete_matrix": complete_matrix,
         "statistics_eligible": bool(complete_matrix and not any(row.get("error") for row in rows) and terminal_receipt.get("status") == "SUCCEEDED"),
+        "formal_statistics_eligible": False,
         "terminal_receipt": terminal_receipt,
         "event_summaries": event_summaries,
         "h1_by_task": h1_by_task,
