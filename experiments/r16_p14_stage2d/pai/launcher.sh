@@ -44,6 +44,13 @@ test "$(git -C "$SOURCE_ROOT" rev-parse 'HEAD^{tree}')" = "$EXPECTED_SOURCE_TREE
 test -z "$(git -C "$SOURCE_ROOT" status --porcelain)"
 test -x "$PYTHON"
 
+# PAI starts the outer bootstrap in /root.  The bootstrap drops privileges to
+# UID/GID 2254 before this launcher runs, so multiprocessing.spawn cannot
+# reconstruct a child from that unreadable inherited cwd.  Bind every phase to
+# the already hash-verified source checkout before any Python process starts.
+cd -- "$SOURCE_ROOT"
+test "$(pwd -P)" = "$SOURCE_ROOT"
+
 export PYTHONPATH="$SOURCE_ROOT/experiments/r16_p14_stage2d:$SOURCE_ROOT/experiments/r16_p14_stage2c:$SOURCE_ROOT/experiments/r16_p14_stage2b:$SOURCE_ROOT/experiments/r16_p14_stage2a:$SOURCE_ROOT/experiments/r16_p14_libero_stage1:$SOURCE_ROOT"
 export R16_P14_STAGE2D_ARTIFACT_ROOT="$ARTIFACT_ROOT"
 export R16_P14_STAGE2D_MIRROR_EXPERIMENT_OUTPUTS=0

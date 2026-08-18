@@ -45,6 +45,9 @@ def test_01_every_isolation_branch_has_unique_spawned_process():
 def test_02_no_shared_runtime_class_in_stage2d():
     assert "class EventRuntime" not in inspect.getsource(runtime)
     assert 'mp.get_context("spawn")' in (EXPERIMENT_ROOT / "r16_p14_stage2d/fresh_process.py").read_text()
+    launcher = (EXPERIMENT_ROOT / "pai/launcher.sh").read_text()
+    assert 'cd -- "$SOURCE_ROOT"' in launcher
+    assert 'test "$(pwd -P)" = "$SOURCE_ROOT"' in launcher
 
 
 def test_03_same_action_cached_signatures_are_exact():
