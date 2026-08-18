@@ -1,11 +1,11 @@
-# 飞书 Step1–Step5 文档归档
+# 飞书 Step1–Step6 文档归档
 
-这里保存 R16-P14 idea 的飞书“实验规划”下五个 Step 及其直属实验报告，共 10 份 Markdown 快照。
+这里保存 R16-P14 idea 的飞书“实验规划”下六个 Step 及其直属实验报告，共 12 份 Markdown 快照。Step6 另保留 full/outline/keyword 回读 JSON。
 
 - 来源：[R16-P14 idea](https://icnbwz7kd1ui.feishu.cn/wiki/MQWAwpio6iIKh3k7oWQcP4qOnLb) → [实验规划](https://icnbwz7kd1ui.feishu.cn/wiki/XK7Vw0f8yiKF8lkmTPHcryZ2nvc)
-- 导出时间：`2026-08-17T12:14:42Z`
+- 导出时间：`2026-08-18T23:38:48Z`
 - 导出接口：`lark-cli docs +fetch --api-version v2 --doc-format markdown --detail simple`
-- 完整性：每个文件的飞书 revision、node/doc token、字节数、行数和 SHA256 见 [MANIFEST.json](./MANIFEST.json) 与 [SHA256SUMS](./SHA256SUMS)。
+- 完整性：每个快照的飞书 revision、node/doc token、字节数、行数和 SHA256 见 [MANIFEST.json](./MANIFEST.json) 与 [SHA256SUMS](./SHA256SUMS)；Step6 的 full/outline/keyword 回读和哈希见 [live_readback](./live_readback/)。
 
 | Step | 计划快照 | 实验报告快照 | 飞书计划 | 飞书报告 |
 |---|---|---|---|---|
@@ -14,6 +14,7 @@
 | Step 3 | [PLAN.md](./step3/PLAN.md) · rev 5 | [REPORT.md](./step3/REPORT.md) · rev 4 | [打开](https://icnbwz7kd1ui.feishu.cn/wiki/ZUhwwOlhRiFMwdkITngcz69an1e) | [打开](https://icnbwz7kd1ui.feishu.cn/wiki/M5XXwXx9sirPYLke5QVcqUvGnnf) |
 | Step 4 | [PLAN.md](./step4/PLAN.md) · rev 6 | [REPORT.md](./step4/REPORT.md) · rev 3 | [打开](https://icnbwz7kd1ui.feishu.cn/wiki/GQ1tw5h8qicaQAkOAPncNVxSn6e) | [打开](https://icnbwz7kd1ui.feishu.cn/wiki/DiaGwwxjFiZ4p2k7jzqcrSy9nvd) |
 | Step 5 | [PLAN.md](./step5/PLAN.md) · rev 6 | [REPORT.md](./step5/REPORT.md) · rev 4 | [打开](https://icnbwz7kd1ui.feishu.cn/wiki/SmWbwfM2Yik5kmkVlpKcdvuynmX) | [打开](https://icnbwz7kd1ui.feishu.cn/wiki/BnfvwJCoYi2EOokK072cdmqqneg) |
+| Step 6 | [PLAN.md](./step6/PLAN.md) · rev 3 | [REPORT.md](./step6/REPORT.md) · rev 4 | [打开](https://icnbwz7kd1ui.feishu.cn/wiki/CoSdwjvXGixf4dkhXE5cpzUSnNY) | [打开](https://icnbwz7kd1ui.feishu.cn/wiki/Yqg8wGp8Fit8enkJZl9chjhVnuf) |
 
 ## 归档约定
 
