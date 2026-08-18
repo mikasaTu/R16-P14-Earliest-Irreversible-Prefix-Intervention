@@ -5,7 +5,8 @@ frozen_before_outcomes: true
 immutable_parent:
   commit: 74538ae3d9ff76f1c5c2d981da3a3c133829d73b
   tree: 93f7f9ae63ff7d2760dc14f65132ee8cdd39e007
-  initial_status_short: ""
+  initial_status_short: UNAVAILABLE_AT_IMMUTABLE_PARENT_CAPTURE
+  initial_status_capture: "not_recorded_at_initial_freeze; historical evidence is missing"
 source_plan:
   sha256: 0816abba294faa6e8b12a73660bb819995bb9ee882875496ec795ec87dae8b90
 immutable_conclusions:
@@ -170,6 +171,9 @@ user_override:
   reason: explicit request to complete every planned experiment even after a failed gate
   downstream_after_failed_gate: diagnostic_only
   scientific_gate_decision_remains_failed: true
+  protocol_amendment: protocol_amendment.md
+  diagnostic_only_global: true
+  formal_positive_evidence_allowed: false
   positive_or_accepted_label_after_failure: forbidden
   accepted_remains_false: true
 forbidden:

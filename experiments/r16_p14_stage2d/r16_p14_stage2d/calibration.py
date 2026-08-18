@@ -19,6 +19,8 @@ from .settings import (
     DETECTION_PREFIX,
     EXPERIMENT_ROOT,
     H_VALID,
+    DIAGNOSTIC_ONLY_GLOBAL,
+    FORMAL_POSITIVE_EVIDENCE_ALLOWED,
     MIRROR_EXPERIMENT_OUTPUTS,
     PREFIX_INDICES,
     TASKS,
@@ -128,6 +130,14 @@ def consolidate() -> dict[str, Any]:
                 else:
                     missing.append(str(path.relative_to(ARTIFACT_ROOT)))
     output = ARTIFACT_ROOT / "calibration_atlas"
+    expected_rows = len(pool) * len(PREFIX_INDICES) * len(CALIBRATION_ARMS)
+    complete_matrix = not missing and len(rows) == expected_rows
+    terminal_path = output / "terminal_receipt.json"
+    terminal_receipt = json.loads(terminal_path.read_text()) if terminal_path.is_file() else {
+        "status": "MISSING",
+        "complete_matrix": False,
+        "source": "no terminal PAI receipt was imported before consolidation",
+    }
     atomic_write_jsonl(output / "rows.jsonl", rows)
     valid = [row for row in rows if not row.get("error")]
     by_event: dict[str, list[dict[str, Any]]] = defaultdict(list)
@@ -137,6 +147,11 @@ def consolidate() -> dict[str, Any]:
     event_summaries: list[dict[str, Any]] = []
     for item in pool:
         event_rows = by_event[item["event_instance_id"]]
+        expected_event_rows = len(PREFIX_INDICES) * len(CALIBRATION_ARMS)
+        if len(event_rows) != expected_event_rows:
+            # Never compute an oracle from a partial event.  The raw shards
+            # remain available for a diagnostic missing-shard audit.
+            continue
         cached = [row for row in event_rows if row["requested_arm"] == "CACHED_MATCHED"]
         if not cached:
             continue
@@ -262,13 +277,17 @@ def consolidate() -> dict[str, Any]:
     )
     summary = {
         "schema_version": 1,
-        "status": "PASS" if not missing and not any(row.get("error") for row in rows) else "INCOMPLETE_OR_ERRORS",
-        "diagnostic_only": not upstream_pass(),
-        "expected_rows": len(pool) * len(PREFIX_INDICES) * len(CALIBRATION_ARMS),
+        "status": "PASS" if complete_matrix and not any(row.get("error") for row in rows) else "INCOMPLETE_OR_ERRORS",
+        "diagnostic_only": DIAGNOSTIC_ONLY_GLOBAL or not upstream_pass(),
+        "formal_positive_evidence_allowed": FORMAL_POSITIVE_EVIDENCE_ALLOWED,
+        "expected_rows": expected_rows,
         "completed_rows": len(rows),
         "valid_rows": len(valid),
         "error_count": sum(bool(row.get("error")) for row in rows),
         "missing_shards": missing,
+        "complete_matrix": complete_matrix,
+        "statistics_eligible": bool(complete_matrix and not any(row.get("error") for row in rows) and terminal_receipt.get("status") == "SUCCEEDED"),
+        "terminal_receipt": terminal_receipt,
         "event_summaries": event_summaries,
         "h1_by_task": h1_by_task,
         "h1_raw_pass": h1_pass,
@@ -284,7 +303,7 @@ def consolidate() -> dict[str, Any]:
         # oracle mechanism was not adjudicated and therefore remains NOT_RUN.
         "oracle_mechanism_decision": (
             "PASS"
-            if oracle_gate and upstream_pass()
+            if oracle_gate and upstream_pass() and not DIAGNOSTIC_ONLY_GLOBAL
             else "NOT_RUN"
             if oracle_gate
             else "NO_ORACLE_GAP"

@@ -19,6 +19,8 @@ from .settings import (
     MIRROR_EXPERIMENT_OUTPUTS,
     SAFETY_NONINFERIORITY_EPSILON,
     TASKS,
+    DIAGNOSTIC_ONLY_GLOBAL,
+    FORMAL_POSITIVE_EVIDENCE_ALLOWED,
 )
 
 
@@ -61,6 +63,36 @@ def paired_values(
         return np.asarray([], dtype=np.float64), np.asarray([], dtype=np.float64)
     array = np.asarray(pairs, dtype=np.float64)
     return array[:, 0], array[:, 1]
+
+
+def cluster_paired_values(
+    rows: list[dict[str, Any]], method: str, baseline: str, field: str
+) -> tuple[np.ndarray, np.ndarray]:
+    """Aggregate each source event before paired bootstrap resampling.
+
+    Confirmatory rows are normally one row per init-state/rollout event.  The
+    explicit grouping also keeps this contract correct if a resumable shard
+    ever contributes duplicate prefix rows or repeated actor measurements.
+    """
+    grouped: dict[str, list[tuple[float, float]]] = defaultdict(list)
+    for row in rows:
+        if method not in row["methods"] or baseline not in row["methods"]:
+            continue
+        left = row["methods"][method].get(field)
+        right = row["methods"][baseline].get(field)
+        if left is None or right is None:
+            continue
+        if not (math.isfinite(float(left)) and math.isfinite(float(right))):
+            continue
+        key = str(row.get("event_instance_id") or row.get("event_id"))
+        grouped[key].append((float(left), float(right)))
+    if not grouped:
+        return np.asarray([], dtype=np.float64), np.asarray([], dtype=np.float64)
+    values = np.asarray(
+        [[float(np.mean([pair[index] for pair in pairs])) for index in (0, 1)] for pairs in grouped.values()],
+        dtype=np.float64,
+    )
+    return values[:, 0], values[:, 1]
 
 
 def bootstrap_mean_difference(left: np.ndarray, right: np.ndarray, seed: int) -> dict[str, Any]:
@@ -139,15 +171,16 @@ def comparison(
         "differences": {},
         "relative_reductions": {},
         "holm_adjusted_p_values": {},
+        "bootstrap_unit": "source event (event_instance_id/init_state rollout)",
     }
     for index, field in enumerate(("safe_success", "cause_violation", "task_success")):
-        left, right = paired_values(rows, method, baseline, field)
+        left, right = cluster_paired_values(rows, method, baseline, field)
         result["differences"][field] = bootstrap_mean_difference(
             left, right, BOOTSTRAP_SEED + seed_offset + index
         )
         result["binary_tables"][field] = exact_binary_table(rows, method, baseline, field)
     for index, field in enumerate(EFFICIENCY_FIELDS, start=10):
-        left, right = paired_values(rows, method, baseline, field)
+        left, right = cluster_paired_values(rows, method, baseline, field)
         result["differences"][field] = bootstrap_mean_difference(
             left, right, BOOTSTRAP_SEED + seed_offset + index
         )
@@ -492,6 +525,9 @@ def main() -> None:
         "diagnostic_error_signal": diagnostic_error_signal(),
         "macro_task_average_descriptive_only": True,
         "evaluation_oracle_loaded": False,
+        "diagnostic_only_global": DIAGNOSTIC_ONLY_GLOBAL,
+        "formal_positive_evidence_allowed": FORMAL_POSITIVE_EVIDENCE_ALLOWED,
+        "actor_seed_is_repeated_measurement": True,
     }
     decision = {
         "schema_version": 1,
@@ -510,6 +546,8 @@ def main() -> None:
         "overall": overall,
         "forced_downstream_execution": True,
         "downstream_evidence_after_failed_gate": "DIAGNOSTIC_ONLY",
+        "diagnostic_only_global": DIAGNOSTIC_ONLY_GLOBAL,
+        "formal_positive_evidence_allowed": FORMAL_POSITIVE_EVIDENCE_ALLOWED,
         "accepted": False,
         "novelty": "N2_ORACLE_PROTOCOL_BOUNDARY_ONLY",
     }

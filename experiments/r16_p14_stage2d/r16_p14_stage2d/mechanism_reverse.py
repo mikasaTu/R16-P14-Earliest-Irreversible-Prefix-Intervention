@@ -9,7 +9,13 @@ import numpy as np
 
 from . import runtime
 from .io_utils import atomic_write_json, load_jsonl
-from .settings import ARTIFACT_ROOT, EXPERIMENT_ROOT, MIRROR_EXPERIMENT_OUTPUTS
+from .settings import (
+    ARTIFACT_ROOT,
+    DIAGNOSTIC_ONLY_GLOBAL,
+    EXPERIMENT_ROOT,
+    FORMAL_POSITIVE_EVIDENCE_ALLOWED,
+    MIRROR_EXPERIMENT_OUTPUTS,
+)
 
 
 FIELDS = (
@@ -139,6 +145,7 @@ def main() -> None:
         row
         for row in load_jsonl(ARTIFACT_ROOT / "confirmatory_evaluation/paired_rows.jsonl")
         if row["replay_admitted_3_of_3"]
+        and all(not method.get("error") for method in row.get("methods", {}).values())
     ]
     contrasts = {
         "cached_content_at_matched_k": contrast(
@@ -216,6 +223,13 @@ def main() -> None:
         "new_idea_generated": False,
         "scope": "explain observed improvements and decreases in the preregistered arms only",
         "valid_event_count": len(rows),
+        "diagnostic_only": DIAGNOSTIC_ONLY_GLOBAL,
+        "formal_positive_evidence_allowed": FORMAL_POSITIVE_EVIDENCE_ALLOWED,
+        "upstream_blockers": [
+            "BLOCKED_BY_EVENT_CONSTRUCTION",
+            "BLOCKED_BY_PERTURBATION_QUALIFICATION",
+        ],
+        "method_error_rows_excluded": True,
         "source_locations": {
             "execute_branch": source_location(runtime.execute_branch),
             "arm_plan": source_location(runtime.arm_plan),

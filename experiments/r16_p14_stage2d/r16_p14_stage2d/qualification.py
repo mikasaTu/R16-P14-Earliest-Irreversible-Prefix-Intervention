@@ -14,7 +14,9 @@ from .io_utils import atomic_write_json, atomic_write_jsonl, load_jsonl
 from .settings import (
     ACTOR_SEEDS,
     ARTIFACT_ROOT,
+    DIAGNOSTIC_ONLY_GLOBAL,
     EXPERIMENT_ROOT,
+    FORMAL_POSITIVE_EVIDENCE_ALLOWED,
     FORCED_DIAGNOSTIC_CONTINUATION,
     H_VALID,
     MIRROR_EXPERIMENT_OUTPUTS,
@@ -247,6 +249,8 @@ def consolidate() -> dict[str, Any]:
         "diagnostic_fallback_rule": "two minimum qualification-gate-distance cells; no positive label permitted",
         "method_outcomes_read": False,
         "forced_diagnostic_continuation": FORCED_DIAGNOSTIC_CONTINUATION,
+        "diagnostic_only": DIAGNOSTIC_ONLY_GLOBAL or not overall_pass,
+        "formal_positive_evidence_allowed": FORMAL_POSITIVE_EVIDENCE_ALLOWED,
     }
     atomic_write_json(output / "frozen_parameters.json", frozen)
     summary = {
@@ -259,6 +263,8 @@ def consolidate() -> dict[str, Any]:
         "selected": selected,
         "grid": table,
         "diagnostic_continuation": not overall_pass and FORCED_DIAGNOSTIC_CONTINUATION,
+        "diagnostic_only": DIAGNOSTIC_ONLY_GLOBAL or not overall_pass,
+        "formal_positive_evidence_allowed": FORMAL_POSITIVE_EVIDENCE_ALLOWED,
     }
     atomic_write_json(output / "summary.json", summary)
     negative = [item for item in table if not item["qualified"]]

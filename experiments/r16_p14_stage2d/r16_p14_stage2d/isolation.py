@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 from collections import defaultdict
 from pathlib import Path
 from typing import Any
@@ -138,6 +139,36 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
                 )
 
     order_invariance: list[dict[str, Any]] = []
+    order_metric_fields = (
+        "final_signature_hash",
+        "actual_actor_calls",
+        "actual_post_detection_actions",
+        "actual_inference_wall_time_s",
+        "total_branch_wall_time_s",
+        "eef_path_length_m",
+        "manipulated_object_path_length_m",
+        "progress_retained_end_m",
+        "progress_regression_m",
+        "contact_count",
+        "S_obs_at_k",
+        "cause_violation",
+        "task_success",
+        "safe_success",
+    )
+    def metric_invariant(field: str, values: list[Any]) -> bool:
+        if len(values) != 3 or any(value is None for value in values):
+            return False
+        if field in {"actual_inference_wall_time_s", "total_branch_wall_time_s"}:
+            numeric = [float(value) for value in values]
+            # Wall time is measured evidence, not a deterministic simulator
+            # state. Verify that every permutation produced a finite measured
+            # value, and retain the raw values/range below; bit equality would
+            # incorrectly turn ordinary OS scheduling jitter into a state
+            # reconstruction failure.
+            return all(math.isfinite(value) and value >= 0.0 for value in numeric)
+        if all(isinstance(value, (int, float)) and not isinstance(value, bool) for value in values):
+            return all(math.isclose(float(value), float(values[0]), rel_tol=1e-9, abs_tol=1e-9) for value in values[1:])
+        return len(set(map(str, values))) == 1
     for task in TASKS:
         for prefix_k in PREFIXES:
             for arm in ("CACHED_MATCHED", "CACHED_NOQUERY", "FRESH_MATCHED"):
@@ -156,6 +187,14 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
                     (row["S_obs_at_k"], row["cause_violation"], row["task_success"])
                     for row in matches
                 }
+                metric_rows = [
+                    {field: row.get(field) if field != "final_signature_hash" else row.get("final_signature", {}).get("complete_signature_hash") for field in order_metric_fields}
+                    for row in matches
+                ]
+                metric_invariance = {
+                    field: metric_invariant(field, [item[field] for item in metric_rows])
+                    for field in order_metric_fields
+                }
                 order_invariance.append(
                     {
                         "task": task,
@@ -164,6 +203,10 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
                         "repeat_count": len(matches),
                         "signature_invariant": len(matches) == 3 and len(signatures) == 1,
                         "outcome_invariant": len(matches) == 3 and len(outcomes) == 1,
+                        "metric_fields": list(order_metric_fields),
+                        "execution_metrics_invariant": all(metric_invariance.values()),
+                        "metric_invariance": metric_invariance,
+                        "metric_values": metric_rows,
                     }
                 )
 
@@ -213,7 +256,9 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
         ),
         "no_S_obs_zero_to_one": not any(item["zero_to_one"] for item in monotonicity),
         "branch_order_invariant": all(
-            item["signature_invariant"] and item["outcome_invariant"]
+            item["signature_invariant"]
+            and item["outcome_invariant"]
+            and item["execution_metrics_invariant"]
             for item in order_invariance
         ),
         "actor_inference_side_effect_free": all(

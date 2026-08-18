@@ -67,5 +67,10 @@ CONFIRMATORY_METHODS = (
 # the gate result immutable, but any downstream execution is diagnostic-only.
 FORCED_DIAGNOSTIC_CONTINUATION = True
 POSITIVE_LABELS_ALLOWED_AFTER_FAILED_GATE = False
+# The outer execution instruction explicitly requires the downstream matrix
+# even after a failed scientific gate.  This is an evidence boundary, not a
+# gate relaxation: every Stage-2D downstream artifact is diagnostic-only.
+DIAGNOSTIC_ONLY_GLOBAL = True
+FORMAL_POSITIVE_EVIDENCE_ALLOWED = False
 MAXIMUM_GPUS = 2
 MAXIMUM_CONCURRENT_GPU_WORKERS = 2

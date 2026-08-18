@@ -4,7 +4,7 @@ import json
 from collections import Counter
 from typing import Any
 
-from .io_utils import atomic_write_json, atomic_write_jsonl, load_jsonl
+from .io_utils import atomic_write_json, atomic_write_jsonl, load_jsonl, sha256_json
 from .settings import ACTOR_SEEDS, ARTIFACT_ROOT, EXPERIMENT_ROOT, MIRROR_EXPERIMENT_OUTPUTS, TASKS
 
 
@@ -34,6 +34,16 @@ def create_formal_event_pool() -> dict[str, Any]:
                     {
                         "event_instance_id": f"{event['event_id']}__{parameter['parameter_id']}",
                         "event_id": event["event_id"],
+                        "source_event_sha256": sha256_json(event),
+                        "source_checkpoint": event["checkpoint"],
+                        "source_checkpoint_sha256": event["checkpoint_sha256"],
+                        "source_original_chunk_sha256": event["original_chunk_hash"],
+                        "source_is_actor_generated_chunk": bool(
+                            event["source_is_actor_generated_chunk"]
+                        ),
+                        "source_is_demonstration_chunk": bool(
+                            event["source_is_demonstration_chunk"]
+                        ),
                         "task": task,
                         "split": split,
                         "actor_seed": seed,

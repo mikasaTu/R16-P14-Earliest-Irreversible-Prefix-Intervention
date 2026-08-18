@@ -19,6 +19,8 @@ from .settings import (
     MIRROR_EXPERIMENT_OUTPUTS,
     PROJECT_ROOT,
     TASKS,
+    DIAGNOSTIC_ONLY_GLOBAL,
+    FORMAL_POSITIVE_EVIDENCE_ALLOWED,
 )
 
 
@@ -184,6 +186,19 @@ def consolidate() -> dict[str, Any]:
             else:
                 missing.append(str(path.relative_to(ARTIFACT_ROOT)))
     output = ARTIFACT_ROOT / "confirmatory_evaluation"
+    expected_method_rows = len(pool) * len(CONFIRMATORY_METHODS)
+    expected_replay_rows = len(pool) * 3
+    complete_matrix = (
+        not missing
+        and len(rows) == expected_method_rows
+        and len(replay_rows) == expected_replay_rows
+    )
+    terminal_path = output / "terminal_receipt.json"
+    terminal_receipt = json.loads(terminal_path.read_text()) if terminal_path.is_file() else {
+        "status": "MISSING",
+        "complete_matrix": False,
+        "source": "no terminal PAI receipt was imported before consolidation",
+    }
     atomic_write_jsonl(output / "replay_rows.jsonl", replay_rows)
     atomic_write_jsonl(output / "method_rows.jsonl", rows)
     by_event: dict[str, dict[str, dict[str, Any]]] = defaultdict(dict)
@@ -258,16 +273,24 @@ def consolidate() -> dict[str, Any]:
         }
     summary = {
         "schema_version": 1,
-        "status": "PASS" if not missing and all(value["passes"] for value in minimum.values()) else "BLOCKED_BY_MINIMUM_DATA",
-        "expected_method_rows": len(pool) * len(CONFIRMATORY_METHODS),
+        "status": "PASS" if complete_matrix and all(value["passes"] for value in minimum.values()) else "BLOCKED_BY_MINIMUM_DATA",
+        "expected_method_rows": expected_method_rows,
         "method_rows": len(rows),
-        "expected_replay_rows": len(pool) * 3,
+        "expected_replay_rows": expected_replay_rows,
         "replay_rows": len(replay_rows),
         "replay_admitted_events": sum(replay_status.values()),
         "error_count": sum(bool(row.get("error")) for row in rows + replay_rows),
         "missing_shards": missing,
         "minimum_data": minimum,
-        "diagnostic_only": any(row.get("diagnostic_only") for row in rows),
+        "diagnostic_only": DIAGNOSTIC_ONLY_GLOBAL or any(row.get("diagnostic_only") for row in rows),
+        "formal_positive_evidence_allowed": FORMAL_POSITIVE_EVIDENCE_ALLOWED,
+        "complete_matrix": complete_matrix,
+        "statistics_eligible": bool(
+            complete_matrix
+            and not any(row.get("error") for row in rows + replay_rows)
+            and terminal_receipt.get("status") == "SUCCEEDED"
+        ),
+        "terminal_receipt": terminal_receipt,
         "evaluation_all_k_scanned_before_rule": False,
     }
     atomic_write_json(output / "summary.json", summary)

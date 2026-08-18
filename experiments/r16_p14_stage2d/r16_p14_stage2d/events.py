@@ -28,8 +28,10 @@ from .settings import (
     ACTOR_SEEDS,
     ARTIFACT_ROOT,
     CALIBRATION_IDS,
+    DIAGNOSTIC_ONLY_GLOBAL,
     EVALUATION_IDS,
     EXPERIMENT_ROOT,
+    FORMAL_POSITIVE_EVIDENCE_ALLOWED,
     H_VALID,
     INFRASTRUCTURE_IDS,
     MIRROR_EXPERIMENT_OUTPUTS,
@@ -450,6 +452,8 @@ def consolidate(splits: tuple[str, ...]) -> dict[str, Any]:
         "global_step_fallback_events": sum(bool(e["global_step_fallback_used"]) for e in events),
         "demonstration_events": sum(bool(e["source_is_demonstration_chunk"]) for e in events),
         "method_outcomes_read": False,
+        "diagnostic_only": DIAGNOSTIC_ONLY_GLOBAL,
+        "formal_positive_evidence_allowed": FORMAL_POSITIVE_EVIDENCE_ALLOWED,
     }
     atomic_write_json(output / "summary.json", summary)
     report = (

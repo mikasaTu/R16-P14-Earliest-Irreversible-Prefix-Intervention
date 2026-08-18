@@ -94,6 +94,33 @@ payload = {
     "gid": os.getgid(),
     "unix_time": time.time(),
 }
+
+write_terminal_receipt() {
+  local relative_path=$1
+  "$PYTHON" - "$relative_path" "$PHASE" <<'PY'
+import json, os, pathlib, sys, time
+root = pathlib.Path(os.environ["R16_P14_STAGE2D_ARTIFACT_ROOT"])
+path = root / sys.argv[1]
+path.parent.mkdir(parents=True, exist_ok=True)
+payload = {
+    "schema_version": 1,
+    "phase": sys.argv[2],
+    "status": "SUCCEEDED",
+    "complete_matrix": True,
+    "workers_returned_zero": True,
+    "registry_run_id": os.environ["PAI_CANARY_RUN_ID"],
+    "source": "terminal worker barrier before consolidation",
+    "unix_time": time.time(),
+}
+if not path.exists():
+    descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    with os.fdopen(descriptor, "w") as handle:
+        json.dump(payload, handle, indent=2, sort_keys=True)
+        handle.write("\n")
+        handle.flush()
+        os.fsync(handle.fileno())
+PY
+}
 if not path.exists():
     path.parent.mkdir(parents=True, exist_ok=True)
     descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
@@ -166,6 +193,8 @@ elif [[ "$PHASE" = atlas ]]; then
     --device cpu --max-new-shards 1
   write_marker FIRST_REAL_WORK.json
   run_dual_module r16_p14_stage2d.calibration
+  write_marker ATLAS_WORKERS_COMPLETE.json
+  write_terminal_receipt calibration_atlas/terminal_receipt.json
   "$PYTHON" -m r16_p14_stage2d.calibration --consolidate >"$ARTIFACT_DIR/logs/calibration-consolidate.log" 2>&1
   write_marker ATLAS_COMPLETE.json
 elif [[ "$PHASE" = phase2 ]]; then
@@ -176,6 +205,8 @@ elif [[ "$PHASE" = phase2 ]]; then
   write_marker FIRST_REAL_WORK.json
   run_dual_module r16_p14_stage2d.confirmatory --phase replay
   run_dual_module r16_p14_stage2d.confirmatory --phase methods
+  write_marker PHASE2_WORKERS_COMPLETE.json
+  write_terminal_receipt confirmatory_evaluation/terminal_receipt.json
   "$PYTHON" -m r16_p14_stage2d.confirmatory --consolidate >"$ARTIFACT_DIR/logs/confirmatory-consolidate.log" 2>&1
   "$PYTHON" -m r16_p14_stage2d.statistics --primary >"$ARTIFACT_DIR/logs/statistics-primary.log" 2>&1
   "$PYTHON" -m r16_p14_stage2d.mechanism_reverse >"$ARTIFACT_DIR/logs/mechanism-primary.log" 2>&1
@@ -187,6 +218,8 @@ else
     --device cpu --max-new-shards 1
   write_marker FIRST_REAL_WORK.json
   run_dual_module r16_p14_stage2d.oracle_appendix
+  write_marker PHASE3_WORKERS_COMPLETE.json
+  write_terminal_receipt oracle_appendix/terminal_receipt.json
   "$PYTHON" -m r16_p14_stage2d.oracle_appendix --consolidate >"$ARTIFACT_DIR/logs/oracle-consolidate.log" 2>&1
   "$PYTHON" -m r16_p14_stage2d.mechanism_reverse >"$ARTIFACT_DIR/logs/mechanism-final.log" 2>&1
   "$PYTHON" -m r16_p14_stage2d.report >"$ARTIFACT_DIR/logs/report.log" 2>&1

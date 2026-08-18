@@ -18,6 +18,8 @@ from .settings import (
     SAFETY_NONINFERIORITY_EPSILON,
     TAIL_HORIZON,
     TARGET_SHIFT_TASK,
+    DIAGNOSTIC_ONLY_GLOBAL,
+    FORMAL_POSITIVE_EVIDENCE_ALLOWED,
 )
 
 
@@ -34,6 +36,8 @@ def main() -> None:
     if evaluation_shards.exists() and any(evaluation_shards.rglob("*.json")):
         raise RuntimeError("evaluation outcomes already exist; rule freeze is outcome contaminated")
     calibration = json.loads((ARTIFACT_ROOT / "calibration_atlas/summary.json").read_text())
+    if not calibration.get("complete_matrix") or not calibration.get("terminal_receipt", {}).get("status") == "SUCCEEDED":
+        raise RuntimeError("calibration atlas must have a terminal receipt and complete shards before rule freeze")
     rows = [row for row in load_jsonl(ARTIFACT_ROOT / "calibration_atlas/rows.jsonl") if not row.get("error")]
     pool = [
         item
@@ -110,7 +114,8 @@ def main() -> None:
         "action_disagreement_threshold": threshold,
         "action_disagreement_threshold_rule": "calibration 75th percentile; analysis only",
         "evaluation_outcomes_read": False,
-        "diagnostic_only": bool(calibration["diagnostic_only"]),
+        "diagnostic_only": DIAGNOSTIC_ONLY_GLOBAL or bool(calibration["diagnostic_only"]),
+        "formal_positive_evidence_allowed": FORMAL_POSITIVE_EVIDENCE_ALLOWED,
     }
     baselines = {
         "schema_version": 1,
@@ -141,6 +146,8 @@ def main() -> None:
             for name in ("rule.json", "calibration_selection.json", "baselines.json", "report.md")
         },
         "evaluation_outcomes_absent_at_freeze": True,
+        "diagnostic_only_global": DIAGNOSTIC_ONLY_GLOBAL,
+        "formal_positive_evidence_allowed": FORMAL_POSITIVE_EVIDENCE_ALLOWED,
     }
     atomic_write_json(output / "manifest.json", manifest)
     if MIRROR_EXPERIMENT_OUTPUTS:

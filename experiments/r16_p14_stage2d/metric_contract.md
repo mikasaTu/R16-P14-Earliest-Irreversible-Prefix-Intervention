@@ -48,3 +48,9 @@ Scientific gates are evaluated exactly as preregistered. Because the user
 explicitly required all planned experiments even if a gate fails, downstream
 work after a failure is clearly stamped `diagnostic_only=true`; it cannot
 produce a positive, accepted, N3, or N4 label.
+
+The execution-scope amendment is recorded in
+`protocol_amendment.md`. It applies globally: `formal_positive_evidence_allowed`
+is `false` for this run. This permits complete diagnostic matrices while
+preserving every failed gate and preventing downstream rows from being
+misread as confirmatory evidence.

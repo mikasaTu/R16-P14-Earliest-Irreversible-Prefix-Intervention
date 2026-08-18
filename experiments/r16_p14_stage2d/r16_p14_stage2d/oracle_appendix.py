@@ -13,7 +13,15 @@ import numpy as np
 
 from .fresh_process import run_spawned_branch
 from .io_utils import atomic_write_json, atomic_write_jsonl, load_jsonl, sha256_file
-from .settings import ARTIFACT_ROOT, EXPERIMENT_ROOT, MIRROR_EXPERIMENT_OUTPUTS, PREFIX_INDICES, PROJECT_ROOT
+from .settings import (
+    ARTIFACT_ROOT,
+    DIAGNOSTIC_ONLY_GLOBAL,
+    EXPERIMENT_ROOT,
+    FORMAL_POSITIVE_EVIDENCE_ALLOWED,
+    MIRROR_EXPERIMENT_OUTPUTS,
+    PREFIX_INDICES,
+    PROJECT_ROOT,
+)
 
 
 def verify_primary_lock() -> dict[str, Any]:
@@ -125,6 +133,14 @@ def consolidate() -> dict[str, Any]:
             else:
                 missing.append(str(path.relative_to(ARTIFACT_ROOT)))
     output = ARTIFACT_ROOT / "oracle_appendix"
+    expected_rows = len(pool) * len(PREFIX_INDICES)
+    terminal_path = output / "terminal_receipt.json"
+    terminal_receipt = json.loads(terminal_path.read_text()) if terminal_path.is_file() else {
+        "status": "MISSING",
+        "complete_matrix": False,
+        "source": "no terminal PAI receipt was imported before consolidation",
+    }
+    complete_matrix = not missing and len(rows) == expected_rows
     atomic_write_jsonl(output / "rows.jsonl", rows)
     by_event = defaultdict(list)
     for row in rows:
@@ -174,8 +190,8 @@ def consolidate() -> dict[str, Any]:
     primary_unchanged = primary_before == primary_after
     summary = {
         "schema_version": 1,
-        "status": "PASS" if not missing and len(oracle_rows) == len(pool) else "INCOMPLETE",
-        "expected_rows": len(pool) * len(PREFIX_INDICES),
+        "status": "PASS" if complete_matrix and len(oracle_rows) == len(pool) else "INCOMPLETE",
+        "expected_rows": expected_rows,
         "rows": len(rows),
         "oracle_events": len(oracle_rows),
         "missing_shards": missing,
@@ -188,6 +204,11 @@ def consolidate() -> dict[str, Any]:
         "primary_decision_unchanged": primary_unchanged,
         "primary_decision_effect": "NONE",
         "primary_manifest": primary_lock,
+        "diagnostic_only": DIAGNOSTIC_ONLY_GLOBAL,
+        "formal_positive_evidence_allowed": FORMAL_POSITIVE_EVIDENCE_ALLOWED,
+        "complete_matrix": complete_matrix,
+        "terminal_receipt": terminal_receipt,
+        "statistics_eligible": bool(complete_matrix and terminal_receipt.get("status") == "SUCCEEDED"),
     }
     atomic_write_json(output / "summary.json", summary)
     (output / "report.md").write_text(

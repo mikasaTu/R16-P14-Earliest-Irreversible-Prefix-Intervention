@@ -103,6 +103,9 @@ def main() -> None:
         "blockers": blockers,
         "scientific_auto_continue_allowed": not blockers,
         "user_override_diagnostic_continuation": bool(blockers),
+        "protocol_amendment": "experiments/r16_p14_stage2d/protocol_amendment.md",
+        "diagnostic_only_global": True,
+        "formal_positive_evidence_allowed": False,
         "next_command": (
             "submit Stage2D atlas PAI phase from this committed barrier; preserve "
             "diagnostic_only=true if blockers is nonempty"
@@ -123,6 +126,7 @@ def main() -> None:
         f"Blockers: `{blockers}`",
         "",
         "If any blocker is present, the explicit user override permits the remaining matrix to run only as diagnostic evidence. It cannot change the failed gate or produce a positive/accepted label.",
+        "Global evidence amendment: diagnostic_only=true; formal_positive_evidence_allowed=false.",
         "",
         f"Next command: {payload['next_command']}",
         "",

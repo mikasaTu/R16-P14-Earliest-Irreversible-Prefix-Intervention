@@ -152,7 +152,11 @@ def manifest() -> dict[str, Any]:
         "immutable_parent": {
             "head": head,
             "tree": tree,
-            "start_status_short": "",
+            # The original parent-HEAD capture predates the status snapshot;
+            # never fabricate a clean status after the fact.  Preserve the
+            # missingness explicitly in every regenerated manifest.
+            "start_status_short": "UNAVAILABLE_AT_IMMUTABLE_PARENT_CAPTURE",
+            "start_status_capture": "not_recorded_at_initial_freeze; historical evidence is missing",
             "subject": git_text("show", "-s", "--format=%s", IMMUTABLE_PARENT),
             "commit_object_sha256": sha256_bytes(
                 subprocess.check_output(["git", "cat-file", "commit", IMMUTABLE_PARENT], cwd=PROJECT_ROOT)
