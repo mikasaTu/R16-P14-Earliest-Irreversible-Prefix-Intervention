@@ -85,6 +85,7 @@ write_marker() {
 import json, os, pathlib, sys, time
 root = pathlib.Path(os.environ["R16_P14_STAGE2D_ARTIFACT_ROOT"])
 path = root.parent / "pai_state" / sys.argv[1]
+path.parent.mkdir(parents=True, exist_ok=True)
 payload = {
     "schema_version": 1,
     "status": "complete",
@@ -94,6 +95,13 @@ payload = {
     "gid": os.getgid(),
     "unix_time": time.time(),
 }
+if not path.exists():
+    descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    with os.fdopen(descriptor, "w") as handle:
+        json.dump(payload, handle, indent=2, sort_keys=True)
+        handle.write("\n")
+        handle.flush()
+        os.fsync(handle.fileno())
 PY
 }
 
