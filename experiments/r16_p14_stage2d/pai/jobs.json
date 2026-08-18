@@ -52,6 +52,42 @@
       "earliest_decisive_error": "multiprocessing.spawn attempted os.chdir('/root') after privilege drop and raised PermissionError",
       "recovery": "Explicitly chdir to the hash-verified source root before starting Python; resume immutable event shards in a new run ID.",
       "superseded_by_run_id": "r16p14-stage2d-phase1-20260818-robot-v2"
+    },
+    {
+      "phase": "phase1_events_qualification_cohort",
+      "run_id": "r16p14-stage2d-phase1-20260818-robot-v2",
+      "job_id": "dlcrymjnucjo88dd",
+      "source_commit": "5254032b41c76294acf7988aaa7836e74df4e70c",
+      "source_tree": "f1de7c52dc90faafde2ff4b1e54d6a1bf5967e0b",
+      "resource_id": "quota1ssrabud0bh",
+      "resource_pool": "exp-robot",
+      "worker_count": 1,
+      "gpus_per_worker": 2,
+      "gpu_model_expected": "NVIDIA A800",
+      "training": false,
+      "wandb": false,
+      "pai_automatic_fault_tolerance": false,
+      "status_at_submission": "EnvPreparing",
+      "resumes_immutable_events_from_run_id": "r16p14-stage2d-phase1-20260818-robot-v1",
+      "event_attempts_reused": 420,
+      "status_final": "Succeeded",
+      "reason_code_final": "JobSucceeded",
+      "gmt_finish_time": "2026-08-18T06:28:39Z",
+      "duration_seconds": 2737,
+      "formal_event_attempts": 420,
+      "formal_event_errors": 0,
+      "qualification_branches": 732,
+      "qualification_missing": 0,
+      "phase_complete_marker": true,
+      "event_availability_gate": {
+        "put_the_cream_cheese_in_the_bowl": false,
+        "put_the_bowl_on_the_stove": true
+      },
+      "perturbation_family_gate": {
+        "put_the_cream_cheese_in_the_bowl": "BLOCKED",
+        "put_the_bowl_on_the_stove": "BLOCKED"
+      },
+      "downstream_evidence_mode": "DIAGNOSTIC_ONLY"
     }
   ]
 }

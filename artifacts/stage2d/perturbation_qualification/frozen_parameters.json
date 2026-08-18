@@ -1,0 +1,50 @@
+{
+  "diagnostic_fallback_rule": "two minimum qualification-gate-distance cells; no positive label permitted",
+  "forced_diagnostic_continuation": true,
+  "method_outcomes_read": false,
+  "schema_version": 1,
+  "selection_rule": "first two qualified cells in preregistered lexical order",
+  "status": "BLOCKED_BY_PERTURBATION_QUALIFICATION",
+  "tasks": {
+    "put_the_bowl_on_the_stove": {
+      "parameters": [
+        {
+          "clearance_delta_m": 0.0,
+          "diagnostic_fallback": true,
+          "future_index": 9,
+          "gate_distance": 0.2841269841269841,
+          "parameter_id": "future_09__clearance_p000mm",
+          "qualified": false
+        },
+        {
+          "clearance_delta_m": -0.01,
+          "diagnostic_fallback": true,
+          "future_index": 9,
+          "gate_distance": 0.584126984126984,
+          "parameter_id": "future_09__clearance_m010mm",
+          "qualified": false
+        }
+      ],
+      "status": "BLOCKED"
+    },
+    "put_the_cream_cheese_in_the_bowl": {
+      "parameters": [
+        {
+          "diagnostic_fallback": false,
+          "gate_distance": 0.0,
+          "magnitude_m": 0.06,
+          "parameter_id": "shift_060mm",
+          "qualified": true
+        },
+        {
+          "diagnostic_fallback": true,
+          "gate_distance": 0.16363636363636358,
+          "magnitude_m": 0.08,
+          "parameter_id": "shift_080mm",
+          "qualified": false
+        }
+      ],
+      "status": "BLOCKED"
+    }
+  }
+}

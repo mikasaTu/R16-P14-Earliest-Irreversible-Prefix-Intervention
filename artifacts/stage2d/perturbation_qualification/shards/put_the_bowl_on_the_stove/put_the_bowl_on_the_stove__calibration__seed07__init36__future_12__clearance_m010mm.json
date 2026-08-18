@@ -1,0 +1,22 @@
+{
+  "child_exitcode": 0,
+  "error": "ValueError: cannot define a lateral direction for a zero-length path",
+  "event_id": "put_the_bowl_on_the_stove__calibration__seed07__init36",
+  "fresh_environment_created": false,
+  "method_outcomes_inspected_for_parameter_selection": false,
+  "parameter": {
+    "clearance_delta_m": -0.01,
+    "future_index": 12,
+    "parameter_id": "future_12__clearance_m010mm"
+  },
+  "parent_pid": 283,
+  "pid": 17199,
+  "prefix_k": 16,
+  "process_start_method": "spawn",
+  "qualification_only": true,
+  "repeat": 0,
+  "requested_arm": "FULL_OLD_CHUNK",
+  "task": "put_the_bowl_on_the_stove",
+  "traceback": "Traceback (most recent call last):\n  File \"/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16-p14-stage2d-20260818-phase1-recovery-v2/experiments/r16_p14_stage2d/r16_p14_stage2d/fresh_process.py\", line 17, in _child\n    result = execute_branch(**request)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16-p14-stage2d-20260818-phase1-recovery-v2/experiments/r16_p14_stage2d/r16_p14_stage2d/runtime.py\", line 392, in execute_branch\n    perturbation = apply_perturbation(env, event, parameter)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16-p14-stage2d-20260818-phase1-recovery-v2/experiments/r16_p14_stage2d/r16_p14_stage2d/runtime.py\", line 251, in apply_perturbation\n    lateral = lateral_unit(prior, future)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16-p14-stage2d-20260818-phase1-recovery-v2/experiments/r16_p14_stage2d/r16_p14_stage2d/geometry.py\", line 64, in lateral_unit\n    raise ValueError(\"cannot define a lateral direction for a zero-length path\")\nValueError: cannot define a lateral direction for a zero-length path\n",
+  "unique_process_contract": true
+}
