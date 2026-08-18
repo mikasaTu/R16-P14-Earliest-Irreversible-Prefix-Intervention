@@ -13,6 +13,10 @@ ARTIFACT_ROOT=$ARTIFACT_DIR/stage2d_artifacts
 CACHE_ROOT=/mnt/cpfs/zbl-cpfs-new/USERS/leon/cache/r16_p14_stage2d
 REGISTRY_RUN_ID=${PAI_CANARY_RUN_ID:?PAI_CANARY_RUN_ID is required}
 NONCE=${PAI_CANARY_NONCE:?PAI_CANARY_NONCE is required}
+RESUME_FROM_RUN=${STAGE2D_RESUME_FROM_RUN:-}
+RESUME_SOURCE_COMMIT=${STAGE2D_RESUME_SOURCE_COMMIT:-$EXPECTED_SOURCE_COMMIT}
+RESUME_SOURCE_TREE=${STAGE2D_RESUME_SOURCE_TREE:-$EXPECTED_SOURCE_TREE}
+RESUME_ROOT=${STAGE2D_RESUME_ROOT:-/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2d/pai}
 
 on_error() {
   local exit_code=$?
@@ -132,6 +136,80 @@ if not path.exists():
 PY
 }
 
+import_resume_shards() {
+  [[ -n "$RESUME_FROM_RUN" ]] || return 0
+  [[ "$RESUME_FROM_RUN" =~ ^[A-Za-z0-9][A-Za-z0-9._-]{2,63}$ ]]
+  case "$RESUME_ROOT" in
+    /mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2d/pai) ;;
+    *) printf 'resume root escaped Stage2D evidence root: %s\n' "$RESUME_ROOT" >&2; exit 72 ;;
+  esac
+  local resume_dir="$RESUME_ROOT/$RESUME_FROM_RUN"
+  test -f "$resume_dir/pai_state/RECOVERY_MANIFEST.json"
+  "$PYTHON" - "$resume_dir" "$ARTIFACT_ROOT" "$RESUME_SOURCE_COMMIT" "$RESUME_SOURCE_TREE" <<'PY'
+import hashlib
+import json
+import os
+import pathlib
+import shutil
+import sys
+
+resume_dir = pathlib.Path(sys.argv[1])
+artifact_dir = pathlib.Path(sys.argv[2])
+expected_commit, expected_tree = sys.argv[3:5]
+manifest_path = resume_dir / "pai_state/RECOVERY_MANIFEST.json"
+manifest = json.loads(manifest_path.read_text())
+if not manifest.get("immutable_completed_evidence"):
+    raise RuntimeError("resume manifest is not immutable evidence")
+if manifest.get("source_commit") != expected_commit or manifest.get("source_tree") != expected_tree:
+    raise RuntimeError("resume source freeze differs from current source")
+source_root = resume_dir / "stage2d_artifacts"
+destination_root = artifact_dir / "confirmatory_evaluation"
+destination_root.mkdir(parents=True, exist_ok=True)
+imported = []
+for item in manifest.get("items", []):
+    relative = pathlib.PurePosixPath(item["relative_path"])
+    if relative.parts[:2] != ("stage2d_artifacts", "confirmatory_evaluation"):
+        raise RuntimeError(f"resume path escaped confirmatory root: {relative}")
+    source = resume_dir / relative
+    destination = artifact_dir / relative.relative_to("stage2d_artifacts")
+    if not source.is_file():
+        raise RuntimeError(f"resume shard is missing: {source}")
+    digest = hashlib.sha256(source.read_bytes()).hexdigest()
+    if digest != item["sha256"] or source.stat().st_size != int(item["size"]):
+        raise RuntimeError(f"resume shard checksum mismatch: {source}")
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    if destination.exists():
+        if hashlib.sha256(destination.read_bytes()).hexdigest() != digest:
+            raise RuntimeError(f"refusing to overwrite divergent completed shard: {destination}")
+    else:
+        shutil.copyfile(source, destination)
+        os.chmod(destination, 0o600)
+    imported.append({"relative_path": str(destination.relative_to(artifact_dir)), "sha256": digest})
+receipt = artifact_dir.parent / "pai_state/RESUME_IMPORT.json"
+receipt.parent.mkdir(parents=True, exist_ok=True)
+payload = {
+    "schema_version": 1,
+    "status": "IMPORTED_IMMUTABLE_COMPLETED_SHARDS",
+    "source_run_id": manifest["run_id"],
+    "source_job_id": manifest["job_id"],
+    "source_manifest_sha256": hashlib.sha256(manifest_path.read_bytes()).hexdigest(),
+    "source_replay_shard_count": len(imported),
+    "expected_replay_shard_count": manifest["expected_replay_shard_count"],
+    "source_status": manifest["status"],
+    "uid": os.getuid(),
+    "gid": os.getgid(),
+    "completed_shards_not_overwritten": True,
+}
+if not receipt.exists():
+    descriptor = os.open(receipt, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    with os.fdopen(descriptor, "w") as handle:
+        json.dump(payload, handle, indent=2, sort_keys=True)
+        handle.write("\n")
+        handle.flush()
+        os.fsync(handle.fileno())
+PY
+}
+
 run_event_worker() {
   local worker_index=$1
   local gpu_index=$2
@@ -163,6 +241,8 @@ run_dual_module() {
   wait "$pid0"
   wait "$pid1"
 }
+
+import_resume_shards
 
 if [[ "$PHASE" = phase1 ]]; then
   # One persisted formal event is the first-real-work gate. All later work is
