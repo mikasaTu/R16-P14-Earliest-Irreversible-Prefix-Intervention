@@ -285,3 +285,80 @@ def test_38_checksum_paths_are_stable_for_external_pai_artifact_root():
         "artifacts/stage2d/statistics/statistics.json"
     )
     assert "relative_to(PROJECT_ROOT)" not in inspect.getsource(checksums.main)
+
+
+def test_39_bootstrap_clusters_collapse_actor_seed_repeats_but_keep_task_and_severity():
+    rows = []
+    for actor_seed in (7, 17, 29):
+        rows.append(
+            {
+                "task": "task_a",
+                "parameter_id": "sev_a",
+                "init_state_id": 1,
+                "actor_seed": actor_seed,
+                "methods": {"left": {"x": 1.0}, "right": {"x": 0.0}},
+            }
+        )
+    rows.append(
+        {
+            "task": "task_a",
+            "parameter_id": "sev_b",
+            "init_state_id": 1,
+            "actor_seed": 7,
+            "methods": {"left": {"x": 2.0}, "right": {"x": 0.0}},
+        }
+    )
+    rows.append(
+        {
+            "task": "task_b",
+            "parameter_id": "sev_a",
+            "init_state_id": 1,
+            "actor_seed": 7,
+            "methods": {"left": {"x": 3.0}, "right": {"x": 0.0}},
+        }
+    )
+    overall_left, _ = statistics.cluster_paired_values(rows, "left", "right", "x")
+    severity_left, _ = statistics.cluster_paired_values(
+        rows,
+        "left",
+        "right",
+        "x",
+        cluster_fields=("task", "parameter_id", "source_rollout"),
+    )
+    seed_left, _ = statistics.cluster_paired_values(
+        [row for row in rows if row["actor_seed"] == 7],
+        "left",
+        "right",
+        "x",
+        cluster_fields=("task", "parameter_id", "source_rollout", "actor_seed"),
+    )
+    assert len(overall_left) == 2  # task_a/init1 and task_b/init1
+    assert len(severity_left) == 3  # task + severity + init1
+    assert len(seed_left) == 3  # seed strata remain separate, but still clustered
+
+
+def test_40_binary_tables_retain_event_rows_while_bootstrap_is_clustered():
+    rows = [
+        {
+            "task": "task_a",
+            "parameter_id": "sev_a",
+            "init_state_id": 1,
+            "actor_seed": seed,
+            "methods": {
+                "left": {"safe_success": True, "cause_violation": False, "task_success": True},
+                "right": {"safe_success": False, "cause_violation": False, "task_success": False},
+            },
+        }
+        for seed in (7, 17, 29)
+    ]
+    comparison = statistics.comparison(rows, "left", "right")
+    assert comparison["differences"]["safe_success"]["n"] == 1
+    assert comparison["binary_tables"]["safe_success"] == {"method_1__baseline_0": 3}
+    assert comparison["bootstrap_cluster_fields"] == ["task", "source_rollout"]
+
+
+def test_41_report_contains_all_primary_comparison_tables():
+    report = require(ARTIFACT_ROOT / "REPORT.md").read_text()
+    for label in ("- h2:", "- h3:", "- h4:"):
+        assert label in report
+    assert "bootstrap=source rollout cluster; prefix rows averaged within cluster" in report

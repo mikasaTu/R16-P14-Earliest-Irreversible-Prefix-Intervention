@@ -1,0 +1,4991 @@
+{
+  "cached_fresh_action_disagreement": {
+    "overall": {
+      "mean": 0.09399220906231621,
+      "n": 154
+    },
+    "put_the_bowl_on_the_stove": {
+      "mean": 0.08371746410593027,
+      "n": 82
+    },
+    "put_the_cream_cheese_in_the_bowl": {
+      "mean": 0.10569400192931133,
+      "n": 72
+    }
+  },
+  "causal_limits": [
+    "The operator uses a frozen state ACT, not RGB or a VLA.",
+    "Only two LIBERO task families are observed.",
+    "The oracle is an upper bound and is not deployable.",
+    "A failed upstream gate makes all downstream patterns diagnostic-only."
+  ],
+  "contrasts": {
+    "bounded_cached_prefix_vs_full_old": {
+      "effects_left_minus_right": {
+        "actual_actor_calls": {
+          "direction": "higher_in_left",
+          "estimate": 2.0
+        },
+        "actual_inference_wall_time_s": {
+          "direction": "higher_in_left",
+          "estimate": 0.010403555558443625
+        },
+        "actual_post_detection_actions": {
+          "direction": "lower_in_left",
+          "estimate": -3.2467532467532467
+        },
+        "cause_violation": {
+          "direction": "lower_in_left",
+          "estimate": -0.13636363636363635
+        },
+        "eef_path_length_m": {
+          "direction": "lower_in_left",
+          "estimate": -0.029719526269599863
+        },
+        "manipulated_object_path_length_m": {
+          "direction": "lower_in_left",
+          "estimate": -0.030962627251537717
+        },
+        "progress_regression_m": {
+          "direction": "higher_in_left",
+          "estimate": 0.00016623759845956553
+        },
+        "safe_success": {
+          "direction": "lower_in_left",
+          "estimate": -0.025974025974025976
+        }
+      },
+      "left": "EVENT_ALIGNED_CACHED",
+      "n": 154,
+      "right": "FULL_OLD_CHUNK"
+    },
+    "cached_content_at_matched_k": {
+      "effects_left_minus_right": {
+        "actual_actor_calls": {
+          "direction": "equal",
+          "estimate": 0.0
+        },
+        "actual_inference_wall_time_s": {
+          "direction": "higher_in_left",
+          "estimate": 6.870211692543095e-05
+        },
+        "actual_post_detection_actions": {
+          "direction": "higher_in_left",
+          "estimate": 0.006493506493506494
+        },
+        "cause_violation": {
+          "direction": "lower_in_left",
+          "estimate": -0.012987012987012988
+        },
+        "eef_path_length_m": {
+          "direction": "lower_in_left",
+          "estimate": -0.0008340763917824927
+        },
+        "manipulated_object_path_length_m": {
+          "direction": "lower_in_left",
+          "estimate": -0.0008893863803233139
+        },
+        "progress_regression_m": {
+          "direction": "lower_in_left",
+          "estimate": -0.000810471871250343
+        },
+        "safe_success": {
+          "direction": "equal",
+          "estimate": 0.0
+        }
+      },
+      "left": "EVENT_ALIGNED_CACHED",
+      "n": 154,
+      "right": "FRESH_MATCHED_AT_RULE_K"
+    },
+    "cached_motion_vs_hold": {
+      "effects_left_minus_right": {
+        "actual_actor_calls": {
+          "direction": "equal",
+          "estimate": 0.0
+        },
+        "actual_inference_wall_time_s": {
+          "direction": "higher_in_left",
+          "estimate": 6.213104542846898e-05
+        },
+        "actual_post_detection_actions": {
+          "direction": "lower_in_left",
+          "estimate": -0.032467532467532464
+        },
+        "cause_violation": {
+          "direction": "higher_in_left",
+          "estimate": 0.07792207792207792
+        },
+        "eef_path_length_m": {
+          "direction": "higher_in_left",
+          "estimate": 0.07934518094070642
+        },
+        "manipulated_object_path_length_m": {
+          "direction": "higher_in_left",
+          "estimate": 0.07062086432562284
+        },
+        "progress_regression_m": {
+          "direction": "higher_in_left",
+          "estimate": 0.000572092970158946
+        },
+        "safe_success": {
+          "direction": "equal",
+          "estimate": 0.0
+        }
+      },
+      "left": "EVENT_ALIGNED_CACHED",
+      "n": 154,
+      "right": "HOLD_MATCHED_AT_RULE_K"
+    },
+    "discarded_detection_query": {
+      "effects_left_minus_right": {
+        "actual_actor_calls": {
+          "direction": "higher_in_left",
+          "estimate": 1.0
+        },
+        "actual_inference_wall_time_s": {
+          "direction": "higher_in_left",
+          "estimate": 0.005122639487006842
+        },
+        "actual_post_detection_actions": {
+          "direction": "equal",
+          "estimate": 0.0
+        },
+        "cause_violation": {
+          "direction": "equal",
+          "estimate": 0.0
+        },
+        "eef_path_length_m": {
+          "direction": "equal",
+          "estimate": 0.0
+        },
+        "manipulated_object_path_length_m": {
+          "direction": "equal",
+          "estimate": 0.0
+        },
+        "progress_regression_m": {
+          "direction": "equal",
+          "estimate": 0.0
+        },
+        "safe_success": {
+          "direction": "equal",
+          "estimate": 0.0
+        }
+      },
+      "left": "EVENT_ALIGNED_CACHED",
+      "n": 154,
+      "right": "CACHED_NOQUERY_AT_RULE_K"
+    },
+    "event_timing_vs_fixed_delay_8": {
+      "effects_left_minus_right": {
+        "actual_actor_calls": {
+          "direction": "higher_in_left",
+          "estimate": 0.012987012987012988
+        },
+        "actual_inference_wall_time_s": {
+          "direction": "higher_in_left",
+          "estimate": 8.030120782872732e-05
+        },
+        "actual_post_detection_actions": {
+          "direction": "lower_in_left",
+          "estimate": -1.1818181818181819
+        },
+        "cause_violation": {
+          "direction": "higher_in_left",
+          "estimate": 0.08441558441558442
+        },
+        "eef_path_length_m": {
+          "direction": "lower_in_left",
+          "estimate": -0.015569539131781458
+        },
+        "manipulated_object_path_length_m": {
+          "direction": "lower_in_left",
+          "estimate": -0.016035010756945536
+        },
+        "progress_regression_m": {
+          "direction": "higher_in_left",
+          "estimate": 0.0007188263503113188
+        },
+        "safe_success": {
+          "direction": "lower_in_left",
+          "estimate": -0.006493506493506494
+        }
+      },
+      "left": "EVENT_ALIGNED_CACHED",
+      "n": 154,
+      "right": "FIXED_DELAY_8"
+    },
+    "event_timing_vs_immediate": {
+      "effects_left_minus_right": {
+        "actual_actor_calls": {
+          "direction": "higher_in_left",
+          "estimate": 1.0
+        },
+        "actual_inference_wall_time_s": {
+          "direction": "higher_in_left",
+          "estimate": 0.005321890701301905
+        },
+        "actual_post_detection_actions": {
+          "direction": "higher_in_left",
+          "estimate": 6.753246753246753
+        },
+        "cause_violation": {
+          "direction": "higher_in_left",
+          "estimate": 0.2662337662337662
+        },
+        "eef_path_length_m": {
+          "direction": "higher_in_left",
+          "estimate": 0.057106601413889374
+        },
+        "manipulated_object_path_length_m": {
+          "direction": "higher_in_left",
+          "estimate": 0.05623575740898827
+        },
+        "progress_regression_m": {
+          "direction": "higher_in_left",
+          "estimate": 0.0016915665108350453
+        },
+        "safe_success": {
+          "direction": "higher_in_left",
+          "estimate": 0.012987012987012988
+        }
+      },
+      "left": "EVENT_ALIGNED_CACHED",
+      "n": 154,
+      "right": "IMMEDIATE_FRESH"
+    }
+  },
+  "diagnostic_only": true,
+  "formal_positive_evidence_allowed": false,
+  "mechanisms": [
+    {
+      "code_path": "execute_branch selects old[d:k] for CACHED_MATCHED and fresh_d[:k-d] for FRESH_MATCHED, then both call the same actor at k and execute h_tail=4",
+      "interpretation": "The matched-k contrast has safe-success delta 0.0 and cause-violation delta -0.012987012987012988.  In this matrix safe success is effectively unchanged, so the old cached action content does not show a measurable H2 advantage over a fresh prefix at the same handoff.  Any small path/progress difference is motion geometry, not a selection-quality gain; call count, prefix length, tail actor, and tail horizon are matched.",
+      "mechanism": "cached action content under matched handoff time",
+      "observed_effect": {
+        "actual_actor_calls": {
+          "direction": "equal",
+          "estimate": 0.0
+        },
+        "actual_inference_wall_time_s": {
+          "direction": "higher_in_left",
+          "estimate": 6.870211692543095e-05
+        },
+        "actual_post_detection_actions": {
+          "direction": "higher_in_left",
+          "estimate": 0.006493506493506494
+        },
+        "cause_violation": {
+          "direction": "lower_in_left",
+          "estimate": -0.012987012987012988
+        },
+        "eef_path_length_m": {
+          "direction": "lower_in_left",
+          "estimate": -0.0008340763917824927
+        },
+        "manipulated_object_path_length_m": {
+          "direction": "lower_in_left",
+          "estimate": -0.0008893863803233139
+        },
+        "progress_regression_m": {
+          "direction": "lower_in_left",
+          "estimate": -0.000810471871250343
+        },
+        "safe_success": {
+          "direction": "equal",
+          "estimate": 0.0
+        }
+      },
+      "stratified_effects": {
+        "actor_seed": {
+          "17": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 1.7950187519488736e-05
+              },
+              "actual_post_detection_actions": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "cause_violation": {
+                "direction": "lower_in_left",
+                "estimate": -0.03125
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.0004641126412089165
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.0004483613467794153
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.0007329949598190938
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 64,
+            "right": "FRESH_MATCHED_AT_RULE_K"
+          },
+          "29": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "lower_in_left",
+                "estimate": -5.706910631372321e-05
+              },
+              "actual_post_detection_actions": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "cause_violation": {
+                "direction": "lower_in_left",
+                "estimate": -0.02127659574468085
+              },
+              "eef_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.0027613366290212536
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.0026089757500793015
+              },
+              "progress_regression_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.003340502750537849
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 47,
+            "right": "FRESH_MATCHED_AT_RULE_K"
+          },
+          "7": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.0002817107442328855
+              },
+              "actual_post_detection_actions": {
+                "direction": "higher_in_left",
+                "estimate": 0.023255813953488372
+              },
+              "cause_violation": {
+                "direction": "higher_in_left",
+                "estimate": 0.023255813953488372
+              },
+              "eef_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.0006597244606482696
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.0010009015932545536
+              },
+              "progress_regression_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.00034234224013246365
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 43,
+            "right": "FRESH_MATCHED_AT_RULE_K"
+          }
+        },
+        "severity": {
+          "put_the_bowl_on_the_stove::future_09__clearance_m010mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.000258918499991978
+              },
+              "actual_post_detection_actions": {
+                "direction": "higher_in_left",
+                "estimate": 0.025
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.0023428918622714987
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.0027279124443820653
+              },
+              "progress_regression_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.0019702296561762106
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 40,
+            "right": "FRESH_MATCHED_AT_RULE_K"
+          },
+          "put_the_bowl_on_the_stove::future_09__clearance_p000mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "lower_in_left",
+                "estimate": -1.843564273041834e-05
+              },
+              "actual_post_detection_actions": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.0008984014201743553
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.0007755557496312687
+              },
+              "progress_regression_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.0007847907405969274
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 42,
+            "right": "FRESH_MATCHED_AT_RULE_K"
+          },
+          "put_the_cream_cheese_in_the_bowl::shift_060mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "lower_in_left",
+                "estimate": -4.0281675656179025e-05
+              },
+              "actual_post_detection_actions": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.00041135043252740793
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.00042571596730363163
+              },
+              "progress_regression_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.00034686564148521507
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 37,
+            "right": "FRESH_MATCHED_AT_RULE_K"
+          },
+          "put_the_cream_cheese_in_the_bowl::shift_080mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 7.108871430838398e-05
+              },
+              "actual_post_detection_actions": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "cause_violation": {
+                "direction": "lower_in_left",
+                "estimate": -0.05714285714285714
+              },
+              "eef_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.0003491198914238594
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.0003150615457208247
+              },
+              "progress_regression_m": {
+                "direction": "lower_in_left",
+                "estimate": -5.949773870870891e-06
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 35,
+            "right": "FRESH_MATCHED_AT_RULE_K"
+          }
+        },
+        "task": {
+          "put_the_bowl_on_the_stove": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.00011685906103660428
+              },
+              "actual_post_detection_actions": {
+                "direction": "higher_in_left",
+                "estimate": 0.012195121951219513
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.0016030309041241816
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.0017279248690219007
+              },
+              "progress_regression_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.0013630536262453582
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 82,
+            "right": "FRESH_MATCHED_AT_RULE_K"
+          },
+          "put_the_cream_cheese_in_the_bowl": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 1.3856708354372435e-05
+              },
+              "actual_post_detection_actions": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "cause_violation": {
+                "direction": "lower_in_left",
+                "estimate": -0.027777777777777776
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 4.167735838443073e-05
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 6.561578736118759e-05
+              },
+              "progress_regression_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.00018114265028379775
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 72,
+            "right": "FRESH_MATCHED_AT_RULE_K"
+          }
+        }
+      }
+    },
+    {
+      "code_path": "CACHED_MATCHED calls ACT at d and discards the tensor; CACHED_NOQUERY executes identical old[d:k] bytes",
+      "interpretation": "Exact pre-tail signatures show the discarded query has no physical or history effect; the observed actor-call delta is 1.0 and the inference-time delta is 0.005122639487006842.  Thus the sham-query increase is pure computation/bookkeeping overhead, not action-content value.",
+      "mechanism": "detection-time sham query overhead",
+      "observed_effect": {
+        "actual_actor_calls": {
+          "direction": "higher_in_left",
+          "estimate": 1.0
+        },
+        "actual_inference_wall_time_s": {
+          "direction": "higher_in_left",
+          "estimate": 0.005122639487006842
+        },
+        "actual_post_detection_actions": {
+          "direction": "equal",
+          "estimate": 0.0
+        },
+        "cause_violation": {
+          "direction": "equal",
+          "estimate": 0.0
+        },
+        "eef_path_length_m": {
+          "direction": "equal",
+          "estimate": 0.0
+        },
+        "manipulated_object_path_length_m": {
+          "direction": "equal",
+          "estimate": 0.0
+        },
+        "progress_regression_m": {
+          "direction": "equal",
+          "estimate": 0.0
+        },
+        "safe_success": {
+          "direction": "equal",
+          "estimate": 0.0
+        }
+      },
+      "stratified_effects": {
+        "actor_seed": {
+          "17": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 1.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.0052343510780730185
+              },
+              "actual_post_detection_actions": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "progress_regression_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 64,
+            "right": "CACHED_NOQUERY_AT_RULE_K"
+          },
+          "29": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 1.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.005054045851059701
+              },
+              "actual_post_detection_actions": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "progress_regression_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 47,
+            "right": "CACHED_NOQUERY_AT_RULE_K"
+          },
+          "7": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 1.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.005031345511687779
+              },
+              "actual_post_detection_actions": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "progress_regression_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 43,
+            "right": "CACHED_NOQUERY_AT_RULE_K"
+          }
+        },
+        "severity": {
+          "put_the_bowl_on_the_stove::future_09__clearance_m010mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 1.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.005214714349915539
+              },
+              "actual_post_detection_actions": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "progress_regression_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 40,
+            "right": "CACHED_NOQUERY_AT_RULE_K"
+          },
+          "put_the_bowl_on_the_stove::future_09__clearance_p000mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 1.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.005235579476253146
+              },
+              "actual_post_detection_actions": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "progress_regression_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 42,
+            "right": "CACHED_NOQUERY_AT_RULE_K"
+          },
+          "put_the_cream_cheese_in_the_bowl::shift_060mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 1.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.004997545540550778
+              },
+              "actual_post_detection_actions": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "progress_regression_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 37,
+            "right": "CACHED_NOQUERY_AT_RULE_K"
+          },
+          "put_the_cream_cheese_in_the_bowl::shift_080mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 1.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.00501412525712632
+              },
+              "actual_post_detection_actions": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "progress_regression_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 35,
+            "right": "CACHED_NOQUERY_AT_RULE_K"
+          }
+        },
+        "task": {
+          "put_the_bowl_on_the_stove": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 1.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.005225401365844557
+              },
+              "actual_post_detection_actions": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "progress_regression_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 82,
+            "right": "CACHED_NOQUERY_AT_RULE_K"
+          },
+          "put_the_cream_cheese_in_the_bowl": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 1.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.0050056051249972216
+              },
+              "actual_post_detection_actions": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "progress_regression_m": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 72,
+            "right": "CACHED_NOQUERY_AT_RULE_K"
+          }
+        }
+      }
+    },
+    {
+      "code_path": "arm_plan maps IMMEDIATE_FRESH to k=d and EVENT_ALIGNED_CACHED to the frozen event rule",
+      "interpretation": "Against immediate replanning, the event-aligned arm adds 6.753 post-detection actions and changes cause violation by 0.266; its safe-success delta is only 0.013.  This identifies stale-action exposure during the delayed window rather than a free timing benefit.  Execution-cost changes use only measured actions, calls, paths, and wall time; retained cached count is not efficiency.",
+      "mechanism": "event-aligned delay versus immediate replanning",
+      "observed_effect": {
+        "actual_actor_calls": {
+          "direction": "higher_in_left",
+          "estimate": 1.0
+        },
+        "actual_inference_wall_time_s": {
+          "direction": "higher_in_left",
+          "estimate": 0.005321890701301905
+        },
+        "actual_post_detection_actions": {
+          "direction": "higher_in_left",
+          "estimate": 6.753246753246753
+        },
+        "cause_violation": {
+          "direction": "higher_in_left",
+          "estimate": 0.2662337662337662
+        },
+        "eef_path_length_m": {
+          "direction": "higher_in_left",
+          "estimate": 0.057106601413889374
+        },
+        "manipulated_object_path_length_m": {
+          "direction": "higher_in_left",
+          "estimate": 0.05623575740898827
+        },
+        "progress_regression_m": {
+          "direction": "higher_in_left",
+          "estimate": 0.0016915665108350453
+        },
+        "safe_success": {
+          "direction": "higher_in_left",
+          "estimate": 0.012987012987012988
+        }
+      },
+      "stratified_effects": {
+        "actor_seed": {
+          "17": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 1.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.005326628546878709
+              },
+              "actual_post_detection_actions": {
+                "direction": "higher_in_left",
+                "estimate": 6.6875
+              },
+              "cause_violation": {
+                "direction": "higher_in_left",
+                "estimate": 0.265625
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.058471698101223844
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.05705421291594394
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.003128734015251093
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 64,
+            "right": "IMMEDIATE_FRESH"
+          },
+          "29": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 1.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.005220947829757085
+              },
+              "actual_post_detection_actions": {
+                "direction": "higher_in_left",
+                "estimate": 7.531914893617022
+              },
+              "cause_violation": {
+                "direction": "higher_in_left",
+                "estimate": 0.3404255319148936
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.05580695938626909
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.054586764765599635
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.0012552084596307886
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 47,
+            "right": "IMMEDIATE_FRESH"
+          },
+          "7": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 1.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.005425171930271464
+              },
+              "actual_post_detection_actions": {
+                "direction": "higher_in_left",
+                "estimate": 6.0
+              },
+              "cause_violation": {
+                "direction": "higher_in_left",
+                "estimate": 0.18604651162790697
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.05649536856060441
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.056819978380944186
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 2.9476002090231027e-05
+              },
+              "safe_success": {
+                "direction": "higher_in_left",
+                "estimate": 0.046511627906976744
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 43,
+            "right": "IMMEDIATE_FRESH"
+          }
+        },
+        "severity": {
+          "put_the_bowl_on_the_stove::future_09__clearance_m010mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 1.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.005404781424942939
+              },
+              "actual_post_detection_actions": {
+                "direction": "higher_in_left",
+                "estimate": 4.875
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.0522552422762928
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.05327388035886403
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.00035253873432244563
+              },
+              "safe_success": {
+                "direction": "higher_in_left",
+                "estimate": 0.05
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 40,
+            "right": "IMMEDIATE_FRESH"
+          },
+          "put_the_bowl_on_the_stove::future_09__clearance_p000mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 1.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.005314486142944068
+              },
+              "actual_post_detection_actions": {
+                "direction": "higher_in_left",
+                "estimate": 5.0
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.05665711462037465
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.05591143802416753
+              },
+              "progress_regression_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.00045948999153768225
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 42,
+            "right": "IMMEDIATE_FRESH"
+          },
+          "put_the_cream_cheese_in_the_bowl::shift_060mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 1.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.0053403814864715375
+              },
+              "actual_post_detection_actions": {
+                "direction": "higher_in_left",
+                "estimate": 8.891891891891891
+              },
+              "cause_violation": {
+                "direction": "higher_in_left",
+                "estimate": 0.5135135135135135
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.05823604992272712
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.056369732975348016
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.005696563935602438
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 37,
+            "right": "IMMEDIATE_FRESH"
+          },
+          "put_the_cream_cheese_in_the_bowl::shift_080mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 1.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.005216496514276514
+              },
+              "actual_post_detection_actions": {
+                "direction": "higher_in_left",
+                "estimate": 8.742857142857142
+              },
+              "cause_violation": {
+                "direction": "higher_in_left",
+                "estimate": 0.6285714285714286
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.061996407585446035
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.05986831170076345
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.001569297352085473
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 35,
+            "right": "IMMEDIATE_FRESH"
+          }
+        },
+        "task": {
+          "put_the_bowl_on_the_stove": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 1.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.005358532621967908
+              },
+              "actual_post_detection_actions": {
+                "direction": "higher_in_left",
+                "estimate": 4.939024390243903
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.05450985981838351
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.05462482452889753
+              },
+              "progress_regression_m": {
+                "direction": "lower_in_left",
+                "estimate": -6.337841794737597e-05
+              },
+              "safe_success": {
+                "direction": "higher_in_left",
+                "estimate": 0.024390243902439025
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 82,
+            "right": "IMMEDIATE_FRESH"
+          },
+          "put_the_cream_cheese_in_the_bowl": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 1.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.005280159624987846
+              },
+              "actual_post_detection_actions": {
+                "direction": "higher_in_left",
+                "estimate": 8.819444444444445
+              },
+              "cause_violation": {
+                "direction": "higher_in_left",
+                "estimate": 0.5694444444444444
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.06006400156432661
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.058070430966869396
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.0036902537908372474
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 72,
+            "right": "IMMEDIATE_FRESH"
+          }
+        }
+      }
+    },
+    {
+      "code_path": "The frozen rule uses target release/path timing and selects rule_k; FIXED_DELAY_8 always executes prefix_k=d+8=10 before the same h_tail=4 recovery call.",
+      "interpretation": "Against FIXED_DELAY_8, the event rule changes safe success by -0.0065 (-0.65 percentage points), cause violation by 0.0844 (+8.44 percentage points), and post-detection actions by -1.182 (-1.18, only about 9.9% of the 11.873-action fixed baseline).  The bowl rule is k=7 throughout: it saves about 2.94 actions with no cause difference.  Cream is mostly k=11: it spends about +0.82 actions and has +18.06 percentage points cause violation. The calibration-only oracle gap recovery is 0.158 when available, below the 0.40 H4 criterion. Thus the fixed-baseline comparison is heterogeneous and does not support H4; it is an audit of the frozen rule, not a new method.",
+      "mechanism": "event-aligned rule versus strongest fixed delay",
+      "observed_effect": {
+        "actual_actor_calls": {
+          "direction": "higher_in_left",
+          "estimate": 0.012987012987012988
+        },
+        "actual_inference_wall_time_s": {
+          "direction": "higher_in_left",
+          "estimate": 8.030120782872732e-05
+        },
+        "actual_post_detection_actions": {
+          "direction": "lower_in_left",
+          "estimate": -1.1818181818181819
+        },
+        "cause_violation": {
+          "direction": "higher_in_left",
+          "estimate": 0.08441558441558442
+        },
+        "eef_path_length_m": {
+          "direction": "lower_in_left",
+          "estimate": -0.015569539131781458
+        },
+        "manipulated_object_path_length_m": {
+          "direction": "lower_in_left",
+          "estimate": -0.016035010756945536
+        },
+        "progress_regression_m": {
+          "direction": "higher_in_left",
+          "estimate": 0.0007188263503113188
+        },
+        "safe_success": {
+          "direction": "lower_in_left",
+          "estimate": -0.006493506493506494
+        }
+      },
+      "stratified_effects": {
+        "actor_seed": {
+          "17": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 5.415381252049656e-05
+              },
+              "actual_post_detection_actions": {
+                "direction": "lower_in_left",
+                "estimate": -1.3125
+              },
+              "cause_violation": {
+                "direction": "higher_in_left",
+                "estimate": 0.09375
+              },
+              "eef_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.01743306840473459
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.018314640764467535
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.0003062399056844721
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 64,
+            "right": "FIXED_DELAY_8"
+          },
+          "29": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "lower_in_left",
+                "estimate": -7.546699998783879e-05
+              },
+              "actual_post_detection_actions": {
+                "direction": "lower_in_left",
+                "estimate": -0.425531914893617
+              },
+              "cause_violation": {
+                "direction": "higher_in_left",
+                "estimate": 0.0851063829787234
+              },
+              "eef_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.007605408871237325
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.008555668572464968
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.001839179744113134
+              },
+              "safe_success": {
+                "direction": "lower_in_left",
+                "estimate": -0.02127659574468085
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 47,
+            "right": "FIXED_DELAY_8"
+          },
+          "7": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 0.046511627906976744
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.00028947653497071285
+              },
+              "actual_post_detection_actions": {
+                "direction": "lower_in_left",
+                "estimate": -1.813953488372093
+              },
+              "cause_violation": {
+                "direction": "higher_in_left",
+                "estimate": 0.06976744186046512
+              },
+              "eef_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.02150089375449248
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.020817168017158987
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.00010833618629812959
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 43,
+            "right": "FIXED_DELAY_8"
+          }
+        },
+        "severity": {
+          "put_the_bowl_on_the_stove::future_09__clearance_m010mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 0.05
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.00031807142485149595
+              },
+              "actual_post_detection_actions": {
+                "direction": "lower_in_left",
+                "estimate": -2.875
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.02983603097752029
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.02992556185253712
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.001918052394691372
+              },
+              "safe_success": {
+                "direction": "lower_in_left",
+                "estimate": -0.025
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 40,
+            "right": "FIXED_DELAY_8"
+          },
+          "put_the_bowl_on_the_stove::future_09__clearance_p000mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 7.744195263945759e-05
+              },
+              "actual_post_detection_actions": {
+                "direction": "lower_in_left",
+                "estimate": -3.0
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.032392751463534805
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.03261420902909418
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.00028318940261734456
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 42,
+            "right": "FIXED_DELAY_8"
+          },
+          "put_the_cream_cheese_in_the_bowl::shift_060mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "lower_in_left",
+                "estimate": -2.5988919197835777e-06
+              },
+              "actual_post_detection_actions": {
+                "direction": "higher_in_left",
+                "estimate": 0.8918918918918919
+              },
+              "cause_violation": {
+                "direction": "higher_in_left",
+                "estimate": 0.21621621621621623
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.0023550265780755133
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.0022912681768026645
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.00042749308701522075
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 37,
+            "right": "FIXED_DELAY_8"
+          },
+          "put_the_cream_cheese_in_the_bowl::shift_080mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "lower_in_left",
+                "estimate": -0.00010036782852174448
+              },
+              "actual_post_detection_actions": {
+                "direction": "higher_in_left",
+                "estimate": 0.7428571428571429
+              },
+              "cause_violation": {
+                "direction": "higher_in_left",
+                "estimate": 0.14285714285714285
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.001974051168175285
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.00036144783463226373
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.00017902751516561636
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 35,
+            "right": "FIXED_DELAY_8"
+          }
+        },
+        "task": {
+          "put_the_bowl_on_the_stove": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 0.024390243902439025
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.00019482218298679337
+              },
+              "actual_post_detection_actions": {
+                "direction": "lower_in_left",
+                "estimate": -2.9390243902439024
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.031145570738649674
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.03130267382101756
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.0010806835450924799
+              },
+              "safe_success": {
+                "direction": "lower_in_left",
+                "estimate": -0.012195121951219513
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 82,
+            "right": "FIXED_DELAY_8"
+          },
+          "put_the_cream_cheese_in_the_bowl": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "lower_in_left",
+                "estimate": -5.012545832351457e-05
+              },
+              "actual_post_detection_actions": {
+                "direction": "higher_in_left",
+                "estimate": 0.8194444444444444
+              },
+              "cause_violation": {
+                "direction": "higher_in_left",
+                "estimate": 0.18055555555555555
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.002169830198262902
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.0013531610660253862
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.00030671121181055194
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 72,
+            "right": "FIXED_DELAY_8"
+          }
+        }
+      }
+    },
+    {
+      "code_path": "HOLD_MATCHED preserves gripper state but zeros six motion dimensions for exactly k-d actions",
+      "interpretation": "The contrast separates old motion content from merely waiting the same number of simulator steps: cached versus hold changes cause violation by 0.078 and EEF path by 0.079 m.  This is evidence of a physical motion-content difference in the diagnostic replay, not deployable value.",
+      "mechanism": "motion content versus elapsed-time control",
+      "observed_effect": {
+        "actual_actor_calls": {
+          "direction": "equal",
+          "estimate": 0.0
+        },
+        "actual_inference_wall_time_s": {
+          "direction": "higher_in_left",
+          "estimate": 6.213104542846898e-05
+        },
+        "actual_post_detection_actions": {
+          "direction": "lower_in_left",
+          "estimate": -0.032467532467532464
+        },
+        "cause_violation": {
+          "direction": "higher_in_left",
+          "estimate": 0.07792207792207792
+        },
+        "eef_path_length_m": {
+          "direction": "higher_in_left",
+          "estimate": 0.07934518094070642
+        },
+        "manipulated_object_path_length_m": {
+          "direction": "higher_in_left",
+          "estimate": 0.07062086432562284
+        },
+        "progress_regression_m": {
+          "direction": "higher_in_left",
+          "estimate": 0.000572092970158946
+        },
+        "safe_success": {
+          "direction": "equal",
+          "estimate": 0.0
+        }
+      },
+      "stratified_effects": {
+        "actor_seed": {
+          "17": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.00010872460931210526
+              },
+              "actual_post_detection_actions": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "cause_violation": {
+                "direction": "lower_in_left",
+                "estimate": -0.03125
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.08208723652719775
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.08090831061081685
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.0027383519568877582
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 64,
+            "right": "HOLD_MATCHED_AT_RULE_K"
+          },
+          "29": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "lower_in_left",
+                "estimate": -0.00013798040427378085
+              },
+              "actual_post_detection_actions": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "cause_violation": {
+                "direction": "higher_in_left",
+                "estimate": 0.2127659574468085
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.07600072552688669
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.06907247004160273
+              },
+              "progress_regression_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.00234460448341225
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 47,
+            "right": "HOLD_MATCHED_AT_RULE_K"
+          },
+          "7": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.00021150895350877173
+              },
+              "actual_post_detection_actions": {
+                "direction": "lower_in_left",
+                "estimate": -0.11627906976744186
+              },
+              "cause_violation": {
+                "direction": "higher_in_left",
+                "estimate": 0.09302325581395349
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.078919549473592
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.05700174732786766
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.0005359116949776026
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 43,
+            "right": "HOLD_MATCHED_AT_RULE_K"
+          }
+        },
+        "severity": {
+          "put_the_bowl_on_the_stove::future_09__clearance_m010mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.00014964712482878895
+              },
+              "actual_post_detection_actions": {
+                "direction": "lower_in_left",
+                "estimate": -0.125
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.07772809720896083
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.06153077915856825
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.0026184569587461197
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 40,
+            "right": "HOLD_MATCHED_AT_RULE_K"
+          },
+          "put_the_bowl_on_the_stove::future_09__clearance_p000mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "lower_in_left",
+                "estimate": -1.8505499924902412e-05
+              },
+              "actual_post_detection_actions": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.08332025002303675
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.06623348052311047
+              },
+              "progress_regression_m": {
+                "direction": "lower_in_left",
+                "estimate": -3.027834485825718e-05
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 42,
+            "right": "HOLD_MATCHED_AT_RULE_K"
+          },
+          "put_the_cream_cheese_in_the_bowl::shift_060mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "lower_in_left",
+                "estimate": -3.423256759093862e-05
+              },
+              "actual_post_detection_actions": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "cause_violation": {
+                "direction": "higher_in_left",
+                "estimate": 0.13513513513513514
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.07514178340283582
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.0756081715670583
+              },
+              "progress_regression_m": {
+                "direction": "lower_in_left",
+                "estimate": -5.8758760681842936e-05
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 37,
+            "right": "HOLD_MATCHED_AT_RULE_K"
+          },
+          "put_the_cream_cheese_in_the_bowl::shift_080mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.00016074662858695126
+              },
+              "actual_post_detection_actions": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "cause_violation": {
+                "direction": "higher_in_left",
+                "estimate": 0.2
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.08086678541822523
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.08100209742432542
+              },
+              "progress_regression_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.00037686275188834645
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 35,
+            "right": "HOLD_MATCHED_AT_RULE_K"
+          }
+        },
+        "task": {
+          "put_the_bowl_on_the_stove": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 6.352017068665435e-05
+              },
+              "actual_post_detection_actions": {
+                "direction": "lower_in_left",
+                "estimate": -0.06097560975609756
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.08059237060153632
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.06393947985748011
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.0012617876568999755
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 82,
+            "right": "HOLD_MATCHED_AT_RULE_K"
+          },
+          "put_the_cream_cheese_in_the_bowl": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 6.054898610664673e-05
+              },
+              "actual_post_detection_actions": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "cause_violation": {
+                "direction": "higher_in_left",
+                "estimate": 0.16666666666666666
+              },
+              "eef_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.07792477049365013
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.0782302188587854
+              },
+              "progress_regression_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.00021339264529611528
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 72,
+            "right": "HOLD_MATCHED_AT_RULE_K"
+          }
+        }
+      }
+    },
+    {
+      "code_path": "FULL_OLD_CHUNK executes old[d:H] with no recovery tail; the event rule truncates reuse and invokes the actor at k",
+      "interpretation": "Relative to the full stale chunk, bounded reuse changes cause violation by -0.136 and safe success by -0.026, while using -3.247 fewer post-detection actions.  The trade-off is consistent with truncating stale execution, but does not establish a positive selector because the upstream gate failed.",
+      "mechanism": "bounded reuse versus stale full-chunk execution",
+      "observed_effect": {
+        "actual_actor_calls": {
+          "direction": "higher_in_left",
+          "estimate": 2.0
+        },
+        "actual_inference_wall_time_s": {
+          "direction": "higher_in_left",
+          "estimate": 0.010403555558443625
+        },
+        "actual_post_detection_actions": {
+          "direction": "lower_in_left",
+          "estimate": -3.2467532467532467
+        },
+        "cause_violation": {
+          "direction": "lower_in_left",
+          "estimate": -0.13636363636363635
+        },
+        "eef_path_length_m": {
+          "direction": "lower_in_left",
+          "estimate": -0.029719526269599863
+        },
+        "manipulated_object_path_length_m": {
+          "direction": "lower_in_left",
+          "estimate": -0.030962627251537717
+        },
+        "progress_regression_m": {
+          "direction": "higher_in_left",
+          "estimate": 0.00016623759845956553
+        },
+        "safe_success": {
+          "direction": "lower_in_left",
+          "estimate": -0.025974025974025976
+        }
+      },
+      "stratified_effects": {
+        "actor_seed": {
+          "17": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 2.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.01043267882808152
+              },
+              "actual_post_detection_actions": {
+                "direction": "lower_in_left",
+                "estimate": -3.3125
+              },
+              "cause_violation": {
+                "direction": "lower_in_left",
+                "estimate": -0.15625
+              },
+              "eef_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.032899276457269845
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.03395230764075104
+              },
+              "progress_regression_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.0006943670430824061
+              },
+              "safe_success": {
+                "direction": "lower_in_left",
+                "estimate": -0.015625
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 64,
+            "right": "FULL_OLD_CHUNK"
+          },
+          "29": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 2.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.01031506393618211
+              },
+              "actual_post_detection_actions": {
+                "direction": "lower_in_left",
+                "estimate": -2.4680851063829787
+              },
+              "cause_violation": {
+                "direction": "lower_in_left",
+                "estimate": -0.2127659574468085
+              },
+              "eef_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.01773210030739205
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.019235563281012256
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.0015148893823392704
+              },
+              "safe_success": {
+                "direction": "lower_in_left",
+                "estimate": -0.02127659574468085
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 47,
+            "right": "FULL_OLD_CHUNK"
+          },
+          "7": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 2.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.010456932697733528
+              },
+              "actual_post_detection_actions": {
+                "direction": "lower_in_left",
+                "estimate": -4.0
+              },
+              "cause_violation": {
+                "direction": "lower_in_left",
+                "estimate": -0.023255813953488372
+              },
+              "eef_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.03808941018152752
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.03933082403537596
+              },
+              "progress_regression_m": {
+                "direction": "lower_in_left",
+                "estimate": -2.6970233718572786e-05
+              },
+              "safe_success": {
+                "direction": "lower_in_left",
+                "estimate": -0.046511627906976744
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 43,
+            "right": "FULL_OLD_CHUNK"
+          }
+        },
+        "severity": {
+          "put_the_bowl_on_the_stove::future_09__clearance_m010mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 2.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.010559683474912162
+              },
+              "actual_post_detection_actions": {
+                "direction": "lower_in_left",
+                "estimate": -5.125
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.05166658107998895
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.05129979275149177
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.0019029092715685532
+              },
+              "safe_success": {
+                "direction": "lower_in_left",
+                "estimate": -0.025
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 40,
+            "right": "FULL_OLD_CHUNK"
+          },
+          "put_the_bowl_on_the_stove::future_09__clearance_p000mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 2.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.010449837809617401
+              },
+              "actual_post_detection_actions": {
+                "direction": "lower_in_left",
+                "estimate": -5.0
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.055865321980764306
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.05970374022553721
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.00028318940261734456
+              },
+              "safe_success": {
+                "direction": "lower_in_left",
+                "estimate": -0.07142857142857142
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 42,
+            "right": "FULL_OLD_CHUNK"
+          },
+          "put_the_cream_cheese_in_the_bowl::shift_060mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 2.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.010319708243250224
+              },
+              "actual_post_detection_actions": {
+                "direction": "lower_in_left",
+                "estimate": -1.1081081081081081
+              },
+              "cause_violation": {
+                "direction": "lower_in_left",
+                "estimate": -0.2702702702702703
+              },
+              "eef_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.0024620803622601604
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.002232069307005698
+              },
+              "progress_regression_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.0012323071873929436
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 37,
+            "right": "FULL_OLD_CHUNK"
+          },
+          "put_the_cream_cheese_in_the_bowl::shift_080mm": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 2.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.010258223542846931
+              },
+              "actual_post_detection_actions": {
+                "direction": "lower_in_left",
+                "estimate": -1.2571428571428571
+              },
+              "cause_violation": {
+                "direction": "lower_in_left",
+                "estimate": -0.3142857142857143
+              },
+              "eef_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.0020772373063741535
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.003603120938438983
+              },
+              "progress_regression_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.000480410562181674
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 35,
+            "right": "FULL_OLD_CHUNK"
+          }
+        },
+        "task": {
+          "put_the_bowl_on_the_stove": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 2.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.010503421060980699
+              },
+              "actual_post_detection_actions": {
+                "direction": "lower_in_left",
+                "estimate": -5.060975609756097
+              },
+              "cause_violation": {
+                "direction": "equal",
+                "estimate": 0.0
+              },
+              "eef_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.05381715568770314
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.05560425365283212
+              },
+              "progress_regression_m": {
+                "direction": "higher_in_left",
+                "estimate": 0.0010732966557642756
+              },
+              "safe_success": {
+                "direction": "lower_in_left",
+                "estimate": -0.04878048780487805
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 82,
+            "right": "FULL_OLD_CHUNK"
+          },
+          "put_the_cream_cheese_in_the_bowl": {
+            "effects_left_minus_right": {
+              "actual_actor_calls": {
+                "direction": "higher_in_left",
+                "estimate": 2.0
+              },
+              "actual_inference_wall_time_s": {
+                "direction": "higher_in_left",
+                "estimate": 0.010289819847220846
+              },
+              "actual_post_detection_actions": {
+                "direction": "lower_in_left",
+                "estimate": -1.1805555555555556
+              },
+              "cause_violation": {
+                "direction": "lower_in_left",
+                "estimate": -0.2916666666666667
+              },
+              "eef_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.002275003876760018
+              },
+              "manipulated_object_path_length_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.002898552738952434
+              },
+              "progress_regression_m": {
+                "direction": "lower_in_left",
+                "estimate": -0.0008668018834707986
+              },
+              "safe_success": {
+                "direction": "equal",
+                "estimate": 0.0
+              }
+            },
+            "left": "EVENT_ALIGNED_CACHED",
+            "n": 72,
+            "right": "FULL_OLD_CHUNK"
+          }
+        }
+      }
+    }
+  ],
+  "mechanistic_constraints": {
+    "h2_cached_content": {
+      "code_constraint": "CACHED and FRESH execute equal prefix lengths, matched detection-time calls, the same tail actor, and h_tail=4; only old[d:k] versus fresh_d[:k-d] differs.",
+      "result_interpretation": "The overall cached-vs-fresh safe-success difference is zero. The action-disagreement mean is reported above (overall and per task), so action content differs but does not become outcome value; no measured real efficiency field reaches the 15% criterion."
+    },
+    "h3_event_aligned_vs_immediate": {
+      "code_constraint": "IMMEDIATE_FRESH sets k=d and executes only the four-step common tail; EVENT_ALIGNED_CACHED executes k-d cached actions, then the same tail, with one additional actor call.",
+      "result_interpretation": "The resulting extra exposure is structural: overall post-detection actions increase by 6.753 and cause violation by 0.266. Cream events (mostly k=11) account for roughly +8.82 actions and +0.569 cause rate, while bowl events (k=7) add roughly +4.94 actions with zero cause delta."
+    },
+    "h4_event_aligned_vs_fixed_delay_8": {
+      "code_constraint": "FIXED_DELAY_8 is a frozen, outcome-blind prefix with k=d+8=10; the event rule is k=release_or_path_event-2 clipped to [d,H]. Both use the same recovery tail and budget.",
+      "result_interpretation": "The event rule is -0.0065 safe success, +0.0844 cause violation, and -1.182 post-detection actions versus FIXED_DELAY_8 (about -9.9% of the 11.873-action baseline). The bowl-only k=7 rule saves 2.94 actions with no cause change; cream is mostly k=11 and costs +0.82 actions with +18.06 percentage points cause. Calibration-only oracle gap recovery is below H4's 0.40 requirement. The heterogeneity explains the aggregate and is not a new idea."
+    },
+    "hold_and_full_old": {
+      "code_constraint": "HOLD_MATCHED zeros motion dimensions for exactly k-d steps; FULL_OLD_CHUNK continues old[d:H] without a recovery tail.",
+      "result_interpretation": "Cached motion differs from waiting (cause +0.078 and EEF path +0.079 m versus hold), while bounded reuse versus full-old reduces cause by 0.136 but also safe success by 0.026 and actions by 3.247. These are diagnostic trade-offs, not a positive selector."
+    },
+    "sham_query": {
+      "code_constraint": "CACHED_MATCHED calls ACT at d and discards the tensor; CACHED_NOQUERY omits that call but executes identical old action bytes.",
+      "result_interpretation": "The exact same-action signature and equal physical outcomes isolate the observed +1 actor call and +0.0051 s inference time as computation-only overhead."
+    }
+  },
+  "method": "code-first mechanism reverse audit",
+  "method_error_rows_excluded": true,
+  "new_idea_generated": false,
+  "qualification_failure_mechanisms": {
+    "cells": [
+      {
+        "delayed_violation_rate": 0.12727272727272726,
+        "error_count": 0,
+        "mechanistic_account": "The target-shift implementation is geometrically valid, but the chosen magnitude is outside the useful delayed-violation band: 40 mm yields 0.1273 delayed violations, while 80 mm yields 0.9636.  The 60 mm cell is the only qualified target-shift severity.",
+        "median_first_violation_offset": 12.0,
+        "parameter_id": "shift_040mm",
+        "positive_label_allowed": false,
+        "qualified": false,
+        "root_cause_label": "severity is respectively too weak or too strong",
+        "task": "put_the_cream_cheese_in_the_bowl",
+        "valid_events": 55
+      },
+      {
+        "delayed_violation_rate": 0.9636363636363636,
+        "error_count": 0,
+        "mechanistic_account": "The target-shift implementation is geometrically valid, but the chosen magnitude is outside the useful delayed-violation band: 40 mm yields 0.1273 delayed violations, while 80 mm yields 0.9636.  The 60 mm cell is the only qualified target-shift severity.",
+        "median_first_violation_offset": 12.0,
+        "parameter_id": "shift_080mm",
+        "positive_label_allowed": false,
+        "qualified": false,
+        "root_cause_label": "severity is respectively too weak or too strong",
+        "task": "put_the_cream_cheese_in_the_bowl",
+        "valid_events": 55
+      },
+      {
+        "delayed_violation_rate": 0.015873015873015872,
+        "error_count": 0,
+        "mechanistic_account": "The blocker placement uses the conservative maximum XY radius of the live geometry plus the obstacle radius and clearance.  This places the centers roughly 0.1584 m apart (about 0.0757 m + 0.0827 m before clearance), so the -10/0 mm cells rarely make contact and the delayed violation rate remains near 0.0159 rather than entering the preregistered 0.30--0.80 interval.",
+        "median_first_violation_offset": 13.0,
+        "parameter_id": "future_09__clearance_m010mm",
+        "positive_label_allowed": false,
+        "qualified": false,
+        "root_cause_label": "conservative radius-sum placement makes the perturbation weak",
+        "task": "put_the_bowl_on_the_stove",
+        "valid_events": 63
+      },
+      {
+        "delayed_violation_rate": 0.015873015873015872,
+        "error_count": 0,
+        "mechanistic_account": "The blocker placement uses the conservative maximum XY radius of the live geometry plus the obstacle radius and clearance.  This places the centers roughly 0.1584 m apart (about 0.0757 m + 0.0827 m before clearance), so the -10/0 mm cells rarely make contact and the delayed violation rate remains near 0.0159 rather than entering the preregistered 0.30--0.80 interval.",
+        "median_first_violation_offset": 11.0,
+        "parameter_id": "future_09__clearance_p000mm",
+        "positive_label_allowed": false,
+        "qualified": false,
+        "root_cause_label": "conservative radius-sum placement makes the perturbation weak",
+        "task": "put_the_bowl_on_the_stove",
+        "valid_events": 63
+      },
+      {
+        "delayed_violation_rate": 0.0,
+        "error_count": 0,
+        "mechanistic_account": "The blocker placement uses the conservative maximum XY radius of the live geometry plus the obstacle radius and clearance.  This places the centers roughly 0.1584 m apart (about 0.0757 m + 0.0827 m before clearance), so the -10/0 mm cells rarely make contact and the delayed violation rate remains near 0.0159 rather than entering the preregistered 0.30--0.80 interval.",
+        "median_first_violation_offset": 0.0,
+        "parameter_id": "future_09__clearance_p010mm",
+        "positive_label_allowed": false,
+        "qualified": false,
+        "root_cause_label": "conservative radius-sum placement makes the perturbation weak",
+        "task": "put_the_bowl_on_the_stove",
+        "valid_events": 63
+      },
+      {
+        "delayed_violation_rate": 0.05555555555555555,
+        "error_count": 45,
+        "mechanistic_account": "The future-point eligibility check only guarantees distance from the anchor.  The live lateral direction is computed from consecutive trajectory points at indices 11 and 12; the observed local XY segment is approximately zero, so the lateral vector is undefined and the qualification branch records replay/error rows.",
+        "median_first_violation_offset": 5.0,
+        "parameter_id": "future_12__clearance_m010mm",
+        "positive_label_allowed": false,
+        "qualified": false,
+        "root_cause_label": "event-geometry/qualification-grid mismatch",
+        "task": "put_the_bowl_on_the_stove",
+        "valid_events": 18
+      },
+      {
+        "delayed_violation_rate": 0.0,
+        "error_count": 45,
+        "mechanistic_account": "The future-point eligibility check only guarantees distance from the anchor.  The live lateral direction is computed from consecutive trajectory points at indices 11 and 12; the observed local XY segment is approximately zero, so the lateral vector is undefined and the qualification branch records replay/error rows.",
+        "median_first_violation_offset": 0.0,
+        "parameter_id": "future_12__clearance_p000mm",
+        "positive_label_allowed": false,
+        "qualified": false,
+        "root_cause_label": "event-geometry/qualification-grid mismatch",
+        "task": "put_the_bowl_on_the_stove",
+        "valid_events": 18
+      },
+      {
+        "delayed_violation_rate": 0.0,
+        "error_count": 45,
+        "mechanistic_account": "The future-point eligibility check only guarantees distance from the anchor.  The live lateral direction is computed from consecutive trajectory points at indices 11 and 12; the observed local XY segment is approximately zero, so the lateral vector is undefined and the qualification branch records replay/error rows.",
+        "median_first_violation_offset": 0.0,
+        "parameter_id": "future_12__clearance_p010mm",
+        "positive_label_allowed": false,
+        "qualified": false,
+        "root_cause_label": "event-geometry/qualification-grid mismatch",
+        "task": "put_the_bowl_on_the_stove",
+        "valid_events": 18
+      }
+    ],
+    "method_outcomes_read": false,
+    "source": "perturbation_qualification/summary.json plus runtime geometry/placement code",
+    "status": "BLOCKED_BY_PERTURBATION_QUALIFICATION"
+  },
+  "rule_k_distribution": {
+    "by_task": {
+      "put_the_bowl_on_the_stove": {
+        "7": 82
+      },
+      "put_the_cream_cheese_in_the_bowl": {
+        "10": 7,
+        "11": 64,
+        "5": 1
+      }
+    },
+    "overall": {
+      "10": 7,
+      "11": 64,
+      "5": 1,
+      "7": 82
+    }
+  },
+  "schema_version": 1,
+  "scope": "explain observed improvements and decreases in the preregistered arms only",
+  "source_locations": {
+    "actor_call": {
+      "end_line": 314,
+      "file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/R16-P14-stage2d-fresh-process-event-aligned-prefix-reuse/experiments/r16_p14_stage2d/r16_p14_stage2d/runtime.py",
+      "function": "actor_call",
+      "start_line": 289
+    },
+    "arm_plan": {
+      "end_line": 363,
+      "file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/R16-P14-stage2d-fresh-process-event-aligned-prefix-reuse/experiments/r16_p14_stage2d/r16_p14_stage2d/runtime.py",
+      "function": "arm_plan",
+      "start_line": 351
+    },
+    "cause_tracker": {
+      "end_line": 94,
+      "file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/R16-P14-stage2d-fresh-process-event-aligned-prefix-reuse/experiments/r16_p14_stage2d/r16_p14_stage2d/runtime.py",
+      "function": "observe_action",
+      "start_line": 73
+    },
+    "execute_branch": {
+      "end_line": 537,
+      "file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/R16-P14-stage2d-fresh-process-event-aligned-prefix-reuse/experiments/r16_p14_stage2d/r16_p14_stage2d/runtime.py",
+      "function": "execute_branch",
+      "start_line": 366
+    },
+    "perturbation": {
+      "end_line": 286,
+      "file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/R16-P14-stage2d-fresh-process-event-aligned-prefix-reuse/experiments/r16_p14_stage2d/r16_p14_stage2d/runtime.py",
+      "function": "apply_perturbation",
+      "start_line": 229
+    }
+  },
+  "stratified_contrasts": {
+    "bounded_cached_prefix_vs_full_old": {
+      "actor_seed": {
+        "17": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 2.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.01043267882808152
+            },
+            "actual_post_detection_actions": {
+              "direction": "lower_in_left",
+              "estimate": -3.3125
+            },
+            "cause_violation": {
+              "direction": "lower_in_left",
+              "estimate": -0.15625
+            },
+            "eef_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.032899276457269845
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.03395230764075104
+            },
+            "progress_regression_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.0006943670430824061
+            },
+            "safe_success": {
+              "direction": "lower_in_left",
+              "estimate": -0.015625
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 64,
+          "right": "FULL_OLD_CHUNK"
+        },
+        "29": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 2.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.01031506393618211
+            },
+            "actual_post_detection_actions": {
+              "direction": "lower_in_left",
+              "estimate": -2.4680851063829787
+            },
+            "cause_violation": {
+              "direction": "lower_in_left",
+              "estimate": -0.2127659574468085
+            },
+            "eef_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.01773210030739205
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.019235563281012256
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.0015148893823392704
+            },
+            "safe_success": {
+              "direction": "lower_in_left",
+              "estimate": -0.02127659574468085
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 47,
+          "right": "FULL_OLD_CHUNK"
+        },
+        "7": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 2.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.010456932697733528
+            },
+            "actual_post_detection_actions": {
+              "direction": "lower_in_left",
+              "estimate": -4.0
+            },
+            "cause_violation": {
+              "direction": "lower_in_left",
+              "estimate": -0.023255813953488372
+            },
+            "eef_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.03808941018152752
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.03933082403537596
+            },
+            "progress_regression_m": {
+              "direction": "lower_in_left",
+              "estimate": -2.6970233718572786e-05
+            },
+            "safe_success": {
+              "direction": "lower_in_left",
+              "estimate": -0.046511627906976744
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 43,
+          "right": "FULL_OLD_CHUNK"
+        }
+      },
+      "severity": {
+        "put_the_bowl_on_the_stove::future_09__clearance_m010mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 2.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.010559683474912162
+            },
+            "actual_post_detection_actions": {
+              "direction": "lower_in_left",
+              "estimate": -5.125
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.05166658107998895
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.05129979275149177
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.0019029092715685532
+            },
+            "safe_success": {
+              "direction": "lower_in_left",
+              "estimate": -0.025
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 40,
+          "right": "FULL_OLD_CHUNK"
+        },
+        "put_the_bowl_on_the_stove::future_09__clearance_p000mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 2.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.010449837809617401
+            },
+            "actual_post_detection_actions": {
+              "direction": "lower_in_left",
+              "estimate": -5.0
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.055865321980764306
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.05970374022553721
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.00028318940261734456
+            },
+            "safe_success": {
+              "direction": "lower_in_left",
+              "estimate": -0.07142857142857142
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 42,
+          "right": "FULL_OLD_CHUNK"
+        },
+        "put_the_cream_cheese_in_the_bowl::shift_060mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 2.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.010319708243250224
+            },
+            "actual_post_detection_actions": {
+              "direction": "lower_in_left",
+              "estimate": -1.1081081081081081
+            },
+            "cause_violation": {
+              "direction": "lower_in_left",
+              "estimate": -0.2702702702702703
+            },
+            "eef_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.0024620803622601604
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.002232069307005698
+            },
+            "progress_regression_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.0012323071873929436
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 37,
+          "right": "FULL_OLD_CHUNK"
+        },
+        "put_the_cream_cheese_in_the_bowl::shift_080mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 2.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.010258223542846931
+            },
+            "actual_post_detection_actions": {
+              "direction": "lower_in_left",
+              "estimate": -1.2571428571428571
+            },
+            "cause_violation": {
+              "direction": "lower_in_left",
+              "estimate": -0.3142857142857143
+            },
+            "eef_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.0020772373063741535
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.003603120938438983
+            },
+            "progress_regression_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.000480410562181674
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 35,
+          "right": "FULL_OLD_CHUNK"
+        }
+      },
+      "task": {
+        "put_the_bowl_on_the_stove": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 2.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.010503421060980699
+            },
+            "actual_post_detection_actions": {
+              "direction": "lower_in_left",
+              "estimate": -5.060975609756097
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.05381715568770314
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.05560425365283212
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.0010732966557642756
+            },
+            "safe_success": {
+              "direction": "lower_in_left",
+              "estimate": -0.04878048780487805
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 82,
+          "right": "FULL_OLD_CHUNK"
+        },
+        "put_the_cream_cheese_in_the_bowl": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 2.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.010289819847220846
+            },
+            "actual_post_detection_actions": {
+              "direction": "lower_in_left",
+              "estimate": -1.1805555555555556
+            },
+            "cause_violation": {
+              "direction": "lower_in_left",
+              "estimate": -0.2916666666666667
+            },
+            "eef_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.002275003876760018
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.002898552738952434
+            },
+            "progress_regression_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.0008668018834707986
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 72,
+          "right": "FULL_OLD_CHUNK"
+        }
+      }
+    },
+    "cached_content_at_matched_k": {
+      "actor_seed": {
+        "17": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 1.7950187519488736e-05
+            },
+            "actual_post_detection_actions": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "cause_violation": {
+              "direction": "lower_in_left",
+              "estimate": -0.03125
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.0004641126412089165
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.0004483613467794153
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.0007329949598190938
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 64,
+          "right": "FRESH_MATCHED_AT_RULE_K"
+        },
+        "29": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "lower_in_left",
+              "estimate": -5.706910631372321e-05
+            },
+            "actual_post_detection_actions": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "cause_violation": {
+              "direction": "lower_in_left",
+              "estimate": -0.02127659574468085
+            },
+            "eef_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.0027613366290212536
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.0026089757500793015
+            },
+            "progress_regression_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.003340502750537849
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 47,
+          "right": "FRESH_MATCHED_AT_RULE_K"
+        },
+        "7": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.0002817107442328855
+            },
+            "actual_post_detection_actions": {
+              "direction": "higher_in_left",
+              "estimate": 0.023255813953488372
+            },
+            "cause_violation": {
+              "direction": "higher_in_left",
+              "estimate": 0.023255813953488372
+            },
+            "eef_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.0006597244606482696
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.0010009015932545536
+            },
+            "progress_regression_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.00034234224013246365
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 43,
+          "right": "FRESH_MATCHED_AT_RULE_K"
+        }
+      },
+      "severity": {
+        "put_the_bowl_on_the_stove::future_09__clearance_m010mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.000258918499991978
+            },
+            "actual_post_detection_actions": {
+              "direction": "higher_in_left",
+              "estimate": 0.025
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.0023428918622714987
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.0027279124443820653
+            },
+            "progress_regression_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.0019702296561762106
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 40,
+          "right": "FRESH_MATCHED_AT_RULE_K"
+        },
+        "put_the_bowl_on_the_stove::future_09__clearance_p000mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "lower_in_left",
+              "estimate": -1.843564273041834e-05
+            },
+            "actual_post_detection_actions": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.0008984014201743553
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.0007755557496312687
+            },
+            "progress_regression_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.0007847907405969274
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 42,
+          "right": "FRESH_MATCHED_AT_RULE_K"
+        },
+        "put_the_cream_cheese_in_the_bowl::shift_060mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "lower_in_left",
+              "estimate": -4.0281675656179025e-05
+            },
+            "actual_post_detection_actions": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.00041135043252740793
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.00042571596730363163
+            },
+            "progress_regression_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.00034686564148521507
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 37,
+          "right": "FRESH_MATCHED_AT_RULE_K"
+        },
+        "put_the_cream_cheese_in_the_bowl::shift_080mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 7.108871430838398e-05
+            },
+            "actual_post_detection_actions": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "cause_violation": {
+              "direction": "lower_in_left",
+              "estimate": -0.05714285714285714
+            },
+            "eef_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.0003491198914238594
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.0003150615457208247
+            },
+            "progress_regression_m": {
+              "direction": "lower_in_left",
+              "estimate": -5.949773870870891e-06
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 35,
+          "right": "FRESH_MATCHED_AT_RULE_K"
+        }
+      },
+      "task": {
+        "put_the_bowl_on_the_stove": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.00011685906103660428
+            },
+            "actual_post_detection_actions": {
+              "direction": "higher_in_left",
+              "estimate": 0.012195121951219513
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.0016030309041241816
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.0017279248690219007
+            },
+            "progress_regression_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.0013630536262453582
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 82,
+          "right": "FRESH_MATCHED_AT_RULE_K"
+        },
+        "put_the_cream_cheese_in_the_bowl": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 1.3856708354372435e-05
+            },
+            "actual_post_detection_actions": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "cause_violation": {
+              "direction": "lower_in_left",
+              "estimate": -0.027777777777777776
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 4.167735838443073e-05
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 6.561578736118759e-05
+            },
+            "progress_regression_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.00018114265028379775
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 72,
+          "right": "FRESH_MATCHED_AT_RULE_K"
+        }
+      }
+    },
+    "cached_motion_vs_hold": {
+      "actor_seed": {
+        "17": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.00010872460931210526
+            },
+            "actual_post_detection_actions": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "cause_violation": {
+              "direction": "lower_in_left",
+              "estimate": -0.03125
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.08208723652719775
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.08090831061081685
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.0027383519568877582
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 64,
+          "right": "HOLD_MATCHED_AT_RULE_K"
+        },
+        "29": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "lower_in_left",
+              "estimate": -0.00013798040427378085
+            },
+            "actual_post_detection_actions": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "cause_violation": {
+              "direction": "higher_in_left",
+              "estimate": 0.2127659574468085
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.07600072552688669
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.06907247004160273
+            },
+            "progress_regression_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.00234460448341225
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 47,
+          "right": "HOLD_MATCHED_AT_RULE_K"
+        },
+        "7": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.00021150895350877173
+            },
+            "actual_post_detection_actions": {
+              "direction": "lower_in_left",
+              "estimate": -0.11627906976744186
+            },
+            "cause_violation": {
+              "direction": "higher_in_left",
+              "estimate": 0.09302325581395349
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.078919549473592
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.05700174732786766
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.0005359116949776026
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 43,
+          "right": "HOLD_MATCHED_AT_RULE_K"
+        }
+      },
+      "severity": {
+        "put_the_bowl_on_the_stove::future_09__clearance_m010mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.00014964712482878895
+            },
+            "actual_post_detection_actions": {
+              "direction": "lower_in_left",
+              "estimate": -0.125
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.07772809720896083
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.06153077915856825
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.0026184569587461197
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 40,
+          "right": "HOLD_MATCHED_AT_RULE_K"
+        },
+        "put_the_bowl_on_the_stove::future_09__clearance_p000mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "lower_in_left",
+              "estimate": -1.8505499924902412e-05
+            },
+            "actual_post_detection_actions": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.08332025002303675
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.06623348052311047
+            },
+            "progress_regression_m": {
+              "direction": "lower_in_left",
+              "estimate": -3.027834485825718e-05
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 42,
+          "right": "HOLD_MATCHED_AT_RULE_K"
+        },
+        "put_the_cream_cheese_in_the_bowl::shift_060mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "lower_in_left",
+              "estimate": -3.423256759093862e-05
+            },
+            "actual_post_detection_actions": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "cause_violation": {
+              "direction": "higher_in_left",
+              "estimate": 0.13513513513513514
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.07514178340283582
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.0756081715670583
+            },
+            "progress_regression_m": {
+              "direction": "lower_in_left",
+              "estimate": -5.8758760681842936e-05
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 37,
+          "right": "HOLD_MATCHED_AT_RULE_K"
+        },
+        "put_the_cream_cheese_in_the_bowl::shift_080mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.00016074662858695126
+            },
+            "actual_post_detection_actions": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "cause_violation": {
+              "direction": "higher_in_left",
+              "estimate": 0.2
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.08086678541822523
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.08100209742432542
+            },
+            "progress_regression_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.00037686275188834645
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 35,
+          "right": "HOLD_MATCHED_AT_RULE_K"
+        }
+      },
+      "task": {
+        "put_the_bowl_on_the_stove": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 6.352017068665435e-05
+            },
+            "actual_post_detection_actions": {
+              "direction": "lower_in_left",
+              "estimate": -0.06097560975609756
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.08059237060153632
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.06393947985748011
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.0012617876568999755
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 82,
+          "right": "HOLD_MATCHED_AT_RULE_K"
+        },
+        "put_the_cream_cheese_in_the_bowl": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 6.054898610664673e-05
+            },
+            "actual_post_detection_actions": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "cause_violation": {
+              "direction": "higher_in_left",
+              "estimate": 0.16666666666666666
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.07792477049365013
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.0782302188587854
+            },
+            "progress_regression_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.00021339264529611528
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 72,
+          "right": "HOLD_MATCHED_AT_RULE_K"
+        }
+      }
+    },
+    "discarded_detection_query": {
+      "actor_seed": {
+        "17": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.0052343510780730185
+            },
+            "actual_post_detection_actions": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "progress_regression_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 64,
+          "right": "CACHED_NOQUERY_AT_RULE_K"
+        },
+        "29": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.005054045851059701
+            },
+            "actual_post_detection_actions": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "progress_regression_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 47,
+          "right": "CACHED_NOQUERY_AT_RULE_K"
+        },
+        "7": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.005031345511687779
+            },
+            "actual_post_detection_actions": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "progress_regression_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 43,
+          "right": "CACHED_NOQUERY_AT_RULE_K"
+        }
+      },
+      "severity": {
+        "put_the_bowl_on_the_stove::future_09__clearance_m010mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.005214714349915539
+            },
+            "actual_post_detection_actions": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "progress_regression_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 40,
+          "right": "CACHED_NOQUERY_AT_RULE_K"
+        },
+        "put_the_bowl_on_the_stove::future_09__clearance_p000mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.005235579476253146
+            },
+            "actual_post_detection_actions": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "progress_regression_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 42,
+          "right": "CACHED_NOQUERY_AT_RULE_K"
+        },
+        "put_the_cream_cheese_in_the_bowl::shift_060mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.004997545540550778
+            },
+            "actual_post_detection_actions": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "progress_regression_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 37,
+          "right": "CACHED_NOQUERY_AT_RULE_K"
+        },
+        "put_the_cream_cheese_in_the_bowl::shift_080mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.00501412525712632
+            },
+            "actual_post_detection_actions": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "progress_regression_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 35,
+          "right": "CACHED_NOQUERY_AT_RULE_K"
+        }
+      },
+      "task": {
+        "put_the_bowl_on_the_stove": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.005225401365844557
+            },
+            "actual_post_detection_actions": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "progress_regression_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 82,
+          "right": "CACHED_NOQUERY_AT_RULE_K"
+        },
+        "put_the_cream_cheese_in_the_bowl": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.0050056051249972216
+            },
+            "actual_post_detection_actions": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "progress_regression_m": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 72,
+          "right": "CACHED_NOQUERY_AT_RULE_K"
+        }
+      }
+    },
+    "event_timing_vs_fixed_delay_8": {
+      "actor_seed": {
+        "17": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 5.415381252049656e-05
+            },
+            "actual_post_detection_actions": {
+              "direction": "lower_in_left",
+              "estimate": -1.3125
+            },
+            "cause_violation": {
+              "direction": "higher_in_left",
+              "estimate": 0.09375
+            },
+            "eef_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.01743306840473459
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.018314640764467535
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.0003062399056844721
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 64,
+          "right": "FIXED_DELAY_8"
+        },
+        "29": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "lower_in_left",
+              "estimate": -7.546699998783879e-05
+            },
+            "actual_post_detection_actions": {
+              "direction": "lower_in_left",
+              "estimate": -0.425531914893617
+            },
+            "cause_violation": {
+              "direction": "higher_in_left",
+              "estimate": 0.0851063829787234
+            },
+            "eef_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.007605408871237325
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.008555668572464968
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.001839179744113134
+            },
+            "safe_success": {
+              "direction": "lower_in_left",
+              "estimate": -0.02127659574468085
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 47,
+          "right": "FIXED_DELAY_8"
+        },
+        "7": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 0.046511627906976744
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.00028947653497071285
+            },
+            "actual_post_detection_actions": {
+              "direction": "lower_in_left",
+              "estimate": -1.813953488372093
+            },
+            "cause_violation": {
+              "direction": "higher_in_left",
+              "estimate": 0.06976744186046512
+            },
+            "eef_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.02150089375449248
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.020817168017158987
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.00010833618629812959
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 43,
+          "right": "FIXED_DELAY_8"
+        }
+      },
+      "severity": {
+        "put_the_bowl_on_the_stove::future_09__clearance_m010mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 0.05
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.00031807142485149595
+            },
+            "actual_post_detection_actions": {
+              "direction": "lower_in_left",
+              "estimate": -2.875
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.02983603097752029
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.02992556185253712
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.001918052394691372
+            },
+            "safe_success": {
+              "direction": "lower_in_left",
+              "estimate": -0.025
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 40,
+          "right": "FIXED_DELAY_8"
+        },
+        "put_the_bowl_on_the_stove::future_09__clearance_p000mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 7.744195263945759e-05
+            },
+            "actual_post_detection_actions": {
+              "direction": "lower_in_left",
+              "estimate": -3.0
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.032392751463534805
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.03261420902909418
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.00028318940261734456
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 42,
+          "right": "FIXED_DELAY_8"
+        },
+        "put_the_cream_cheese_in_the_bowl::shift_060mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "lower_in_left",
+              "estimate": -2.5988919197835777e-06
+            },
+            "actual_post_detection_actions": {
+              "direction": "higher_in_left",
+              "estimate": 0.8918918918918919
+            },
+            "cause_violation": {
+              "direction": "higher_in_left",
+              "estimate": 0.21621621621621623
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.0023550265780755133
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.0022912681768026645
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.00042749308701522075
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 37,
+          "right": "FIXED_DELAY_8"
+        },
+        "put_the_cream_cheese_in_the_bowl::shift_080mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "lower_in_left",
+              "estimate": -0.00010036782852174448
+            },
+            "actual_post_detection_actions": {
+              "direction": "higher_in_left",
+              "estimate": 0.7428571428571429
+            },
+            "cause_violation": {
+              "direction": "higher_in_left",
+              "estimate": 0.14285714285714285
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.001974051168175285
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.00036144783463226373
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.00017902751516561636
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 35,
+          "right": "FIXED_DELAY_8"
+        }
+      },
+      "task": {
+        "put_the_bowl_on_the_stove": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 0.024390243902439025
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.00019482218298679337
+            },
+            "actual_post_detection_actions": {
+              "direction": "lower_in_left",
+              "estimate": -2.9390243902439024
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.031145570738649674
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.03130267382101756
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.0010806835450924799
+            },
+            "safe_success": {
+              "direction": "lower_in_left",
+              "estimate": -0.012195121951219513
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 82,
+          "right": "FIXED_DELAY_8"
+        },
+        "put_the_cream_cheese_in_the_bowl": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "lower_in_left",
+              "estimate": -5.012545832351457e-05
+            },
+            "actual_post_detection_actions": {
+              "direction": "higher_in_left",
+              "estimate": 0.8194444444444444
+            },
+            "cause_violation": {
+              "direction": "higher_in_left",
+              "estimate": 0.18055555555555555
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.002169830198262902
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.0013531610660253862
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.00030671121181055194
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 72,
+          "right": "FIXED_DELAY_8"
+        }
+      }
+    },
+    "event_timing_vs_immediate": {
+      "actor_seed": {
+        "17": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.005326628546878709
+            },
+            "actual_post_detection_actions": {
+              "direction": "higher_in_left",
+              "estimate": 6.6875
+            },
+            "cause_violation": {
+              "direction": "higher_in_left",
+              "estimate": 0.265625
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.058471698101223844
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.05705421291594394
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.003128734015251093
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 64,
+          "right": "IMMEDIATE_FRESH"
+        },
+        "29": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.005220947829757085
+            },
+            "actual_post_detection_actions": {
+              "direction": "higher_in_left",
+              "estimate": 7.531914893617022
+            },
+            "cause_violation": {
+              "direction": "higher_in_left",
+              "estimate": 0.3404255319148936
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.05580695938626909
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.054586764765599635
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.0012552084596307886
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 47,
+          "right": "IMMEDIATE_FRESH"
+        },
+        "7": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.005425171930271464
+            },
+            "actual_post_detection_actions": {
+              "direction": "higher_in_left",
+              "estimate": 6.0
+            },
+            "cause_violation": {
+              "direction": "higher_in_left",
+              "estimate": 0.18604651162790697
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.05649536856060441
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.056819978380944186
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 2.9476002090231027e-05
+            },
+            "safe_success": {
+              "direction": "higher_in_left",
+              "estimate": 0.046511627906976744
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 43,
+          "right": "IMMEDIATE_FRESH"
+        }
+      },
+      "severity": {
+        "put_the_bowl_on_the_stove::future_09__clearance_m010mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.005404781424942939
+            },
+            "actual_post_detection_actions": {
+              "direction": "higher_in_left",
+              "estimate": 4.875
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.0522552422762928
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.05327388035886403
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.00035253873432244563
+            },
+            "safe_success": {
+              "direction": "higher_in_left",
+              "estimate": 0.05
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 40,
+          "right": "IMMEDIATE_FRESH"
+        },
+        "put_the_bowl_on_the_stove::future_09__clearance_p000mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.005314486142944068
+            },
+            "actual_post_detection_actions": {
+              "direction": "higher_in_left",
+              "estimate": 5.0
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.05665711462037465
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.05591143802416753
+            },
+            "progress_regression_m": {
+              "direction": "lower_in_left",
+              "estimate": -0.00045948999153768225
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 42,
+          "right": "IMMEDIATE_FRESH"
+        },
+        "put_the_cream_cheese_in_the_bowl::shift_060mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.0053403814864715375
+            },
+            "actual_post_detection_actions": {
+              "direction": "higher_in_left",
+              "estimate": 8.891891891891891
+            },
+            "cause_violation": {
+              "direction": "higher_in_left",
+              "estimate": 0.5135135135135135
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.05823604992272712
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.056369732975348016
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.005696563935602438
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 37,
+          "right": "IMMEDIATE_FRESH"
+        },
+        "put_the_cream_cheese_in_the_bowl::shift_080mm": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.005216496514276514
+            },
+            "actual_post_detection_actions": {
+              "direction": "higher_in_left",
+              "estimate": 8.742857142857142
+            },
+            "cause_violation": {
+              "direction": "higher_in_left",
+              "estimate": 0.6285714285714286
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.061996407585446035
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.05986831170076345
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.001569297352085473
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 35,
+          "right": "IMMEDIATE_FRESH"
+        }
+      },
+      "task": {
+        "put_the_bowl_on_the_stove": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.005358532621967908
+            },
+            "actual_post_detection_actions": {
+              "direction": "higher_in_left",
+              "estimate": 4.939024390243903
+            },
+            "cause_violation": {
+              "direction": "equal",
+              "estimate": 0.0
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.05450985981838351
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.05462482452889753
+            },
+            "progress_regression_m": {
+              "direction": "lower_in_left",
+              "estimate": -6.337841794737597e-05
+            },
+            "safe_success": {
+              "direction": "higher_in_left",
+              "estimate": 0.024390243902439025
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 82,
+          "right": "IMMEDIATE_FRESH"
+        },
+        "put_the_cream_cheese_in_the_bowl": {
+          "effects_left_minus_right": {
+            "actual_actor_calls": {
+              "direction": "higher_in_left",
+              "estimate": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "direction": "higher_in_left",
+              "estimate": 0.005280159624987846
+            },
+            "actual_post_detection_actions": {
+              "direction": "higher_in_left",
+              "estimate": 8.819444444444445
+            },
+            "cause_violation": {
+              "direction": "higher_in_left",
+              "estimate": 0.5694444444444444
+            },
+            "eef_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.06006400156432661
+            },
+            "manipulated_object_path_length_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.058070430966869396
+            },
+            "progress_regression_m": {
+              "direction": "higher_in_left",
+              "estimate": 0.0036902537908372474
+            },
+            "safe_success": {
+              "direction": "equal",
+              "estimate": 0.0
+            }
+          },
+          "left": "EVENT_ALIGNED_CACHED",
+          "n": 72,
+          "right": "IMMEDIATE_FRESH"
+        }
+      }
+    }
+  },
+  "upstream_blockers": [
+    "BLOCKED_BY_EVENT_CONSTRUCTION",
+    "BLOCKED_BY_PERTURBATION_QUALIFICATION"
+  ],
+  "valid_event_count": 154
+}

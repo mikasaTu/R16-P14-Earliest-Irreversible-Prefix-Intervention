@@ -65,16 +65,55 @@ def paired_values(
     return array[:, 0], array[:, 1]
 
 
-def cluster_paired_values(
-    rows: list[dict[str, Any]], method: str, baseline: str, field: str
-) -> tuple[np.ndarray, np.ndarray]:
-    """Aggregate each source event before paired bootstrap resampling.
+def _source_rollout_value(row: dict[str, Any]) -> str:
+    """Return the source-rollout cluster id for repeated actor measurements.
 
-    Confirmatory rows are normally one row per init-state/rollout event.  The
-    explicit grouping also keeps this contract correct if a resumable shard
-    ever contributes duplicate prefix rows or repeated actor measurements.
+    Formal rows carry ``init_state_id`` as the stable source-rollout identity.
+    Newer producers may provide an explicit ``source_rollout_id``; that value
+    takes precedence.  ``event_id`` is deliberately not a fallback because it
+    includes the actor seed in the current event writer and would make the same
+    init state look like three independent bootstrap samples.
     """
-    grouped: dict[str, list[tuple[float, float]]] = defaultdict(list)
+    value = row.get("source_rollout_id")
+    if value is None:
+        value = row.get("source_event_id")
+    if value is None:
+        value = row.get("init_state_id")
+    if value is None:
+        raise ValueError("paired row has no init_state/source rollout cluster id")
+    return str(value)
+
+
+def _cluster_key(row: dict[str, Any], cluster_fields: tuple[str, ...]) -> tuple[str, ...]:
+    values = []
+    for field in cluster_fields:
+        if field in {"source_rollout", "init_state_id"}:
+            values.append(_source_rollout_value(row))
+        else:
+            value = row.get(field)
+            if value is None:
+                raise ValueError(f"paired row has no cluster field: {field}")
+            values.append(str(value))
+    return tuple(values)
+
+
+def cluster_paired_values(
+    rows: list[dict[str, Any]],
+    method: str,
+    baseline: str,
+    field: str,
+    cluster_fields: tuple[str, ...] = ("task", "source_rollout"),
+) -> tuple[np.ndarray, np.ndarray]:
+    """Aggregate source-rollout clusters before paired bootstrap resampling.
+
+    The overall comparison uses ``(task, init_state/source_rollout)``.  A
+    severity comparison adds ``parameter_id`` so different perturbations from
+    one init state do not become one observation.  Actor-seed strata are
+    reported separately and add ``actor_seed`` to the key.  This prevents the
+    same source init state rendered by three frozen actor checkpoints from
+    being counted as three independent bootstrap samples.
+    """
+    grouped: dict[tuple[str, ...], list[tuple[float, float]]] = defaultdict(list)
     for row in rows:
         if method not in row["methods"] or baseline not in row["methods"]:
             continue
@@ -84,7 +123,7 @@ def cluster_paired_values(
             continue
         if not (math.isfinite(float(left)) and math.isfinite(float(right))):
             continue
-        key = str(row.get("event_instance_id") or row.get("event_id"))
+        key = _cluster_key(row, cluster_fields)
         grouped[key].append((float(left), float(right)))
     if not grouped:
         return np.asarray([], dtype=np.float64), np.asarray([], dtype=np.float64)
@@ -161,7 +200,11 @@ def exact_binary_table(rows: list[dict[str, Any]], method: str, baseline: str, f
 
 
 def comparison(
-    rows: list[dict[str, Any]], method: str, baseline: str, seed_offset: int = 0
+    rows: list[dict[str, Any]],
+    method: str,
+    baseline: str,
+    seed_offset: int = 0,
+    cluster_fields: tuple[str, ...] = ("task", "source_rollout"),
 ) -> dict[str, Any]:
     result: dict[str, Any] = {
         "method": method,
@@ -171,16 +214,21 @@ def comparison(
         "differences": {},
         "relative_reductions": {},
         "holm_adjusted_p_values": {},
-        "bootstrap_unit": "source event (event_instance_id/init_state rollout)",
+        "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+        "bootstrap_cluster_fields": list(cluster_fields),
     }
     for index, field in enumerate(("safe_success", "cause_violation", "task_success")):
-        left, right = cluster_paired_values(rows, method, baseline, field)
+        left, right = cluster_paired_values(
+            rows, method, baseline, field, cluster_fields=cluster_fields
+        )
         result["differences"][field] = bootstrap_mean_difference(
             left, right, BOOTSTRAP_SEED + seed_offset + index
         )
         result["binary_tables"][field] = exact_binary_table(rows, method, baseline, field)
     for index, field in enumerate(EFFICIENCY_FIELDS, start=10):
-        left, right = cluster_paired_values(rows, method, baseline, field)
+        left, right = cluster_paired_values(
+            rows, method, baseline, field, cluster_fields=cluster_fields
+        )
         result["differences"][field] = bootstrap_mean_difference(
             left, right, BOOTSTRAP_SEED + seed_offset + index
         )
@@ -257,7 +305,7 @@ def diagnostic_error_signal() -> dict[str, Any]:
     y = [float(row["progress_regression_m"]) for row in usable]
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in usable:
-        grouped[row["event_instance_id"]].append(row)
+        grouped[_cluster_key(row, ("task", "source_rollout"))].append(row)
     centered_x, centered_y, per_event = [], [], []
     for event_id, event_rows in sorted(grouped.items()):
         ex = [float(row["cached_fresh_action_disagreement"]) for row in event_rows]
@@ -302,25 +350,43 @@ def diagnostic_error_signal() -> dict[str, Any]:
             "state_only_variance": "unavailable; no state-only WM branch",
             "initial_dino_orbit_floor": "not applicable; no DINO branch",
             "true_future_dino_orbit_floor": "not applicable; no DINO branch",
-            "episode_random_intercept": "demeaned within event_instance_id",
+            "episode_random_intercept": "demeaned within task+init_state/source_rollout cluster",
         },
         "holm_correction": "applied to paired arm bootstrap p-values; no positive label is inferred",
     }
 
 
 def grouped_comparisons(rows: list[dict[str, Any]], method: str, baseline: str) -> dict[str, Any]:
-    result = {"overall": comparison(rows, method, baseline)}
+    result = {
+        "overall": comparison(
+            rows,
+            method,
+            baseline,
+            cluster_fields=("task", "source_rollout"),
+        )
+    }
     dimensions = {
         "task": lambda row: row["task"],
         "severity": lambda row: f"{row['task']}::{row['parameter_id']}",
         "actor_seed": lambda row: str(row["actor_seed"]),
+    }
+    cluster_fields_by_dimension = {
+        "task": ("task", "source_rollout"),
+        "severity": ("task", "parameter_id", "source_rollout"),
+        "actor_seed": ("task", "parameter_id", "source_rollout", "actor_seed"),
     }
     for dimension, getter in dimensions.items():
         groups = defaultdict(list)
         for row in rows:
             groups[getter(row)].append(row)
         result[dimension] = {
-            name: comparison(group, method, baseline, seed_offset=1000 + index * 100)
+            name: comparison(
+                group,
+                method,
+                baseline,
+                seed_offset=1000 + index * 100,
+                cluster_fields=cluster_fields_by_dimension[dimension],
+            )
             for index, (name, group) in enumerate(sorted(groups.items()))
         }
     return result
@@ -515,6 +581,19 @@ def main() -> None:
         "bootstrap_replicates": BOOTSTRAP_REPLICATES,
         "bootstrap_seed": BOOTSTRAP_SEED,
         "independent_unit": "init_state_rollout_event",
+        "bootstrap_cluster_contract": {
+            "overall": ["task", "init_state/source_rollout"],
+            "task": ["task", "init_state/source_rollout"],
+            "severity": ["task", "parameter_id", "init_state/source_rollout"],
+            "actor_seed": [
+                "task",
+                "parameter_id",
+                "init_state/source_rollout",
+                "actor_seed",
+            ],
+            "actor_seed_is_repeated_measurement": True,
+            "prefix_rows_are_not_independent": True,
+        },
         "valid_events": len(rows),
         "comparisons": grouped,
         "agreement": agreements,

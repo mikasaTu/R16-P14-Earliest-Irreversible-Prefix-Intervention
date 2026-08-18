@@ -1,0 +1,1555 @@
+{
+  "S_obs_at_k": true,
+  "actor_inference_side_effect_free": true,
+  "actor_seed": 7,
+  "actual_actor_calls": 0,
+  "actual_inference_wall_time_s": 0.0,
+  "actual_post_detection_actions": 0,
+  "cached_actions_retained": 0,
+  "cached_fresh_action_disagreement": null,
+  "cause_violation": false,
+  "cause_violation_type": null,
+  "child_exitcode": 0,
+  "completion_steps": null,
+  "contact_count": 52,
+  "contact_event_indices": [],
+  "detection_signature": {
+    "cause_tracker": {
+      "contact_event_indices": [],
+      "ever_stably_lifted": true,
+      "first_violation_offset": null,
+      "gripper_transition_indices": [],
+      "immediate_violation": false,
+      "initial_object_z": 0.97,
+      "injected": true,
+      "injection_contact": false,
+      "post_detection_steps": 0,
+      "previous_gripper": 1.0,
+      "shifted_target_qpos": null,
+      "task": "put_the_bowl_on_the_stove",
+      "violation": false,
+      "violation_type": null
+    },
+    "cause_tracker_hash": "1eb70cb8ebc284b42c71282ef3c7ea4484c6596108a349541374e89535ee2668",
+    "complete_signature_hash": "387840d081f224b147222ea5809abe3833956c8d902db6ff345a3f3ca0f32429",
+    "contact_pairs": [
+      [
+        "akita_black_bowl_1_g13",
+        "gripper0_finger1_collision"
+      ],
+      [
+        "akita_black_bowl_1_g29",
+        "gripper0_finger2_collision"
+      ],
+      [
+        "akita_black_bowl_1_g29",
+        "gripper0_finger2_pad_collision"
+      ],
+      [
+        "akita_black_bowl_1_g30",
+        "gripper0_finger2_collision"
+      ],
+      [
+        "akita_black_bowl_1_g30",
+        "gripper0_finger2_pad_collision"
+      ],
+      [
+        "akita_black_bowl_1_g31",
+        "gripper0_finger2_collision"
+      ],
+      [
+        "akita_black_bowl_1_g31",
+        "gripper0_finger2_pad_collision"
+      ],
+      [
+        "akita_black_bowl_1_g32",
+        "gripper0_finger1_collision"
+      ],
+      [
+        "akita_black_bowl_1_g32",
+        "gripper0_finger1_pad_collision"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g4"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g4"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g4"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g4"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g5"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g5"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g5"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g5"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "table_collision"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "table_collision"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "table_collision"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "table_collision"
+      ],
+      [
+        "plate_1_g10",
+        "table_collision"
+      ],
+      [
+        "plate_1_g2",
+        "table_collision"
+      ],
+      [
+        "plate_1_g3",
+        "table_collision"
+      ],
+      [
+        "plate_1_g4",
+        "table_collision"
+      ],
+      [
+        "plate_1_g5",
+        "table_collision"
+      ],
+      [
+        "plate_1_g6",
+        "table_collision"
+      ],
+      [
+        "plate_1_g7",
+        "table_collision"
+      ],
+      [
+        "plate_1_g8",
+        "table_collision"
+      ],
+      [
+        "plate_1_g9",
+        "table_collision"
+      ],
+      [
+        "table_collision",
+        "wine_bottle_1_g3"
+      ],
+      [
+        "table_collision",
+        "wine_bottle_1_g3"
+      ],
+      [
+        "table_collision",
+        "wine_bottle_1_g3"
+      ],
+      [
+        "table_collision",
+        "wine_bottle_1_g3"
+      ]
+    ],
+    "contact_pairs_hash": "6ddbfc4f0cf468217b7de1271bb9bcbfb0e91e15daa0483464c172f82c7e8de9",
+    "executed_prefix_action_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "executed_prefix_length": 0,
+    "four_state_history_hash": "328e9bce65e9f2375e945004aa935294e0a90657ac8434dbdb9056f6d02d97f6",
+    "gripper_state": 1.0,
+    "manipulated_qpos_hash": "b5c6d875ed178db5bafbaf2d9ff3c48f020bcdd250fbdcb3827a770960903b84",
+    "observation_feature_hash": "dbccbcb4a6db85516378d0a90f9636c32fe6388f1551dbc38d5f2aeff5fc8aff",
+    "obstacle_qpos_hash": "006b71d321cc9ca96e1c4860cb4b680a179db2201a158ee020387054088ec359",
+    "robot_qpos_hash": "83fdbb4fd4d5b92fc866660e97bf46fcea9e471d65531161c8461708f7056f33",
+    "robot_qvel_hash": "e89ea50e5e5ff98edad9287f9e5ecbfbc18e9012cfaf14501055c4a23d274790",
+    "simulator_state_hash": "75b12fd4535a2e4d0f792d486ea86b04e7ad044cc806d9df8185d1200b471c3a",
+    "target_qpos_hash": null,
+    "task_phase": {
+      "ever_stably_lifted": true,
+      "gripper_closed": true,
+      "object_height_delta_m": 0.06208027083438372,
+      "post_detection_steps": 0,
+      "task_success": false
+    },
+    "task_phase_hash": "6f0864c21227ea21ce35b41806a9c7ca826fe1af91c156c31950620e10de27f6",
+    "three_action_history_hash": "fbd3ce4b67341d3e9f0978175134c0c3e1a90ef659fb52d2cd0f1db79eb93d56"
+  },
+  "eef_path_length_m": 0.02392604518530525,
+  "effective_arm": "RECONSTRUCT_ONLY",
+  "error": null,
+  "event_id": "put_the_bowl_on_the_stove__evaluation__seed07__init57",
+  "event_instance_id": "put_the_bowl_on_the_stove__evaluation__seed07__init57__future_09__clearance_p000mm",
+  "executed_prefix_action_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "executed_prefix_length": 0,
+  "final_signature": {
+    "cause_tracker": {
+      "contact_event_indices": [],
+      "ever_stably_lifted": true,
+      "first_violation_offset": null,
+      "gripper_transition_indices": [],
+      "immediate_violation": false,
+      "initial_object_z": 0.97,
+      "injected": true,
+      "injection_contact": false,
+      "post_detection_steps": 0,
+      "previous_gripper": 1.0,
+      "shifted_target_qpos": null,
+      "task": "put_the_bowl_on_the_stove",
+      "violation": false,
+      "violation_type": null
+    },
+    "cause_tracker_hash": "1eb70cb8ebc284b42c71282ef3c7ea4484c6596108a349541374e89535ee2668",
+    "complete_signature_hash": "387840d081f224b147222ea5809abe3833956c8d902db6ff345a3f3ca0f32429",
+    "contact_pairs": [
+      [
+        "akita_black_bowl_1_g13",
+        "gripper0_finger1_collision"
+      ],
+      [
+        "akita_black_bowl_1_g29",
+        "gripper0_finger2_collision"
+      ],
+      [
+        "akita_black_bowl_1_g29",
+        "gripper0_finger2_pad_collision"
+      ],
+      [
+        "akita_black_bowl_1_g30",
+        "gripper0_finger2_collision"
+      ],
+      [
+        "akita_black_bowl_1_g30",
+        "gripper0_finger2_pad_collision"
+      ],
+      [
+        "akita_black_bowl_1_g31",
+        "gripper0_finger2_collision"
+      ],
+      [
+        "akita_black_bowl_1_g31",
+        "gripper0_finger2_pad_collision"
+      ],
+      [
+        "akita_black_bowl_1_g32",
+        "gripper0_finger1_collision"
+      ],
+      [
+        "akita_black_bowl_1_g32",
+        "gripper0_finger1_pad_collision"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g4"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g4"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g4"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g4"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g5"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g5"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g5"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g5"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "table_collision"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "table_collision"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "table_collision"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "table_collision"
+      ],
+      [
+        "plate_1_g10",
+        "table_collision"
+      ],
+      [
+        "plate_1_g2",
+        "table_collision"
+      ],
+      [
+        "plate_1_g3",
+        "table_collision"
+      ],
+      [
+        "plate_1_g4",
+        "table_collision"
+      ],
+      [
+        "plate_1_g5",
+        "table_collision"
+      ],
+      [
+        "plate_1_g6",
+        "table_collision"
+      ],
+      [
+        "plate_1_g7",
+        "table_collision"
+      ],
+      [
+        "plate_1_g8",
+        "table_collision"
+      ],
+      [
+        "plate_1_g9",
+        "table_collision"
+      ],
+      [
+        "table_collision",
+        "wine_bottle_1_g3"
+      ],
+      [
+        "table_collision",
+        "wine_bottle_1_g3"
+      ],
+      [
+        "table_collision",
+        "wine_bottle_1_g3"
+      ],
+      [
+        "table_collision",
+        "wine_bottle_1_g3"
+      ]
+    ],
+    "contact_pairs_hash": "6ddbfc4f0cf468217b7de1271bb9bcbfb0e91e15daa0483464c172f82c7e8de9",
+    "executed_prefix_action_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "executed_prefix_length": 0,
+    "four_state_history_hash": "328e9bce65e9f2375e945004aa935294e0a90657ac8434dbdb9056f6d02d97f6",
+    "gripper_state": 1.0,
+    "manipulated_qpos_hash": "b5c6d875ed178db5bafbaf2d9ff3c48f020bcdd250fbdcb3827a770960903b84",
+    "observation_feature_hash": "dbccbcb4a6db85516378d0a90f9636c32fe6388f1551dbc38d5f2aeff5fc8aff",
+    "obstacle_qpos_hash": "006b71d321cc9ca96e1c4860cb4b680a179db2201a158ee020387054088ec359",
+    "robot_qpos_hash": "83fdbb4fd4d5b92fc866660e97bf46fcea9e471d65531161c8461708f7056f33",
+    "robot_qvel_hash": "e89ea50e5e5ff98edad9287f9e5ecbfbc18e9012cfaf14501055c4a23d274790",
+    "simulator_state_hash": "75b12fd4535a2e4d0f792d486ea86b04e7ad044cc806d9df8185d1200b471c3a",
+    "target_qpos_hash": null,
+    "task_phase": {
+      "ever_stably_lifted": true,
+      "gripper_closed": true,
+      "object_height_delta_m": 0.06208027083438372,
+      "post_detection_steps": 0,
+      "task_success": false
+    },
+    "task_phase_hash": "6f0864c21227ea21ce35b41806a9c7ca826fe1af91c156c31950620e10de27f6",
+    "three_action_history_hash": "fbd3ce4b67341d3e9f0978175134c0c3e1a90ef659fb52d2cd0f1db79eb93d56"
+  },
+  "first_violation_offset": null,
+  "fresh_environment_created": true,
+  "gripper_event_indices": [],
+  "immediate_violation": false,
+  "individual_inference_wall_times_s": [],
+  "init_state_id": 57,
+  "injection_contact": false,
+  "manipulated_object_path_length_m": 0.025684912039519725,
+  "maximum_action_budget": 18,
+  "maximum_policy_call_budget": 2,
+  "parameter": {
+    "clearance_delta_m": 0.0,
+    "future_index": 9,
+    "parameter_id": "future_09__clearance_p000mm"
+  },
+  "parameter_id": "future_09__clearance_p000mm",
+  "parent_pid": 162,
+  "perturbation": {
+    "after_qpos": [
+      0.021872075882287123,
+      0.06816663199520899,
+      0.902506338529415,
+      0.7071068099946488,
+      -1.3218930757410973e-05,
+      5.90520402849983e-06,
+      0.7071067522302282
+    ],
+    "before_qpos": [
+      0.047382313833356726,
+      -0.008571161126388326,
+      0.902506338529415,
+      0.7071068099946488,
+      -1.3218930757410973e-05,
+      5.90520402849983e-06,
+      0.7071067522302282
+    ],
+    "contacts_after": [
+      [
+        "akita_black_bowl_1_g13",
+        "gripper0_finger1_collision"
+      ],
+      [
+        "akita_black_bowl_1_g29",
+        "gripper0_finger2_collision"
+      ],
+      [
+        "akita_black_bowl_1_g29",
+        "gripper0_finger2_pad_collision"
+      ],
+      [
+        "akita_black_bowl_1_g30",
+        "gripper0_finger2_collision"
+      ],
+      [
+        "akita_black_bowl_1_g30",
+        "gripper0_finger2_pad_collision"
+      ],
+      [
+        "akita_black_bowl_1_g31",
+        "gripper0_finger2_collision"
+      ],
+      [
+        "akita_black_bowl_1_g31",
+        "gripper0_finger2_pad_collision"
+      ],
+      [
+        "akita_black_bowl_1_g32",
+        "gripper0_finger1_collision"
+      ],
+      [
+        "akita_black_bowl_1_g32",
+        "gripper0_finger1_pad_collision"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g4"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g4"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g4"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g4"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g5"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g5"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g5"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g5"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "table_collision"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "table_collision"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "table_collision"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "table_collision"
+      ],
+      [
+        "plate_1_g10",
+        "table_collision"
+      ],
+      [
+        "plate_1_g2",
+        "table_collision"
+      ],
+      [
+        "plate_1_g3",
+        "table_collision"
+      ],
+      [
+        "plate_1_g4",
+        "table_collision"
+      ],
+      [
+        "plate_1_g5",
+        "table_collision"
+      ],
+      [
+        "plate_1_g6",
+        "table_collision"
+      ],
+      [
+        "plate_1_g7",
+        "table_collision"
+      ],
+      [
+        "plate_1_g8",
+        "table_collision"
+      ],
+      [
+        "plate_1_g9",
+        "table_collision"
+      ],
+      [
+        "table_collision",
+        "wine_bottle_1_g3"
+      ],
+      [
+        "table_collision",
+        "wine_bottle_1_g3"
+      ],
+      [
+        "table_collision",
+        "wine_bottle_1_g3"
+      ],
+      [
+        "table_collision",
+        "wine_bottle_1_g3"
+      ]
+    ],
+    "contacts_before": [
+      [
+        "akita_black_bowl_1_g13",
+        "gripper0_finger1_collision"
+      ],
+      [
+        "akita_black_bowl_1_g29",
+        "gripper0_finger2_collision"
+      ],
+      [
+        "akita_black_bowl_1_g29",
+        "gripper0_finger2_pad_collision"
+      ],
+      [
+        "akita_black_bowl_1_g30",
+        "gripper0_finger2_collision"
+      ],
+      [
+        "akita_black_bowl_1_g30",
+        "gripper0_finger2_pad_collision"
+      ],
+      [
+        "akita_black_bowl_1_g31",
+        "gripper0_finger2_collision"
+      ],
+      [
+        "akita_black_bowl_1_g31",
+        "gripper0_finger2_pad_collision"
+      ],
+      [
+        "akita_black_bowl_1_g32",
+        "gripper0_finger1_collision"
+      ],
+      [
+        "akita_black_bowl_1_g32",
+        "gripper0_finger1_pad_collision"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "table_collision"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "table_collision"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "table_collision"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "table_collision"
+      ],
+      [
+        "plate_1_g10",
+        "table_collision"
+      ],
+      [
+        "plate_1_g2",
+        "table_collision"
+      ],
+      [
+        "plate_1_g3",
+        "table_collision"
+      ],
+      [
+        "plate_1_g4",
+        "table_collision"
+      ],
+      [
+        "plate_1_g5",
+        "table_collision"
+      ],
+      [
+        "plate_1_g6",
+        "table_collision"
+      ],
+      [
+        "plate_1_g7",
+        "table_collision"
+      ],
+      [
+        "plate_1_g8",
+        "table_collision"
+      ],
+      [
+        "plate_1_g9",
+        "table_collision"
+      ],
+      [
+        "table_collision",
+        "wine_bottle_1_g3"
+      ],
+      [
+        "table_collision",
+        "wine_bottle_1_g3"
+      ],
+      [
+        "table_collision",
+        "wine_bottle_1_g3"
+      ],
+      [
+        "table_collision",
+        "wine_bottle_1_g3"
+      ]
+    ],
+    "geometry": {
+      "center_clearance_m": 0.1546200858677696,
+      "future_point": [
+        -0.13232285082064968,
+        0.05670820571441496,
+        0.8984070745551889,
+        0.74856949358929,
+        -1.374713394094848e-05,
+        2.5021197827892146e-06,
+        0.6630563423060141
+      ],
+      "manipulated": {
+        "conservative_bounding_sphere": true,
+        "geoms": [
+          {
+            "candidate_radius_m": 0.048041621567287196,
+            "center": [
+              -0.1521952982497308,
+              0.055116177552731224,
+              1.043707147296043
+            ],
+            "geom": "akita_black_bowl_1_g1",
+            "geom_id": 84,
+            "geom_rbound_m": 0.015485715998945609,
+            "horizontal_offset_m": 0.032555905568341585
+          },
+          {
+            "candidate_radius_m": 0.04884263378899154,
+            "center": [
+              -0.0938072540111182,
+              0.07308360502100616,
+              1.0418622515911038
+            ],
+            "geom": "akita_black_bowl_1_g10",
+            "geom_id": 93,
+            "geom_rbound_m": 0.015485715998945609,
+            "horizontal_offset_m": 0.03335691779004593
+          },
+          {
+            "candidate_radius_m": 0.04816828748625781,
+            "center": [
+              -0.10565051672103237,
+              0.08161949111359706,
+              1.0434127279689536
+            ],
+            "geom": "akita_black_bowl_1_g11",
+            "geom_id": 94,
+            "geom_rbound_m": 0.015485715998945609,
+            "horizontal_offset_m": 0.0326825714873122
+          },
+          {
+            "candidate_radius_m": 0.04816828748625781,
+            "center": [
+              -0.10565051672103237,
+              0.08161949111359706,
+              1.0434127279689536
+            ],
+            "geom": "akita_black_bowl_1_g12",
+            "geom_id": 95,
+            "geom_rbound_m": 0.015485715998945609,
+            "horizontal_offset_m": 0.0326825714873122
+          },
+          {
+            "candidate_radius_m": 0.04778084918186122,
+            "center": [
+              -0.11470124162862208,
+              0.084040748583537,
+              1.0442324174902942
+            ],
+            "geom": "akita_black_bowl_1_g13",
+            "geom_id": 96,
+            "geom_rbound_m": 0.015485715998945609,
+            "horizontal_offset_m": 0.03229513318291561
+          },
+          {
+            "candidate_radius_m": 0.04736923999124986,
+            "center": [
+              -0.12885101980869929,
+              0.08271115087336446,
+              1.0450585212269492
+            ],
+            "geom": "akita_black_bowl_1_g14",
+            "geom_id": 97,
+            "geom_rbound_m": 0.015485715998945609,
+            "horizontal_offset_m": 0.03188352399230425
+          },
+          {
+            "candidate_radius_m": 0.04728974820018608,
+            "center": [
+              -0.14139832498494584,
+              0.07546904611206773,
+              1.045251268316524
+            ],
+            "geom": "akita_black_bowl_1_g15",
+            "geom_id": 98,
+            "geom_rbound_m": 0.015485715998945609,
+            "horizontal_offset_m": 0.03180403220124047
+          },
+          {
+            "candidate_radius_m": 0.04748209720177693,
+            "center": [
+              -0.1484559018734257,
+              0.0663304804058285,
+              1.0449087405133552
+            ],
+            "geom": "akita_black_bowl_1_g16",
+            "geom_id": 99,
+            "geom_rbound_m": 0.015485715998945609,
+            "horizontal_offset_m": 0.03199638120283132
+          },
+          {
+            "candidate_radius_m": 0.0652295035100755,
+            "center": [
+              -0.1639458446083479,
+              0.05467292875710286,
+              1.0688818705473355
+            ],
+            "geom": "akita_black_bowl_1_g17",
+            "geom_id": 100,
+            "geom_rbound_m": 0.020986579044713315,
+            "horizontal_offset_m": 0.04424292446536219
+          },
+          {
+            "candidate_radius_m": 0.06666219023460393,
+            "center": [
+              -0.16297904658606344,
+              0.03732505150836428,
+              1.0672728470711843
+            ],
+            "geom": "akita_black_bowl_1_g18",
+            "geom_id": 101,
+            "geom_rbound_m": 0.020986579044713315,
+            "horizontal_offset_m": 0.04567561118989062
+          },
+          {
+            "candidate_radius_m": 0.06818636273876792,
+            "center": [
+              -0.15597634570780639,
+              0.0218598917693282,
+              1.0654285546172184
+            ],
+            "geom": "akita_black_bowl_1_g19",
+            "geom_id": 102,
+            "geom_rbound_m": 0.020986579044713315,
+            "horizontal_offset_m": 0.04719978369405461
+          },
+          {
+            "candidate_radius_m": 0.04862961767138564,
+            "center": [
+              -0.15070980161192438,
+              0.04024867152835126,
+              1.042485564571013
+            ],
+            "geom": "akita_black_bowl_1_g2",
+            "geom_id": 85,
+            "geom_rbound_m": 0.015485715998945609,
+            "horizontal_offset_m": 0.03314390167244003
+          },
+          {
+            "candidate_radius_m": 0.06960832443753029,
+            "center": [
+              -0.143753390192375,
+              0.009848739272732464,
+              1.0635433293862957
+            ],
+            "geom": "akita_black_bowl_1_g20",
+            "geom_id": 103,
+            "geom_rbound_m": 0.020986579044713315,
+            "horizontal_offset_m": 0.04862174539281698
+          },
+          {
+            "candidate_radius_m": 0.07075609144849479,
+            "center": [
+              -0.128083134211872,
+              0.0030754980199470677,
+              1.061894335621275
+            ],
+            "geom": "akita_black_bowl_1_g21",
+            "geom_id": 104,
+            "geom_rbound_m": 0.020986579044713315,
+            "horizontal_offset_m": 0.049769512403781475
+          },
+          {
+            "candidate_radius_m": 0.07152454490924409,
+            "center": [
+              -0.11144908229585974,
+              0.0022992798799591485,
+              1.060714928035
+            ],
+            "geom": "akita_black_bowl_1_g22",
+            "geom_id": 105,
+            "geom_rbound_m": 0.020986579044713315,
+            "horizontal_offset_m": 0.05053796586453078
+          },
+          {
+            "candidate_radius_m": 0.07190562429870345,
+            "center": [
+              -0.09518378768905063,
+              0.007559503333643233,
+              1.0600975622025972
+            ],
+            "geom": "akita_black_bowl_1_g23",
+            "geom_id": 106,
+            "geom_rbound_m": 0.020986579044713315,
+            "horizontal_offset_m": 0.05091904525399014
+          },
+          {
+            "candidate_radius_m": 0.0718598172184591,
+            "center": [
+              -0.08171323028489669,
+              0.01839197405050088,
+              1.0601628415240993
+            ],
+            "geom": "akita_black_bowl_1_g24",
+            "geom_id": 107,
+            "geom_rbound_m": 0.020986579044713315,
+            "horizontal_offset_m": 0.0508732381737458
+          },
+          {
+            "candidate_radius_m": 0.07137220151899679,
+            "center": [
+              -0.07315401881434944,
+              0.033036853866500376,
+              1.060895367412641
+            ],
+            "geom": "akita_black_bowl_1_g25",
+            "geom_id": 108,
+            "geom_rbound_m": 0.020986579044713315,
+            "horizontal_offset_m": 0.05038562247428348
+          },
+          {
+            "candidate_radius_m": 0.0704943302784333,
+            "center": [
+              -0.07032113972936406,
+              0.04983952368086079,
+              1.062202227466141
+            ],
+            "geom": "akita_black_bowl_1_g26",
+            "geom_id": 109,
+            "geom_rbound_m": 0.020986579044713315,
+            "horizontal_offset_m": 0.049507751233719983
+          },
+          {
+            "candidate_radius_m": 0.06925684731296033,
+            "center": [
+              -0.07372714518938353,
+              0.06662440171604801,
+              1.0639239406101366
+            ],
+            "geom": "akita_black_bowl_1_g27",
+            "geom_id": 110,
+            "geom_rbound_m": 0.020986579044713315,
+            "horizontal_offset_m": 0.04827026826824701
+          },
+          {
+            "candidate_radius_m": 0.06780920716173298,
+            "center": [
+              -0.08282907447500573,
+              0.08091036446218071,
+              1.0658033691657465
+            ],
+            "geom": "akita_black_bowl_1_g28",
+            "geom_id": 111,
+            "geom_rbound_m": 0.020986579044713315,
+            "horizontal_offset_m": 0.04682262811701967
+          },
+          {
+            "candidate_radius_m": 0.06626549654635003,
+            "center": [
+              -0.09682444540637589,
+              0.09117804891118797,
+              1.0676516788121462
+            ],
+            "geom": "akita_black_bowl_1_g29",
+            "geom_id": 112,
+            "geom_rbound_m": 0.020986579044713315,
+            "horizontal_offset_m": 0.04527891750163671
+          },
+          {
+            "candidate_radius_m": 0.04923451671585599,
+            "center": [
+              -0.1432119122307177,
+              0.027862992616747597,
+              1.0410433743180143
+            ],
+            "geom": "akita_black_bowl_1_g3",
+            "geom_id": 86,
+            "geom_rbound_m": 0.015485715998945609,
+            "horizontal_offset_m": 0.03374880071691038
+          },
+          {
+            "candidate_radius_m": 0.06495085643309986,
+            "center": [
+              -0.11293348682503498,
+              0.09557535769293624,
+              1.069118430341849
+            ],
+            "geom": "akita_black_bowl_1_g30",
+            "geom_id": 113,
+            "geom_rbound_m": 0.020986579044713315,
+            "horizontal_offset_m": 0.04396427738838655
+          },
+          {
+            "candidate_radius_m": 0.06495085643309986,
+            "center": [
+              -0.11293348682503498,
+              0.09557535769293624,
+              1.069118430341849
+            ],
+            "geom": "akita_black_bowl_1_g31",
+            "geom_id": 114,
+            "geom_rbound_m": 0.020986579044713315,
+            "horizontal_offset_m": 0.04396427738838655
+          },
+          {
+            "candidate_radius_m": 0.06402954321410118,
+            "center": [
+              -0.12970761212861795,
+              0.09402796565109739,
+              1.0701003153496542
+            ],
+            "geom": "akita_black_bowl_1_g32",
+            "geom_id": 115,
+            "geom_rbound_m": 0.020986579044713315,
+            "horizontal_offset_m": 0.04304296416938787
+          },
+          {
+            "candidate_radius_m": 0.06368943444997702,
+            "center": [
+              -0.1449055965062571,
+              0.08667192000746823,
+              1.070459847470446
+            ],
+            "geom": "akita_black_bowl_1_g33",
+            "geom_id": 116,
+            "geom_rbound_m": 0.020986579044713315,
+            "horizontal_offset_m": 0.042702855405263695
+          },
+          {
+            "candidate_radius_m": 0.06400241624407343,
+            "center": [
+              -0.15647110881149753,
+              0.07459139929661002,
+              1.0701562943913019
+            ],
+            "geom": "akita_black_bowl_1_g34",
+            "geom_id": 117,
+            "geom_rbound_m": 0.020986579044713315,
+            "horizontal_offset_m": 0.04301583719936013
+          },
+          {
+            "candidate_radius_m": 0.06281137787495839,
+            "center": [
+              -0.1613489997226951,
+              0.06505407230211172,
+              1.0696327735622315
+            ],
+            "geom": "akita_black_bowl_1_g35",
+            "geom_id": 118,
+            "geom_rbound_m": 0.019279898858655872,
+            "horizontal_offset_m": 0.04353147901630252
+          },
+          {
+            "candidate_radius_m": 0.02399612212104476,
+            "center": [
+              -0.11854664594006242,
+              0.05134015274577967,
+              1.0358727465914366
+            ],
+            "geom": "akita_black_bowl_1_g36",
+            "geom_id": 119,
+            "geom_rbound_m": 0.02252656653820107,
+            "horizontal_offset_m": 0.0014695555828436898
+          },
+          {
+            "candidate_radius_m": 0.03766480166108477,
+            "center": [
+              -0.09930088975447315,
+              0.04888402525007229,
+              1.0343694480283816
+            ],
+            "geom": "akita_black_bowl_1_g37",
+            "geom_id": 120,
+            "geom_rbound_m": 0.01693225915228089,
+            "horizontal_offset_m": 0.020732542508803877
+          },
+          {
+            "candidate_radius_m": 0.03396216027761917,
+            "center": [
+              -0.11703789153050363,
+              0.06944737683260514,
+              1.03738413535715
+            ],
+            "geom": "akita_black_bowl_1_g38",
+            "geom_id": 121,
+            "geom_rbound_m": 0.016446270093854107,
+            "horizontal_offset_m": 0.01751589018376506
+          },
+          {
+            "candidate_radius_m": 0.03501695600384301,
+            "center": [
+              -0.1217221339931249,
+              0.03355617809725495,
+              1.0345013891159809
+            ],
+            "geom": "akita_black_bowl_1_g39",
+            "geom_id": 122,
+            "geom_rbound_m": 0.01632477258647115,
+            "horizontal_offset_m": 0.01869218341737186
+          },
+          {
+            "candidate_radius_m": 0.049750523747857565,
+            "center": [
+              -0.1310578607830034,
+              0.019792756430982265,
+              1.0396041657465145
+            ],
+            "geom": "akita_black_bowl_1_g4",
+            "geom_id": 87,
+            "geom_rbound_m": 0.015485715998945609,
+            "horizontal_offset_m": 0.034264807748911955
+          },
+          {
+            "candidate_radius_m": 0.03227022433949128,
+            "center": [
+              -0.13402434811398187,
+              0.053315404303221625,
+              1.037081719999032
+            ],
+            "geom": "akita_black_bowl_1_g40",
+            "geom_id": 123,
+            "geom_rbound_m": 0.01797312994444763,
+            "horizontal_offset_m": 0.014297094395043656
+          },
+          {
+            "candidate_radius_m": 0.05009097750392921,
+            "center": [
+              -0.11698004931896028,
+              0.017654481666284763,
+              1.0384741191043294
+            ],
+            "geom": "akita_black_bowl_1_g5",
+            "geom_id": 88,
+            "geom_rbound_m": 0.015485715998945609,
+            "horizontal_offset_m": 0.0346052615049836
+          },
+          {
+            "candidate_radius_m": 0.05024107043989527,
+            "center": [
+              -0.10279218842411923,
+              0.021823170380242823,
+              1.0378982392255702
+            ],
+            "geom": "akita_black_bowl_1_g6",
+            "geom_id": 89,
+            "geom_rbound_m": 0.015485715998945609,
+            "horizontal_offset_m": 0.03475535444094966
+          },
+          {
+            "candidate_radius_m": 0.05018758951370568,
+            "center": [
+              -0.09165809414967002,
+              0.03180819871732278,
+              1.0380440260404329
+            ],
+            "geom": "akita_black_bowl_1_g7",
+            "geom_id": 90,
+            "geom_rbound_m": 0.015485715998945609,
+            "horizontal_offset_m": 0.03470187351476007
+          },
+          {
+            "candidate_radius_m": 0.04992479189833743,
+            "center": [
+              -0.08598067487342952,
+              0.04551444184388323,
+              1.0388853403202283
+            ],
+            "geom": "akita_black_bowl_1_g8",
+            "geom_id": 91,
+            "geom_rbound_m": 0.015485715998945609,
+            "horizontal_offset_m": 0.03443907589939182
+          },
+          {
+            "candidate_radius_m": 0.04945035786946504,
+            "center": [
+              -0.08683242362349342,
+              0.060415706693650664,
+              1.040268861170758
+            ],
+            "geom": "akita_black_bowl_1_g9",
+            "geom_id": 92,
+            "geom_rbound_m": 0.015485715998945609,
+            "horizontal_offset_m": 0.03396464187051943
+          }
+        ],
+        "joint_name": "akita_black_bowl_1_joint0",
+        "method": "max_xy_geom_offset_plus_mujoco_geom_rbound",
+        "object_name": "akita_black_bowl_1",
+        "origin": [
+          -0.1197751027486152,
+          0.05214668078657389,
+          1.0320802708343837
+        ],
+        "radius_m": 0.07190562429870345
+      },
+      "obstacle": {
+        "conservative_bounding_sphere": true,
+        "geoms": [
+          {
+            "candidate_radius_m": 0.0418602554669216,
+            "center": [
+              0.047382281459233296,
+              -0.008571076473625263,
+              0.9056363385281028
+            ],
+            "geom": "plate_1_g1",
+            "geom_id": 151,
+            "geom_rbound_m": 0.04186016483484029,
+            "horizontal_offset_m": 9.063208130758541e-08
+          },
+          {
+            "candidate_radius_m": 0.08270994027133059,
+            "center": [
+              0.01352223903007551,
+              -0.04299097011501678,
+              0.9094669192165803
+            ],
+            "geom": "plate_1_g10",
+            "geom_id": 160,
+            "geom_rbound_m": 0.03442714917038586,
+            "horizontal_offset_m": 0.04828279110094473
+          },
+          {
+            "candidate_radius_m": 0.08270722115665187,
+            "center": [
+              -0.0008977581525268161,
+              -0.008570968951634776,
+              0.9094658391581224
+            ],
+            "geom": "plate_1_g2",
+            "geom_id": 152,
+            "geom_rbound_m": 0.03442714917038586,
+            "horizontal_offset_m": 0.04828007198626601
+          },
+          {
+            "candidate_radius_m": 0.08270722115665187,
+            "center": [
+              -0.0008977581525268161,
+              -0.008570968951634776,
+              0.9094658391581224
+            ],
+            "geom": "plate_1_g3",
+            "geom_id": 153,
+            "geom_rbound_m": 0.03442714917038586,
+            "horizontal_offset_m": 0.04828007198626601
+          },
+          {
+            "candidate_radius_m": 0.08271403293476767,
+            "center": [
+              0.011552244495679771,
+              0.02379903002121199,
+              0.9094650924642144
+            ],
+            "geom": "plate_1_g4",
+            "geom_id": 154,
+            "geom_rbound_m": 0.03442714917038586,
+            "horizontal_offset_m": 0.04828688376438181
+          },
+          {
+            "candidate_radius_m": 0.08270955371805853,
+            "center": [
+              0.04424224578768072,
+              0.039609027349515824,
+              0.9094650029914281
+            ],
+            "geom": "plate_1_g5",
+            "geom_id": 155,
+            "geom_rbound_m": 0.03442714917038586,
+            "horizontal_offset_m": 0.04828240454767267
+          },
+          {
+            "candidate_radius_m": 0.08271395930419427,
+            "center": [
+              0.07890224483658596,
+              0.028009024527188266,
+              0.9094656752148718
+            ],
+            "geom": "plate_1_g6",
+            "geom_id": 156,
+            "geom_rbound_m": 0.03442714917038586,
+            "horizontal_offset_m": 0.04828681013380841
+          },
+          {
+            "candidate_radius_m": 0.08271189646943775,
+            "center": [
+              0.09561224203052215,
+              -0.006270976822997558,
+              0.9094667751728096
+            ],
+            "geom": "plate_1_g7",
+            "geom_id": 157,
+            "geom_rbound_m": 0.03442714917038586,
+            "horizontal_offset_m": 0.04828474729905188
+          },
+          {
+            "candidate_radius_m": 0.08270700438037137,
+            "center": [
+              0.08230223911477388,
+              -0.041910975724514195,
+              0.9094676014107349
+            ],
+            "geom": "plate_1_g8",
+            "geom_id": 158,
+            "geom_rbound_m": 0.03442714917038586,
+            "horizontal_offset_m": 0.048279855209985505
+          },
+          {
+            "candidate_radius_m": 0.08271446156906614,
+            "center": [
+              0.048682237894834036,
+              -0.05684097297729711,
+              0.9094676574642335
+            ],
+            "geom": "plate_1_g9",
+            "geom_id": 159,
+            "geom_rbound_m": 0.03442714917038586,
+            "horizontal_offset_m": 0.048287312398680275
+          }
+        ],
+        "joint_name": "plate_1_joint0",
+        "method": "max_xy_geom_offset_plus_mujoco_geom_rbound",
+        "object_name": "plate_1",
+        "origin": [
+          0.047382313833356726,
+          -0.008571161126388326,
+          0.902506338529415
+        ],
+        "radius_m": 0.08271446156906614
+      },
+      "path_tangent_source": [
+        [
+          -0.13232285085200718,
+          0.056708206136389785,
+          0.8984070627781254,
+          0.748569493590009,
+          -1.369761328194782e-05,
+          2.4640278757514402e-06,
+          0.6630563423063693
+        ],
+        [
+          -0.13232285082064968,
+          0.05670820571441496,
+          0.8984070745551889,
+          0.74856949358929,
+          -1.374713394094848e-05,
+          2.5021197827892146e-06,
+          0.6630563423060141
+        ]
+      ]
+    },
+    "kind": "future_path_live_geometry_blocker",
+    "lateral_unit": [
+      0.9972502979645452,
+      0.07410697139693238
+    ],
+    "manipulated_qpos_max_error": 0.0,
+    "moved_joint": "plate_1_joint0",
+    "parameter": {
+      "clearance_delta_m": 0.0,
+      "future_index": 9,
+      "parameter_id": "future_09__clearance_p000mm"
+    }
+  },
+  "pid": 3689,
+  "pre_tail_signature": {
+    "cause_tracker": {
+      "contact_event_indices": [],
+      "ever_stably_lifted": true,
+      "first_violation_offset": null,
+      "gripper_transition_indices": [],
+      "immediate_violation": false,
+      "initial_object_z": 0.97,
+      "injected": true,
+      "injection_contact": false,
+      "post_detection_steps": 0,
+      "previous_gripper": 1.0,
+      "shifted_target_qpos": null,
+      "task": "put_the_bowl_on_the_stove",
+      "violation": false,
+      "violation_type": null
+    },
+    "cause_tracker_hash": "1eb70cb8ebc284b42c71282ef3c7ea4484c6596108a349541374e89535ee2668",
+    "complete_signature_hash": "387840d081f224b147222ea5809abe3833956c8d902db6ff345a3f3ca0f32429",
+    "contact_pairs": [
+      [
+        "akita_black_bowl_1_g13",
+        "gripper0_finger1_collision"
+      ],
+      [
+        "akita_black_bowl_1_g29",
+        "gripper0_finger2_collision"
+      ],
+      [
+        "akita_black_bowl_1_g29",
+        "gripper0_finger2_pad_collision"
+      ],
+      [
+        "akita_black_bowl_1_g30",
+        "gripper0_finger2_collision"
+      ],
+      [
+        "akita_black_bowl_1_g30",
+        "gripper0_finger2_pad_collision"
+      ],
+      [
+        "akita_black_bowl_1_g31",
+        "gripper0_finger2_collision"
+      ],
+      [
+        "akita_black_bowl_1_g31",
+        "gripper0_finger2_pad_collision"
+      ],
+      [
+        "akita_black_bowl_1_g32",
+        "gripper0_finger1_collision"
+      ],
+      [
+        "akita_black_bowl_1_g32",
+        "gripper0_finger1_pad_collision"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g4"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g4"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g4"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g4"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g5"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g5"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g5"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "plate_1_g5"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "table_collision"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "table_collision"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "table_collision"
+      ],
+      [
+        "cream_cheese_1_g1",
+        "table_collision"
+      ],
+      [
+        "plate_1_g10",
+        "table_collision"
+      ],
+      [
+        "plate_1_g2",
+        "table_collision"
+      ],
+      [
+        "plate_1_g3",
+        "table_collision"
+      ],
+      [
+        "plate_1_g4",
+        "table_collision"
+      ],
+      [
+        "plate_1_g5",
+        "table_collision"
+      ],
+      [
+        "plate_1_g6",
+        "table_collision"
+      ],
+      [
+        "plate_1_g7",
+        "table_collision"
+      ],
+      [
+        "plate_1_g8",
+        "table_collision"
+      ],
+      [
+        "plate_1_g9",
+        "table_collision"
+      ],
+      [
+        "table_collision",
+        "wine_bottle_1_g3"
+      ],
+      [
+        "table_collision",
+        "wine_bottle_1_g3"
+      ],
+      [
+        "table_collision",
+        "wine_bottle_1_g3"
+      ],
+      [
+        "table_collision",
+        "wine_bottle_1_g3"
+      ]
+    ],
+    "contact_pairs_hash": "6ddbfc4f0cf468217b7de1271bb9bcbfb0e91e15daa0483464c172f82c7e8de9",
+    "executed_prefix_action_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "executed_prefix_length": 0,
+    "four_state_history_hash": "328e9bce65e9f2375e945004aa935294e0a90657ac8434dbdb9056f6d02d97f6",
+    "gripper_state": 1.0,
+    "manipulated_qpos_hash": "b5c6d875ed178db5bafbaf2d9ff3c48f020bcdd250fbdcb3827a770960903b84",
+    "observation_feature_hash": "dbccbcb4a6db85516378d0a90f9636c32fe6388f1551dbc38d5f2aeff5fc8aff",
+    "obstacle_qpos_hash": "006b71d321cc9ca96e1c4860cb4b680a179db2201a158ee020387054088ec359",
+    "robot_qpos_hash": "83fdbb4fd4d5b92fc866660e97bf46fcea9e471d65531161c8461708f7056f33",
+    "robot_qvel_hash": "e89ea50e5e5ff98edad9287f9e5ecbfbc18e9012cfaf14501055c4a23d274790",
+    "simulator_state_hash": "75b12fd4535a2e4d0f792d486ea86b04e7ad044cc806d9df8185d1200b471c3a",
+    "target_qpos_hash": null,
+    "task_phase": {
+      "ever_stably_lifted": true,
+      "gripper_closed": true,
+      "object_height_delta_m": 0.06208027083438372,
+      "post_detection_steps": 0,
+      "task_success": false
+    },
+    "task_phase_hash": "6f0864c21227ea21ce35b41806a9c7ca826fe1af91c156c31950620e10de27f6",
+    "three_action_history_hash": "fbd3ce4b67341d3e9f0978175134c0c3e1a90ef659fb52d2cd0f1db79eb93d56"
+  },
+  "prefix_k": 2,
+  "process_start_method": "spawn",
+  "progress_regression_m": 0.0,
+  "progress_retained_end_m": 0.0,
+  "reconstruction": {
+    "action_history_exact": true,
+    "actor_inference_side_effect_free": true,
+    "anchor_state_exact": true,
+    "event_chunk_exact": true,
+    "max_anchor_state_error": 0.0,
+    "state_history_exact": true
+  },
+  "repeat": 0,
+  "replay_only": true,
+  "requested_arm": "RECONSTRUCT_ONLY",
+  "requested_prefix_k": 2,
+  "safe_success": false,
+  "schema_version": 1,
+  "split": "evaluation",
+  "tail_horizon": 4,
+  "task": "put_the_bowl_on_the_stove",
+  "task_progress_at_k": 0.0,
+  "task_success": false,
+  "total_branch_wall_time_s": 3.731128378000051,
+  "tracker": {
+    "contact_event_indices": [],
+    "ever_stably_lifted": true,
+    "first_violation_offset": null,
+    "gripper_transition_indices": [],
+    "immediate_violation": false,
+    "initial_object_z": 0.97,
+    "injected": true,
+    "injection_contact": false,
+    "post_detection_steps": 0,
+    "previous_gripper": 1.0,
+    "shifted_target_qpos": null,
+    "task": "put_the_bowl_on_the_stove",
+    "violation": false,
+    "violation_type": null
+  },
+  "unique_process_contract": true
+}

@@ -73,6 +73,13 @@ def main() -> None:
         "",
         f"The code-first audit covers {mechanism.get('valid_event_count')} replay-admitted events and explicitly records `new_idea_generated=false`. CACHED vs FRESH isolates old action content; CACHED vs NOQUERY isolates sham-query compute; HOLD isolates elapsed steps from motion content; FULL_OLD isolates damage from stale suffix continuation.",
         "",
+        "Mechanism interpretation is constrained by the actual arm code and observed rows:",
+        "",
+        "- H2: CACHED and FRESH use equal prefix lengths, matched detection-time calls, the same tail actor, and `h_tail=4`; only old versus fresh prefix bytes differ. Safe-success delta is 0, while mean action disagreement is 0.094 overall (0.084 bowl, 0.106 cream). No measured real-efficiency field reaches 15%, so different action content did not yield a result advantage.",
+        "- H3: IMMEDIATE_FRESH uses `k=d`, four common tail actions, and one actor call. EVENT_ALIGNED_CACHED adds `k-d` cached actions and one call before the same tail. This structural exposure explains +6.753 actions and +0.266 cause overall; bowl (`k=7`) is +4.94 actions with no cause change, while cream (mostly `k=11`) is +8.82 actions and +0.569 cause.",
+        "- H4: FIXED_DELAY_8 is fixed at `k=10`; the event rule is outcome-blind release/path timing. The event rule is −0.0065 safe success, +0.0844 cause, and −1.182 actions, only a 9.9% reduction. Bowl saves about 2.94 actions with no cause difference; cream spends about 0.82 actions and has +18.06 percentage points cause. Calibration-only oracle gap recovery is 0.158, below the 0.40 criterion.",
+        "- The discarded detection-time query has exact same-action signatures and equal physical outcomes; its +1 actor call and +0.0051 s are computation-only overhead. These are mechanism explanations for the measured arms, not a new idea or deployable rule.",
+        "",
         "Any downstream pattern after a failed upstream gate is labeled diagnostic-only and cannot support a positive or accepted claim.",
         "",
         "## Diagnostic error signal and root-cause audit",
@@ -85,7 +92,7 @@ def main() -> None:
         "",
         "## Statistical contract",
         "",
-        f"Paired event-cluster bootstrap: {statistics.get('bootstrap_replicates')} resamples with seed {statistics.get('bootstrap_seed')}. The source event (`event_instance_id`/init-state rollout), not a prefix row, is resampled; duplicate rows within an event are aggregated first. Actor checkpoints are reported as repeated model measurements rather than independent population samples, and two tasks do not justify population-wide cross-task generalization.",
+        f"Paired cluster bootstrap: {statistics.get('bootstrap_replicates')} resamples with seed {statistics.get('bootstrap_seed')}. Overall clusters are task + source rollout/init-state; severity clusters additionally include the perturbation parameter. Prefix rows are never independent and are aggregated within a source rollout first. Actor checkpoints are reported as repeated model measurements rather than independent population samples, and two tasks do not justify population-wide cross-task generalization.",
         "",
         "## Learned/deployable evidence",
         "",
@@ -110,11 +117,15 @@ def main() -> None:
         lines.append(
             f"- {cell.get('task')} / {cell.get('parameter_id')}: qualified={cell.get('qualified')}, delayed_violation={cell.get('delayed_violation_rate')}, immediate={cell.get('immediate_violation_rate')}, valid={cell.get('valid_events')}, errors={cell.get('error_count')}, median_onset={cell.get('median_first_violation_offset')}."
         )
-    lines.extend(["", "Paired comparison estimates (left minus baseline; 95% bootstrap CI):", ""])
-    for name, result in statistics.get("comparisons", {}).items():
-        if name != "overall":
+    lines.extend(["", "Paired comparison estimates (left minus baseline; 95% cluster-bootstrap CI):", ""])
+    for name, grouped in statistics.get("comparisons", {}).items():
+        result = grouped.get("overall", {})
+        if not result:
             continue
-        lines.append(f"- {result.get('method')} vs {result.get('baseline')} (n={result.get('events')}):")
+        lines.append(
+            f"- {name}: {result.get('method')} vs {result.get('baseline')} "
+            f"(n={result.get('events')}, bootstrap={result.get('bootstrap_unit')}):"
+        )
         for field in ("safe_success", "cause_violation", "actual_post_detection_actions", "actual_actor_calls", "actual_inference_wall_time_s", "eef_path_length_m", "manipulated_object_path_length_m", "total_branch_wall_time_s"):
             metric = result.get("differences", {}).get(field, {})
             lines.append(f"  - {field}: estimate={metric.get('estimate')}, CI95={metric.get('ci95')}, Holm-p={result.get('holm_adjusted_p_values', {}).get(field)}")

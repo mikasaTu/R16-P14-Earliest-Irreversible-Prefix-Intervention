@@ -1,0 +1,6290 @@
+{
+  "actor_seed_is_repeated_measurement": true,
+  "agreement": {
+    "h2": {
+      "actor_seed_passes": {
+        "17": false,
+        "29": false,
+        "7": false
+      },
+      "at_least_two_of_three_actor_seeds_agree": false,
+      "both_severities_per_task_agree": false,
+      "both_tasks_agree": false
+    },
+    "h3": {
+      "actor_seed_passes": {
+        "17": false,
+        "29": false,
+        "7": false
+      },
+      "at_least_two_of_three_actor_seeds_agree": false,
+      "both_severities_per_task_agree": false,
+      "both_tasks_agree": false
+    },
+    "h4": {
+      "actor_seed_passes": {
+        "17": false,
+        "29": false,
+        "7": false
+      },
+      "at_least_two_of_three_actor_seeds_agree": false,
+      "both_severities_per_task_agree": false,
+      "both_tasks_agree": false
+    }
+  },
+  "bootstrap_cluster_contract": {
+    "actor_seed": [
+      "task",
+      "parameter_id",
+      "init_state/source_rollout",
+      "actor_seed"
+    ],
+    "actor_seed_is_repeated_measurement": true,
+    "overall": [
+      "task",
+      "init_state/source_rollout"
+    ],
+    "prefix_rows_are_not_independent": true,
+    "severity": [
+      "task",
+      "parameter_id",
+      "init_state/source_rollout"
+    ],
+    "task": [
+      "task",
+      "init_state/source_rollout"
+    ]
+  },
+  "bootstrap_replicates": 10000,
+  "bootstrap_seed": 216214,
+  "comparisons": {
+    "h2": {
+      "actor_seed": {
+        "17": {
+          "baseline": "FRESH_MATCHED_AT_RULE_K",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 45,
+              "method_0__baseline_1": 2,
+              "method_1__baseline_1": 17
+            },
+            "safe_success": {
+              "method_0__baseline_0": 64
+            },
+            "task_success": {
+              "method_0__baseline_0": 64
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "parameter_id",
+            "source_rollout",
+            "actor_seed"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 64,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.00028010573011538753,
+                0.0003153069629056482
+              ],
+              "estimate": 1.7950187519488736e-05,
+              "n": 64,
+              "p_two_sided_bootstrap": 0.896
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 64,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "cause_violation": {
+              "ci95": [
+                -0.078125,
+                0.0
+              ],
+              "estimate": -0.03125,
+              "n": 64,
+              "p_two_sided_bootstrap": 0.2638
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.00024763191665426676,
+                0.0011922727343525157
+              ],
+              "estimate": 0.0004641126412089165,
+              "n": 64,
+              "p_two_sided_bootstrap": 0.1982
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.0002970803999240571,
+                0.0012005782624290727
+              ],
+              "estimate": 0.0004483613467794153,
+              "n": 64,
+              "p_two_sided_bootstrap": 0.2398
+            },
+            "progress_regression_m": {
+              "ci95": [
+                0.0002783507052135781,
+                0.0013690503266492388
+              ],
+              "estimate": 0.0007329949598190938,
+              "n": 64,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 64,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 64,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.02815582904768874,
+                0.15064812847197037
+              ],
+              "estimate": 0.05986774559383079,
+              "n": 64,
+              "p_two_sided_bootstrap": 0.1902
+            }
+          },
+          "events": 64,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 1.0,
+            "actual_inference_wall_time_s": 1.0,
+            "actual_post_detection_actions": 1.0,
+            "cause_violation": 1.0,
+            "completion_steps": null,
+            "eef_path_length_m": 1.0,
+            "manipulated_object_path_length_m": 1.0,
+            "progress_regression_m": 0.0,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 1.0
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 64
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.030722197688550015,
+                0.026411510968969914
+              ],
+              "estimate": -0.0017235386671121229,
+              "n": 64
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 64
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.009752970600455584,
+                0.0020709596315191506
+              ],
+              "estimate": -0.0037763139905878026,
+              "n": 64
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.009860495600012571,
+                0.002397607186217531
+              ],
+              "estimate": -0.003608600000501578,
+              "n": 64
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.31596555184397623,
+                -0.06115932409466124
+              ],
+              "estimate": -0.12907580033516663,
+              "n": 64
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.03752928082589683,
+                0.006461783482046875
+              ],
+              "estimate": -0.01457338880305646,
+              "n": 64
+            }
+          }
+        },
+        "29": {
+          "baseline": "FRESH_MATCHED_AT_RULE_K",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 29,
+              "method_0__baseline_1": 2,
+              "method_1__baseline_0": 1,
+              "method_1__baseline_1": 15
+            },
+            "safe_success": {
+              "method_0__baseline_0": 47
+            },
+            "task_success": {
+              "method_0__baseline_0": 47
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "parameter_id",
+            "source_rollout",
+            "actor_seed"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 47,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.0003287157239005284,
+                0.000211151171698775
+              ],
+              "estimate": -5.706910631372321e-05,
+              "n": 47,
+              "p_two_sided_bootstrap": 0.6754
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 47,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "cause_violation": {
+              "ci95": [
+                -0.0851063829787234,
+                0.0425531914893617
+              ],
+              "estimate": -0.02127659574468085,
+              "n": 47,
+              "p_two_sided_bootstrap": 0.7932
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.004376438814532634,
+                -0.0014484092829013437
+              ],
+              "estimate": -0.0027613366290212536,
+              "n": 47,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.004108438481188616,
+                -0.0013416362612715923
+              ],
+              "estimate": -0.0026089757500793015,
+              "n": 47,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.006821067755567841,
+                -0.0006683756200251344
+              ],
+              "estimate": -0.003340502750537849,
+              "n": 47,
+              "p_two_sided_bootstrap": 0.0008
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 47,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 47,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.033586840191538674,
+                0.09209518422116851
+              ],
+              "estimate": 0.025255534170132994,
+              "n": 47,
+              "p_two_sided_bootstrap": 0.445
+            }
+          },
+          "events": 47,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 1.0,
+            "actual_inference_wall_time_s": 1.0,
+            "actual_post_detection_actions": 1.0,
+            "cause_violation": 1.0,
+            "completion_steps": null,
+            "eef_path_length_m": 0.0,
+            "manipulated_object_path_length_m": 0.0,
+            "progress_regression_m": 0.0064,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 1.0
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 47
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.020764557187497878,
+                0.031429705873087195
+              ],
+              "estimate": 0.005502157182124888,
+              "n": 47
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 47
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                0.012186382030588184,
+                0.03704100453370329
+              ],
+              "estimate": 0.02325023270599663,
+              "n": 47
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                0.011489172129609223,
+                0.03398777842672754
+              ],
+              "estimate": 0.02165540230258861,
+              "n": 47
+            },
+            "progress_regression_m": {
+              "ci95": [
+                0.07484471883156607,
+                0.5705551188149239
+              ],
+              "estimate": 0.2819517694197343,
+              "n": 47
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.0213275999716235,
+                0.00796626688066614
+              ],
+              "estimate": -0.0058777156074414924,
+              "n": 47
+            }
+          }
+        },
+        "7": {
+          "baseline": "FRESH_MATCHED_AT_RULE_K",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 35,
+              "method_1__baseline_0": 1,
+              "method_1__baseline_1": 7
+            },
+            "safe_success": {
+              "method_0__baseline_0": 41,
+              "method_1__baseline_1": 2
+            },
+            "task_success": {
+              "method_0__baseline_0": 41,
+              "method_1__baseline_1": 2
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "parameter_id",
+            "source_rollout",
+            "actor_seed"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 43,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.00015393638545121977,
+                0.0007969848431933547
+              ],
+              "estimate": 0.0002817107442328855,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.2402
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                0.0,
+                0.06976744186046512
+              ],
+              "estimate": 0.023255813953488372,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.7338
+            },
+            "cause_violation": {
+              "ci95": [
+                0.0,
+                0.06976744186046512
+              ],
+              "estimate": 0.023255813953488372,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.7218
+            },
+            "completion_steps": {
+              "ci95": [
+                0.0,
+                1.0
+              ],
+              "estimate": 0.5,
+              "n": 2,
+              "p_two_sided_bootstrap": 0.4894
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.00153673253135613,
+                0.00016590172034708584
+              ],
+              "estimate": -0.0006597244606482696,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.1174
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.00237583448413325,
+                8.196089684718565e-05
+              ],
+              "estimate": -0.0010009015932545536,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.0742
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.0014389096850878562,
+                0.0003883646985750391
+              ],
+              "estimate": -0.00034234224013246365,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.7442
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 43,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 43,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.1847677204656519,
+                0.016178481028564975
+              ],
+              "estimate": -0.08174643137201286,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.106
+            }
+          },
+          "events": 43,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 1.0,
+            "actual_inference_wall_time_s": 1.0,
+            "actual_post_detection_actions": 1.0,
+            "cause_violation": 1.0,
+            "completion_steps": 1.0,
+            "eef_path_length_m": 1.0,
+            "manipulated_object_path_length_m": 0.8162,
+            "progress_regression_m": 1.0,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 1.0
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 43
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.07864390067645509,
+                0.014415430200024624
+              ],
+              "estimate": -0.027685955699076205,
+              "n": 43
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                -0.007371007371007196,
+                0.0
+              ],
+              "estimate": -0.0023310023310023353,
+              "n": 43
+            },
+            "completion_steps": {
+              "ci95": [
+                -0.16666666666666666,
+                0.0
+              ],
+              "estimate": -0.08333333333333333,
+              "n": 2
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.0011874097888786674,
+                0.012530113544118125
+              ],
+              "estimate": 0.005370025705361126,
+              "n": 43
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.0005969823948814727,
+                0.018236570839809643
+              ],
+              "estimate": 0.007907325081792345,
+              "n": 43
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -3.6787058606299268,
+                0.4306081342641563
+              ],
+              "estimate": 0.2688148971594495,
+              "n": 43
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.003994497702072745,
+                0.04387241015690616
+              ],
+              "estimate": 0.01968116078685186,
+              "n": 43
+            }
+          }
+        }
+      },
+      "overall": {
+        "baseline": "FRESH_MATCHED_AT_RULE_K",
+        "binary_tables": {
+          "cause_violation": {
+            "method_0__baseline_0": 109,
+            "method_0__baseline_1": 4,
+            "method_1__baseline_0": 2,
+            "method_1__baseline_1": 39
+          },
+          "safe_success": {
+            "method_0__baseline_0": 152,
+            "method_1__baseline_1": 2
+          },
+          "task_success": {
+            "method_0__baseline_0": 152,
+            "method_1__baseline_1": 2
+          }
+        },
+        "bootstrap_cluster_fields": [
+          "task",
+          "source_rollout"
+        ],
+        "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+        "differences": {
+          "actual_actor_calls": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "estimate": 0.0,
+            "n": 75,
+            "p_two_sided_bootstrap": 1.0
+          },
+          "actual_inference_wall_time_s": {
+            "ci95": [
+              -0.00015979652898651396,
+              0.0002588007284118577
+            ],
+            "estimate": 4.644846671857922e-05,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.6652
+          },
+          "actual_post_detection_actions": {
+            "ci95": [
+              0.0,
+              0.02
+            ],
+            "estimate": 0.006666666666666667,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.7186
+          },
+          "cause_violation": {
+            "ci95": [
+              -0.03777777777777778,
+              0.02
+            ],
+            "estimate": -0.00888888888888889,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.5634
+          },
+          "completion_steps": {
+            "ci95": [
+              0.0,
+              1.0
+            ],
+            "estimate": 0.5,
+            "n": 2,
+            "p_two_sided_bootstrap": 0.5
+          },
+          "eef_path_length_m": {
+            "ci95": [
+              -0.0015342616981247458,
+              -0.00025179749064906077
+            ],
+            "estimate": -0.0008793057496121095,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.0052
+          },
+          "manipulated_object_path_length_m": {
+            "ci95": [
+              -0.0016515560566422146,
+              -0.00029012913703547257
+            ],
+            "estimate": -0.0009368104256875285,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.004
+          },
+          "progress_regression_m": {
+            "ci95": [
+              -0.003091704300451331,
+              5.298643153316888e-05
+            ],
+            "estimate": -0.0012117303300900686,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.0682
+          },
+          "safe_success": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "estimate": 0.0,
+            "n": 75,
+            "p_two_sided_bootstrap": 1.0
+          },
+          "task_success": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "estimate": 0.0,
+            "n": 75,
+            "p_two_sided_bootstrap": 1.0
+          },
+          "total_branch_wall_time_s": {
+            "ci95": [
+              -0.04106127934180073,
+              0.06745196464697273
+            ],
+            "estimate": 0.011923841975595277,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.6926
+          }
+        },
+        "events": 154,
+        "holm_adjusted_p_values": {
+          "actual_actor_calls": 1.0,
+          "actual_inference_wall_time_s": 1.0,
+          "actual_post_detection_actions": 1.0,
+          "cause_violation": 1.0,
+          "completion_steps": 1.0,
+          "eef_path_length_m": 0.052,
+          "manipulated_object_path_length_m": 0.044,
+          "progress_regression_m": 0.6138,
+          "safe_success": 1.0,
+          "task_success": 1.0,
+          "total_branch_wall_time_s": 1.0
+        },
+        "method": "EVENT_ALIGNED_CACHED",
+        "relative_reductions": {
+          "actual_actor_calls": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "estimate": 0.0,
+            "n": 75
+          },
+          "actual_inference_wall_time_s": {
+            "ci95": [
+              -0.02464417558918194,
+              0.01523921123459174
+            ],
+            "estimate": -0.004492309878652945,
+            "n": 75
+          },
+          "actual_post_detection_actions": {
+            "ci95": [
+              -0.001915719008709524,
+              0.0
+            ],
+            "estimate": -0.0006170300287948312,
+            "n": 75
+          },
+          "completion_steps": {
+            "ci95": [
+              -0.16666666666666666,
+              0.0
+            ],
+            "estimate": -0.08333333333333333,
+            "n": 2
+          },
+          "eef_path_length_m": {
+            "ci95": [
+              0.00211910794376285,
+              0.012489375040155673
+            ],
+            "estimate": 0.007225380087734175,
+            "n": 75
+          },
+          "manipulated_object_path_length_m": {
+            "ci95": [
+              0.0022364905421342106,
+              0.013151485841317846
+            ],
+            "estimate": 0.007569384856525744,
+            "n": 75
+          },
+          "progress_regression_m": {
+            "ci95": [
+              -0.01046372213808598,
+              0.42732618584323695
+            ],
+            "estimate": 0.18532173885664227,
+            "n": 75
+          },
+          "total_branch_wall_time_s": {
+            "ci95": [
+              -0.016362886876094426,
+              0.009619074199016362
+            ],
+            "estimate": -0.0028645538677073597,
+            "n": 75
+          }
+        }
+      },
+      "severity": {
+        "put_the_bowl_on_the_stove::future_09__clearance_m010mm": {
+          "baseline": "FRESH_MATCHED_AT_RULE_K",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 40
+            },
+            "safe_success": {
+              "method_0__baseline_0": 38,
+              "method_1__baseline_1": 2
+            },
+            "task_success": {
+              "method_0__baseline_0": 38,
+              "method_1__baseline_1": 2
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "parameter_id",
+            "source_rollout"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 31,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.00027244980581731546,
+                0.0006208664093024606
+              ],
+              "estimate": 0.0001827787580682085,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.4212
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                0.0,
+                0.0967741935483871
+              ],
+              "estimate": 0.03225806451612903,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.7272
+            },
+            "cause_violation": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 31,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "completion_steps": {
+              "ci95": [
+                0.0,
+                1.0
+              ],
+              "estimate": 0.5,
+              "n": 2,
+              "p_two_sided_bootstrap": 0.4936
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.002955180119336508,
+                -0.000617047474627297
+              ],
+              "estimate": -0.001734061868060109,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.0008
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.003440868291664954,
+                -0.0007560014379450037
+              ],
+              "estimate": -0.002014691616634373,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.0002
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.0028748829781777866,
+                0.0
+              ],
+              "estimate": -0.0012711159072104584,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.0826
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 31,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 31,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.11810411766767068,
+                0.07816713489728443
+              ],
+              "estimate": -0.020534023274099273,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.675
+            }
+          },
+          "events": 40,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 1.0,
+            "actual_inference_wall_time_s": 1.0,
+            "actual_post_detection_actions": 1.0,
+            "cause_violation": 1.0,
+            "completion_steps": 1.0,
+            "eef_path_length_m": 0.008,
+            "manipulated_object_path_length_m": 0.0022,
+            "progress_regression_m": 0.7434000000000001,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 1.0
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 31
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.060088660569935434,
+                0.025558082814490006
+              ],
+              "estimate": -0.017700432319440122,
+              "n": 31
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                -0.011235955056179662,
+                0.0
+              ],
+              "estimate": -0.003642987249544523,
+              "n": 31
+            },
+            "completion_steps": {
+              "ci95": [
+                -0.16666666666666666,
+                0.0
+              ],
+              "estimate": -0.08333333333333333,
+              "n": 2
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                0.005233769577546427,
+                0.024329009448152902
+              ],
+              "estimate": 0.013963574011713541,
+              "n": 31
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                0.006123546770439126,
+                0.026528696366957788
+              ],
+              "estimate": 0.01576310968331139,
+              "n": 31
+            },
+            "progress_regression_m": {
+              "ci95": [
+                0.0,
+                0.65729064877721
+              ],
+              "estimate": 0.37379556355284377,
+              "n": 31
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.019189649033356276,
+                0.028982324671792438
+              ],
+              "estimate": 0.004997959082251267,
+              "n": 31
+            }
+          }
+        },
+        "put_the_bowl_on_the_stove::future_09__clearance_p000mm": {
+          "baseline": "FRESH_MATCHED_AT_RULE_K",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 42
+            },
+            "safe_success": {
+              "method_0__baseline_0": 42
+            },
+            "task_success": {
+              "method_0__baseline_0": 42
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "parameter_id",
+            "source_rollout"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 31,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.0004892372132237522,
+                0.0006648889046940796
+              ],
+              "estimate": 1.4566113007873295e-05,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.9876
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 31,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "cause_violation": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 31,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.002194026956051077,
+                4.8897598339184205e-05
+              ],
+              "estimate": -0.000968532693581873,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.0614
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.001632315138882107,
+                9.01015959807596e-05
+              ],
+              "estimate": -0.0007786476426999172,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.0778
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.0031768779770694404,
+                0.0
+              ],
+              "estimate": -0.001060035712856642,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.2534
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 31,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 31,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.10374073672468234,
+                0.1784817489834719
+              ],
+              "estimate": 0.033788321123766056,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.6446
+            }
+          },
+          "events": 42,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 1.0,
+            "actual_inference_wall_time_s": 1.0,
+            "actual_post_detection_actions": 1.0,
+            "cause_violation": 1.0,
+            "completion_steps": null,
+            "eef_path_length_m": 0.614,
+            "manipulated_object_path_length_m": 0.7001999999999999,
+            "progress_regression_m": 1.0,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 1.0
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 31
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.062425595202521354,
+                0.04606717761933856
+              ],
+              "estimate": -0.0013911139951202675,
+              "n": 31
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 31
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.00028681511964177245,
+                0.01724741123456078
+              ],
+              "estimate": 0.007606043027018307,
+              "n": 31
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.000786449866153733,
+                0.012253554573357087
+              ],
+              "estimate": 0.006010607849351228,
+              "n": 31
+            },
+            "progress_regression_m": {
+              "ci95": [
+                0.0,
+                0.798393675169169
+              ],
+              "estimate": 0.7652011127461367,
+              "n": 31
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.04336468083393772,
+                0.024180629015093474
+              ],
+              "estimate": -0.008208224667682278,
+              "n": 31
+            }
+          }
+        },
+        "put_the_cream_cheese_in_the_bowl::shift_060mm": {
+          "baseline": "FRESH_MATCHED_AT_RULE_K",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 16,
+              "method_0__baseline_1": 2,
+              "method_1__baseline_0": 2,
+              "method_1__baseline_1": 17
+            },
+            "safe_success": {
+              "method_0__baseline_0": 37
+            },
+            "task_success": {
+              "method_0__baseline_0": 37
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "parameter_id",
+            "source_rollout"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 28,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.0003815022758693942,
+                0.00021894592145902232
+              ],
+              "estimate": -8.332183926183591e-05,
+              "n": 28,
+              "p_two_sided_bootstrap": 0.568
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 28,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "cause_violation": {
+              "ci95": [
+                -0.07142857142857142,
+                0.16071428571428573
+              ],
+              "estimate": 0.03571428571428571,
+              "n": 28,
+              "p_two_sided_bootstrap": 0.6698
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.0012698052012561944,
+                0.0012266368073257877
+              ],
+              "estimate": -1.350256234805905e-05,
+              "n": 28,
+              "p_two_sided_bootstrap": 0.993
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.0013000347609947334,
+                0.0012702127859060082
+              ],
+              "estimate": -3.632025705967553e-06,
+              "n": 28,
+              "p_two_sided_bootstrap": 0.9826
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.005650757022749094,
+                0.0015790859767395148
+              ],
+              "estimate": -0.0011580820860033283,
+              "n": 28,
+              "p_two_sided_bootstrap": 0.7302
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 28,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 28,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.04124729173669621,
+                0.10894000884051136
+              ],
+              "estimate": 0.03148741974993641,
+              "n": 28,
+              "p_two_sided_bootstrap": 0.4086
+            }
+          },
+          "events": 37,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 1.0,
+            "actual_inference_wall_time_s": 1.0,
+            "actual_post_detection_actions": 1.0,
+            "cause_violation": 1.0,
+            "completion_steps": null,
+            "eef_path_length_m": 1.0,
+            "manipulated_object_path_length_m": 1.0,
+            "progress_regression_m": 1.0,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 1.0
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 28
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.02085298810732899,
+                0.03655528508656001
+              ],
+              "estimate": 0.008038019996316025,
+              "n": 28
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 28
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.010835001414925343,
+                0.010660213592988124
+              ],
+              "estimate": 0.0001151613129182472,
+              "n": 28
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.010729923629349828,
+                0.010711757141459508
+              ],
+              "estimate": 3.0751668604917895e-05,
+              "n": 28
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.10805260238405212,
+                0.33586672662181455
+              ],
+              "estimate": 0.06476018292541377,
+              "n": 28
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.026455541393135395,
+                0.009857703767625058
+              ],
+              "estimate": -0.007595178480127115,
+              "n": 28
+            }
+          }
+        },
+        "put_the_cream_cheese_in_the_bowl::shift_080mm": {
+          "baseline": "FRESH_MATCHED_AT_RULE_K",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 11,
+              "method_0__baseline_1": 2,
+              "method_1__baseline_1": 22
+            },
+            "safe_success": {
+              "method_0__baseline_0": 35
+            },
+            "task_success": {
+              "method_0__baseline_0": 35
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "parameter_id",
+            "source_rollout"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 26,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.0002928327949606004,
+                0.0005226342028228129
+              ],
+              "estimate": 9.596357057553639e-05,
+              "n": 26,
+              "p_two_sided_bootstrap": 0.6564
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 26,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "cause_violation": {
+              "ci95": [
+                -0.15384615384615385,
+                0.0
+              ],
+              "estimate": -0.057692307692307696,
+              "n": 26,
+              "p_two_sided_bootstrap": 0.2454
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.0012362793366941058,
+                0.0009293828274866565
+              ],
+              "estimate": -0.0001327850112195804,
+              "n": 26,
+              "p_two_sided_bootstrap": 0.8056
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.0011954294048909248,
+                0.000974562908255011
+              ],
+              "estimate": -0.00011458678962998145,
+              "n": 26,
+              "p_two_sided_bootstrap": 0.834
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.00010952928696506715,
+                0.00014915699356955384
+              ],
+              "estimate": 1.5242318419536795e-05,
+              "n": 26,
+              "p_two_sided_bootstrap": 0.8484
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 26,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 26,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.1350129166158779,
+                0.06932140782836782
+              ],
+              "estimate": -0.02692939951283244,
+              "n": 26,
+              "p_two_sided_bootstrap": 0.64
+            }
+          },
+          "events": 35,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 1.0,
+            "actual_inference_wall_time_s": 1.0,
+            "actual_post_detection_actions": 1.0,
+            "cause_violation": 1.0,
+            "completion_steps": null,
+            "eef_path_length_m": 1.0,
+            "manipulated_object_path_length_m": 1.0,
+            "progress_regression_m": 1.0,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 1.0
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 26
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.051960422173259656,
+                0.02875354654935256
+              ],
+              "estimate": -0.009397838490852703,
+              "n": 26
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 26
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.00830190083343093,
+                0.01031868533500698
+              ],
+              "estimate": 0.0011353231488628532,
+              "n": 26
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.00842391304356977,
+                0.010025824627392281
+              ],
+              "estimate": 0.0009770112216823574,
+              "n": 26
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.04459432305986418,
+                0.053705480968194164
+              ],
+              "estimate": -0.00412466596663368,
+              "n": 26
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.016060555225227924,
+                0.03067771307835631
+              ],
+              "estimate": 0.006208545269541143,
+              "n": 26
+            }
+          }
+        }
+      },
+      "task": {
+        "put_the_bowl_on_the_stove": {
+          "baseline": "FRESH_MATCHED_AT_RULE_K",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 82
+            },
+            "safe_success": {
+              "method_0__baseline_0": 80,
+              "method_1__baseline_1": 2
+            },
+            "task_success": {
+              "method_0__baseline_0": 80,
+              "method_1__baseline_1": 2
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "source_rollout"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 39,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.0002722058748608472,
+                0.0004095462825296568
+              ],
+              "estimate": 7.002758127230808e-05,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.701
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                0.0,
+                0.038461538461538464
+              ],
+              "estimate": 0.01282051282051282,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.7218
+            },
+            "cause_violation": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 39,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "completion_steps": {
+              "ci95": [
+                0.0,
+                1.0
+              ],
+              "estimate": 0.5,
+              "n": 2,
+              "p_two_sided_bootstrap": 0.4936
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.0025713314803991003,
+                -0.0008214448436797231
+              ],
+              "estimate": -0.0016369052226957105,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.002822327739592758,
+                -0.0008503067454852213
+              ],
+              "estimate": -0.0017722643612330658,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.002614682179604004,
+                -0.0002661262072001624
+              ],
+              "estimate": -0.0012836277505130001,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.0088
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 39,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 39,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.06203320544886672,
+                0.11436627851801308
+              ],
+              "estimate": 0.02137912095311073,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.6578
+            }
+          },
+          "events": 82,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 1.0,
+            "actual_inference_wall_time_s": 1.0,
+            "actual_post_detection_actions": 1.0,
+            "cause_violation": 1.0,
+            "completion_steps": 1.0,
+            "eef_path_length_m": 0.0,
+            "manipulated_object_path_length_m": 0.0,
+            "progress_regression_m": 0.0792,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 1.0
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 39
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.04035230250342749,
+                0.02608143872832918
+              ],
+              "estimate": -0.0067292346282557414,
+              "n": 39
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                -0.004354136429608112,
+                0.0
+              ],
+              "estimate": -0.0014347202295552316,
+              "n": 39
+            },
+            "completion_steps": {
+              "ci95": [
+                -0.16666666666666666,
+                0.0
+              ],
+              "estimate": -0.08333333333333333,
+              "n": 2
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                0.006400682176126658,
+                0.0206885456567539
+              ],
+              "estimate": 0.013028406509516508,
+              "n": 39
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                0.00693557661131404,
+                0.021870811364462707
+              ],
+              "estimate": 0.013729566374350249,
+              "n": 39
+            },
+            "progress_regression_m": {
+              "ci95": [
+                0.20932383904423643,
+                0.7547837163426968
+              ],
+              "estimate": 0.42282106368695355,
+              "n": 39
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.027769882065376863,
+                0.014992640125524979
+              ],
+              "estimate": -0.005205810899105698,
+              "n": 39
+            }
+          }
+        },
+        "put_the_cream_cheese_in_the_bowl": {
+          "baseline": "FRESH_MATCHED_AT_RULE_K",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 27,
+              "method_0__baseline_1": 4,
+              "method_1__baseline_0": 2,
+              "method_1__baseline_1": 39
+            },
+            "safe_success": {
+              "method_0__baseline_0": 72
+            },
+            "task_success": {
+              "method_0__baseline_0": 72
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "source_rollout"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 36,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.0002015348739895728,
+                0.00024354709146529065
+              ],
+              "estimate": 2.0904425952039626e-05,
+              "n": 36,
+              "p_two_sided_bootstrap": 0.8514
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 36,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "cause_violation": {
+              "ci95": [
+                -0.0787037037037037,
+                0.041666666666666664
+              ],
+              "estimate": -0.01851851851851852,
+              "n": 36,
+              "p_two_sided_bootstrap": 0.5534
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.000936824981515747,
+                0.000788743451186188
+              ],
+              "estimate": -5.857298710487487e-05,
+              "n": 36,
+              "p_two_sided_bootstrap": 0.8936
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.0009343746817248537,
+                0.0008331446505152795
+              ],
+              "estimate": -3.173532884652981e-05,
+              "n": 36,
+              "p_two_sided_bootstrap": 0.9494
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.004628565891090674,
+                0.0009311545561226912
+              ],
+              "estimate": -0.0011338414579652259,
+              "n": 36,
+              "p_two_sided_bootstrap": 0.6652
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 36,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 36,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.05800945693959477,
+                0.06386126200179969
+              ],
+              "estimate": 0.0016806230832868696,
+              "n": 36,
+              "p_two_sided_bootstrap": 0.96
+            }
+          },
+          "events": 72,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 1.0,
+            "actual_inference_wall_time_s": 1.0,
+            "actual_post_detection_actions": 1.0,
+            "cause_violation": 1.0,
+            "completion_steps": null,
+            "eef_path_length_m": 1.0,
+            "manipulated_object_path_length_m": 1.0,
+            "progress_regression_m": 1.0,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 1.0
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 36
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.02395911649333101,
+                0.01935329237704945
+              ],
+              "estimate": -0.0020360684190624785,
+              "n": 36
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 36
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.006698929456751722,
+                0.007673692944334249
+              ],
+              "estimate": 0.0004988174904698669,
+              "n": 36
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.007063744379572987,
+                0.007738922351193763
+              ],
+              "estimate": 0.00026894575061035835,
+              "n": 36
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.10160052587784978,
+                0.4075912807150513
+              ],
+              "estimate": 0.10972941465960165,
+              "n": 36
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.014656146091603997,
+                0.013468639698627978
+              ],
+              "estimate": -0.00039797253995644557,
+              "n": 36
+            }
+          }
+        }
+      }
+    },
+    "h3": {
+      "actor_seed": {
+        "17": {
+          "baseline": "IMMEDIATE_FRESH",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 47,
+              "method_1__baseline_0": 17
+            },
+            "safe_success": {
+              "method_0__baseline_0": 64
+            },
+            "task_success": {
+              "method_0__baseline_0": 64
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "parameter_id",
+            "source_rollout",
+            "actor_seed"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                1.0,
+                1.0
+              ],
+              "estimate": 1.0,
+              "n": 64,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                0.005117961205879507,
+                0.005548030729634501
+              ],
+              "estimate": 0.005326628546878709,
+              "n": 64,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                6.203125,
+                7.171875
+              ],
+              "estimate": 6.6875,
+              "n": 64,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "cause_violation": {
+              "ci95": [
+                0.15625,
+                0.375
+              ],
+              "estimate": 0.265625,
+              "n": 64,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                0.055541861912971766,
+                0.061431209123303646
+              ],
+              "estimate": 0.058471698101223844,
+              "n": 64,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                0.05413168783765887,
+                0.05991078123255384
+              ],
+              "estimate": 0.05705421291594394,
+              "n": 64,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "progress_regression_m": {
+              "ci95": [
+                0.0014043723420869415,
+                0.005188444998212487
+              ],
+              "estimate": 0.003128734015251093,
+              "n": 64,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 64,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 64,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                0.12574435530634337,
+                0.31112786640284923
+              ],
+              "estimate": 0.21739537507821893,
+              "n": 64,
+              "p_two_sided_bootstrap": 0.0
+            }
+          },
+          "events": 64,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 0.0,
+            "actual_inference_wall_time_s": 0.0,
+            "actual_post_detection_actions": 0.0,
+            "cause_violation": 0.0,
+            "completion_steps": null,
+            "eef_path_length_m": 0.0,
+            "manipulated_object_path_length_m": 0.0,
+            "progress_regression_m": 0.0,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 0.0
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                -1.0,
+                -1.0
+              ],
+              "estimate": -1.0,
+              "n": 64
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -1.0969778741843634,
+                -0.9940539283304832
+              ],
+              "estimate": -1.043199391609582,
+              "n": 64
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                -1.796875,
+                -1.55078125
+              ],
+              "estimate": -1.671875,
+              "n": 64
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.9442507007386923,
+                -0.8592071565536269
+              ],
+              "estimate": -0.9010425515964863,
+              "n": 64
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.8842207836444704,
+                -0.8046580238176188
+              ],
+              "estimate": -0.8434712821298194,
+              "n": 64
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -3.2657158689582135,
+                -0.4788963226206087
+              ],
+              "estimate": -0.952994537820073,
+              "n": 64
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.07942467718881928,
+                -0.03138842787981905
+              ],
+              "estimate": -0.055029970174024306,
+              "n": 64
+            }
+          }
+        },
+        "29": {
+          "baseline": "IMMEDIATE_FRESH",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 31,
+              "method_1__baseline_0": 16
+            },
+            "safe_success": {
+              "method_0__baseline_0": 47
+            },
+            "task_success": {
+              "method_0__baseline_0": 47
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "parameter_id",
+            "source_rollout",
+            "actor_seed"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                1.0,
+                1.0
+              ],
+              "estimate": 1.0,
+              "n": 47,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                0.005029213445663543,
+                0.005402958940455024
+              ],
+              "estimate": 0.005220947829757085,
+              "n": 47,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                7.0,
+                8.063829787234043
+              ],
+              "estimate": 7.531914893617022,
+              "n": 47,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "cause_violation": {
+              "ci95": [
+                0.2127659574468085,
+                0.46808510638297873
+              ],
+              "estimate": 0.3404255319148936,
+              "n": 47,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                0.0517474938840464,
+                0.05979124122319967
+              ],
+              "estimate": 0.05580695938626909,
+              "n": 47,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                0.05069393172480019,
+                0.058413307493012864
+              ],
+              "estimate": 0.054586764765599635,
+              "n": 47,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.0011348550703519328,
+                0.004057830861489701
+              ],
+              "estimate": 0.0012552084596307886,
+              "n": 47,
+              "p_two_sided_bootstrap": 0.3414
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 47,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 47,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                0.06503676771536263,
+                0.2071957347303292
+              ],
+              "estimate": 0.13567926904254413,
+              "n": 47,
+              "p_two_sided_bootstrap": 0.0004
+            }
+          },
+          "events": 47,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 0.0,
+            "actual_inference_wall_time_s": 0.0,
+            "actual_post_detection_actions": 0.0,
+            "cause_violation": 0.0,
+            "completion_steps": null,
+            "eef_path_length_m": 0.0,
+            "manipulated_object_path_length_m": 0.0,
+            "progress_regression_m": 1.0,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 0.0016
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                -1.0,
+                -1.0
+              ],
+              "estimate": -1.0,
+              "n": 47
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -1.0863078311037566,
+                -0.9597389205176985
+              ],
+              "estimate": -1.0248976899392006,
+              "n": 47
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                -2.0106382978723403,
+                -1.7446808510638299
+              ],
+              "estimate": -1.8829787234042552,
+              "n": 47
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -1.0021127153571243,
+                -0.8531585296787934
+              ],
+              "estimate": -0.9270615981887794,
+              "n": 47
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.9316895214793108,
+                -0.7976298608828144
+              ],
+              "estimate": -0.8626068914677459,
+              "n": 47
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.6476211902153098,
+                0.18751217743169132
+              ],
+              "estimate": -0.17308279382167432,
+              "n": 47
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.05008831695433158,
+                -0.015414704528048197
+              ],
+              "estimate": -0.0324094984591306,
+              "n": 47
+            }
+          }
+        },
+        "7": {
+          "baseline": "IMMEDIATE_FRESH",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 35,
+              "method_1__baseline_0": 8
+            },
+            "safe_success": {
+              "method_0__baseline_0": 41,
+              "method_1__baseline_0": 2
+            },
+            "task_success": {
+              "method_0__baseline_0": 41,
+              "method_1__baseline_0": 2
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "parameter_id",
+            "source_rollout",
+            "actor_seed"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                1.0,
+                1.0
+              ],
+              "estimate": 1.0,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                0.005040712533209152,
+                0.0059042180186113825
+              ],
+              "estimate": 0.005425171930271464,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                5.441279069767442,
+                6.5813953488372094
+              ],
+              "estimate": 6.0,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "cause_violation": {
+              "ci95": [
+                0.06976744186046512,
+                0.3023255813953488
+              ],
+              "estimate": 0.18604651162790697,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.0002
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                0.05224180943799064,
+                0.0602866951399227
+              ],
+              "estimate": 0.05649536856060441,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                0.0526075810410163,
+                0.06084465226882714
+              ],
+              "estimate": 0.056819978380944186,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.000533638745203541,
+                0.0005939196251202942
+              ],
+              "estimate": 2.9476002090231027e-05,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.8974
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.11627906976744186
+              ],
+              "estimate": 0.046511627906976744,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.2732
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.11627906976744186
+              ],
+              "estimate": 0.046511627906976744,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.2626
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                0.06326725633846811,
+                0.22012470355649572
+              ],
+              "estimate": 0.1392514059768346,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.0004
+            }
+          },
+          "events": 43,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 0.0,
+            "actual_inference_wall_time_s": 0.0,
+            "actual_post_detection_actions": 0.0,
+            "cause_violation": 0.001,
+            "completion_steps": null,
+            "eef_path_length_m": 0.0,
+            "manipulated_object_path_length_m": 0.0,
+            "progress_regression_m": 0.8974,
+            "safe_success": 0.7878000000000001,
+            "task_success": 0.7878000000000001,
+            "total_branch_wall_time_s": 0.0016
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                -1.0,
+                -1.0
+              ],
+              "estimate": -1.0,
+              "n": 43
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -1.1768103269092174,
+                -0.9928170179807227
+              ],
+              "estimate": -1.0781855857204894,
+              "n": 43
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                -1.6453488372093021,
+                -1.3546511627906979
+              ],
+              "estimate": -1.5,
+              "n": 43
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.9173038544541575,
+                -0.8028973438777277
+              ],
+              "estimate": -0.8599247714103804,
+              "n": 43
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.8863372056050267,
+                -0.7670706538921701
+              ],
+              "estimate": -0.826374366722723,
+              "n": 43
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -2.7257729106605786,
+                1.0
+              ],
+              "estimate": -0.0326891558178094,
+              "n": 43
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.056143821970222406,
+                -0.016250525060929312
+              ],
+              "estimate": -0.03541004854758617,
+              "n": 43
+            }
+          }
+        }
+      },
+      "overall": {
+        "baseline": "IMMEDIATE_FRESH",
+        "binary_tables": {
+          "cause_violation": {
+            "method_0__baseline_0": 113,
+            "method_1__baseline_0": 41
+          },
+          "safe_success": {
+            "method_0__baseline_0": 152,
+            "method_1__baseline_0": 2
+          },
+          "task_success": {
+            "method_0__baseline_0": 152,
+            "method_1__baseline_0": 2
+          }
+        },
+        "bootstrap_cluster_fields": [
+          "task",
+          "source_rollout"
+        ],
+        "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+        "differences": {
+          "actual_actor_calls": {
+            "ci95": [
+              1.0,
+              1.0
+            ],
+            "estimate": 1.0,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.0
+          },
+          "actual_inference_wall_time_s": {
+            "ci95": [
+              0.005149166176448186,
+              0.005479123708891898
+            ],
+            "estimate": 0.005308601886675004,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.0
+          },
+          "actual_post_detection_actions": {
+            "ci95": [
+              6.364444444444445,
+              7.264444444444445
+            ],
+            "estimate": 6.811111111111112,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.0
+          },
+          "cause_violation": {
+            "ci95": [
+              0.18444444444444444,
+              0.35777777777777775
+            ],
+            "estimate": 0.26888888888888884,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.0
+          },
+          "completion_steps": {
+            "ci95": [
+              null,
+              null
+            ],
+            "estimate": null,
+            "n": 0
+          },
+          "eef_path_length_m": {
+            "ci95": [
+              0.05498650901273488,
+              0.05962654876059327
+            ],
+            "estimate": 0.05729246451303851,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.0
+          },
+          "manipulated_object_path_length_m": {
+            "ci95": [
+              0.054097736816388214,
+              0.05871031152850449
+            ],
+            "estimate": 0.05639916168672563,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.0
+          },
+          "progress_regression_m": {
+            "ci95": [
+              0.0007555373015329731,
+              0.0029936893511345775
+            ],
+            "estimate": 0.0017973571441097687,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.0002
+          },
+          "safe_success": {
+            "ci95": [
+              0.0,
+              0.028888888888888888
+            ],
+            "estimate": 0.01111111111111111,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.2608
+          },
+          "task_success": {
+            "ci95": [
+              0.0,
+              0.028888888888888888
+            ],
+            "estimate": 0.01111111111111111,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.276
+          },
+          "total_branch_wall_time_s": {
+            "ci95": [
+              0.11605687546425274,
+              0.2262404842475194
+            ],
+            "estimate": 0.17088807551783958,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.0
+          }
+        },
+        "events": 154,
+        "holm_adjusted_p_values": {
+          "actual_actor_calls": 0.0,
+          "actual_inference_wall_time_s": 0.0,
+          "actual_post_detection_actions": 0.0,
+          "cause_violation": 0.0,
+          "completion_steps": null,
+          "eef_path_length_m": 0.0,
+          "manipulated_object_path_length_m": 0.0,
+          "progress_regression_m": 0.0006000000000000001,
+          "safe_success": 0.5216,
+          "task_success": 0.5216,
+          "total_branch_wall_time_s": 0.0
+        },
+        "method": "EVENT_ALIGNED_CACHED",
+        "relative_reductions": {
+          "actual_actor_calls": {
+            "ci95": [
+              -1.0,
+              -1.0
+            ],
+            "estimate": -1.0,
+            "n": 75
+          },
+          "actual_inference_wall_time_s": {
+            "ci95": [
+              -1.086579362169337,
+              -1.0052908522419264
+            ],
+            "estimate": -1.0455360036956176,
+            "n": 75
+          },
+          "actual_post_detection_actions": {
+            "ci95": [
+              -1.8144444444444443,
+              -1.5916666666666668
+            ],
+            "estimate": -1.702777777777778,
+            "n": 75
+          },
+          "completion_steps": {
+            "ci95": [
+              null,
+              null
+            ],
+            "estimate": null,
+            "n": 0
+          },
+          "eef_path_length_m": {
+            "ci95": [
+              -0.9461342560152086,
+              -0.8609683744566157
+            ],
+            "estimate": -0.9018878149498036,
+            "n": 75
+          },
+          "manipulated_object_path_length_m": {
+            "ci95": [
+              -0.8907605766309404,
+              -0.8117695781791987
+            ],
+            "estimate": -0.8490382729833433,
+            "n": 75
+          },
+          "progress_regression_m": {
+            "ci95": [
+              -0.9361580277059309,
+              -0.25653098841306904
+            ],
+            "estimate": -0.5092478572658325,
+            "n": 75
+          },
+          "total_branch_wall_time_s": {
+            "ci95": [
+              -0.05693611191051371,
+              -0.02924669283810337
+            ],
+            "estimate": -0.04268378041951644,
+            "n": 75
+          }
+        }
+      },
+      "severity": {
+        "put_the_bowl_on_the_stove::future_09__clearance_m010mm": {
+          "baseline": "IMMEDIATE_FRESH",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 40
+            },
+            "safe_success": {
+              "method_0__baseline_0": 38,
+              "method_1__baseline_0": 2
+            },
+            "task_success": {
+              "method_0__baseline_0": 38,
+              "method_1__baseline_0": 2
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "parameter_id",
+            "source_rollout"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                1.0,
+                1.0
+              ],
+              "estimate": 1.0,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                0.00507891831007016,
+                0.005692008415136783
+              ],
+              "estimate": 0.00537868149999374,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                4.709677419354839,
+                5.0
+              ],
+              "estimate": 4.887096774193548,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "cause_violation": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 31,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                0.05024585400401898,
+                0.05670578396619963
+              ],
+              "estimate": 0.05373579138637728,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                0.05027891098246333,
+                0.05720909927831182
+              ],
+              "estimate": 0.053980939889044115,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.0007374613559323848,
+                0.001636640615563197
+              ],
+              "estimate": 0.00022744434472415852,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.8392
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.12903225806451613
+              ],
+              "estimate": 0.04838709677419355,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.2542
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.12903225806451613
+              ],
+              "estimate": 0.04838709677419355,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.252
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                0.044498683593626395,
+                0.22563544409929637
+              ],
+              "estimate": 0.13257554964528964,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.0022
+            }
+          },
+          "events": 40,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 0.0,
+            "actual_inference_wall_time_s": 0.0,
+            "actual_post_detection_actions": 0.0,
+            "cause_violation": 1.0,
+            "completion_steps": null,
+            "eef_path_length_m": 0.0,
+            "manipulated_object_path_length_m": 0.0,
+            "progress_regression_m": 1.0,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 0.011000000000000001
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                -1.0,
+                -1.0
+              ],
+              "estimate": -1.0,
+              "n": 31
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -1.123939878668734,
+                -0.9775845114622294
+              ],
+              "estimate": -1.0484087810975296,
+              "n": 31
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                -1.25,
+                -1.1774193548387095
+              ],
+              "estimate": -1.221774193548387,
+              "n": 31
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.8163822039625362,
+                -0.7395381198979258
+              ],
+              "estimate": -0.7820116801169282,
+              "n": 31
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.792708602386933,
+                -0.7065876053291392
+              ],
+              "estimate": -0.7516675625399305,
+              "n": 31
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.7457307573265932,
+                1.0
+              ],
+              "estimate": -0.11958141009558179,
+              "n": 31
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.058015259593385445,
+                -0.011306739906464532
+              ],
+              "estimate": -0.03351784520134556,
+              "n": 31
+            }
+          }
+        },
+        "put_the_bowl_on_the_stove::future_09__clearance_p000mm": {
+          "baseline": "IMMEDIATE_FRESH",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 42
+            },
+            "safe_success": {
+              "method_0__baseline_0": 42
+            },
+            "task_success": {
+              "method_0__baseline_0": 42
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "parameter_id",
+            "source_rollout"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                1.0,
+                1.0
+              ],
+              "estimate": 1.0,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                0.00493875860207122,
+                0.005943506355462278
+              ],
+              "estimate": 0.005347035043111539,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                5.0,
+                5.0
+              ],
+              "estimate": 5.0,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "cause_violation": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 31,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                0.05370062693629391,
+                0.05879787490370664
+              ],
+              "estimate": 0.05652820767993068,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                0.05330367872428191,
+                0.058012570947194586
+              ],
+              "estimate": 0.055827451297264206,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.0013721504321384847,
+                0.0
+              ],
+              "estimate": -0.0004986713148457715,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.2534
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 31,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 31,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                0.051820105062793796,
+                0.2890213438515074
+              ],
+              "estimate": 0.1650662699302747,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.0036
+            }
+          },
+          "events": 42,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 0.0,
+            "actual_inference_wall_time_s": 0.0,
+            "actual_post_detection_actions": 0.0,
+            "cause_violation": 1.0,
+            "completion_steps": null,
+            "eef_path_length_m": 0.0,
+            "manipulated_object_path_length_m": 0.0,
+            "progress_regression_m": 1.0,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 0.018
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                -1.0,
+                -1.0
+              ],
+              "estimate": -1.0,
+              "n": 31
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -1.1619316456110556,
+                -0.9462295069440853
+              ],
+              "estimate": -1.0406117475085173,
+              "n": 31
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                -1.25,
+                -1.25
+              ],
+              "estimate": -1.25,
+              "n": 31
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.837952128922393,
+                -0.774335840141034
+              ],
+              "estimate": -0.8093898266737201,
+              "n": 31
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.7910343974536739,
+                -0.7367954246225767
+              ],
+              "estimate": -0.7653942040074388,
+              "n": 31
+            },
+            "progress_regression_m": {
+              "ci95": [
+                0.0,
+                0.679553983301212
+              ],
+              "estimate": 0.6052284282952184,
+              "n": 31
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.07275590742991056,
+                -0.012880187476499898
+              ],
+              "estimate": -0.04142064985465188,
+              "n": 31
+            }
+          }
+        },
+        "put_the_cream_cheese_in_the_bowl::shift_060mm": {
+          "baseline": "IMMEDIATE_FRESH",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 18,
+              "method_1__baseline_0": 19
+            },
+            "safe_success": {
+              "method_0__baseline_0": 37
+            },
+            "task_success": {
+              "method_0__baseline_0": 37
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "parameter_id",
+            "source_rollout"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                1.0,
+                1.0
+              ],
+              "estimate": 1.0,
+              "n": 28,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                0.005134886083482826,
+                0.005592465973607119
+              ],
+              "estimate": 0.005354107767845205,
+              "n": 28,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                8.839285714285714,
+                9.0
+              ],
+              "estimate": 8.928571428571429,
+              "n": 28,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "cause_violation": {
+              "ci95": [
+                0.32142857142857145,
+                0.6428571428571429
+              ],
+              "estimate": 0.48214285714285715,
+              "n": 28,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                0.054932571673888625,
+                0.06404411615815521
+              ],
+              "estimate": 0.05947487478869895,
+              "n": 28,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                0.053076248515519994,
+                0.062432991466366126
+              ],
+              "estimate": 0.057569985381951794,
+              "n": 28,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "progress_regression_m": {
+              "ci95": [
+                0.0026436151686574593,
+                0.010285392987946328
+              ],
+              "estimate": 0.006126934796269468,
+              "n": 28,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 28,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 28,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                0.06719303025936968,
+                0.24960284308524577
+              ],
+              "estimate": 0.15769524358925327,
+              "n": 28,
+              "p_two_sided_bootstrap": 0.0008
+            }
+          },
+          "events": 37,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 0.0,
+            "actual_inference_wall_time_s": 0.0,
+            "actual_post_detection_actions": 0.0,
+            "cause_violation": 0.0,
+            "completion_steps": null,
+            "eef_path_length_m": 0.0,
+            "manipulated_object_path_length_m": 0.0,
+            "progress_regression_m": 0.0,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 0.0024000000000000002
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                -1.0,
+                -1.0
+              ],
+              "estimate": -1.0,
+              "n": 28
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -1.1428355537429156,
+                -1.0328008818529704
+              ],
+              "estimate": -1.0863485038202,
+              "n": 28
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                -2.25,
+                -2.2098214285714284
+              ],
+              "estimate": -2.232142857142857,
+              "n": 28
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -1.1105860266054925,
+                -0.9534744901756355
+              ],
+              "estimate": -1.029676460052349,
+              "n": 28
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -1.0282570841850798,
+                -0.8789888214460051
+              ],
+              "estimate": -0.9510256310407075,
+              "n": 28
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -1.1242040943459197,
+                -0.3301129482058215
+              ],
+              "estimate": -0.5781431575213254,
+              "n": 28
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.06427676069843995,
+                -0.015928765691439445
+              ],
+              "estimate": -0.03923251506416845,
+              "n": 28
+            }
+          }
+        },
+        "put_the_cream_cheese_in_the_bowl::shift_080mm": {
+          "baseline": "IMMEDIATE_FRESH",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 13,
+              "method_1__baseline_0": 22
+            },
+            "safe_success": {
+              "method_0__baseline_0": 35
+            },
+            "task_success": {
+              "method_0__baseline_0": 35
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "parameter_id",
+            "source_rollout"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                1.0,
+                1.0
+              ],
+              "estimate": 1.0,
+              "n": 26,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                0.0048755249798017085,
+                0.005607626390410449
+              ],
+              "estimate": 0.005234837326927624,
+              "n": 26,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                8.153846153846153,
+                8.961538461538462
+              ],
+              "estimate": 8.653846153846153,
+              "n": 26,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "cause_violation": {
+              "ci95": [
+                0.4423076923076923,
+                0.7884615384615384
+              ],
+              "estimate": 0.6153846153846154,
+              "n": 26,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                0.05437875681855806,
+                0.06580946567667396
+              ],
+              "estimate": 0.060246678252395304,
+              "n": 26,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                0.05245746634780176,
+                0.06374492837385921
+              ],
+              "estimate": 0.05813875170604109,
+              "n": 26,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "progress_regression_m": {
+              "ci95": [
+                0.0004387031736015568,
+                0.003958382144187599
+              ],
+              "estimate": 0.0019971143694479877,
+              "n": 26,
+              "p_two_sided_bootstrap": 0.0006
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 26,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 26,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                0.1543319753726445,
+                0.30468773570577684
+              ],
+              "estimate": 0.23085588698718196,
+              "n": 26,
+              "p_two_sided_bootstrap": 0.0
+            }
+          },
+          "events": 35,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 0.0,
+            "actual_inference_wall_time_s": 0.0,
+            "actual_post_detection_actions": 0.0,
+            "cause_violation": 0.0,
+            "completion_steps": null,
+            "eef_path_length_m": 0.0,
+            "manipulated_object_path_length_m": 0.0,
+            "progress_regression_m": 0.0018,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 0.0
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                -1.0,
+                -1.0
+              ],
+              "estimate": -1.0,
+              "n": 26
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -1.141153533027522,
+                -0.923660489851663
+              ],
+              "estimate": -1.0320309267673613,
+              "n": 26
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                -2.2403846153846154,
+                -2.0288461538461537
+              ],
+              "estimate": -2.1634615384615383,
+              "n": 26
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -1.1381008655907257,
+                -0.9915883289398658
+              ],
+              "estimate": -1.0648346227757368,
+              "n": 26
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -1.054485109754183,
+                -0.9148938802490434
+              ],
+              "estimate": -0.9849077200906984,
+              "n": 26
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -6.395510477495506,
+                0.0
+              ],
+              "estimate": -1.165493981856612,
+              "n": 26
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.07666213030861102,
+                -0.03680596097125822
+              ],
+              "estimate": -0.056586651879781596,
+              "n": 26
+            }
+          }
+        }
+      },
+      "task": {
+        "put_the_bowl_on_the_stove": {
+          "baseline": "IMMEDIATE_FRESH",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 82
+            },
+            "safe_success": {
+              "method_0__baseline_0": 80,
+              "method_1__baseline_0": 2
+            },
+            "task_success": {
+              "method_0__baseline_0": 80,
+              "method_1__baseline_0": 2
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "source_rollout"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                1.0,
+                1.0
+              ],
+              "estimate": 1.0,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                0.005081214433528396,
+                0.005601707549505054
+              ],
+              "estimate": 0.005321787260721681,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                4.871794871794871,
+                5.0
+              ],
+              "estimate": 4.948717948717949,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "cause_violation": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 39,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                0.052365735493783094,
+                0.056825306296737044
+              ],
+              "estimate": 0.05471770158682507,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                0.05249029062707404,
+                0.05708998240853287
+              ],
+              "estimate": 0.05484653106939462,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.0008001922859241996,
+                0.001195390190961759
+              ],
+              "estimate": 1.4937522904017686e-05,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.9552
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.05555555555555555
+              ],
+              "estimate": 0.021367521367521364,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.2482
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.05555555555555555
+              ],
+              "estimate": 0.021367521367521364,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.2492
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                0.05807059277947483,
+                0.23103751965373462
+              ],
+              "estimate": 0.142750614636898,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.0006
+            }
+          },
+          "events": 82,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 0.0,
+            "actual_inference_wall_time_s": 0.0,
+            "actual_post_detection_actions": 0.0,
+            "cause_violation": 1.0,
+            "completion_steps": null,
+            "eef_path_length_m": 0.0,
+            "manipulated_object_path_length_m": 0.0,
+            "progress_regression_m": 1.0,
+            "safe_success": 0.9928,
+            "task_success": 0.9928,
+            "total_branch_wall_time_s": 0.0029999999999999996
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                -1.0,
+                -1.0
+              ],
+              "estimate": -1.0,
+              "n": 39
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -1.0946109155407855,
+                -0.973200554426644
+              ],
+              "estimate": -1.0324123900254103,
+              "n": 39
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                -1.25,
+                -1.217948717948718
+              ],
+              "estimate": -1.2371794871794872,
+              "n": 39
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.814299443064181,
+                -0.7624652841036927
+              ],
+              "estimate": -0.7897294846769856,
+              "n": 39
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.7852092327123061,
+                -0.7292437521206162
+              ],
+              "estimate": -0.7568693958587257,
+              "n": 39
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.5112563422470539,
+                0.6737145747779187
+              ],
+              "estimate": -0.008598125589908967,
+              "n": 39
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.05840868900788936,
+                -0.014835936681002908
+              ],
+              "estimate": -0.03581831283602979,
+              "n": 39
+            }
+          }
+        },
+        "put_the_cream_cheese_in_the_bowl": {
+          "baseline": "IMMEDIATE_FRESH",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 31,
+              "method_1__baseline_0": 41
+            },
+            "safe_success": {
+              "method_0__baseline_0": 72
+            },
+            "task_success": {
+              "method_0__baseline_0": 72
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "source_rollout"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                1.0,
+                1.0
+              ],
+              "estimate": 1.0,
+              "n": 36,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                0.00510636502710466,
+                0.005493858440973509
+              ],
+              "estimate": 0.00529431773145777,
+              "n": 36,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                8.63425925925926,
+                8.958333333333334
+              ],
+              "estimate": 8.828703703703704,
+              "n": 36,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "cause_violation": {
+              "ci95": [
+                0.4351851851851852,
+                0.6851851851851851
+              ],
+              "estimate": 0.5601851851851851,
+              "n": 36,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                0.0560348896415074,
+                0.06414923058019599
+              ],
+              "estimate": 0.06008179101643642,
+              "n": 36,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                0.053926997767736115,
+                0.06217542442538208
+              ],
+              "estimate": 0.058081178188834216,
+              "n": 36,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "progress_regression_m": {
+              "ci95": [
+                0.001945705798339927,
+                0.005735676758092271
+              ],
+              "estimate": 0.0037283117337493323,
+              "n": 36,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 36,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 36,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                0.1405889588553228,
+                0.2651822014590039
+              ],
+              "estimate": 0.2013703248055263,
+              "n": 36,
+              "p_two_sided_bootstrap": 0.0
+            }
+          },
+          "events": 72,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 0.0,
+            "actual_inference_wall_time_s": 0.0,
+            "actual_post_detection_actions": 0.0,
+            "cause_violation": 0.0,
+            "completion_steps": null,
+            "eef_path_length_m": 0.0,
+            "manipulated_object_path_length_m": 0.0,
+            "progress_regression_m": 0.0,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 0.0
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                -1.0,
+                -1.0
+              ],
+              "estimate": -1.0,
+              "n": 36
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -1.112128331662449,
+                -1.0093582771016385
+              ],
+              "estimate": -1.0602118274864047,
+              "n": 36
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                -2.2395833333333335,
+                -2.1574074074074074
+              ],
+              "estimate": -2.207175925925926,
+              "n": 36
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -1.1172263396653255,
+                -0.9860686833771295
+              ],
+              "estimate": -1.0488531668095435,
+              "n": 36
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -1.0346910888552314,
+                -0.9087115324496395
+              ],
+              "estimate": -0.9698610213546737,
+              "n": 36
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -1.5073364029425302,
+                -0.3931208218219488
+              ],
+              "estimate": -0.6814787189738042,
+              "n": 36
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.06697938081321315,
+                -0.0344284386664002
+              ],
+              "estimate": -0.050051373234300124,
+              "n": 36
+            }
+          }
+        }
+      }
+    },
+    "h4": {
+      "actor_seed": {
+        "17": {
+          "baseline": "FIXED_DELAY_8",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 45,
+              "method_0__baseline_1": 2,
+              "method_1__baseline_0": 8,
+              "method_1__baseline_1": 9
+            },
+            "safe_success": {
+              "method_0__baseline_0": 64
+            },
+            "task_success": {
+              "method_0__baseline_0": 64
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "parameter_id",
+            "source_rollout",
+            "actor_seed"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 64,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.0002120089373970124,
+                0.00032837682383952683
+              ],
+              "estimate": 5.415381252049656e-05,
+              "n": 64,
+              "p_two_sided_bootstrap": 0.7028
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                -1.796875,
+                -0.828125
+              ],
+              "estimate": -1.3125,
+              "n": 64,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "cause_violation": {
+              "ci95": [
+                0.0,
+                0.1875
+              ],
+              "estimate": 0.09375,
+              "n": 64,
+              "p_two_sided_bootstrap": 0.0718
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.021816538455240276,
+                -0.012971397165126583
+              ],
+              "estimate": -0.01743306840473459,
+              "n": 64,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.02291484322721746,
+                -0.013637809688404612
+              ],
+              "estimate": -0.018314640764467535,
+              "n": 64,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "progress_regression_m": {
+              "ci95": [
+                3.7949873256663885e-05,
+                0.0006549349777259826
+              ],
+              "estimate": 0.0003062399056844721,
+              "n": 64,
+              "p_two_sided_bootstrap": 0.019
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 64,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 64,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.05022750774650122,
+                0.14484883117851374
+              ],
+              "estimate": 0.04596681825004012,
+              "n": 64,
+              "p_two_sided_bootstrap": 0.3512
+            }
+          },
+          "events": 64,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 1.0,
+            "actual_inference_wall_time_s": 1.0,
+            "actual_post_detection_actions": 0.0,
+            "cause_violation": 0.4308,
+            "completion_steps": null,
+            "eef_path_length_m": 0.0,
+            "manipulated_object_path_length_m": 0.0,
+            "progress_regression_m": 0.133,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 1.0
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 64
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.032735255624404484,
+                0.019743981230398663
+              ],
+              "estimate": -0.005217871753385103,
+              "n": 64
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                0.06770833333333333,
+                0.14973958333333334
+              ],
+              "estimate": 0.109375,
+              "n": 64
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                0.094807140277588,
+                0.15142254692838744
+              ],
+              "estimate": 0.12381603482987338,
+              "n": 64
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                0.09860240527918027,
+                0.15697002907269833
+              ],
+              "estimate": 0.12806455447617163,
+              "n": 64
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.1153207563583466,
+                -0.007962759080591476
+              ],
+              "estimate": -0.050157630729375444,
+              "n": 64
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.03537144929660697,
+                0.012248432468162972
+              ],
+              "estimate": -0.01115180028437815,
+              "n": 64
+            }
+          }
+        },
+        "29": {
+          "baseline": "FIXED_DELAY_8",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 31,
+              "method_1__baseline_0": 4,
+              "method_1__baseline_1": 12
+            },
+            "safe_success": {
+              "method_0__baseline_0": 46,
+              "method_0__baseline_1": 1
+            },
+            "task_success": {
+              "method_0__baseline_0": 46,
+              "method_0__baseline_1": 1
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "parameter_id",
+            "source_rollout",
+            "actor_seed"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 47,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.00042708327646710613,
+                0.00024072602491456694
+              ],
+              "estimate": -7.546699998783879e-05,
+              "n": 47,
+              "p_two_sided_bootstrap": 0.6728
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                -0.9574468085106383,
+                0.0851063829787234
+              ],
+              "estimate": -0.425531914893617,
+              "n": 47,
+              "p_two_sided_bootstrap": 0.1088
+            },
+            "cause_violation": {
+              "ci95": [
+                0.02127659574468085,
+                0.1702127659574468
+              ],
+              "estimate": 0.0851063829787234,
+              "n": 47,
+              "p_two_sided_bootstrap": 0.0314
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.012052715677017142,
+                -0.003594718649634527
+              ],
+              "estimate": -0.007605408871237325,
+              "n": 47,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.012982533448593698,
+                -0.0043780631081128205
+              ],
+              "estimate": -0.008555668572464968,
+              "n": 47,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -8.233961110485153e-06,
+                0.004971632854191228
+              ],
+              "estimate": 0.001839179744113134,
+              "n": 47,
+              "p_two_sided_bootstrap": 0.0542
+            },
+            "safe_success": {
+              "ci95": [
+                -0.06382978723404255,
+                0.0
+              ],
+              "estimate": -0.02127659574468085,
+              "n": 47,
+              "p_two_sided_bootstrap": 0.7424
+            },
+            "task_success": {
+              "ci95": [
+                -0.06382978723404255,
+                0.0
+              ],
+              "estimate": -0.02127659574468085,
+              "n": 47,
+              "p_two_sided_bootstrap": 0.7378
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.12346413048452937,
+                0.035789758290393624
+              ],
+              "estimate": -0.0439097587021295,
+              "n": 47,
+              "p_two_sided_bootstrap": 0.28
+            }
+          },
+          "events": 47,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 1.0,
+            "actual_inference_wall_time_s": 1.0,
+            "actual_post_detection_actions": 0.6527999999999999,
+            "cause_violation": 0.2512,
+            "completion_steps": null,
+            "eef_path_length_m": 0.0,
+            "manipulated_object_path_length_m": 0.0,
+            "progress_regression_m": 0.37939999999999996,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 1.0
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 47
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.024665412182690288,
+                0.04058638563934113
+              ],
+              "estimate": 0.007263055223206588,
+              "n": 47
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                -0.007092198581560331,
+                0.08007117437722425
+              ],
+              "estimate": 0.03558718861209973,
+              "n": 47
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                0.029372309822965587,
+                0.09293978811217471
+              ],
+              "estimate": 0.06152743121198819,
+              "n": 47
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                0.035853710458566945,
+                0.0979854821420219
+              ],
+              "estimate": 0.06767461944940184,
+              "n": 47
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -1.2645154195815713,
+                0.0003724593137383218
+              ],
+              "estimate": -0.27581773234291357,
+              "n": 47
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.008020805553426389,
+                0.028833499721046138
+              ],
+              "estimate": 0.010057220373737588,
+              "n": 47
+            }
+          }
+        },
+        "7": {
+          "baseline": "FIXED_DELAY_8",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 35,
+              "method_1__baseline_0": 3,
+              "method_1__baseline_1": 5
+            },
+            "safe_success": {
+              "method_0__baseline_0": 41,
+              "method_1__baseline_1": 2
+            },
+            "task_success": {
+              "method_0__baseline_0": 41,
+              "method_1__baseline_1": 2
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "parameter_id",
+            "source_rollout",
+            "actor_seed"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.11627906976744186
+              ],
+              "estimate": 0.046511627906976744,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.2542
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.000253709502257427,
+                0.000902482690276106
+              ],
+              "estimate": 0.00028947653497071285,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.332
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                -2.3488372093023258,
+                -1.255813953488372
+              ],
+              "estimate": -1.813953488372093,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "cause_violation": {
+              "ci95": [
+                0.0,
+                0.16279069767441862
+              ],
+              "estimate": 0.06976744186046512,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.0864
+            },
+            "completion_steps": {
+              "ci95": [
+                0.0,
+                1.0
+              ],
+              "estimate": 0.5,
+              "n": 2,
+              "p_two_sided_bootstrap": 0.4894
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.02649226392888881,
+                -0.016411366568656695
+              ],
+              "estimate": -0.02150089375449248,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.025828061289913766,
+                -0.015636529713292848
+              ],
+              "estimate": -0.020817168017158987,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -6.891659424065566e-07,
+                0.0003048712797802311
+              ],
+              "estimate": 0.00010833618629812959,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.263
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 43,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 43,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.12913685650629375,
+                0.03907067173266224
+              ],
+              "estimate": -0.04570149893013052,
+              "n": 43,
+              "p_two_sided_bootstrap": 0.2876
+            }
+          },
+          "events": 43,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 1.0,
+            "actual_inference_wall_time_s": 1.0,
+            "actual_post_detection_actions": 0.0,
+            "cause_violation": 0.6912,
+            "completion_steps": 1.0,
+            "eef_path_length_m": 0.0,
+            "manipulated_object_path_length_m": 0.0,
+            "progress_regression_m": 1.0,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 1.0
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                -0.061728395061728385,
+                0.0
+              ],
+              "estimate": -0.023809523809523853,
+              "n": 43
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.09042370116523381,
+                0.02544808438729664
+              ],
+              "estimate": -0.02847089088329566,
+              "n": 43
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                0.10742187500000004,
+                0.19642857142857134
+              ],
+              "estimate": 0.15354330708661415,
+              "n": 43
+            },
+            "completion_steps": {
+              "ci95": [
+                -0.16666666666666666,
+                0.0
+              ],
+              "estimate": -0.08333333333333333,
+              "n": 2
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                0.11996613614098338,
+                0.1745908364343074
+              ],
+              "estimate": 0.14962941474794747,
+              "n": 43
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                0.11275830966814027,
+                0.16833904138734335
+              ],
+              "estimate": 0.14219833249752686,
+              "n": 43
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -1.1344937988091817,
+                0.0005430209762646913
+              ],
+              "estimate": -0.13166040072519491,
+              "n": 43
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.009776176503633499,
+                0.030730946195371964
+              ],
+              "estimate": 0.0110993529901461,
+              "n": 43
+            }
+          }
+        }
+      },
+      "overall": {
+        "baseline": "FIXED_DELAY_8",
+        "binary_tables": {
+          "cause_violation": {
+            "method_0__baseline_0": 111,
+            "method_0__baseline_1": 2,
+            "method_1__baseline_0": 15,
+            "method_1__baseline_1": 26
+          },
+          "safe_success": {
+            "method_0__baseline_0": 151,
+            "method_0__baseline_1": 1,
+            "method_1__baseline_1": 2
+          },
+          "task_success": {
+            "method_0__baseline_0": 151,
+            "method_0__baseline_1": 1,
+            "method_1__baseline_1": 2
+          }
+        },
+        "bootstrap_cluster_fields": [
+          "task",
+          "source_rollout"
+        ],
+        "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+        "differences": {
+          "actual_actor_calls": {
+            "ci95": [
+              0.0,
+              0.028888888888888888
+            ],
+            "estimate": 0.01111111111111111,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.2488
+          },
+          "actual_inference_wall_time_s": {
+            "ci95": [
+              -0.00019635696784481144,
+              0.0002680302210008121
+            ],
+            "estimate": 3.4935864499251086e-05,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.7788
+          },
+          "actual_post_detection_actions": {
+            "ci95": [
+              -1.5711111111111113,
+              -0.6933333333333334
+            ],
+            "estimate": -1.1355555555555554,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.0
+          },
+          "cause_violation": {
+            "ci95": [
+              0.026666666666666665,
+              0.11777777777777779
+            ],
+            "estimate": 0.07111111111111111,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.0008
+          },
+          "completion_steps": {
+            "ci95": [
+              0.0,
+              1.0
+            ],
+            "estimate": 0.5,
+            "n": 2,
+            "p_two_sided_bootstrap": 0.5
+          },
+          "eef_path_length_m": {
+            "ci95": [
+              -0.018993594785030758,
+              -0.01120908132982223
+            ],
+            "estimate": -0.015155104484647512,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.0
+          },
+          "manipulated_object_path_length_m": {
+            "ci95": [
+              -0.019693175495607056,
+              -0.011776031634865734
+            ],
+            "estimate": -0.01564776766622551,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.0
+          },
+          "progress_regression_m": {
+            "ci95": [
+              5.0510924560342934e-05,
+              0.0016624144092800095
+            ],
+            "estimate": 0.0006407029496182698,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.0188
+          },
+          "safe_success": {
+            "ci95": [
+              -0.013333333333333334,
+              0.0
+            ],
+            "estimate": -0.0044444444444444444,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.7264
+          },
+          "task_success": {
+            "ci95": [
+              -0.013333333333333334,
+              0.0
+            ],
+            "estimate": -0.0044444444444444444,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.7066
+          },
+          "total_branch_wall_time_s": {
+            "ci95": [
+              -0.0637627421256328,
+              0.05202234072366785
+            ],
+            "estimate": -0.006966241682171124,
+            "n": 75,
+            "p_two_sided_bootstrap": 0.7944
+          }
+        },
+        "events": 154,
+        "holm_adjusted_p_values": {
+          "actual_actor_calls": 1.0,
+          "actual_inference_wall_time_s": 1.0,
+          "actual_post_detection_actions": 0.0,
+          "cause_violation": 0.0064,
+          "completion_steps": 1.0,
+          "eef_path_length_m": 0.0,
+          "manipulated_object_path_length_m": 0.0,
+          "progress_regression_m": 0.1316,
+          "safe_success": 1.0,
+          "task_success": 1.0,
+          "total_branch_wall_time_s": 1.0
+        },
+        "method": "EVENT_ALIGNED_CACHED",
+        "relative_reductions": {
+          "actual_actor_calls": {
+            "ci95": [
+              -0.014656144306651788,
+              0.0
+            ],
+            "estimate": -0.005586592178771042,
+            "n": 75
+          },
+          "actual_inference_wall_time_s": {
+            "ci95": [
+              -0.02660898949508932,
+              0.018577877224640035
+            ],
+            "estimate": -0.0033750990359023496,
+            "n": 75
+          },
+          "actual_post_detection_actions": {
+            "ci95": [
+              0.059063893016344744,
+              0.13096147429766225
+            ],
+            "estimate": 0.09505208333333331,
+            "n": 75
+          },
+          "completion_steps": {
+            "ci95": [
+              -0.16666666666666666,
+              0.0
+            ],
+            "estimate": -0.08333333333333333,
+            "n": 2
+          },
+          "eef_path_length_m": {
+            "ci95": [
+              0.0858290180165625,
+              0.13575076929327123
+            ],
+            "estimate": 0.11145703520244081,
+            "n": 75
+          },
+          "manipulated_object_path_length_m": {
+            "ci95": [
+              0.08759386752881632,
+              0.13647556127594268
+            ],
+            "estimate": 0.11300145030052576,
+            "n": 75
+          },
+          "progress_regression_m": {
+            "ci95": [
+              -0.41585089215140386,
+              -0.011306637935518457
+            ],
+            "estimate": -0.13672444996556796,
+            "n": 75
+          },
+          "total_branch_wall_time_s": {
+            "ci95": [
+              -0.01232192563304663,
+              0.015196079262961253
+            ],
+            "estimate": 0.0016659919680334847,
+            "n": 75
+          }
+        }
+      },
+      "severity": {
+        "put_the_bowl_on_the_stove::future_09__clearance_m010mm": {
+          "baseline": "FIXED_DELAY_8",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 40
+            },
+            "safe_success": {
+              "method_0__baseline_0": 37,
+              "method_0__baseline_1": 1,
+              "method_1__baseline_1": 2
+            },
+            "task_success": {
+              "method_0__baseline_0": 37,
+              "method_0__baseline_1": 1,
+              "method_1__baseline_1": 2
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "parameter_id",
+            "source_rollout"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.12903225806451613
+              ],
+              "estimate": 0.04838709677419355,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.238
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.00023400067903040625,
+                0.0008175803477687646
+              ],
+              "estimate": 0.00026742030633848175,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.324
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                -3.0,
+                -2.725806451612903
+              ],
+              "estimate": -2.8870967741935485,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "cause_violation": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 31,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "completion_steps": {
+              "ci95": [
+                0.0,
+                1.0
+              ],
+              "estimate": 0.5,
+              "n": 2,
+              "p_two_sided_bootstrap": 0.4936
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.03303453158793862,
+                -0.028152152053858025
+              ],
+              "estimate": -0.03079540692337105,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.032979547311100595,
+                -0.02794397850072369
+              ],
+              "estimate": -0.030665042515511033,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -4.779699277980956e-07,
+                0.003515081698339498
+              ],
+              "estimate": 0.0012374531578654012,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.245
+            },
+            "safe_success": {
+              "ci95": [
+                -0.04838709677419355,
+                0.0
+              ],
+              "estimate": -0.016129032258064516,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.7374
+            },
+            "task_success": {
+              "ci95": [
+                -0.04838709677419355,
+                0.0
+              ],
+              "estimate": -0.016129032258064516,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.7072
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.13612594862815014,
+                0.04761535279652569
+              ],
+              "estimate": -0.04238444188692278,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.3656
+            }
+          },
+          "events": 40,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 1.0,
+            "actual_inference_wall_time_s": 1.0,
+            "actual_post_detection_actions": 0.0,
+            "cause_violation": 1.0,
+            "completion_steps": 1.0,
+            "eef_path_length_m": 0.0,
+            "manipulated_object_path_length_m": 0.0,
+            "progress_regression_m": 1.0,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 1.0
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                -0.06896551724137936,
+                0.0
+              ],
+              "estimate": -0.024793388429752043,
+              "n": 31
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.08241146282067095,
+                0.0221206397311291
+              ],
+              "estimate": -0.02611121057133989,
+              "n": 31
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                0.2373595505617978,
+                0.25000000000000006
+              ],
+              "estimate": 0.2452054794520548,
+              "n": 31
+            },
+            "completion_steps": {
+              "ci95": [
+                -0.16666666666666666,
+                0.0
+              ],
+              "estimate": -0.08333333333333333,
+              "n": 2
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                0.19116465265574484,
+                0.20852887345670137
+              ],
+              "estimate": 0.20095404356253302,
+              "n": 31
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                0.18463974440983108,
+                0.20496596099540862
+              ],
+              "estimate": 0.1959917372572461,
+              "n": 31
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -2.9064607224390975,
+                0.0005430209762646994
+              ],
+              "estimate": -1.387286493318684,
+              "n": 31
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.012301972426386002,
+                0.03280212931134777
+              ],
+              "estimate": 0.01026175159363148,
+              "n": 31
+            }
+          }
+        },
+        "put_the_bowl_on_the_stove::future_09__clearance_p000mm": {
+          "baseline": "FIXED_DELAY_8",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 42
+            },
+            "safe_success": {
+              "method_0__baseline_0": 42
+            },
+            "task_success": {
+              "method_0__baseline_0": 42
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "parameter_id",
+            "source_rollout"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 31,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.0003793637131157841,
+                0.0007244162917773269
+              ],
+              "estimate": 0.00010345615082867452,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.7686
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                -3.0,
+                -3.0
+              ],
+              "estimate": -3.0,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "cause_violation": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 31,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.03403872387580579,
+                -0.029867899715106304
+              ],
+              "estimate": -0.03215453154192051,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.034214055265172814,
+                -0.02991093826372478
+              ],
+              "estimate": -0.03231914258916179,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "progress_regression_m": {
+              "ci95": [
+                0.0,
+                0.0009173948343675651
+              ],
+              "estimate": 0.00032526769980099185,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.2534
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 31,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 31,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.09559140787669992,
+                0.15175339998797638
+              ],
+              "estimate": 0.02111194664523223,
+              "n": 31,
+              "p_two_sided_bootstrap": 0.7668
+            }
+          },
+          "events": 42,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 1.0,
+            "actual_inference_wall_time_s": 1.0,
+            "actual_post_detection_actions": 0.0,
+            "cause_violation": 1.0,
+            "completion_steps": null,
+            "eef_path_length_m": 0.0,
+            "manipulated_object_path_length_m": 0.0,
+            "progress_regression_m": 1.0,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 1.0
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 31
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.07089680305442908,
+                0.03634082252922555
+              ],
+              "estimate": -0.009965015022777864,
+              "n": 31
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                0.25,
+                0.25
+              ],
+              "estimate": 0.25,
+              "n": 31
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                0.1938516083137245,
+                0.2111464217488536
+              ],
+              "estimate": 0.20283793919824367,
+              "n": 31
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                0.19074242252001775,
+                0.2100248595859713
+              ],
+              "estimate": 0.2006327601244409,
+              "n": 31
+            },
+            "progress_regression_m": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 31
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.037162911848271404,
+                0.023516756735887556
+              ],
+              "estimate": -0.005112997196184861,
+              "n": 31
+            }
+          }
+        },
+        "put_the_cream_cheese_in_the_bowl::shift_060mm": {
+          "baseline": "FIXED_DELAY_8",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 17,
+              "method_0__baseline_1": 1,
+              "method_1__baseline_0": 9,
+              "method_1__baseline_1": 10
+            },
+            "safe_success": {
+              "method_0__baseline_0": 37
+            },
+            "task_success": {
+              "method_0__baseline_0": 37
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "parameter_id",
+            "source_rollout"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 28,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.0003504697349276244,
+                0.0003072184736087786
+              ],
+              "estimate": -2.3415500018180474e-05,
+              "n": 28,
+              "p_two_sided_bootstrap": 0.8828
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                0.8392857142857143,
+                1.0
+              ],
+              "estimate": 0.9285714285714286,
+              "n": 28,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "cause_violation": {
+              "ci95": [
+                0.07142857142857142,
+                0.375
+              ],
+              "estimate": 0.21428571428571427,
+              "n": 28,
+              "p_two_sided_bootstrap": 0.0018
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                0.002042094728713418,
+                0.002931773163231762
+              ],
+              "estimate": 0.0024797788154793028,
+              "n": 28,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                0.001921823859278685,
+                0.002847161736811361
+              ],
+              "estimate": 0.002381985980420762,
+              "n": 28,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.0003081930110047362,
+                0.0008609542931043552
+              ],
+              "estimate": 0.0002730956361644844,
+              "n": 28,
+              "p_two_sided_bootstrap": 0.3422
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 28,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 28,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.10802786297414407,
+                0.08499254308385375
+              ],
+              "estimate": -0.010640171000038176,
+              "n": 28,
+              "p_two_sided_bootstrap": 0.8456
+            }
+          },
+          "events": 37,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 1.0,
+            "actual_inference_wall_time_s": 1.0,
+            "actual_post_detection_actions": 0.0,
+            "cause_violation": 0.0126,
+            "completion_steps": null,
+            "eef_path_length_m": 0.0,
+            "manipulated_object_path_length_m": 0.0,
+            "progress_regression_m": 1.0,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 1.0
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 28
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.029556468819123,
+                0.033465462517358595
+              ],
+              "estimate": 0.0022720129283003367,
+              "n": 28
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                -0.08333333333333333,
+                -0.06994047619047612
+              ],
+              "estimate": -0.0773809523809524,
+              "n": 28
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.02538378626082329,
+                -0.017843365898036465
+              ],
+              "estimate": -0.021609173808461744,
+              "n": 28
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.0246857945030543,
+                -0.01657505852511703
+              ],
+              "estimate": -0.020583579701598312,
+              "n": 28
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.057023144278394784,
+                0.019715672704984415
+              ],
+              "estimate": -0.016600097637172993,
+              "n": 28
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.0200889480616031,
+                0.025633293335451352
+              ],
+              "estimate": 0.0025407305394334868,
+              "n": 28
+            }
+          }
+        },
+        "put_the_cream_cheese_in_the_bowl::shift_080mm": {
+          "baseline": "FIXED_DELAY_8",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 12,
+              "method_0__baseline_1": 1,
+              "method_1__baseline_0": 6,
+              "method_1__baseline_1": 16
+            },
+            "safe_success": {
+              "method_0__baseline_0": 35
+            },
+            "task_success": {
+              "method_0__baseline_0": 35
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "parameter_id",
+            "source_rollout"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 26,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.00045609894284334246,
+                0.0003602550381232231
+              ],
+              "estimate": -4.520349355557188e-05,
+              "n": 26,
+              "p_two_sided_bootstrap": 0.821
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                0.15384615384615385,
+                0.9615384615384616
+              ],
+              "estimate": 0.6538461538461539,
+              "n": 26,
+              "p_two_sided_bootstrap": 0.0258
+            },
+            "cause_violation": {
+              "ci95": [
+                -0.05128205128205128,
+                0.21794871794871795
+              ],
+              "estimate": 0.08333333333333334,
+              "n": 26,
+              "p_two_sided_bootstrap": 0.236
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.00011390515416646939,
+                0.00300962352531838
+              ],
+              "estimate": 0.00176037276162569,
+              "n": 26,
+              "p_two_sided_bootstrap": 0.0626
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.005769766554326759,
+                0.002766232923362278
+              ],
+              "estimate": -0.0002856515713814005,
+              "n": 26,
+              "p_two_sided_bootstrap": 0.8522
+            },
+            "progress_regression_m": {
+              "ci95": [
+                2.2313521167197307e-05,
+                0.0005984214251708467
+              ],
+              "estimate": 0.0002447476543759969,
+              "n": 26,
+              "p_two_sided_bootstrap": 0.0138
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 26,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 26,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.1263722630255506,
+                0.08567023751289896
+              ],
+              "estimate": -0.013590755224376992,
+              "n": 26,
+              "p_two_sided_bootstrap": 0.8424
+            }
+          },
+          "events": 35,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 1.0,
+            "actual_inference_wall_time_s": 1.0,
+            "actual_post_detection_actions": 0.2322,
+            "cause_violation": 1.0,
+            "completion_steps": null,
+            "eef_path_length_m": 0.5008,
+            "manipulated_object_path_length_m": 1.0,
+            "progress_regression_m": 0.138,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 1.0
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 26
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.03671828086032352,
+                0.04351605481611589
+              ],
+              "estimate": 0.004366472421104436,
+              "n": 26
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                -0.08012820512820513,
+                -0.009615384615384581
+              ],
+              "estimate": -0.05448717948717944,
+              "n": 26
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.025669802508095703,
+                0.0013567770860878293
+              ],
+              "estimate": -0.015298976287635793,
+              "n": 26
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.023409870833735903,
+                0.05003504329326431
+              ],
+              "estimate": 0.002432028345982094,
+              "n": 26
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.14841548933598298,
+                -0.016316109874532997
+              ],
+              "estimate": -0.07061587325723781,
+              "n": 26
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.0200699614615707,
+                0.02840851485485238
+              ],
+              "estimate": 0.003142999979928879,
+              "n": 26
+            }
+          }
+        }
+      },
+      "task": {
+        "put_the_bowl_on_the_stove": {
+          "baseline": "FIXED_DELAY_8",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 82
+            },
+            "safe_success": {
+              "method_0__baseline_0": 79,
+              "method_0__baseline_1": 1,
+              "method_1__baseline_1": 2
+            },
+            "task_success": {
+              "method_0__baseline_0": 79,
+              "method_0__baseline_1": 1,
+              "method_1__baseline_1": 2
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "source_rollout"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.05555555555555555
+              ],
+              "estimate": 0.021367521367521364,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.262
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.0002565955642165381,
+                0.0004909667167772531
+              ],
+              "estimate": 0.00011778916676774269,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.5474
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                -3.0,
+                -2.8803418803418803
+              ],
+              "estimate": -2.948717948717949,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "cause_violation": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 39,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "completion_steps": {
+              "ci95": [
+                0.0,
+                1.0
+              ],
+              "estimate": 0.5,
+              "n": 2,
+              "p_two_sided_bootstrap": 0.4936
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.03281442362649355,
+                -0.02918254219259458
+              ],
+              "estimate": -0.031160887334254737,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.03296743036677271,
+                -0.029287300525271374
+              ],
+              "estimate": -0.03134290633610969,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "progress_regression_m": {
+              "ci95": [
+                3.076142590216099e-05,
+                0.002899908855218207
+              ],
+              "estimate": 0.0010681673777408274,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.0276
+            },
+            "safe_success": {
+              "ci95": [
+                -0.02564102564102564,
+                0.0
+              ],
+              "estimate": -0.008547008547008546,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.7212
+            },
+            "task_success": {
+              "ci95": [
+                -0.02564102564102564,
+                0.0
+              ],
+              "estimate": -0.008547008547008546,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.7504
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.0789757648796079,
+                0.09061600197558244
+              ],
+              "estimate": -0.00023036752977883103,
+              "n": 39,
+              "p_two_sided_bootstrap": 0.9586
+            }
+          },
+          "events": 82,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 1.0,
+            "actual_inference_wall_time_s": 1.0,
+            "actual_post_detection_actions": 0.0,
+            "cause_violation": 1.0,
+            "completion_steps": 1.0,
+            "eef_path_length_m": 0.0,
+            "manipulated_object_path_length_m": 0.0,
+            "progress_regression_m": 0.2208,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 1.0
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                -0.028571428571428466,
+                0.0
+              ],
+              "estimate": -0.010799136069114432,
+              "n": 39
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.04773383124050226,
+                0.02322555109485884
+              ],
+              "estimate": -0.011371027834864543,
+              "n": 39
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                0.24455732946298964,
+                0.25
+              ],
+              "estimate": 0.2478448275862069,
+              "n": 39
+            },
+            "completion_steps": {
+              "ci95": [
+                -0.16666666666666666,
+                0.0
+              ],
+              "estimate": -0.08333333333333333,
+              "n": 2
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                0.1933842920067682,
+                0.20670125696096794
+              ],
+              "estimate": 0.2008239074160009,
+              "n": 39
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                0.18874289817668927,
+                0.2042442306980031
+              ],
+              "estimate": 0.19755456816025552,
+              "n": 39
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -4.847949022145611,
+                0.0
+              ],
+              "estimate": -1.56148826168172,
+              "n": 39
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.021695549347547523,
+                0.019552749107226867
+              ],
+              "estimate": 5.580082041881067e-05,
+              "n": 39
+            }
+          }
+        },
+        "put_the_cream_cheese_in_the_bowl": {
+          "baseline": "FIXED_DELAY_8",
+          "binary_tables": {
+            "cause_violation": {
+              "method_0__baseline_0": 29,
+              "method_0__baseline_1": 2,
+              "method_1__baseline_0": 15,
+              "method_1__baseline_1": 26
+            },
+            "safe_success": {
+              "method_0__baseline_0": 72
+            },
+            "task_success": {
+              "method_0__baseline_0": 72
+            }
+          },
+          "bootstrap_cluster_fields": [
+            "task",
+            "source_rollout"
+          ],
+          "bootstrap_unit": "source rollout cluster; prefix rows averaged within cluster",
+          "differences": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 36,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.0003132914589670313,
+                0.00021381636400513902
+              ],
+              "estimate": -5.4821879624948146e-05,
+              "n": 36,
+              "p_two_sided_bootstrap": 0.6862
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                0.6342592592592593,
+                0.9583333333333334
+              ],
+              "estimate": 0.8287037037037037,
+              "n": 36,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "cause_violation": {
+              "ci95": [
+                0.06018518518518518,
+                0.2361111111111111
+              ],
+              "estimate": 0.14814814814814814,
+              "n": 36,
+              "p_two_sided_bootstrap": 0.0012
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                0.0015169236460558359,
+                0.0027031079332700686
+              ],
+              "estimate": 0.0021844936024269803,
+              "n": 36,
+              "p_two_sided_bootstrap": 0.0
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.0006577304659247465,
+                0.0025278472839368846
+              ],
+              "estimate": 0.0013552992261490328,
+              "n": 36,
+              "p_two_sided_bootstrap": 0.1582
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.0001814035969843366,
+                0.0005452419236044693
+              ],
+              "estimate": 0.00017761648581883258,
+              "n": 36,
+              "p_two_sided_bootstrap": 0.329
+            },
+            "safe_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 36,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "task_success": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 36,
+              "p_two_sided_bootstrap": 1.0
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.09440132610114109,
+                0.06587556130728985
+              ],
+              "estimate": -0.014263438680596109,
+              "n": 36,
+              "p_two_sided_bootstrap": 0.7274
+            }
+          },
+          "events": 72,
+          "holm_adjusted_p_values": {
+            "actual_actor_calls": 1.0,
+            "actual_inference_wall_time_s": 1.0,
+            "actual_post_detection_actions": 0.0,
+            "cause_violation": 0.0096,
+            "completion_steps": null,
+            "eef_path_length_m": 0.0,
+            "manipulated_object_path_length_m": 1.0,
+            "progress_regression_m": 1.0,
+            "safe_success": 1.0,
+            "task_success": 1.0,
+            "total_branch_wall_time_s": 1.0
+          },
+          "method": "EVENT_ALIGNED_CACHED",
+          "relative_reductions": {
+            "actual_actor_calls": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "estimate": 0.0,
+              "n": 36
+            },
+            "actual_inference_wall_time_s": {
+              "ci95": [
+                -0.02065800745894089,
+                0.02989125367012286
+              ],
+              "estimate": 0.005300496963193515,
+              "n": 36
+            },
+            "actual_post_detection_actions": {
+              "ci95": [
+                -0.07986111111111116,
+                -0.05246913580246915
+              ],
+              "estimate": -0.06905864197530868,
+              "n": 36
+            },
+            "completion_steps": {
+              "ci95": [
+                null,
+                null
+              ],
+              "estimate": null,
+              "n": 0
+            },
+            "eef_path_length_m": {
+              "ci95": [
+                -0.023260453145192567,
+                -0.013282094376093269
+              ],
+              "estimate": -0.018965809194256465,
+              "n": 36
+            },
+            "manipulated_object_path_length_m": {
+              "ci95": [
+                -0.021639230912909445,
+                0.005696735022089616
+              ],
+              "estimate": -0.011622300118797169,
+              "n": 36
+            },
+            "progress_regression_m": {
+              "ci95": [
+                -0.058054219237955444,
+                0.021850329118887405
+              ],
+              "estimate": -0.019687893052587335,
+              "n": 36
+            },
+            "total_branch_wall_time_s": {
+              "ci95": [
+                -0.01511323963308502,
+                0.02155111285834141
+              ],
+              "estimate": 0.0033648863728842748,
+              "n": 36
+            }
+          }
+        }
+      }
+    }
+  },
+  "diagnostic_error_signal": {
+    "diagnostic_only": true,
+    "error_proxy": "progress_regression_m_or_explicit_cause_violation",
+    "event_count": 59,
+    "global_spearman": 0.266886403358126,
+    "high_error_auroc": null,
+    "high_error_threshold": 0.0,
+    "holm_correction": "applied to paired arm bootstrap p-values; no positive label is inferred",
+    "mixed_effect_controls": {
+      "action_magnitude": "unavailable as a direct command norm; EEF path is retained separately",
+      "canonical_task_loss": "unavailable; no learned WM loss in Stage-2D",
+      "ensemble_uncertainty": "unavailable; no ensemble in Stage-2D",
+      "episode_random_intercept": "demeaned within task+init_state/source_rollout cluster",
+      "initial_dino_orbit_floor": "not applicable; no DINO branch",
+      "state_only_variance": "unavailable; no state-only WM branch",
+      "true_future_dino_orbit_floor": "not applicable; no DINO branch"
+    },
+    "mixed_effect_episode_intercept_slope": 0.058175281230482455,
+    "positive_correlation_event_fraction": 0.6538461538461539,
+    "row_count": 1652,
+    "score_proxy": "cached_fresh_action_disagreement",
+    "state_centered_spearman": 0.14283217169239054,
+    "status": "COMPLETE",
+    "within_event_spearman_distribution": {
+      "count": 26,
+      "median": 0.2026743034389715,
+      "positive_fraction": 0.6538461538461539,
+      "values": [
+        0.3046052243885954,
+        0.39492377809564905,
+        0.5932002937848826,
+        0.6120601939643617,
+        0.09663485557232457,
+        0.7911810521819796,
+        0.7890341003099102,
+        0.3644405142398324,
+        0.028078883922170075,
+        -0.9089449983366621,
+        -0.21497895502911465,
+        -0.5567871769370515,
+        0.11212515439301249,
+        0.7239087261184473,
+        0.5332215097778771,
+        -0.07252747252747253,
+        0.6094494002200441,
+        -0.15713033983148247,
+        0.6044474658632781,
+        -0.05142597340008787,
+        0.6,
+        -0.7297584936022327,
+        -0.792082371427086,
+        -0.4803947831672752,
+        0.2351648351648352,
+        0.1701837717131078
+      ]
+    }
+  },
+  "diagnostic_only_global": true,
+  "efficiency_fields": [
+    "actual_post_detection_actions",
+    "completion_steps",
+    "actual_actor_calls",
+    "actual_inference_wall_time_s",
+    "eef_path_length_m",
+    "manipulated_object_path_length_m",
+    "total_branch_wall_time_s",
+    "progress_regression_m"
+  ],
+  "evaluation_oracle_loaded": false,
+  "formal_positive_evidence_allowed": false,
+  "h1_raw_pass": true,
+  "h4_calibration_oracle_gap": {
+    "fixed_mean_post_actions": 11.872881355932204,
+    "n": 118,
+    "oracle_efficiency_gap_recovered": 0.15838150289017353,
+    "oracle_mean_post_actions": 4.5423728813559325,
+    "rule_differs_from_strongest_fixed_fraction": 0.940677966101695,
+    "rule_interior_fraction": 1.0,
+    "rule_mean_post_actions": 10.711864406779661,
+    "source": "calibration_only; evaluation oracle not loaded"
+  },
+  "independent_unit": "init_state_rollout_event",
+  "macro_task_average_descriptive_only": true,
+  "raw_pass": {
+    "h2": false,
+    "h3": false,
+    "h4": false
+  },
+  "schema_version": 1,
+  "valid_events": 154
+}
