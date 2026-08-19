@@ -333,8 +333,6 @@ else
   "$PYTHON" -m r16_p14_stage2d.oracle_appendix --consolidate >"$ARTIFACT_DIR/logs/oracle-consolidate.log" 2>&1
   "$PYTHON" -m r16_p14_stage2d.mechanism_reverse >"$ARTIFACT_DIR/logs/mechanism-final.log" 2>&1
   "$PYTHON" -m r16_p14_stage2d.report >"$ARTIFACT_DIR/logs/report.log" 2>&1
-  "$PYTHON" -m pytest -q "$SOURCE_ROOT/experiments/r16_p14_stage2d/tests" \
-    --junitxml="$ARTIFACT_ROOT/test_results/pytest.xml" >"$ARTIFACT_DIR/logs/pytest.log" 2>&1
   "$PYTHON" -m r16_p14_stage2d.checksums >"$ARTIFACT_DIR/logs/checksums.log" 2>&1
   "$PYTHON" -m pytest -q "$SOURCE_ROOT/experiments/r16_p14_stage2d/tests" \
     >"$ARTIFACT_DIR/logs/pytest-final.log" 2>&1

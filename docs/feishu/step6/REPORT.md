@@ -1,3 +1,4 @@
+
 # 一、结论摘要
 
 本阶段的最终正式状态是 **BLOCKED_BY_EVENT_CONSTRUCTION**。accepted=false，novelty=N2_ORACLE_PROTOCOL_BOUNDARY_ONLY。Stage-1b 的 universal hypothesis 保持 KILLED_IMMUTABLE；Stage-2C 保持 BLOCKED_UPSTREAM_IMMUTABLE。
@@ -93,3 +94,5 @@ Stage-2D tests 共 44 项，最终本地结果为 44 passed、0 failed、0 skipp
 GitHub 仓库：[R16-P14-Earliest-Irreversible-Prefix-Intervention](https://github.com/mikasaTu/R16-P14-Earliest-Irreversible-Prefix-Intervention)。Step6 计划：[飞书 step6](https://icnbwz7kd1ui.feishu.cn/wiki/CoSdwjvXGixf4dkhXE5cpzUSnNY)。Step6 实验报告：[飞书实验报告](https://icnbwz7kd1ui.feishu.cn/wiki/Yqg8wGp8Fit8enkJZl9chjhVnuf)。
 
 本阶段到此停止 offline pilot，不进入 closed-loop expansion、learned replanability、SmolVLA、π0.5、LIBERO 新扩展或其他下游阶段。
+
+格式契约审计：5 份历史 JUnit XML 已机械转换为同名 JSON，保留 original_sha256、汇总计数、每条 testcase 及失败/错误/跳过详情；按本阶段格式契约未提交 JUnit XML。最终本地契约测试以 plain log 与 JSON 归档，结果为 44 passed、0 failed、0 skipped。

@@ -42,6 +42,8 @@ The evaluation all-k appendix status is **PASS**; rows=2310 / 2310; events=154; 
 
 PAI receipt: run `r16p14-stage2d-phase3-oracle-20260819-v6`, JobId `dlcxqlerueks20h6`, final platform status **Failed**. The platform job failed only during postprocessing because the first pytest ran before SHA256SUMS was rebuilt after the 2310 oracle shards were written (test_29); this is retained as a control-plane failure, not rewritten as Succeeded. The science matrix and terminal receipt above remain complete and diagnostic-only.
 
+Format-contract audit: the five historical JUnit XML receipts were mechanically converted to same-basename JSON, preserving original SHA256 values, aggregate counters, every testcase, and complete failure/error/skipped details. JUnit XML is not retained in the repository. The final local contract run is archived as `test_results/final_pytest.log` and `test_results/final_pytest.json`: 44 passed, 0 failed, 0 skipped.
+
 ## Mechanism reverse audit
 
 The code-first audit covers 154 replay-admitted events and explicitly records `new_idea_generated=false`. CACHED vs FRESH isolates old action content; CACHED vs NOQUERY isolates sham-query compute; HOLD isolates elapsed steps from motion content; FULL_OLD isolates damage from stale suffix continuation.
