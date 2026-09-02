@@ -212,9 +212,11 @@ explained_fraction = (restricted_delta - full_delta) / restricted_delta, 仅当 
 
 ```text
 cause_violation_type_set = sorted(unique(non-empty cause_violation_type values))
-prefix_cause_violation_any = any(cause_violation over the 180 rows)
-prefix_cause_violation_fraction = mean(cause_violation over the 180 rows)
+prefix_cause_violation_any = any(prefix_cause_violation over the 180 rows)
+prefix_cause_violation_fraction = mean(prefix_cause_violation over the 180 rows)
 ```
+
+这里的 `prefix_cause_violation_any` 与 `prefix_cause_violation_fraction` 只聚合行中的 raw `prefix_cause_violation` 字段；`cause_violation_type_set` 仍只聚合 raw `cause_violation_type`。本修订仍发生在读取任何 raw outcome 之前，首提交 `0ff6aef8ec53bfc2f30fc6eda3c86d116e6b3ea0` 保留在审计链中。
 
 按 `parameter_id`、`task` 比较预先定义的 covered 21 events 与 uncovered 27 events，分别给出 cause 类型集合、`any`、fraction 和 support coverage；同时输出 `all_contaminated` 与 `replay_valid_subset` 两版。任何 invalid event 不得被静默视作安全或从全集中抹除。
 
