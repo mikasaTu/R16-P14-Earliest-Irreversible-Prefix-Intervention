@@ -1,0 +1,240 @@
+{
+  "axis_contract": {
+    "budget": {
+      "causal_decomposition": "NOT_IDENTIFIABLE",
+      "stage2c": "event_remaining_horizon plus padded_event_budget; not a preset grid",
+      "stage2d": "maximum_action_budget=18, maximum_policy_call_budget=2, tail_horizon=4"
+    },
+    "runtime_purity": {
+      "causal_decomposition": "NOT_IDENTIFIABLE",
+      "stage2c": [
+        "shared_runtime_known_invalid",
+        "shared_runtime_no_detected_violation"
+      ],
+      "stage2d": [
+        "fresh_process_verified"
+      ]
+    },
+    "severity": {
+      "causal_decomposition": "NOT_IDENTIFIABLE",
+      "stage2c": [
+        "future_06_lateral_040mm",
+        "future_14_lateral_020mm",
+        "shift_040mm",
+        "shift_060mm"
+      ],
+      "stage2d": [
+        "future_09__clearance_m010mm",
+        "future_09__clearance_p000mm",
+        "shift_060mm",
+        "shift_080mm"
+      ]
+    }
+  },
+  "causal_contribution": "NOT_IDENTIFIABLE_BUDGET_SEVERITY_RUNTIME_CO_VARY",
+  "diagnostic_only": true,
+  "formal_positive_evidence_allowed": false,
+  "new_idea_generated": false,
+  "only_quantifiable_sensitivity": "stage2c_all_to_valid_invalid_event_exclusion_subset_sensitivity",
+  "planned_pai_jobs": 0,
+  "published_stage2c_10_to_16_band": {
+    "display_range": [
+      "10.4%",
+      "16.0%"
+    ],
+    "exact_range": [
+      0.10416666666666667,
+      0.1597222222222222
+    ],
+    "methods": [
+      "fixed_delay_4",
+      "fixed_delay_8",
+      "immediate_fresh_h16"
+    ],
+    "note": "The exact 5.6% fixed-delay-1 and 9.0% fixed-delay-2 rates remain in published_stage2c_baseline_rates."
+  },
+  "published_stage2c_baseline_rates": {
+    "fixed_delay_1": 0.05555555555555555,
+    "fixed_delay_2": 0.09027777777777778,
+    "fixed_delay_4": 0.10416666666666667,
+    "fixed_delay_8": 0.1111111111111111,
+    "immediate_fresh_h16": 0.1597222222222222
+  },
+  "schema_version": 1,
+  "stage2c_all_to_valid_sensitivity": [
+    {
+      "all_contaminated": 0.10648148148148148,
+      "operator": "fresh_h16",
+      "parameter_id": "future_06_lateral_040mm",
+      "replay_valid_subset": 0.0024691358024691358,
+      "task": "put_the_bowl_on_the_stove",
+      "valid_minus_all": -0.10401234567901235
+    },
+    {
+      "all_contaminated": 0.0787037037037037,
+      "operator": "fresh_h4",
+      "parameter_id": "future_06_lateral_040mm",
+      "replay_valid_subset": 0.0024691358024691358,
+      "task": "put_the_bowl_on_the_stove",
+      "valid_minus_all": -0.07623456790123458
+    },
+    {
+      "all_contaminated": 0.21203703703703702,
+      "operator": "hold_one_step_then_fresh_h16",
+      "parameter_id": "future_06_lateral_040mm",
+      "replay_valid_subset": 0.0,
+      "task": "put_the_bowl_on_the_stove",
+      "valid_minus_all": -0.21203703703703702
+    },
+    {
+      "all_contaminated": 0.10092592592592593,
+      "operator": "rollback_one_step_then_fresh_h16",
+      "parameter_id": "future_06_lateral_040mm",
+      "replay_valid_subset": 0.0,
+      "task": "put_the_bowl_on_the_stove",
+      "valid_minus_all": -0.10092592592592593
+    },
+    {
+      "all_contaminated": 0.19722222222222222,
+      "operator": "fresh_h16",
+      "parameter_id": "future_14_lateral_020mm",
+      "replay_valid_subset": 0.04814814814814815,
+      "task": "put_the_bowl_on_the_stove",
+      "valid_minus_all": -0.14907407407407408
+    },
+    {
+      "all_contaminated": 0.13055555555555556,
+      "operator": "fresh_h4",
+      "parameter_id": "future_14_lateral_020mm",
+      "replay_valid_subset": 0.02962962962962963,
+      "task": "put_the_bowl_on_the_stove",
+      "valid_minus_all": -0.10092592592592593
+    },
+    {
+      "all_contaminated": 0.25,
+      "operator": "hold_one_step_then_fresh_h16",
+      "parameter_id": "future_14_lateral_020mm",
+      "replay_valid_subset": 0.007407407407407408,
+      "task": "put_the_bowl_on_the_stove",
+      "valid_minus_all": -0.24259259259259258
+    },
+    {
+      "all_contaminated": 0.15925925925925927,
+      "operator": "rollback_one_step_then_fresh_h16",
+      "parameter_id": "future_14_lateral_020mm",
+      "replay_valid_subset": 0.003703703703703704,
+      "task": "put_the_bowl_on_the_stove",
+      "valid_minus_all": -0.15555555555555556
+    },
+    {
+      "all_contaminated": 0.0787037037037037,
+      "operator": "fresh_h16",
+      "parameter_id": "shift_040mm",
+      "replay_valid_subset": 0.0787037037037037,
+      "task": "put_the_cream_cheese_in_the_bowl",
+      "valid_minus_all": 0.0
+    },
+    {
+      "all_contaminated": 0.075,
+      "operator": "fresh_h4",
+      "parameter_id": "shift_040mm",
+      "replay_valid_subset": 0.075,
+      "task": "put_the_cream_cheese_in_the_bowl",
+      "valid_minus_all": 0.0
+    },
+    {
+      "all_contaminated": 0.025,
+      "operator": "hold_one_step_then_fresh_h16",
+      "parameter_id": "shift_040mm",
+      "replay_valid_subset": 0.025,
+      "task": "put_the_cream_cheese_in_the_bowl",
+      "valid_minus_all": 0.0
+    },
+    {
+      "all_contaminated": 0.03888888888888889,
+      "operator": "rollback_one_step_then_fresh_h16",
+      "parameter_id": "shift_040mm",
+      "replay_valid_subset": 0.03888888888888889,
+      "task": "put_the_cream_cheese_in_the_bowl",
+      "valid_minus_all": 0.0
+    },
+    {
+      "all_contaminated": 0.041666666666666664,
+      "operator": "fresh_h16",
+      "parameter_id": "shift_060mm",
+      "replay_valid_subset": 0.041666666666666664,
+      "task": "put_the_cream_cheese_in_the_bowl",
+      "valid_minus_all": 0.0
+    },
+    {
+      "all_contaminated": 0.027777777777777776,
+      "operator": "fresh_h4",
+      "parameter_id": "shift_060mm",
+      "replay_valid_subset": 0.027777777777777776,
+      "task": "put_the_cream_cheese_in_the_bowl",
+      "valid_minus_all": 0.0
+    },
+    {
+      "all_contaminated": 0.010185185185185186,
+      "operator": "hold_one_step_then_fresh_h16",
+      "parameter_id": "shift_060mm",
+      "replay_valid_subset": 0.010185185185185186,
+      "task": "put_the_cream_cheese_in_the_bowl",
+      "valid_minus_all": 0.0
+    },
+    {
+      "all_contaminated": 0.014814814814814815,
+      "operator": "rollback_one_step_then_fresh_h16",
+      "parameter_id": "shift_060mm",
+      "replay_valid_subset": 0.014814814814814815,
+      "task": "put_the_cream_cheese_in_the_bowl",
+      "valid_minus_all": 0.0
+    }
+  ],
+  "stage2c_b1_operator_rate_range": [
+    0.0,
+    0.25
+  ],
+  "stage2c_invalid_events": {
+    "invalid": 33,
+    "total": 96,
+    "valid": 63
+  },
+  "stage2d_frozen_fixed_delay_rates": {
+    "display_range": [
+      "0.85%",
+      "3.39%"
+    ],
+    "exact_range": [
+      0.00847457627118644,
+      0.03389830508474576
+    ],
+    "rows": [
+      {
+        "actual_post_detection_actions": 6.0,
+        "cause_violation": 0.0,
+        "delay": 2,
+        "events": 118,
+        "method": "FIXED_DELAY_2",
+        "safe_success": 0.00847457627118644
+      },
+      {
+        "actual_post_detection_actions": 7.966101694915254,
+        "cause_violation": 0.00847457627118644,
+        "delay": 4,
+        "events": 118,
+        "method": "FIXED_DELAY_4",
+        "safe_success": 0.01694915254237288
+      },
+      {
+        "actual_post_detection_actions": 11.872881355932204,
+        "cause_violation": 0.1864406779661017,
+        "delay": 8,
+        "events": 118,
+        "method": "FIXED_DELAY_8",
+        "safe_success": 0.03389830508474576
+      }
+    ]
+  },
+  "submitted_pai_jobs": 0
+}

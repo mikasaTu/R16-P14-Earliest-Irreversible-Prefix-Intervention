@@ -1,0 +1,1100 @@
+{
+  "A1_exact_reproduction": true,
+  "A1_rows": [
+    {
+      "baseline": "action_disagreement",
+      "denominator": 144,
+      "diagnostic_only": true,
+      "exact_match": true,
+      "expected_denominator": 144,
+      "expected_numerator": 10,
+      "expected_support_events": 48,
+      "numerator": 10,
+      "percentage": "6.9%",
+      "support_denominator": 48,
+      "support_events": 48
+    },
+    {
+      "baseline": "fixed_delay_1",
+      "denominator": 144,
+      "diagnostic_only": true,
+      "exact_match": true,
+      "expected_denominator": 144,
+      "expected_numerator": 8,
+      "expected_support_events": 48,
+      "numerator": 8,
+      "percentage": "5.6%",
+      "support_denominator": 48,
+      "support_events": 48
+    },
+    {
+      "baseline": "fixed_delay_2",
+      "denominator": 144,
+      "diagnostic_only": true,
+      "exact_match": true,
+      "expected_denominator": 144,
+      "expected_numerator": 13,
+      "expected_support_events": 48,
+      "numerator": 13,
+      "percentage": "9.0%",
+      "support_denominator": 48,
+      "support_events": 48
+    },
+    {
+      "baseline": "fixed_delay_4",
+      "denominator": 144,
+      "diagnostic_only": true,
+      "exact_match": true,
+      "expected_denominator": 144,
+      "expected_numerator": 15,
+      "expected_support_events": 48,
+      "numerator": 15,
+      "percentage": "10.4%",
+      "support_denominator": 48,
+      "support_events": 48
+    },
+    {
+      "baseline": "fixed_delay_8",
+      "denominator": 144,
+      "diagnostic_only": true,
+      "exact_match": true,
+      "expected_denominator": 144,
+      "expected_numerator": 16,
+      "expected_support_events": 48,
+      "numerator": 16,
+      "percentage": "11.1%",
+      "support_denominator": 48,
+      "support_events": 48
+    },
+    {
+      "baseline": "immediate_fresh_h16",
+      "denominator": 144,
+      "diagnostic_only": true,
+      "exact_match": true,
+      "expected_denominator": 144,
+      "expected_numerator": 23,
+      "expected_support_events": 48,
+      "numerator": 23,
+      "percentage": "16.0%",
+      "support_denominator": 48,
+      "support_events": 48
+    },
+    {
+      "baseline": "k_last_observed_safe",
+      "denominator": 72,
+      "diagnostic_only": true,
+      "exact_match": true,
+      "expected_denominator": 72,
+      "expected_numerator": 3,
+      "expected_support_events": 24,
+      "numerator": 3,
+      "percentage": "4.2%",
+      "support_denominator": 48,
+      "support_events": 24
+    },
+    {
+      "baseline": "k_last_recoverable",
+      "denominator": 54,
+      "diagnostic_only": true,
+      "exact_match": true,
+      "expected_denominator": 54,
+      "expected_numerator": 20,
+      "expected_support_events": 18,
+      "numerator": 20,
+      "percentage": "37.0%",
+      "support_denominator": 48,
+      "support_events": 18
+    },
+    {
+      "baseline": "velocity_phase",
+      "denominator": 144,
+      "diagnostic_only": true,
+      "exact_match": true,
+      "expected_denominator": 144,
+      "expected_numerator": 16,
+      "expected_support_events": 48,
+      "numerator": 16,
+      "percentage": "11.1%",
+      "support_denominator": 48,
+      "support_events": 48
+    }
+  ],
+  "G0_1": "FULL_SUPPORT_ADVANTAGE",
+  "a5_aggregation_fields": {
+    "any": "raw prefix_cause_violation",
+    "fraction": "raw prefix_cause_violation",
+    "type_set": "raw cause_violation_type"
+  },
+  "a5_event_rows": 82,
+  "cohorts": {
+    "all_contaminated": {
+      "delta": {
+        "absolute_inflation": 0.002314814814814839,
+        "diagnostic_only": true,
+        "explained_fraction": 0.029411764705882647,
+        "formal_positive_evidence_allowed": false,
+        "full_bootstrap": {
+          "ci95": [
+            0.006944444444444444,
+            0.14583333333333334
+          ],
+          "cluster_aggregation": "event_actor_mean_then_equal_cluster_mean",
+          "cluster_order": "first_appearance_in_stable_event_id_order",
+          "cluster_unit": "(task,init_state_id)",
+          "clusters": 16,
+          "estimate": 0.0763888888888889,
+          "percentile_method": "linear",
+          "replicates": 10000,
+          "seed": 216214
+        },
+        "full_delta": 0.0763888888888889,
+        "full_event_count": 48,
+        "historical_heldout_track_b_safe_success_difference": -0.09444444444444444,
+        "new_idea_generated": false,
+        "restricted_bootstrap": {
+          "ci95": [
+            -0.06944444444444445,
+            0.23611111111111108
+          ],
+          "cluster_aggregation": "event_actor_mean_then_equal_cluster_mean",
+          "cluster_order": "first_appearance_in_stable_event_id_order",
+          "cluster_unit": "(task,init_state_id)",
+          "clusters": 12,
+          "estimate": 0.07870370370370373,
+          "percentile_method": "linear",
+          "replicates": 10000,
+          "seed": 216214
+        },
+        "restricted_delta": 0.07870370370370373,
+        "restricted_event_count": 21,
+        "winner": "fixed_delay_8"
+      },
+      "event_count": 48,
+      "invalid_excluded": 0,
+      "method_summaries": [
+        {
+          "actor_calls": 64.29166666666667,
+          "actor_row_count": 144,
+          "cohort": "all_contaminated",
+          "event_count": 48,
+          "fallback_event_count": 0,
+          "full_support": {
+            "actor_calls": 64.29166666666667,
+            "actor_row_count": 144,
+            "cohort": "all_contaminated",
+            "event_count": 48,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 15.541666666666666,
+            "method": "action_disagreement",
+            "new_non_nominal_actions": 226.75694444444443,
+            "safe_success": 0.12499999999999999,
+            "support_coverage": {
+              "cohort_events": 48,
+              "coverage_of_cohort": 1.0,
+              "coverage_of_global_48": 1.0,
+              "defined_events": 48,
+              "defined_rows": 144,
+              "global_events": 48
+            }
+          },
+          "mean_prefix_k": 15.541666666666666,
+          "method": "action_disagreement",
+          "new_non_nominal_actions": 226.75694444444443,
+          "restricted_support": {
+            "actor_calls": 64.29166666666667,
+            "actor_row_count": 144,
+            "event_count": 48,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 15.541666666666666,
+            "method": "action_disagreement",
+            "new_non_nominal_actions": 226.75694444444443,
+            "safe_success": 0.12499999999999999
+          },
+          "safe_success": 0.12499999999999999,
+          "support_coverage": {
+            "cohort_events": 48,
+            "coverage_of_cohort": 1.0,
+            "coverage_of_global_48": 1.0,
+            "defined_events": 48,
+            "defined_rows": 144,
+            "global_events": 48
+          }
+        },
+        {
+          "actor_calls": 67.66666666666667,
+          "actor_row_count": 144,
+          "cohort": "all_contaminated",
+          "event_count": 48,
+          "fallback_event_count": 0,
+          "full_support": {
+            "actor_calls": 67.66666666666667,
+            "actor_row_count": 144,
+            "cohort": "all_contaminated",
+            "event_count": 48,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 3.0,
+            "method": "fixed_delay_1",
+            "new_non_nominal_actions": 244.79166666666666,
+            "safe_success": 0.09722222222222221,
+            "support_coverage": {
+              "cohort_events": 48,
+              "coverage_of_cohort": 1.0,
+              "coverage_of_global_48": 1.0,
+              "defined_events": 48,
+              "defined_rows": 144,
+              "global_events": 48
+            }
+          },
+          "mean_prefix_k": 3.0,
+          "method": "fixed_delay_1",
+          "new_non_nominal_actions": 244.79166666666666,
+          "restricted_support": {
+            "actor_calls": 67.66666666666667,
+            "actor_row_count": 144,
+            "event_count": 48,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 3.0,
+            "method": "fixed_delay_1",
+            "new_non_nominal_actions": 244.79166666666666,
+            "safe_success": 0.09722222222222221
+          },
+          "safe_success": 0.09722222222222221,
+          "support_coverage": {
+            "cohort_events": 48,
+            "coverage_of_cohort": 1.0,
+            "coverage_of_global_48": 1.0,
+            "defined_events": 48,
+            "defined_rows": 144,
+            "global_events": 48
+          }
+        },
+        {
+          "actor_calls": 67.16666666666667,
+          "actor_row_count": 144,
+          "cohort": "all_contaminated",
+          "event_count": 48,
+          "fallback_event_count": 0,
+          "full_support": {
+            "actor_calls": 67.16666666666667,
+            "actor_row_count": 144,
+            "cohort": "all_contaminated",
+            "event_count": 48,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 4.0,
+            "method": "fixed_delay_2",
+            "new_non_nominal_actions": 243.1388888888889,
+            "safe_success": 0.10416666666666667,
+            "support_coverage": {
+              "cohort_events": 48,
+              "coverage_of_cohort": 1.0,
+              "coverage_of_global_48": 1.0,
+              "defined_events": 48,
+              "defined_rows": 144,
+              "global_events": 48
+            }
+          },
+          "mean_prefix_k": 4.0,
+          "method": "fixed_delay_2",
+          "new_non_nominal_actions": 243.1388888888889,
+          "restricted_support": {
+            "actor_calls": 67.16666666666667,
+            "actor_row_count": 144,
+            "event_count": 48,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 4.0,
+            "method": "fixed_delay_2",
+            "new_non_nominal_actions": 243.1388888888889,
+            "safe_success": 0.10416666666666667
+          },
+          "safe_success": 0.10416666666666667,
+          "support_coverage": {
+            "cohort_events": 48,
+            "coverage_of_cohort": 1.0,
+            "coverage_of_global_48": 1.0,
+            "defined_events": 48,
+            "defined_rows": 144,
+            "global_events": 48
+          }
+        },
+        {
+          "actor_calls": 66.85416666666667,
+          "actor_row_count": 144,
+          "cohort": "all_contaminated",
+          "event_count": 48,
+          "fallback_event_count": 0,
+          "full_support": {
+            "actor_calls": 66.85416666666667,
+            "actor_row_count": 144,
+            "cohort": "all_contaminated",
+            "event_count": 48,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 6.0,
+            "method": "fixed_delay_4",
+            "new_non_nominal_actions": 244.4722222222222,
+            "safe_success": 0.09027777777777778,
+            "support_coverage": {
+              "cohort_events": 48,
+              "coverage_of_cohort": 1.0,
+              "coverage_of_global_48": 1.0,
+              "defined_events": 48,
+              "defined_rows": 144,
+              "global_events": 48
+            }
+          },
+          "mean_prefix_k": 6.0,
+          "method": "fixed_delay_4",
+          "new_non_nominal_actions": 244.4722222222222,
+          "restricted_support": {
+            "actor_calls": 66.85416666666667,
+            "actor_row_count": 144,
+            "event_count": 48,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 6.0,
+            "method": "fixed_delay_4",
+            "new_non_nominal_actions": 244.4722222222222,
+            "safe_success": 0.09027777777777778
+          },
+          "safe_success": 0.09027777777777778,
+          "support_coverage": {
+            "cohort_events": 48,
+            "coverage_of_cohort": 1.0,
+            "coverage_of_global_48": 1.0,
+            "defined_events": 48,
+            "defined_rows": 144,
+            "global_events": 48
+          }
+        },
+        {
+          "actor_calls": 65.85416666666667,
+          "actor_row_count": 144,
+          "cohort": "all_contaminated",
+          "event_count": 48,
+          "fallback_event_count": 0,
+          "full_support": {
+            "actor_calls": 65.85416666666667,
+            "actor_row_count": 144,
+            "cohort": "all_contaminated",
+            "event_count": 48,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 10.0,
+            "method": "fixed_delay_8",
+            "new_non_nominal_actions": 230.8888888888889,
+            "safe_success": 0.11805555555555554,
+            "support_coverage": {
+              "cohort_events": 48,
+              "coverage_of_cohort": 1.0,
+              "coverage_of_global_48": 1.0,
+              "defined_events": 48,
+              "defined_rows": 144,
+              "global_events": 48
+            }
+          },
+          "mean_prefix_k": 10.0,
+          "method": "fixed_delay_8",
+          "new_non_nominal_actions": 230.8888888888889,
+          "restricted_support": {
+            "actor_calls": 65.85416666666667,
+            "actor_row_count": 144,
+            "event_count": 48,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 10.0,
+            "method": "fixed_delay_8",
+            "new_non_nominal_actions": 230.8888888888889,
+            "safe_success": 0.11805555555555554
+          },
+          "safe_success": 0.11805555555555554,
+          "support_coverage": {
+            "cohort_events": 48,
+            "coverage_of_cohort": 1.0,
+            "coverage_of_global_48": 1.0,
+            "defined_events": 48,
+            "defined_rows": 144,
+            "global_events": 48
+          }
+        },
+        {
+          "actor_calls": 67.85416666666667,
+          "actor_row_count": 144,
+          "cohort": "all_contaminated",
+          "event_count": 48,
+          "fallback_event_count": 0,
+          "full_support": {
+            "actor_calls": 67.85416666666667,
+            "actor_row_count": 144,
+            "cohort": "all_contaminated",
+            "event_count": 48,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 2.0,
+            "method": "immediate_fresh_h16",
+            "new_non_nominal_actions": 228.88194444444446,
+            "safe_success": 0.16666666666666666,
+            "support_coverage": {
+              "cohort_events": 48,
+              "coverage_of_cohort": 1.0,
+              "coverage_of_global_48": 1.0,
+              "defined_events": 48,
+              "defined_rows": 144,
+              "global_events": 48
+            }
+          },
+          "mean_prefix_k": 2.0,
+          "method": "immediate_fresh_h16",
+          "new_non_nominal_actions": 228.88194444444446,
+          "restricted_support": {
+            "actor_calls": 67.85416666666667,
+            "actor_row_count": 144,
+            "event_count": 48,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 2.0,
+            "method": "immediate_fresh_h16",
+            "new_non_nominal_actions": 228.88194444444446,
+            "safe_success": 0.16666666666666666
+          },
+          "safe_success": 0.16666666666666666,
+          "support_coverage": {
+            "cohort_events": 48,
+            "coverage_of_cohort": 1.0,
+            "coverage_of_global_48": 1.0,
+            "defined_events": 48,
+            "defined_rows": 144,
+            "global_events": 48
+          }
+        },
+        {
+          "actor_calls": 65.6875,
+          "actor_row_count": 144,
+          "cohort": "all_contaminated",
+          "event_count": 48,
+          "fallback_event_count": 20,
+          "full_support": {
+            "actor_calls": 65.6875,
+            "actor_row_count": 144,
+            "cohort": "all_contaminated",
+            "event_count": 48,
+            "fallback_event_count": 20,
+            "mean_prefix_k": 10.166666666666666,
+            "method": "k_last_observed_safe",
+            "new_non_nominal_actions": 231.28472222222226,
+            "safe_success": 0.12499999999999999,
+            "support_coverage": {
+              "cohort_events": 48,
+              "coverage_of_cohort": 0.5833333333333334,
+              "coverage_of_global_48": 0.5833333333333334,
+              "defined_events": 28,
+              "defined_rows": 84,
+              "global_events": 48
+            }
+          },
+          "mean_prefix_k": 10.166666666666666,
+          "method": "k_last_observed_safe",
+          "new_non_nominal_actions": 231.28472222222226,
+          "restricted_support": {
+            "actor_calls": 63.82142857142857,
+            "actor_row_count": 84,
+            "event_count": 28,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 16.0,
+            "method": "k_last_observed_safe",
+            "new_non_nominal_actions": 235.6428571428571,
+            "safe_success": 0.08333333333333333
+          },
+          "safe_success": 0.12499999999999999,
+          "support_coverage": {
+            "cohort_events": 48,
+            "coverage_of_cohort": 0.5833333333333334,
+            "coverage_of_global_48": 0.5833333333333334,
+            "defined_events": 28,
+            "defined_rows": 84,
+            "global_events": 48
+          }
+        },
+        {
+          "actor_calls": 66.4375,
+          "actor_row_count": 144,
+          "cohort": "all_contaminated",
+          "event_count": 48,
+          "fallback_event_count": 27,
+          "full_support": {
+            "actor_calls": 66.4375,
+            "actor_row_count": 144,
+            "cohort": "all_contaminated",
+            "event_count": 48,
+            "fallback_event_count": 27,
+            "mean_prefix_k": 7.625,
+            "method": "k_last_recoverable",
+            "new_non_nominal_actions": 220.1875,
+            "safe_success": 0.19444444444444445,
+            "support_coverage": {
+              "cohort_events": 48,
+              "coverage_of_cohort": 0.4375,
+              "coverage_of_global_48": 0.4375,
+              "defined_events": 21,
+              "defined_rows": 63,
+              "global_events": 48
+            }
+          },
+          "mean_prefix_k": 7.625,
+          "method": "k_last_recoverable",
+          "new_non_nominal_actions": 220.1875,
+          "restricted_support": {
+            "actor_calls": 67.47619047619048,
+            "actor_row_count": 63,
+            "event_count": 21,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 14.857142857142858,
+            "method": "k_last_recoverable",
+            "new_non_nominal_actions": 184.34920634920633,
+            "safe_success": 0.38095238095238093
+          },
+          "safe_success": 0.19444444444444445,
+          "support_coverage": {
+            "cohort_events": 48,
+            "coverage_of_cohort": 0.4375,
+            "coverage_of_global_48": 0.4375,
+            "defined_events": 21,
+            "defined_rows": 63,
+            "global_events": 48
+          }
+        },
+        {
+          "actor_calls": 65.29166666666667,
+          "actor_row_count": 144,
+          "cohort": "all_contaminated",
+          "event_count": 48,
+          "fallback_event_count": 0,
+          "full_support": {
+            "actor_calls": 65.29166666666667,
+            "actor_row_count": 144,
+            "cohort": "all_contaminated",
+            "event_count": 48,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 11.895833333333334,
+            "method": "velocity_phase",
+            "new_non_nominal_actions": 227.0625,
+            "safe_success": 0.13888888888888887,
+            "support_coverage": {
+              "cohort_events": 48,
+              "coverage_of_cohort": 1.0,
+              "coverage_of_global_48": 1.0,
+              "defined_events": 48,
+              "defined_rows": 144,
+              "global_events": 48
+            }
+          },
+          "mean_prefix_k": 11.895833333333334,
+          "method": "velocity_phase",
+          "new_non_nominal_actions": 227.0625,
+          "restricted_support": {
+            "actor_calls": 65.29166666666667,
+            "actor_row_count": 144,
+            "event_count": 48,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 11.895833333333334,
+            "method": "velocity_phase",
+            "new_non_nominal_actions": 227.0625,
+            "safe_success": 0.13888888888888887
+          },
+          "safe_success": 0.13888888888888887,
+          "support_coverage": {
+            "cohort_events": 48,
+            "coverage_of_cohort": 1.0,
+            "coverage_of_global_48": 1.0,
+            "defined_events": 48,
+            "defined_rows": 144,
+            "global_events": 48
+          }
+        }
+      ],
+      "strongest_fixed_delay": "fixed_delay_8"
+    },
+    "replay_valid_subset": {
+      "delta": {
+        "absolute_inflation": 0.019841269841269882,
+        "diagnostic_only": true,
+        "explained_fraction": 0.23809523809523847,
+        "formal_positive_evidence_allowed": false,
+        "full_bootstrap": {
+          "ci95": [
+            -0.007936507936507936,
+            0.14285714285714285
+          ],
+          "cluster_aggregation": "event_actor_mean_then_equal_cluster_mean",
+          "cluster_order": "first_appearance_in_stable_event_id_order",
+          "cluster_unit": "(task,init_state_id)",
+          "clusters": 14,
+          "estimate": 0.06349206349206349,
+          "percentile_method": "linear",
+          "replicates": 10000,
+          "seed": 216214
+        },
+        "full_delta": 0.06349206349206349,
+        "full_event_count": 34,
+        "historical_heldout_track_b_safe_success_difference": -0.09444444444444444,
+        "new_idea_generated": false,
+        "restricted_bootstrap": {
+          "ci95": [
+            -0.19444444444444442,
+            0.3611111111111111
+          ],
+          "cluster_aggregation": "event_actor_mean_then_equal_cluster_mean",
+          "cluster_order": "first_appearance_in_stable_event_id_order",
+          "cluster_unit": "(task,init_state_id)",
+          "clusters": 6,
+          "estimate": 0.08333333333333337,
+          "percentile_method": "linear",
+          "replicates": 10000,
+          "seed": 216214
+        },
+        "restricted_delta": 0.08333333333333337,
+        "restricted_event_count": 9,
+        "winner": "fixed_delay_8"
+      },
+      "event_count": 34,
+      "invalid_excluded": 33,
+      "method_summaries": [
+        {
+          "actor_calls": 62.61764705882353,
+          "actor_row_count": 102,
+          "cohort": "replay_valid_subset",
+          "event_count": 34,
+          "fallback_event_count": 0,
+          "full_support": {
+            "actor_calls": 62.61764705882353,
+            "actor_row_count": 102,
+            "cohort": "replay_valid_subset",
+            "event_count": 34,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 15.352941176470589,
+            "method": "action_disagreement",
+            "new_non_nominal_actions": 234.81372549019608,
+            "safe_success": 0.06862745098039215,
+            "support_coverage": {
+              "cohort_events": 34,
+              "coverage_of_cohort": 1.0,
+              "coverage_of_global_48": 0.7083333333333334,
+              "defined_events": 34,
+              "defined_rows": 102,
+              "global_events": 48
+            }
+          },
+          "mean_prefix_k": 15.352941176470589,
+          "method": "action_disagreement",
+          "new_non_nominal_actions": 234.81372549019608,
+          "restricted_support": {
+            "actor_calls": 62.61764705882353,
+            "actor_row_count": 102,
+            "event_count": 34,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 15.352941176470589,
+            "method": "action_disagreement",
+            "new_non_nominal_actions": 234.81372549019608,
+            "safe_success": 0.06862745098039215
+          },
+          "safe_success": 0.06862745098039215,
+          "support_coverage": {
+            "cohort_events": 34,
+            "coverage_of_cohort": 1.0,
+            "coverage_of_global_48": 0.7083333333333334,
+            "defined_events": 34,
+            "defined_rows": 102,
+            "global_events": 48
+          }
+        },
+        {
+          "actor_calls": 66.05882352941177,
+          "actor_row_count": 102,
+          "cohort": "replay_valid_subset",
+          "event_count": 34,
+          "fallback_event_count": 0,
+          "full_support": {
+            "actor_calls": 66.05882352941177,
+            "actor_row_count": 102,
+            "cohort": "replay_valid_subset",
+            "event_count": 34,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 3.0,
+            "method": "fixed_delay_1",
+            "new_non_nominal_actions": 247.7549019607843,
+            "safe_success": 0.058823529411764705,
+            "support_coverage": {
+              "cohort_events": 34,
+              "coverage_of_cohort": 1.0,
+              "coverage_of_global_48": 0.7083333333333334,
+              "defined_events": 34,
+              "defined_rows": 102,
+              "global_events": 48
+            }
+          },
+          "mean_prefix_k": 3.0,
+          "method": "fixed_delay_1",
+          "new_non_nominal_actions": 247.7549019607843,
+          "restricted_support": {
+            "actor_calls": 66.05882352941177,
+            "actor_row_count": 102,
+            "event_count": 34,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 3.0,
+            "method": "fixed_delay_1",
+            "new_non_nominal_actions": 247.7549019607843,
+            "safe_success": 0.058823529411764705
+          },
+          "safe_success": 0.058823529411764705,
+          "support_coverage": {
+            "cohort_events": 34,
+            "coverage_of_cohort": 1.0,
+            "coverage_of_global_48": 0.7083333333333334,
+            "defined_events": 34,
+            "defined_rows": 102,
+            "global_events": 48
+          }
+        },
+        {
+          "actor_calls": 65.44117647058823,
+          "actor_row_count": 102,
+          "cohort": "replay_valid_subset",
+          "event_count": 34,
+          "fallback_event_count": 0,
+          "full_support": {
+            "actor_calls": 65.44117647058823,
+            "actor_row_count": 102,
+            "cohort": "replay_valid_subset",
+            "event_count": 34,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 4.0,
+            "method": "fixed_delay_2",
+            "new_non_nominal_actions": 252.90196078431376,
+            "safe_success": 0.0392156862745098,
+            "support_coverage": {
+              "cohort_events": 34,
+              "coverage_of_cohort": 1.0,
+              "coverage_of_global_48": 0.7083333333333334,
+              "defined_events": 34,
+              "defined_rows": 102,
+              "global_events": 48
+            }
+          },
+          "mean_prefix_k": 4.0,
+          "method": "fixed_delay_2",
+          "new_non_nominal_actions": 252.90196078431376,
+          "restricted_support": {
+            "actor_calls": 65.44117647058823,
+            "actor_row_count": 102,
+            "event_count": 34,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 4.0,
+            "method": "fixed_delay_2",
+            "new_non_nominal_actions": 252.90196078431376,
+            "safe_success": 0.0392156862745098
+          },
+          "safe_success": 0.0392156862745098,
+          "support_coverage": {
+            "cohort_events": 34,
+            "coverage_of_cohort": 1.0,
+            "coverage_of_global_48": 0.7083333333333334,
+            "defined_events": 34,
+            "defined_rows": 102,
+            "global_events": 48
+          }
+        },
+        {
+          "actor_calls": 65.20588235294117,
+          "actor_row_count": 102,
+          "cohort": "replay_valid_subset",
+          "event_count": 34,
+          "fallback_event_count": 0,
+          "full_support": {
+            "actor_calls": 65.20588235294117,
+            "actor_row_count": 102,
+            "cohort": "replay_valid_subset",
+            "event_count": 34,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 6.0,
+            "method": "fixed_delay_4",
+            "new_non_nominal_actions": 247.09803921568624,
+            "safe_success": 0.04901960784313725,
+            "support_coverage": {
+              "cohort_events": 34,
+              "coverage_of_cohort": 1.0,
+              "coverage_of_global_48": 0.7083333333333334,
+              "defined_events": 34,
+              "defined_rows": 102,
+              "global_events": 48
+            }
+          },
+          "mean_prefix_k": 6.0,
+          "method": "fixed_delay_4",
+          "new_non_nominal_actions": 247.09803921568624,
+          "restricted_support": {
+            "actor_calls": 65.20588235294117,
+            "actor_row_count": 102,
+            "event_count": 34,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 6.0,
+            "method": "fixed_delay_4",
+            "new_non_nominal_actions": 247.09803921568624,
+            "safe_success": 0.04901960784313725
+          },
+          "safe_success": 0.04901960784313725,
+          "support_coverage": {
+            "cohort_events": 34,
+            "coverage_of_cohort": 1.0,
+            "coverage_of_global_48": 0.7083333333333334,
+            "defined_events": 34,
+            "defined_rows": 102,
+            "global_events": 48
+          }
+        },
+        {
+          "actor_calls": 64.20588235294117,
+          "actor_row_count": 102,
+          "cohort": "replay_valid_subset",
+          "event_count": 34,
+          "fallback_event_count": 0,
+          "full_support": {
+            "actor_calls": 64.20588235294117,
+            "actor_row_count": 102,
+            "cohort": "replay_valid_subset",
+            "event_count": 34,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 10.0,
+            "method": "fixed_delay_8",
+            "new_non_nominal_actions": 233.5686274509804,
+            "safe_success": 0.0784313725490196,
+            "support_coverage": {
+              "cohort_events": 34,
+              "coverage_of_cohort": 1.0,
+              "coverage_of_global_48": 0.7083333333333334,
+              "defined_events": 34,
+              "defined_rows": 102,
+              "global_events": 48
+            }
+          },
+          "mean_prefix_k": 10.0,
+          "method": "fixed_delay_8",
+          "new_non_nominal_actions": 233.5686274509804,
+          "restricted_support": {
+            "actor_calls": 64.20588235294117,
+            "actor_row_count": 102,
+            "event_count": 34,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 10.0,
+            "method": "fixed_delay_8",
+            "new_non_nominal_actions": 233.5686274509804,
+            "safe_success": 0.0784313725490196
+          },
+          "safe_success": 0.0784313725490196,
+          "support_coverage": {
+            "cohort_events": 34,
+            "coverage_of_cohort": 1.0,
+            "coverage_of_global_48": 0.7083333333333334,
+            "defined_events": 34,
+            "defined_rows": 102,
+            "global_events": 48
+          }
+        },
+        {
+          "actor_calls": 66.20588235294117,
+          "actor_row_count": 102,
+          "cohort": "replay_valid_subset",
+          "event_count": 34,
+          "fallback_event_count": 0,
+          "full_support": {
+            "actor_calls": 66.20588235294117,
+            "actor_row_count": 102,
+            "cohort": "replay_valid_subset",
+            "event_count": 34,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 2.0,
+            "method": "immediate_fresh_h16",
+            "new_non_nominal_actions": 232.66666666666669,
+            "safe_success": 0.12745098039215685,
+            "support_coverage": {
+              "cohort_events": 34,
+              "coverage_of_cohort": 1.0,
+              "coverage_of_global_48": 0.7083333333333334,
+              "defined_events": 34,
+              "defined_rows": 102,
+              "global_events": 48
+            }
+          },
+          "mean_prefix_k": 2.0,
+          "method": "immediate_fresh_h16",
+          "new_non_nominal_actions": 232.66666666666669,
+          "restricted_support": {
+            "actor_calls": 66.20588235294117,
+            "actor_row_count": 102,
+            "event_count": 34,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 2.0,
+            "method": "immediate_fresh_h16",
+            "new_non_nominal_actions": 232.66666666666669,
+            "safe_success": 0.12745098039215685
+          },
+          "safe_success": 0.12745098039215685,
+          "support_coverage": {
+            "cohort_events": 34,
+            "coverage_of_cohort": 1.0,
+            "coverage_of_global_48": 0.7083333333333334,
+            "defined_events": 34,
+            "defined_rows": 102,
+            "global_events": 48
+          }
+        },
+        {
+          "actor_calls": 63.14705882352941,
+          "actor_row_count": 102,
+          "cohort": "replay_valid_subset",
+          "event_count": 34,
+          "fallback_event_count": 6,
+          "full_support": {
+            "actor_calls": 63.14705882352941,
+            "actor_row_count": 102,
+            "cohort": "replay_valid_subset",
+            "event_count": 34,
+            "fallback_event_count": 6,
+            "mean_prefix_k": 13.529411764705882,
+            "method": "k_last_observed_safe",
+            "new_non_nominal_actions": 236.05882352941177,
+            "safe_success": 0.06862745098039215,
+            "support_coverage": {
+              "cohort_events": 34,
+              "coverage_of_cohort": 0.8235294117647058,
+              "coverage_of_global_48": 0.5833333333333334,
+              "defined_events": 28,
+              "defined_rows": 84,
+              "global_events": 48
+            }
+          },
+          "mean_prefix_k": 13.529411764705882,
+          "method": "k_last_observed_safe",
+          "new_non_nominal_actions": 236.05882352941177,
+          "restricted_support": {
+            "actor_calls": 63.82142857142857,
+            "actor_row_count": 84,
+            "event_count": 28,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 16.0,
+            "method": "k_last_observed_safe",
+            "new_non_nominal_actions": 235.6428571428571,
+            "safe_success": 0.08333333333333333
+          },
+          "safe_success": 0.06862745098039215,
+          "support_coverage": {
+            "cohort_events": 34,
+            "coverage_of_cohort": 0.8235294117647058,
+            "coverage_of_global_48": 0.5833333333333334,
+            "defined_events": 28,
+            "defined_rows": 84,
+            "global_events": 48
+          }
+        },
+        {
+          "actor_calls": 65.38235294117646,
+          "actor_row_count": 102,
+          "cohort": "replay_valid_subset",
+          "event_count": 34,
+          "fallback_event_count": 25,
+          "full_support": {
+            "actor_calls": 65.38235294117646,
+            "actor_row_count": 102,
+            "cohort": "replay_valid_subset",
+            "event_count": 34,
+            "fallback_event_count": 25,
+            "mean_prefix_k": 5.205882352941177,
+            "method": "k_last_recoverable",
+            "new_non_nominal_actions": 229.23529411764707,
+            "safe_success": 0.14705882352941174,
+            "support_coverage": {
+              "cohort_events": 34,
+              "coverage_of_cohort": 0.2647058823529412,
+              "coverage_of_global_48": 0.1875,
+              "defined_events": 9,
+              "defined_rows": 27,
+              "global_events": 48
+            }
+          },
+          "mean_prefix_k": 5.205882352941177,
+          "method": "k_last_recoverable",
+          "new_non_nominal_actions": 229.23529411764707,
+          "restricted_support": {
+            "actor_calls": 66.11111111111111,
+            "actor_row_count": 27,
+            "event_count": 9,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 14.11111111111111,
+            "method": "k_last_recoverable",
+            "new_non_nominal_actions": 176.2962962962963,
+            "safe_success": 0.4444444444444444
+          },
+          "safe_success": 0.14705882352941174,
+          "support_coverage": {
+            "cohort_events": 34,
+            "coverage_of_cohort": 0.2647058823529412,
+            "coverage_of_global_48": 0.1875,
+            "defined_events": 9,
+            "defined_rows": 27,
+            "global_events": 48
+          }
+        },
+        {
+          "actor_calls": 63.8235294117647,
+          "actor_row_count": 102,
+          "cohort": "replay_valid_subset",
+          "event_count": 34,
+          "fallback_event_count": 0,
+          "full_support": {
+            "actor_calls": 63.8235294117647,
+            "actor_row_count": 102,
+            "cohort": "replay_valid_subset",
+            "event_count": 34,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 11.176470588235293,
+            "method": "velocity_phase",
+            "new_non_nominal_actions": 236.5588235294118,
+            "safe_success": 0.0784313725490196,
+            "support_coverage": {
+              "cohort_events": 34,
+              "coverage_of_cohort": 1.0,
+              "coverage_of_global_48": 0.7083333333333334,
+              "defined_events": 34,
+              "defined_rows": 102,
+              "global_events": 48
+            }
+          },
+          "mean_prefix_k": 11.176470588235293,
+          "method": "velocity_phase",
+          "new_non_nominal_actions": 236.5588235294118,
+          "restricted_support": {
+            "actor_calls": 63.8235294117647,
+            "actor_row_count": 102,
+            "event_count": 34,
+            "fallback_event_count": 0,
+            "mean_prefix_k": 11.176470588235293,
+            "method": "velocity_phase",
+            "new_non_nominal_actions": 236.5588235294118,
+            "safe_success": 0.0784313725490196
+          },
+          "safe_success": 0.0784313725490196,
+          "support_coverage": {
+            "cohort_events": 34,
+            "coverage_of_cohort": 1.0,
+            "coverage_of_global_48": 0.7083333333333334,
+            "defined_events": 34,
+            "defined_rows": 102,
+            "global_events": 48
+          }
+        }
+      ],
+      "strongest_fixed_delay": "fixed_delay_8"
+    }
+  },
+  "diagnostic_only": true,
+  "direction_consistent_full_support": true,
+  "formal_positive_evidence_allowed": false,
+  "new_idea_generated": false,
+  "planned_pai_jobs": 0,
+  "positive_label_allowed": false,
+  "status": "PASS",
+  "submitted_pai_jobs": 0,
+  "task": "A"
+}
