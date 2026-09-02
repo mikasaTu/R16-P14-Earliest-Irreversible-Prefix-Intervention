@@ -35,6 +35,14 @@ STAGE2E_ART = ROOT / "artifacts" / "stage2e"
 STAGE2C_ART = ROOT / "artifacts" / "stage2c"
 STAGE2D_ART = ROOT / "artifacts" / "stage2d"
 STAGE2D_CODE = ROOT / "experiments" / "r16_p14_stage2d"
+IMMUTABLE_PARENT_COMMIT = "edebdfc64576129d994535dacb76de930f493c8d"
+IMMUTABLE_PARENT_TREE = "fa0a951abc1aa778cfa76663679173557e6c9b96"
+IMMUTABLE_OLD_PATHS = (
+    "artifacts/stage2c", "artifacts/stage2d",
+    "experiments/r16_p14_stage2a", "experiments/r16_p14_stage2b",
+    "experiments/r16_p14_stage2c", "experiments/r16_p14_stage2d",
+    "docs/feishu",
+)
 
 # The Stage-2D loader is the frozen project loader.  Importing this small
 # utility imports only stdlib/numpy; it does not construct an environment or
@@ -302,7 +310,7 @@ def stable_json(value: Any) -> str:
 def write_csv(path: Path, rows: Sequence[Mapping[str, Any]], columns: Sequence[str]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(columns), extrasaction="ignore")
+        writer = csv.DictWriter(handle, fieldnames=list(columns), extrasaction="ignore", lineterminator="\n")
         writer.writeheader()
         for row in rows:
             writer.writerow({column: clean_csv(row.get(column)) for column in columns})
@@ -430,10 +438,18 @@ def cluster_bootstrap(
     bootstrap draw.  This is intentionally a small local implementation so
     the receipt can state exactly which unit was resampled.
     """
+    # ``rows`` is already in the frozen event-id order produced by
+    # ``_method_summary``/``_delta_rows``.  Keep the first-appearance order
+    # of clusters instead of sorting the cluster labels here.  The bootstrap
+    # distribution is exchangeable in the population limit, but a finite,
+    # seeded resample is not invariant to a permutation of the input vector.
+    # The preregistration therefore freezes this order as part of the
+    # reproducibility contract: event-level actor means first, then the
+    # equally weighted clusters in first event-id appearance order.
     clusters = rows_by(rows, "task", "init_state_id")
     cluster_values = [
         float(np.mean([float(row[value_key]) for row in group]))
-        for _, group in sorted(clusters.items(), key=lambda item: tuple(str(x) for x in item[0]))
+        for _, group in clusters.items()
         if all(row.get(value_key) is not None and math.isfinite(float(row[value_key])) for row in group)
     ]
     if not cluster_values:
@@ -441,6 +457,9 @@ def cluster_bootstrap(
             "estimate": None, "ci95": [None, None], "clusters": 0,
             "replicates": int(replicates), "seed": int(seed),
             "cluster_unit": "(task,init_state_id)",
+            "cluster_aggregation": "event_actor_mean_then_equal_cluster_mean",
+            "cluster_order": "first_appearance_in_stable_event_id_order",
+            "percentile_method": "linear",
         }
     arr = np.asarray(cluster_values, dtype=np.float64)
     rng = np.random.default_rng(int(seed))
@@ -452,7 +471,10 @@ def cluster_bootstrap(
         "estimate": float(np.mean(arr)),
         "ci95": [float(np.percentile(draws, 2.5)), float(np.percentile(draws, 97.5))],
         "clusters": int(len(arr)), "replicates": int(replicates), "seed": int(seed),
-        "cluster_unit": "(task,init_state_id)", "percentile_method": "linear",
+        "cluster_unit": "(task,init_state_id)",
+        "cluster_aggregation": "event_actor_mean_then_equal_cluster_mean",
+        "cluster_order": "first_appearance_in_stable_event_id_order",
+        "percentile_method": "linear",
     }
 
 
@@ -937,6 +959,109 @@ def _stage2d_b2_cells(rows: Sequence[Mapping[str, Any]]) -> list[dict[str, Any]]
     return cells
 
 
+def _b1_axis_audit(
+    baseline: Sequence[Mapping[str, Any]],
+    stage2c_rows: Sequence[Mapping[str, Any]],
+    stage2d_baselines: Mapping[str, Any],
+    invalid: Sequence[Mapping[str, Any]],
+) -> dict[str, Any]:
+    """Materialize the three confounded B1 axes and the only safe sensitivity.
+
+    The commonly quoted Stage-2C ``10--16%`` band is the published
+    calibration-frozen baseline band from fixed delay 4/8 through immediate;
+    the exact fixed-delay-1/2 values are retained so this audit cannot hide
+    an out-of-band baseline.  Stage-2D's ``0.85--3.39%`` band is copied from
+    its frozen fixed-delay receipt, not recomputed from evaluation outcomes.
+    No factor is treated as causal because budget, severity, and runtime
+    purity change together across the two stages.
+    """
+    eval_baseline = [row for row in baseline if row.get("split") == "evaluation"]
+    published_methods = (
+        "fixed_delay_1", "fixed_delay_2", "fixed_delay_4", "fixed_delay_8",
+        "immediate_fresh_h16",
+    )
+    published_rates = {
+        method: float(np.mean([bool(row.get("safe_success")) for row in eval_baseline if row.get("method") == method]))
+        for method in published_methods
+    }
+    published_band_methods = ("fixed_delay_4", "fixed_delay_8", "immediate_fresh_h16")
+    d_fixed = []
+    for row in stage2d_baselines.get("candidate_fixed_delays", []):
+        d_fixed.append({
+            "method": row.get("method"), "delay": row.get("delay"),
+            "safe_success": row.get("safe_success"), "events": row.get("events"),
+            "actual_post_detection_actions": row.get("actual_post_detection_actions"),
+            "cause_violation": row.get("cause_violation"),
+        })
+    fixed_rates = [float(row["safe_success"]) for row in d_fixed if row.get("safe_success") is not None]
+
+    # Stage-2C all -> replay-valid is an invalid-event-exclusion subset
+    # sensitivity calculation, not a decomposition or a paired event effect.
+    # The two cohorts contain different event sets; alignment is only by the
+    # same-stage/task/parameter/operator row label, with no event join across
+    # cohorts or stages. Rebuild from the full row list so values are auditable.
+    cohort_aligned: dict[tuple[str, str, str], dict[str, float]] = {}
+    for row in stage2c_rows:
+        if row.get("stage") != "stage2c":
+            continue
+        key = (str(row.get("task")), str(row.get("original_parameter")), str(row.get("operator_arm")))
+        cohort = "all_contaminated" if row.get("runtime_purity") == "shared_runtime_known_invalid" else "replay_valid_subset"
+        cohort_aligned.setdefault(key, {})[cohort] = float(row["safe_success"])
+    sensitivity_rows = []
+    for key in sorted(cohort_aligned):
+        values = cohort_aligned[key]
+        if set(values) == {"all_contaminated", "replay_valid_subset"}:
+            sensitivity_rows.append({
+                "task": key[0], "parameter_id": key[1], "operator": key[2],
+                "all_contaminated": values["all_contaminated"],
+                "replay_valid_subset": values["replay_valid_subset"],
+                "valid_minus_all": values["replay_valid_subset"] - values["all_contaminated"],
+            })
+    stage2c_rates = [float(row["safe_success"]) for row in stage2c_rows if row.get("stage") == "stage2c"]
+    return {
+        "schema_version": 1,
+        "published_stage2c_baseline_rates": published_rates,
+        "published_stage2c_10_to_16_band": {
+            "methods": list(published_band_methods),
+            "exact_range": [min(published_rates[m] for m in published_band_methods), max(published_rates[m] for m in published_band_methods)],
+            "display_range": ["10.4%", "16.0%"],
+            "note": "The exact 5.6% fixed-delay-1 and 9.0% fixed-delay-2 rates remain in published_stage2c_baseline_rates.",
+        },
+        "stage2d_frozen_fixed_delay_rates": {
+            "rows": d_fixed,
+            "exact_range": [min(fixed_rates), max(fixed_rates)] if fixed_rates else [None, None],
+            "display_range": ["0.85%", "3.39%"],
+        },
+        "stage2c_b1_operator_rate_range": [min(stage2c_rates), max(stage2c_rates)] if stage2c_rates else [None, None],
+        "stage2c_invalid_events": {"invalid": len(invalid), "total": 96, "valid": 96 - len(invalid)},
+        "stage2c_all_to_valid_sensitivity": sensitivity_rows,
+        "axis_contract": {
+            "budget": {
+                "stage2c": "event_remaining_horizon plus padded_event_budget; not a preset grid",
+                "stage2d": "maximum_action_budget=18, maximum_policy_call_budget=2, tail_horizon=4",
+                "causal_decomposition": "NOT_IDENTIFIABLE",
+            },
+            "severity": {
+                "stage2c": ["future_06_lateral_040mm", "future_14_lateral_020mm", "shift_040mm", "shift_060mm"],
+                "stage2d": ["future_09__clearance_m010mm", "future_09__clearance_p000mm", "shift_060mm", "shift_080mm"],
+                "causal_decomposition": "NOT_IDENTIFIABLE",
+            },
+            "runtime_purity": {
+                "stage2c": ["shared_runtime_known_invalid", "shared_runtime_no_detected_violation"],
+                "stage2d": ["fresh_process_verified"],
+                "causal_decomposition": "NOT_IDENTIFIABLE",
+            },
+        },
+        "causal_contribution": "NOT_IDENTIFIABLE_BUDGET_SEVERITY_RUNTIME_CO_VARY",
+        "only_quantifiable_sensitivity": "stage2c_all_to_valid_invalid_event_exclusion_subset_sensitivity",
+        "diagnostic_only": DIAGNOSTIC,
+        "formal_positive_evidence_allowed": FORMAL_POSITIVE,
+        "new_idea_generated": NEW_IDEA,
+        "planned_pai_jobs": 0,
+        "submitted_pai_jobs": 0,
+    }
+
+
 def run_b(
     root: Path, values: Mapping[str, Any], receipt: dict[str, Any], *, replicates: int,
 ) -> dict[str, Any]:
@@ -958,6 +1083,12 @@ def run_b(
         "operator_arm", "tail_horizon", "configured_action_budget", "configured_call_budget", "actual_usage", "safe_success",
         "diagnostic_only", "formal_positive_evidence_allowed", "new_idea_generated",
     ])
+    axis_audit = _b1_axis_audit(
+        list(values.get("c_baseline", [])), b1_rows,
+        values.get("d_baselines", {}) if isinstance(values.get("d_baselines", {}), dict) else {},
+        invalid,
+    )
+    safe_dump(out_dir / "axis_audit.json", axis_audit)
     # B2 selection is explicitly calibration-only and is frozen before the
     # deferred Stage-2D evaluation files are opened.
     selection_receipt = {
@@ -1206,7 +1337,7 @@ S1 的 actors 固定为 7/17/29；calibration 与 evaluation 严格分离；任�
 def write_metric_contract(root: Path) -> None:
     text = """# Stage-2E S0 metric contract
 
-S0 is CPU-only, zero-rollout, diagnostic-only offline reanalysis. Independent unit is an event cluster `(task, init_state_id)`; prefix rows are never independent observations. Stage-2C numbers are always reported as `all_contaminated` (96 events) and `replay_valid_subset` (63 events). Bootstrap is 10,000 resamples, seed 216214, percentile 95% CI and cluster-first weighting.
+S0 is CPU-only, zero-rollout, diagnostic-only offline reanalysis. Independent unit is an event cluster `(task, init_state_id)`; prefix rows are never independent observations. Stage-2C numbers are always reported as `all_contaminated` (96 events) and `replay_valid_subset` (63 events). Bootstrap is 10,000 resamples, seed 216214, percentile 95% CI and cluster-first weighting. For a paired delta, the three actor rows are averaged within each event first; repeated event instances are then averaged with equal weight within each `(task, init_state_id)` cluster. Clusters are kept in their first-appearance order after the input event IDs have been stably sorted; this order is part of the finite-seed reproducibility contract (permuting a seeded vector can change a finite percentile even though the population bootstrap is exchangeable). The `all_contaminated` → `replay_valid_subset` comparison is instead an invalid-event-exclusion subset sensitivity: the event sets differ, so it is not a paired event effect and is not causal.
 
 A1 reproduces the frozen evaluation machine table exactly. A2/A3/A4 use calibration only, boundary `None` falls back to `d=2` with `fresh_h16`, and fixed winner candidates are only fixed delays 1/2/4/8 with the preregistered lexicographic tie-break. A5 aggregates raw `prefix_cause_violation` for `any` and `fraction`; only `cause_violation_type` supplies the type set.
 
@@ -1246,12 +1377,49 @@ def write_source_manifest(root: Path) -> None:
         "old_tree_read_only": ["artifacts/stage2c", "artifacts/stage2d", "experiments/r16_p14_stage2a", "experiments/r16_p14_stage2b", "experiments/r16_p14_stage2c", "experiments/r16_p14_stage2d", "docs/feishu"],
         "deferred_stage2d_evaluation": "opened only after artifacts/stage2e/s0/headroom/selection_receipt.json; descriptive B1 only",
         "runtime_versions": {"python": platform.python_version(), "platform": platform.platform(), "numpy": np.__version__},
-        "git": {"head": git_value(root, "rev-parse", "HEAD"), "tree": git_value(root, "rev-parse", "HEAD^{tree}"), "status": git_value(root, "status", "--short")},
+        # Exclude generated/untracked Stage-2E outputs from this receipt.  The
+        # tracked-worktree status remains an exact, rerun-stable source
+        # freeze, whereas including the output files would make the receipt
+        # differ between the first and second analysis invocation.
+        "git": {"head": git_value(root, "rev-parse", "HEAD"), "tree": git_value(root, "rev-parse", "HEAD^{tree}"), "status": git_value(root, "status", "--short", "--untracked-files=no"), "status_scope": "tracked_only"},
         "read_order": ["validate paths/hash/schema/rows", "A1/A2/A3/A4/A5", "B2 selection receipt", "descriptive Stage2D evaluation B1", "C", "D"],
         "diagnostic_only": DIAGNOSTIC, "formal_positive_evidence_allowed": FORMAL_POSITIVE, "new_idea_generated": NEW_IDEA,
         "planned_pai_jobs": 0, "submitted_pai_jobs": 0,
     }
     safe_dump(root / "artifacts/stage2e/source_freeze/analysis_manifest.json", manifest)
+
+
+def write_immutable_predecessor_receipt(root: Path) -> None:
+    """Freeze tree-object evidence that all predecessor directories are unchanged.
+
+    Tree object IDs are content-addressed hashes for the complete directory
+    contents.  Recording both the immutable parent and current branch values
+    makes the read-only boundary independently auditable without copying or
+    rewriting any predecessor artifact.
+    """
+    entries: list[dict[str, Any]] = []
+    for rel in IMMUTABLE_OLD_PATHS:
+        parent_tree = git_value(root, "rev-parse", f"{IMMUTABLE_PARENT_COMMIT}:{rel}")
+        current_tree = git_value(root, "rev-parse", f"HEAD:{rel}")
+        entries.append({
+            "path": rel,
+            "parent_tree": parent_tree,
+            "current_head_tree": current_tree,
+            "equal": parent_tree is not None and parent_tree == current_tree,
+        })
+    receipt = {
+        "schema_version": 1,
+        "stage": "R16-P14 Stage-2E/S0",
+        "immutable_parent_commit": IMMUTABLE_PARENT_COMMIT,
+        "immutable_parent_tree": IMMUTABLE_PARENT_TREE,
+        "old_paths": entries,
+        "all_equal": bool(entries) and all(bool(item["equal"]) for item in entries),
+        "read_only": True,
+        "diagnostic_only": DIAGNOSTIC,
+        "formal_positive_evidence_allowed": FORMAL_POSITIVE,
+        "new_idea_generated": NEW_IDEA,
+    }
+    safe_dump(root / "artifacts/stage2e/source_freeze/immutable_predecessor_receipt.json", receipt)
 
 
 def _fmt(value: Any, digits: int = 4) -> str:
@@ -1287,13 +1455,14 @@ def write_report(root: Path, a: Mapping[str, Any], b: Mapping[str, Any], c: Mapp
         "",
         "A1 使用 Stage-2C evaluation machine rows 复现冻结表，不把其结果用于 calibration 选择。A2–A5 只使用 calibration rows，并同时保留 96-event `all_contaminated` 与排除 invalid 后的 `replay_valid_subset`。",
         "",
-        "| cohort | strongest fixed | restricted Δ(kLR−fixed) | full Δ(kLR−fixed) | inflation | full CI |",
-        "|---|---|---:|---:|---:|---|",
+        "| cohort | strongest fixed | restricted Δ(kLR−fixed) | restricted 95% CI | full Δ(kLR−fixed) | full 95% CI | inflation |",
+        "|---|---|---:|---|---:|---|---:|",
     ]
     for cohort in ("all_contaminated", "replay_valid_subset"):
         delta = a_cohorts.get(cohort, {}).get("delta", {})
-        ci = delta.get("full_bootstrap", {}).get("ci95", [None, None])
-        lines.append(f"| {cohort} | {delta.get('winner')} | {_fmt(delta.get('restricted_delta'))} | {_fmt(delta.get('full_delta'))} | {_fmt(delta.get('absolute_inflation'))} | [{_fmt(ci[0])}, {_fmt(ci[1])}] |")
+        restricted_ci = delta.get("restricted_bootstrap", {}).get("ci95", [None, None])
+        full_ci = delta.get("full_bootstrap", {}).get("ci95", [None, None])
+        lines.append(f"| {cohort} | {delta.get('winner')} | {_fmt(delta.get('restricted_delta'))} | [{_fmt(restricted_ci[0], 15)}, {_fmt(restricted_ci[1], 15)}] | {_fmt(delta.get('full_delta'))} | [{_fmt(full_ci[0], 15)}, {_fmt(full_ci[1], 15)}] | {_fmt(delta.get('absolute_inflation'))} |")
     lines += [
         "",
         "A5 的 `any` 与 `fraction` 均明确来自 raw `prefix_cause_violation`，cause type set 来自 raw `cause_violation_type`；每 event 固定聚合 180 行，未把 prefix 行当独立样本。",
@@ -1302,7 +1471,9 @@ def write_report(root: Path, a: Mapping[str, Any], b: Mapping[str, Any], c: Mapp
         "",
         f"B1 在 stage 内对齐，未跨 stage 做 event join，也未把相同毫米字符串当作同一 severity。Stage-2C 分别标记 `shared_runtime_known_invalid` 和 `shared_runtime_no_detected_violation`；Stage-2D 标记 `fresh_process_verified`。B2 candidate cells 全部列出，但 configured grid levels 不足，故 G0-2=`{b.get('G0_2')}`，S1 首动作=`BUDGET_SCAN_FIRST`。",
         "",
-        "Stage-2C 的旧 aggregation 路径先在 `aggregate.py:46-68` 对 operator 行取 `C_family`，再用 `R_U=any(C_family>=2/3)`；B 本次只审计这种结构能否在受控预算下形成可解释 headroom，不能用 actual usage 伪造 preset grid。",
+        "Stage-2C 的旧 aggregation 路径先在 `experiments/r16_p14_stage2c/r16_p14_stage2c/aggregate.py::build_atlas` 中按 `(event_instance_id,prefix_k)` 分组，再由同一函数对每个 operator 的三条 actor rows 计算 `C_family`，并用 `R_U=any(C_family>=2/3)`；B 本次只审计这种结构能否在受控预算下形成可解释 headroom，不能用 actual usage 伪造 preset grid。",
+        "",
+        "B1 的已发表 Stage-2C baseline 区间是约 10–16%，Stage-2D 冻结 fixed-delay 描述区间是 0.85–3.39%。这两个区间同时随 configured/remaining budget、perturbation severity 以及 runtime purity 变化；两阶段的 event/cohort、几何参数和执行契约也不同，因此不能把任一差值归因给单一机制。S0 唯一量化的是 Stage-2C 从 `all_contaminated` 排除 replay-invalid 事件得到 `replay_valid_subset` 的 invalid-event-exclusion subset sensitivity（见 `axis_audit.json`）；由于两 cohort 的 event 集合不同，这不是 paired event effect，也不是因果分解，budget、severity、runtime 的 causal contribution 均为 `NOT_IDENTIFIABLE`。",
         "",
         "## C：算子相对 recoverability 阶梯",
         "",
@@ -1316,9 +1487,9 @@ def write_report(root: Path, a: Mapping[str, Any], b: Mapping[str, Any], c: Mapp
         "",
         "## 机制反解（observation → code trace → mechanism → falsifier）",
         "",
-        "1. observation：Stage-2C 不同 operator 的 C_family / boundary 会变化。code trace：`experiments/r16_p14_stage2c/r16_p14_stage2c/aggregate.py:46-68` 对每个 operator 先按三条 recovery actor rows 取安全成功均值，再以 `>=2/3` 形成 family；`runtime.py:400-433` 定义 fresh、hold、rollback 的执行顺序。mechanism：差异首先来自 action prelude（hold/rollback）与 fresh rollout horizon（4/16）的可执行路径与调用/动作预算改变，而不是新的学习器。falsifier：下一阶段必须在两个以上预设 configured budget levels、相同事件和相同 tail 下做受控 factorial 对齐；S0 不实现或运行它。",
-        "2. observation：A 的 boundary baseline 有定义事件较少，fallback 后 full-support 数字与 restricted 数字可能不同。code trace：`aggregate.py:70-89` 对缺失 boundary 不生成该事件，旧选择因此拥有不等 support；本 S0 按 prereg 对 None 唯一 fallback 到 d=2/fresh_h16，并在 event 内先平均 actor。mechanism：restricted/full 差异可由 support selection 与 shared-runtime contamination 驱动，不能直接当成真实 selector 增益。falsifier：在 fresh-process、共同预算且 outcome-blind 的新测量中，预注册同一 cluster bootstrap 后仍需保持方向。",
-        "3. observation：Stage-2D 的 matched/cached/fresh 执行有不同 actual calls。code trace：`stage2d/runtime.py:400-433` 在 matched arm 使用 cached 或 fresh prefix，`runtime.py:459-475` 成功时不 padding tail calls。mechanism：actual call/time 差异是执行路径结果，不等价于 configured budget 或因果 headroom；B2 因缺受控 grid fail-closed。falsifier：至少两个 preset budgets、相同 tail/action/call cap 的 fresh-process matrix。",
+        "1. observation：Stage-2C 不同 operator 的 C_family / boundary 会变化。code trace（仅 Stage-2C）：`experiments/r16_p14_stage2c/r16_p14_stage2c/aggregate.py::build_atlas`（operator actor-mean 与 `R_U`），以及 `experiments/r16_p14_stage2c/r16_p14_stage2c/runtime.py::reconstruct_to_prefix`、`::rollback_action`、`::hold_action`（prefix 重放与 prelude）。mechanism：差异首先来自 hold/rollback 的 action prelude 与 fresh_h4/fresh_h16 的 horizon/调用预算改变，而不是新的学习器。falsifier：下一阶段必须在两个以上预设 configured budget levels、相同事件和相同 tail 下做受控 factorial 对齐；S0 不实现或运行它。",
+        "2. observation：A 的 boundary baseline 有定义事件较少，fallback 后 full-support 数字与 restricted 数字可能不同。code trace（仅 Stage-2C）：`experiments/r16_p14_stage2c/r16_p14_stage2c/aggregate.py::build_atlas` 的 boundary loop（`k_last_recoverable`/`prefix_safety_valid`）和本脚本 `::_event_method_rows`（None→d=2/fresh_h16 fallback）。mechanism：restricted/full 差异可由 support selection 与 shared-runtime contamination 驱动，不能直接当成真实 selector 增益。falsifier：在 fresh-process、共同预算且 outcome-blind 的新测量中，预注册同一 cluster bootstrap 后仍需保持方向。",
+        "3. observation：Stage-2D 的 matched/cached/fresh 执行有不同 actual calls。code trace（仅 Stage-2D）：`experiments/r16_p14_stage2d/r16_p14_stage2d/runtime.py::arm_plan`、`::execute_branch` 的 mode 分支与 tail loop；该函数在成功分支不 padding tail calls。mechanism：actual call/time 差异是执行路径结果，不等价于 configured budget 或因果 headroom；B2 因缺受控 grid fail-closed。falsifier：至少两个 preset budgets、相同 tail/action/call cap 的 fresh-process matrix。",
         "",
         "## 边界与停止条件",
         "",
@@ -1334,18 +1505,15 @@ def write_report(root: Path, a: Mapping[str, Any], b: Mapping[str, Any], c: Mapp
 
 def write_decision(root: Path, a: Mapping[str, Any], b: Mapping[str, Any], c: Mapping[str, Any]) -> dict[str, Any]:
     decision = {
-        "stage1b_universal_hypothesis": "KILLED_IMMUTABLE", "stage2c_status": "BLOCKED_UPSTREAM_IMMUTABLE",
-        "stage2d_status": "BLOCKED_UPSTREAM_IMMUTABLE", "branch_isolation": "PASS" if a.get("A1_exact_reproduction") else "BLOCKED",
-        "event_construction": "BLOCKED", "target_shift_qualification": "NOT_RUN", "path_obstacle_qualification": "NOT_RUN",
-        "oracle_mechanism": "NOT_RUN", "h1_observed_safe_window": "NOT_RUN", "h2_cached_prefix_content": "NOT_RUN",
-        "h3_event_aligned_handoff": "NOT_RUN", "h4_nontrivial_selection": "NOT_RUN",
-        "cached_prefix_claim": "RETIRED", "overall": "BLOCKED_BY_MINIMUM_DATA",
-        "A_status": a.get("status"), "A_G0_1": a.get("G0_1"), "B_status": b.get("status"), "B_G0_2": b.get("G0_2"),
+        "stage1b_universal_hypothesis": "KILLED_IMMUTABLE",
+        "stage2c_status": "BLOCKED_UPSTREAM_IMMUTABLE",
+        "stage2d_status": "BLOCKED_UPSTREAM_IMMUTABLE",
+        "A_status": a.get("status"), "A_G0_1": a.get("G0_1"),
+        "B_status": b.get("status"), "B_G0_2": b.get("G0_2"),
         "C_status": c.get("status"), "C_G0_3": c.get("G0_3"),
-        "accepted": False, "novelty": "N2_ORACLE_PROTOCOL_BOUNDARY_ONLY",
         "diagnostic_only": DIAGNOSTIC, "formal_positive_evidence_allowed": FORMAL_POSITIVE,
         "new_idea_generated": NEW_IDEA, "planned_pai_jobs": 0, "submitted_pai_jobs": 0,
-        "s1_started": False, "selection_receipt_required_before_evaluation": True,
+        "s1_started": False, "accepted": False, "novelty": "N2_ORACLE_PROTOCOL_BOUNDARY_ONLY",
     }
     safe_dump(root / "experiments/r16_p14_stage2e/decision.json", decision)
     return decision
@@ -1393,6 +1561,7 @@ def main() -> None:
     write_commands(root)
     values, receipt = load_inputs(root)
     write_source_manifest(root)
+    write_immutable_predecessor_receipt(root)
     # A/B/C remain independent: an invalid input blocks only the affected
     # path. C uses the recovery rows independently from A/B summaries.
     a = run_a(root, values, receipt, replicates=args.bootstrap_replicates)
@@ -1408,7 +1577,7 @@ def main() -> None:
         "new_idea_generated": NEW_IDEA, "planned_pai_jobs": 0, "submitted_pai_jobs": 0,
     })
     write_checksums(root)
-    print(json.dumps({"A": a.get("status"), "B": b.get("status"), "C": c.get("status"), "G0_1": a.get("G0_1"), "G0_2": b.get("G0_2"), "G0_3": c.get("G0_3"), "decision": decision["overall"]}, ensure_ascii=False, sort_keys=True))
+    print(json.dumps({"A": a.get("status"), "B": b.get("status"), "C": c.get("status"), "G0_1": a.get("G0_1"), "G0_2": b.get("G0_2"), "G0_3": c.get("G0_3")}, ensure_ascii=False, sort_keys=True))
 
 
 if __name__ == "__main__":

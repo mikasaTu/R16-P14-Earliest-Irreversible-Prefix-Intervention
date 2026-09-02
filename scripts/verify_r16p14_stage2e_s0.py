@@ -28,8 +28,23 @@ EXPECTED_A1 = {
     "k_last_recoverable": (20, 54, 18),
     "velocity_phase": (16, 144, 48),
 }
+EXPECTED_CI95 = {
+    "all_contaminated": {
+        "restricted_bootstrap": (-0.069444444444444, 0.236111111111111),
+        "full_bootstrap": (0.006944444444444, 0.145833333333333),
+    },
+    "replay_valid_subset": {
+        "restricted_bootstrap": (-0.194444444444444, 0.361111111111111),
+        "full_bootstrap": (-0.007936507936508, 0.142857142857143),
+    },
+}
+EXPECTED_DECISION_KEYS = {
+    "stage1b_universal_hypothesis", "stage2c_status", "stage2d_status",
+    "A_status", "A_G0_1", "B_status", "B_G0_2", "C_status", "C_G0_3",
+    "diagnostic_only", "formal_positive_evidence_allowed", "new_idea_generated",
+    "planned_pai_jobs", "submitted_pai_jobs", "s1_started", "accepted", "novelty",
+}
 REQUIRED = (
-    "experiments/r16_p14_stage2e/PREREG_S0.md",
     "experiments/r16_p14_stage2e/PREREG_S0.md",
     "experiments/r16_p14_stage2e/metric_contract.md",
     "experiments/r16_p14_stage2e/commands.sh",
@@ -38,12 +53,14 @@ REQUIRED = (
     "experiments/r16_p14_stage2e/reports/REPORT_S0.md",
     "artifacts/stage2e/source_freeze/input_receipt.json",
     "artifacts/stage2e/source_freeze/analysis_manifest.json",
+    "artifacts/stage2e/source_freeze/immutable_predecessor_receipt.json",
     "artifacts/stage2e/s0/common_support/table.csv",
     "artifacts/stage2e/s0/common_support/a1_published_evaluation.csv",
     "artifacts/stage2e/s0/common_support/a5_event_rows.csv",
     "artifacts/stage2e/s0/common_support/a5_table.csv",
     "artifacts/stage2e/s0/common_support/summary.json",
     "artifacts/stage2e/s0/headroom/table.csv",
+    "artifacts/stage2e/s0/headroom/axis_audit.json",
     "artifacts/stage2e/s0/headroom/selection_receipt.json",
     "artifacts/stage2e/s0/headroom/summary.json",
     "artifacts/stage2e/s0/operator_ladder/per_event.jsonl",
@@ -139,8 +156,10 @@ def main() -> int:
         c = load_json(root / "artifacts/stage2e/s0/operator_ladder/summary.json")
         decision = load_json(root / "experiments/r16_p14_stage2e/decision.json")
         receipt = load_json(root / "artifacts/stage2e/source_freeze/input_receipt.json")
+        immutable_receipt = load_json(root / "artifacts/stage2e/source_freeze/immutable_predecessor_receipt.json")
         selection = load_json(root / "artifacts/stage2e/s0/headroom/selection_receipt.json")
-        for obj in (a, b, c, decision, receipt, selection):
+        axis_audit = load_json(root / "artifacts/stage2e/s0/headroom/axis_audit.json")
+        for obj in (a, b, c, decision, receipt, immutable_receipt, selection, axis_audit):
             finite(obj)
         for obj in (a, b, c, decision):
             if obj.get("diagnostic_only") is not True or obj.get("formal_positive_evidence_allowed") is not False or obj.get("new_idea_generated") is not False:
@@ -149,6 +168,16 @@ def main() -> int:
             raise AssertionError("decision boundary changed")
         if decision.get("s1_started") is not False or decision.get("planned_pai_jobs") != 0 or decision.get("submitted_pai_jobs") != 0:
             raise AssertionError("S1/PAI boundary changed")
+        if set(decision) != EXPECTED_DECISION_KEYS:
+            raise AssertionError(f"Stage-2E/S0 decision schema mismatch: {sorted(set(decision) ^ EXPECTED_DECISION_KEYS)}")
+        forbidden_decision_keys = {
+            "overall", "combined_stage2e_s0_decision", "cached_prefix_claim",
+            "h1_observed_safe_window", "h2_cached_prefix_content",
+            "h3_event_aligned_handoff", "h4_nontrivial_selection",
+            "oracle_mechanism",
+        }
+        if forbidden_decision_keys.intersection(decision):
+            raise AssertionError("Stage-2E/S0 decision contains Stage-2D/H1-H4 or combined-overall fields")
         # A1 exact machine-table reproduction.
         a1 = {row["baseline"]: row for row in a.get("A1_rows", [])}
         if set(a1) != set(EXPECTED_A1):
@@ -166,8 +195,32 @@ def main() -> int:
             got = float(deltas[cohort]["delta"]["full_delta"])
             if abs(got - target) > 1e-12:
                 raise AssertionError(f"A full delta mismatch {cohort}: {got} != {target}")
+        # Four preregistered, finite-seed cluster-bootstrap intervals are a
+        # numerical acceptance criterion. The tolerance only absorbs JSON/
+        # IEEE-754 representation of the frozen decimal endpoints.
+        for cohort, expected_intervals in EXPECTED_CI95.items():
+            delta = deltas[cohort]["delta"]
+            for key, expected in expected_intervals.items():
+                got = delta[key]["ci95"]
+                if len(got) != 2 or any(abs(float(actual) - float(target)) > 1e-12 for actual, target in zip(got, expected)):
+                    raise AssertionError(f"A CI mismatch {cohort}/{key}: {got} != {expected}")
+            for key in expected_intervals:
+                if delta[key].get("replicates") != 10000 or delta[key].get("seed") != 216214:
+                    raise AssertionError(f"A bootstrap metadata mismatch {cohort}/{key}")
+            if delta["restricted_bootstrap"].get("cluster_aggregation") != "event_actor_mean_then_equal_cluster_mean":
+                raise AssertionError(f"A restricted bootstrap aggregation mismatch {cohort}")
+            if delta["full_bootstrap"].get("cluster_aggregation") != "event_actor_mean_then_equal_cluster_mean":
+                raise AssertionError(f"A full bootstrap aggregation mismatch {cohort}")
         if b.get("G0_2") != "BUDGET_SCAN_FIRST" or b.get("b3", {}).get("S1_FIRST_ACTION") != "BUDGET_SCAN_FIRST":
             raise AssertionError("B did not fail closed on absent configured budget grid")
+        if b.get("budget_severity_runtime_causal_contribution") != "NOT_IDENTIFIABLE/BLOCKED_BY_NO_COMMON_SUPPORT":
+            raise AssertionError("B does not carry the required NOT_IDENTIFIABLE causal label")
+        if axis_audit.get("causal_contribution") != "NOT_IDENTIFIABLE_BUDGET_SEVERITY_RUNTIME_CO_VARY":
+            raise AssertionError("B1 axis audit does not fail closed to NOT_IDENTIFIABLE")
+        if axis_audit.get("only_quantifiable_sensitivity") != "stage2c_all_to_valid_invalid_event_exclusion_subset_sensitivity":
+            raise AssertionError("B1 reports an unapproved sensitivity")
+        if immutable_receipt.get("all_equal") is not True or immutable_receipt.get("read_only") is not True:
+            raise AssertionError("immutable predecessor receipt is not PASS")
         if selection.get("evaluation_rows_opened_before_receipt") is not False or selection.get("stage2d_evaluation_read_for_selection") is not False or selection.get("reserve_ids_read") is not False:
             raise AssertionError("selection receipt violates open-deny contract")
         for cohort, target in (("all_contaminated", (21, 29, 38, 39, 21, 11 / 21)), ("replay_valid_subset", (8, 12, 12, 12, 8, 5 / 8))):
