@@ -22,6 +22,8 @@ from s1.accept_phase1 import (  # noqa: E402
     _expected_behavior_operator,
     _expected_keys,
     _load_grid_jobs,
+    _validate_trace_files,
+    _validate_trace_workers,
     evaluate_base,
     structural_exclusion_is_valid,
     write_report,
@@ -346,3 +348,30 @@ def test_acceptance_output_must_not_be_inside_gpu_base(tmp_path):
     report = {"status": "INCOMPLETE"}
     with pytest.raises(ValueError):
         write_report(report, tmp_path / "acceptance.json", tmp_path)
+
+
+def test_trace_workers_parallel_matches_serial_and_hash_only_stays_serial(tmp_path):
+    row_one, path_one, _ = _trace_fixture(tmp_path / "one")
+    row_two, path_two, _ = _trace_fixture(tmp_path / "two")
+    trace_rows = {path_two: row_two, path_one: row_one}
+
+    serial_issues, serial_report = _validate_trace_files(trace_rows, "full", 1)
+    parallel_issues, parallel_report = _validate_trace_files(trace_rows, "full", 2)
+    assert serial_issues == parallel_issues == []
+    assert serial_report == parallel_report
+    assert serial_report["files"] == 2
+    assert serial_report["records"] == 52
+    assert serial_report["action_records"] == 2
+    assert serial_report["physics_records"] == 50
+
+    hash_one_issues, hash_one_report = _validate_trace_files(trace_rows, "hash-only", 1)
+    hash_many_issues, hash_many_report = _validate_trace_files(trace_rows, "hash-only", 16)
+    assert hash_one_issues == hash_many_issues == []
+    assert hash_one_report == hash_many_report
+    assert "not parsed" in hash_many_report["scope_note"]
+
+
+@pytest.mark.parametrize("workers", [0, 17])
+def test_trace_workers_are_limited_to_one_through_sixteen(workers):
+    with pytest.raises(ValueError, match="1..16"):
+        _validate_trace_workers(workers)

@@ -12,7 +12,9 @@ import gzip
 import hashlib
 import json
 import math
+import multiprocessing as mp
 import re
+from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
@@ -542,23 +544,66 @@ def _check_d4_groups(
     return report
 
 
-def _check_trace(
-    row: Mapping[str, Any], path: Path, mode: str, issues: list[str], trace_report: dict[str, Any]
-) -> None:
+def _empty_trace_report(mode: str) -> dict[str, Any]:
+    return {
+        "scope": mode,
+        "scope_note": (
+            "raw compressed SHA-256 only; contact content was not parsed"
+            if mode == "hash-only"
+            else "gzip JSONL parsed record-by-record with canonical content SHA-256"
+        ),
+        "files": 0,
+        "records": 0,
+        "bytes": 0,
+        "bytes_by_task": {task: 0 for task in TASKS},
+        "files_by_task": {task: 0 for task in TASKS},
+    }
+
+
+def _empty_trace_result(row: Mapping[str, Any], path: Path) -> dict[str, Any]:
+    task = str(row.get("task"))
+    return {
+        "path": str(path),
+        "issues": [],
+        "files": 0,
+        "records": 0,
+        "bytes": 0,
+        "bytes_by_task": {task: 0},
+        "files_by_task": {task: 0},
+        "action_records": 0,
+        "physics_records": 0,
+        "physics_per_control_counts": {},
+    }
+
+
+def _check_trace_pure(
+    row: Mapping[str, Any], path_raw: str | Path, mode: str
+) -> dict[str, Any]:
+    """Validate one trace without mutating caller state.
+
+    The returned object is deliberately JSON-like and pickleable so a full
+    validation can run in a spawn-based process pool.  The parent process is
+    responsible for deterministic error and counter aggregation.
+    """
+    path = Path(path_raw)
+    result = _empty_trace_result(row, path)
+    issues = result["issues"]
     label = str(path)
     try:
         raw_sha, raw_bytes = _sha256_file(path)
     except OSError as exc:
         _issue(issues, f"{label}: cannot hash trace: {exc}")
-        return
-    trace_report["bytes"] += raw_bytes
-    trace_report["files"] += 1
-    trace_report["bytes_by_task"][str(row["task"])] += raw_bytes
+        return result
+    task = str(row.get("task"))
+    result["files"] = 1
+    result["bytes"] = raw_bytes
+    result["bytes_by_task"][task] = raw_bytes
+    result["files_by_task"][task] = 1
     if row.get("trace_sha256") != raw_sha:
         _issue(issues, f"{label}: trace_sha256 mismatch")
     if mode == "hash-only":
-        trace_report["scope_note"] = "raw compressed SHA-256 only; contact content was not parsed"
-        return
+        result["scope_note"] = "raw compressed SHA-256 only; contact content was not parsed"
+        return result
     content_sha = hashlib.sha256()
     count, nonempty_normalized = 0, False
     controls: dict[int, dict[str, Any]] = {}
@@ -607,8 +652,8 @@ def _check_trace(
                     raise ValueError(f"unknown trace step_kind: {kind!r}")
     except (OSError, EOFError, TypeError, ValueError, json.JSONDecodeError) as exc:
         _issue(issues, f"{label}: invalid gzip trace: {exc}")
-        return
-    trace_report["records"] += count
+        return result
+    result["records"] = count
     if row.get("trace_records") != count:
         _issue(issues, f"{label}: trace_records mismatch")
     if row.get("trace_content_sha256") != content_sha.hexdigest():
@@ -620,7 +665,7 @@ def _check_trace(
         _issue(issues, f"{label}: label receipt incomplete")
     if not controls:
         _issue(issues, f"{label}: no control steps")
-        return
+        return result
     control_steps = sorted(controls)
     if control_steps != list(range(control_steps[-1] + 1)):
         _issue(issues, f"{label}: control steps are not contiguous")
@@ -634,16 +679,96 @@ def _check_trace(
         if sorted(physics) != list(range(1, 26)):
             _issue(issues, f"{label}: control_step={control_step} physics substeps are not 1..25")
         physics_distribution[str(len(physics))] = physics_distribution.get(str(len(physics)), 0) + 1
-    trace_report.setdefault("action_records", 0)
-    trace_report["action_records"] += sum(group["actions"] for group in controls.values())
-    trace_report.setdefault("physics_records", 0)
-    trace_report["physics_records"] += sum(len(group["physics_substeps"]) for group in controls.values())
-    trace_report.setdefault("physics_per_control_counts", {})
-    for key, value in physics_distribution.items():
-        trace_report["physics_per_control_counts"][key] = (
-            trace_report["physics_per_control_counts"].get(key, 0) + value
-        )
+    result["action_records"] = sum(group["actions"] for group in controls.values())
+    result["physics_records"] = sum(len(group["physics_substeps"]) for group in controls.values())
+    result["physics_per_control_counts"] = physics_distribution
+    return result
 
+
+def _merge_trace_counters(source: Mapping[str, Any], destination: dict[str, Any]) -> None:
+    for key in ("files", "records", "bytes"):
+        destination[key] = destination.get(key, 0) + int(source.get(key, 0))
+    for key in ("action_records", "physics_records"):
+        value = int(source.get(key, 0))
+        if value or key in destination:
+            destination[key] = destination.get(key, 0) + value
+    for map_key in ("bytes_by_task", "files_by_task"):
+        target = destination.setdefault(map_key, {})
+        for task, value in (source.get(map_key) or {}).items():
+            target[str(task)] = target.get(str(task), 0) + int(value)
+    source_distribution = source.get("physics_per_control_counts") or {}
+    if source_distribution or "physics_per_control_counts" in destination:
+        target_distribution = destination.setdefault("physics_per_control_counts", {})
+        for count, value in source_distribution.items():
+            target_distribution[str(count)] = target_distribution.get(str(count), 0) + int(value)
+    if source.get("scope_note"):
+        destination["scope_note"] = source["scope_note"]
+
+
+def _merge_trace_result(
+    result: Mapping[str, Any], issues: list[str], trace_report: dict[str, Any]
+) -> None:
+    for message in result.get("issues", ()):
+        _issue(issues, str(message))
+    _merge_trace_counters(result, trace_report)
+
+
+def _check_trace(
+    row: Mapping[str, Any], path: Path, mode: str, issues: list[str], trace_report: dict[str, Any]
+) -> None:
+    """Backward-compatible sequential wrapper used by unit tests and callers."""
+    _merge_trace_result(_check_trace_pure(row, path, mode), issues, trace_report)
+
+
+def _validate_trace_workers(value: Any) -> int:
+    if isinstance(value, bool):
+        raise ValueError("trace_workers must be an integer in 1..16")
+    try:
+        workers = int(value)
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise ValueError("trace_workers must be an integer in 1..16") from exc
+    if isinstance(value, float) and not value.is_integer():
+        raise ValueError("trace_workers must be an integer in 1..16")
+    if not 1 <= workers <= 16:
+        raise ValueError("trace_workers must be an integer in 1..16")
+    return workers
+
+
+def _validate_trace_files(
+    trace_rows: Mapping[Path, Mapping[str, Any]], mode: str, trace_workers: int
+) -> tuple[list[str], dict[str, Any]]:
+    """Run pure per-trace checks and merge results in sorted path order."""
+    workers = _validate_trace_workers(trace_workers)
+    issues: list[str] = []
+    report = _empty_trace_report(mode)
+    ordered = sorted(trace_rows.items(), key=lambda item: str(item[0]))
+    if mode == "full" and workers > 1 and ordered:
+        try:
+            context = mp.get_context("spawn")
+            with ProcessPoolExecutor(max_workers=workers, mp_context=context) as executor:
+                futures = [
+                    (path, executor.submit(_check_trace_pure, row, str(path), mode))
+                    for path, row in ordered
+                ]
+                for path, future in futures:
+                    try:
+                        result = future.result()
+                    except Exception as exc:
+                        _issue(
+                            issues,
+                            f"{path}: trace worker failed: {type(exc).__name__}: {exc}",
+                        )
+                    else:
+                        _merge_trace_result(result, issues, report)
+        except Exception as exc:
+            _issue(
+                issues,
+                f"trace worker pool failed: {type(exc).__name__}: {exc}",
+            )
+    else:
+        for path, row in ordered:
+            _merge_trace_result(_check_trace_pure(row, path, mode), issues, report)
+    return issues, report
 
 def _validate_rows(
     base: Path,
@@ -652,6 +777,7 @@ def _validate_rows(
     jobs: Mapping[str, Mapping[str, Any]],
     job_history: Mapping[str, list[Mapping[str, Any]]],
     mode: str,
+    trace_workers: int,
     allowed_source_commits: set[str],
     issues: list[str],
 ) -> dict[str, Any]:
@@ -829,22 +955,15 @@ def _validate_rows(
         listed_bytes_by_task[task] = sum(path.stat().st_size for path in actual if path.is_file())
     if actual_trace_paths != set(trace_rows):
         _issue(issues, "trace file set differs from COMPLETE shard references")
-    trace_report = {
-        "scope": mode,
-        "scope_note": (
-            "raw compressed SHA-256 only; contact content was not parsed"
-            if mode == "hash-only"
-            else "gzip JSONL parsed record-by-record with canonical content SHA-256"
-        ),
-        "files": 0, "records": 0, "bytes": 0,
-        "bytes_by_task": {task: 0 for task in TASKS},
-        "files_by_task": {task: 0 for task in TASKS},
-        "listed_files_by_task": listed_files_by_task,
-        "listed_bytes_by_task": listed_bytes_by_task,
-    }
-    for path, row in sorted(trace_rows.items(), key=lambda item: str(item[0])):
-        _check_trace(row, path, mode, issues, trace_report)
-        trace_report["files_by_task"][str(row["task"])] += 1
+    trace_report = _empty_trace_report(mode)
+    trace_report["listed_files_by_task"] = listed_files_by_task
+    trace_report["listed_bytes_by_task"] = listed_bytes_by_task
+    trace_issues, computed_trace_report = _validate_trace_files(
+        trace_rows, mode, trace_workers
+    )
+    for trace_issue in trace_issues:
+        _issue(issues, trace_issue)
+    _merge_trace_counters(computed_trace_report, trace_report)
     return {
         "counts": counts,
         "expected_rows_by_task": {task: EXPECTED_EVENTS[task] * 3 * 9 * (4 * 5 + 4) for task in TASKS},
@@ -858,10 +977,14 @@ def _validate_rows(
 
 
 def evaluate_base(
-    base: str | Path, mode: str = "full", allowed_source_commits: Iterable[str] | None = None
+    base: str | Path,
+    mode: str = "full",
+    allowed_source_commits: Iterable[str] | None = None,
+    trace_workers: int = 1,
 ) -> dict[str, Any]:
     if mode not in ("full", "hash-only"):
         raise ValueError(f"unsupported trace mode: {mode}")
+    trace_workers = _validate_trace_workers(trace_workers)
     allowed = set(allowed_source_commits or (SOURCE_COMMIT,))
     if not allowed or any(not HEX40.fullmatch(value) for value in allowed):
         raise ValueError("allowed source commits must be 40-character lowercase hex")
@@ -869,6 +992,7 @@ def evaluate_base(
     report: dict[str, Any] = {
         "schema_version": 1, "status": "INCOMPLETE", "base": str(base_path),
         "phase": "phase1", "trace_validation_scope": mode,
+        "trace_workers": trace_workers,
         "evaluation_raw_read": False, "source_commit": SOURCE_COMMIT,
         "allowed_source_commits": sorted(allowed),
         "uid_gid": [UID_GID, UID_GID], "blocking_reasons": [],
@@ -940,7 +1064,8 @@ def evaluate_base(
         return report
     row_issues: list[str] = []
     report["rows"] = _validate_rows(
-        base_path, events, source_by_key, jobs, job_history, mode, allowed, row_issues
+        base_path, events, source_by_key, jobs, job_history, mode,
+        trace_workers, allowed, row_issues
     )
     report["blocking_reasons"].extend(row_issues)
     report["checks"]["phase1_grid_keys_and_provenance"] = not row_issues
@@ -960,14 +1085,36 @@ def write_report(report: Mapping[str, Any], output: str | Path, base: str | Path
     return output_path
 
 
+def _trace_workers_arg(value: str) -> int:
+    try:
+        workers = int(value)
+    except (TypeError, ValueError):
+        raise argparse.ArgumentTypeError("trace-workers must be an integer in 1..16")
+    if not 1 <= workers <= 16:
+        raise argparse.ArgumentTypeError("trace-workers must be an integer in 1..16")
+    return workers
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--base", required=True, help="explicit Stage-2F external artifact base")
     parser.add_argument("--output", required=True, help="explicit acceptance JSON output path")
     parser.add_argument("--mode", choices=("full", "hash-only"), default="full")
+    parser.add_argument(
+        "--trace-workers",
+        type=_trace_workers_arg,
+        default=1,
+        metavar="N",
+        help="spawn workers for full trace parsing (1..16; hash-only remains serial)",
+    )
     parser.add_argument("--allowed-source-commit", action="append", dest="allowed_source_commits")
     args = parser.parse_args(argv)
-    report = evaluate_base(args.base, args.mode, args.allowed_source_commits)
+    report = evaluate_base(
+        args.base,
+        args.mode,
+        args.allowed_source_commits,
+        trace_workers=args.trace_workers,
+    )
     write_report(report, args.output, args.base)
     print(json.dumps(report, ensure_ascii=False, sort_keys=True))
     return 0
