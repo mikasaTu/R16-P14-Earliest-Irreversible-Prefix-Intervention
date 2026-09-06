@@ -4,7 +4,7 @@
 
 Phase0A 和 Phase0B 已完成。Phase0B 的两任务共600条正式 clean rollout 均已落盘，两个PAI采集作业均为 Succeeded，持久化完整性和2254:2254归属已核验。K1不通过：cream的calibration/evaluation合格事件为19/23，bowl为11/13，均低于每侧25个门槛。
 
-按用户正文“不因gate失败停止其他实验”的要求，继续现有30个calibration事件上的全部9个预算、3个恢复seed、4个算子、5个前缀及4个参考臂，共19440个请求。原计划每任务20个事件的要求保留，实际缺10个，不补样、不换split。该网格只能报告现有观测下的结果与缺口；不足计划样本不能形成有效K2 selection。Phase2 evaluation仍为open-deny，K3未测，不能据此判定NONTRIVIAL_OPERATOR_RELATIVITY或MONOTONE_RESCALING_ONLY。
+按用户正文“不因gate失败停止其他实验”的要求，继续现有30个calibration事件上的全部9个预算、3个恢复seed、4个算子、5个前缀及4个参考臂，共19440个请求。原计划每任务20个事件的要求保留，实际缺10个，不补样、不换split。该网格只能报告现有观测下的结果与缺口；不足计划样本不能形成有效K2 selection。Phase2 evaluation在独立诊断性selection提交与验证前仍为open-deny，K3未测，不能据此判定NONTRIVIAL_OPERATOR_RELATIVITY或MONOTONE_RESCALING_ONLY。
 
 ## 冻结协议与运行身份
 
@@ -54,7 +54,7 @@ calibration 的120条固定rollout可完整分解：cream为53条clean success�
 
 bowl的一个calibration事件anchor位于316/320步，k8/12/16及对应部分参考请求超出任务horizon。这产生324个core与54个reference请求的结构性BLOCKED。完整事件支持集的描述性指标排除该事件，实际支持为cream19、bowl10，但仍保留原始30事件、19440请求和全部排除理由。这些组合记录BLOCKED并继续其余请求；不截短缓存前缀以伪造计划执行，也不把BLOCKED的占位False当阴性观测。每档oracle、weakest、gap及有效支持集将在实际分片完成后报告。
 
-两个Phase1作业dlc14obea2cugtbf与dlc4vt6h6pcw6jzk已提交；两个任务的实际分支源提交、runtime receipt、预算、重建误差0和trace SHA已通过主线程验收，完整网格仍在运行。北京时间2026-09-07 04:23的快照为cream3156/12312、bowl2846/7128，两个作业均无FATAL_ERROR。目前没有可报告的最终Phase1恢复成功率。K2需两任务在同一档位同时满足oracle∈[0.25,0.85]且gap≥0.15，并满足完整证据要求；计划样本不足使有效selection不可成立。Phase2所需两族safe success、k*、minority crossing、Spearman、10000次cluster bootstrap以及族内split-half噪声地板均未测，不填0、不编造边界或概念判决。
+两个Phase1作业dlc14obea2cugtbf与dlc4vt6h6pcw6jzk已提交；两个任务的实际分支源提交、runtime receipt、预算、重建误差0和trace SHA已通过主线程验收，完整网格仍在运行。北京时间2026-09-07 04:23的快照为cream3156/12312、bowl2846/7128，两个作业均无FATAL_ERROR。目前没有可报告的最终Phase1恢复成功率。K2需两任务在同一档位同时满足oracle∈[0.25,0.85]且gap≥0.15，并满足完整证据要求；计划样本不足使有效selection不可成立。Phase2所需两族safe success、k*、minority crossing、Spearman、10000次cluster bootstrap以及族内split-half噪声地板目前均未测。按用户“不因gate停止其他实验”的正文，接下来将走单独诊断性路径：全部现有Phase1请求验收后，在calibration上按原K2数值合格档与原排序选预算；若无数值合格档，则保留失败并按同排序取首档，仅供后续测量。单独receipt提交推送并验真后才读evaluation。原正式BLOCKED receipt及严格atlas入口保留。这是看过部分calibration数据后的执行补充，不是事前预注册，不能冒充前提齐全的确认性检验。具体见DIAGNOSTIC_ATLAS_CONTINUATION.md。
 
 ## PAI记录与工程修复
 
@@ -77,7 +77,7 @@ bowl的一个calibration事件anchor位于316/320步，k8/12/16及对应部分�
 
 实际算子预算经同事件、同k、同recovery seed和同预算的四臂配对核验：tail4/action32时四臂均执行32个新恢复动作，8次recovery policy调用加1次validation。hold/rollback的单步前导动作占用相同action budget，因此其余policy动作是31步，fresh为32步。算子名字中的h16还会受configured tail_horizon截断；不能只根据名字声称h16始终16步重规划。27个完整跨预算/seed配对组（每组108行）的detection和pre-tail状态一致，未发现D4错配；这些是工程验收而非恢复成功率结论。
 
-当前CPU全套回归为61 passed，覆盖样本短缺、源事件/参考臂缺失、真/伪horizon越界和selection禁止规则；旧测试回执保留对应历史代码，不与当前测试重复累加。
+当前CPU全套回归为71 passed，覆盖样本短缺、源事件/参考臂缺失、真/伪horizon越界、COMPLETE携带错误、伪造排除标记、越界anchor和正式selection禁止规则；旧测试回执保留对应历史代码，不与当前测试重复累加。
 
 ## 本阶段没有测的东西
 

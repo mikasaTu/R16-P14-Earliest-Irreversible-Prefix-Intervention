@@ -64,7 +64,7 @@ def _sort(value: Any) -> tuple[int, Any]:
 
 def _error_status(value: Any) -> bool:
     status = str(value).strip().lower()
-    return status in ERROR_STATUSES or status.startswith("error:")
+    return status in ERROR_STATUSES or status.startswith(("blocked", "error", "failed", "failure", "exception"))
 
 
 def _budget(row: Mapping[str, Any]) -> dict[str, int]:

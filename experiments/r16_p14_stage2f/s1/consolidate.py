@@ -213,6 +213,13 @@ def _canonical_row(row: Mapping[str, Any], phase: str) -> tuple[dict[str, Any] |
         and str(raw_error).strip() == "PrefixOutsideTaskHorizon"
         and phase == "phase1"
     )
+    if str(raw_status).strip().upper() == "COMPLETE" and raw_error not in (None, ""):
+        reasons.append("COMPLETE row carries a producer error_type")
+    if row.get("structurally_excluded") and not structural_exclusion:
+        reasons.append("raw structural exclusion lacks matching BLOCKED/error provenance")
+    # This field is derived here, never trusted from producer payloads.
+    result.pop("structurally_excluded", None)
+    result.pop("structural_exclusion_reason", None)
     for field in CORE_FIELDS:
         value = _value(row, field, *containers)
         if value is None:
@@ -709,6 +716,12 @@ def _validate_structural_exclusions(
             marker = ("missing-horizon", event_key)
             if marker not in reported:
                 reasons.append(f"unknown frozen task horizon for structural event {event_key!r}")
+                reported.add(marker)
+            continue
+        if not 0 <= int(anchor) < int(horizon):
+            marker = ("invalid-anchor-range", event_key)
+            if marker not in reported:
+                reasons.append(f"source anchor_global_step ({anchor}) outside [0, {horizon}) for {event_key!r}")
                 reported.add(marker)
             continue
         prefix = int(row["prefix_k"])
