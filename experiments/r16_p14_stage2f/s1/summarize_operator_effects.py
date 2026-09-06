@@ -968,17 +968,25 @@ def _action_stream_check(
                     }
                 )
     excluded_pairs = 0
+    excluded_rows = 0
     if raw_groups is not None:
         for budget, event_groups in raw_groups.items():
             if budget[0] != 4:
                 continue
             for event, branches in event_groups.items():
                 if event in excluded_keys:
-                    excluded_pairs += sum(
-                        1
-                        for branch in branches
+                    compared_rows = [
+                        branch for branch in branches
                         if branch[0] in ("fresh_h4", "fresh_h16")
-                    )
+                    ]
+                    # A pair is one shared event/prefix/seed comparison across
+                    # the two fresh arms.  The raw branch count has two rows
+                    # per pair, so retain both quantities explicitly.
+                    excluded_rows += len(compared_rows)
+                    excluded_pairs += len({
+                        (int(branch[1]), int(branch[2]))
+                        for branch in compared_rows
+                    })
     if safe_mismatches or hash_mismatches:
         status = "MISMATCH"
     elif missing_pairs or unverifiable:
@@ -996,6 +1004,7 @@ def _action_stream_check(
         "unverifiable": unverifiable[:max_evidence],
         "missing_pairs": missing_pairs[:max_evidence],
         "excluded_branch_pairs_skipped": int(excluded_pairs),
+        "excluded_branch_rows_skipped": int(excluded_rows),
         "budgets_checked": [
             _budget_dict(budget)
             for budget in CONFIGURED_BUDGETS

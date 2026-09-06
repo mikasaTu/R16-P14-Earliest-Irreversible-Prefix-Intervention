@@ -267,6 +267,9 @@ def test_available_shortfall_and_structural_blocked_rows_are_excluded_not_zero_f
     assert bowl["absolute"]["fresh_h4"]["estimate"] == pytest.approx(0.2)
     assert bowl["branch_count"] == 10 * 4 * 5 * 3
     assert result["structurally_excluded_events"][0]["event_instance_id"].endswith("-10")
+    check = result["action_stream_check"]
+    assert check["excluded_branch_pairs_skipped"] == 45
+    assert check["excluded_branch_rows_skipped"] == 90
 
 
 
