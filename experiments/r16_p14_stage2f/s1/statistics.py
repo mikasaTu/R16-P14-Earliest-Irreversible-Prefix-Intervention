@@ -345,34 +345,27 @@ def select_budget(grid_summary: Mapping[str, Any]) -> dict[str, Any]:
         excluded_count = int(excluded_count or 0)
     except (TypeError, ValueError):
         excluded_count = 1
+    blocking_reasons = []
     if excluded_count:
-        return {
-            "schema_version": 1,
-            "status": "BLOCKED",
-            "selected_budget": None,
-            "selected": None,
-            "selection_source": "calibration_only",
-            "blocking_reasons": [
-                f"structurally excluded events are not selection observations: {excluded_count}"
-            ],
-            "qualifying_budgets": [],
-            "ranked_candidates": [],
-            "selection_eligible": False,
-        }
+        blocking_reasons.append(
+            f"structurally excluded events are not selection observations: {excluded_count}"
+        )
     if sample_complete is False:
         observed = grid_summary.get("observed_events_by_task", sample.get("observed_events_by_task"))
         planned = grid_summary.get("planned_events", sample.get("planned_events", 20))
         shortfall = grid_summary.get("shortfall", sample.get("shortfall"))
+        blocking_reasons.append(
+            "planned calibration sample incomplete: "
+            f"observed={observed!r}, planned={planned!r}, shortfall={shortfall!r}"
+        )
+    if blocking_reasons:
         return {
             "schema_version": 1,
             "status": "BLOCKED",
             "selected_budget": None,
             "selected": None,
             "selection_source": "calibration_only",
-            "blocking_reasons": [
-                "planned calibration sample incomplete: "
-                f"observed={observed!r}, planned={planned!r}, shortfall={shortfall!r}"
-            ],
+            "blocking_reasons": blocking_reasons,
             "qualifying_budgets": [],
             "ranked_candidates": [],
             "selection_eligible": False,
