@@ -7,8 +7,9 @@ REG=Path("/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/pai-job-registry")
 BASE=Path("/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907")
 ALIAS="exp-robot-oversold-r16p14-stage2f-2gpu"
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
-def build(phase,task_index,run_id,source_commit):
+def build(phase,task_index,run_id,source_commit,diagnostic_atlas=False):
     tasks=("put_the_cream_cheese_in_the_bowl","put_the_bowl_on_the_plate")
+    if diagnostic_atlas and phase!="atlas":raise ValueError("diagnostic atlas requires phase=atlas")
     resolved_commit=subprocess.check_output(["git","rev-parse",source_commit+"^{commit}"],cwd=ROOT,text=True).strip()
     assert resolved_commit==source_commit and (os.getuid(),os.getgid())==(2254,2254)
     payload=Path("/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16p14-stage2f-payloads")/source_commit
@@ -36,7 +37,9 @@ def build(phase,task_index,run_id,source_commit):
         if dest.exists():
             if sha(dest)!=sha(p):raise RuntimeError("fixed pool differs")
         else:shutil.copy2(p,dest)
-    launcher=REG/"launchers"/f"r16p14_stage2f_{phase}_{task_index}_{source_commit[:10]}.sh"
+    launcher_suffix="_diagnostic" if diagnostic_atlas else ""
+    launcher=REG/"launchers"/f"r16p14_stage2f_{phase}_{task_index}_{source_commit[:10]}{launcher_suffix}.sh"
+    diagnostic_flag=" --diagnostic-atlas" if diagnostic_atlas else ""
     body=f"""#!/usr/bin/env bash
 set -euo pipefail
 export PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
@@ -44,7 +47,7 @@ export MUJOCO_GL=egl WANDB_PROJECT=r16-p14-stage2f-s1
 export LIBERO_ASSETS_PATH=/mnt/cpfs/zbl-cpfs-new/dataset/leon/libero/assets/90001343cb134b7e26e18fde0fa2416f3ed6e6a3
 export LIBERO_CONFIG_PATH={payload}/experiments/r16_p14_libero_stage1/libero_config
 cd {payload}
-exec /mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/r16p14_s1_cu124_20260907/bin/python -m experiments.r16_p14_stage2f.s1.pai_entry --phase {phase} --task {tasks[task_index]} --output-root {output} --control-root {control} --source-commit {source_commit} --source-manifest-sha256 {source_manifest_sha} --workers 24
+exec /mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/r16p14_s1_cu124_20260907/bin/python -m experiments.r16_p14_stage2f.s1.pai_entry --phase {phase} --task {tasks[task_index]} --output-root {output} --control-root {control} --source-commit {source_commit} --source-manifest-sha256 {source_manifest_sha} --workers 24{diagnostic_flag}
 """
     if launcher.exists():
         if launcher.read_text()!=body:raise RuntimeError("immutable launcher differs")
@@ -85,6 +88,16 @@ exec /mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/r16p14_s1_cu124_20260907/bin/python 
       submission={"priority":9,"disable_ecs_stock_check":True,"job_reserved_policy":"","job_reserved_minutes":0,
         "job_max_running_time_minutes":290,"tags":{"managed_by":"pai-job-registry","purpose":f"formal-{work}",
         "task":task_id,"model":model_id,"hardware":"2xa800-idle","resource_pool":"exp-robot","experiment_role":"stage2f-s1"}})
+    if diagnostic_atlas:
+        template["evidence"].update({
+            "diagnostic_continuation": True,
+            "kind": "r16p14_stage2f_diagnostic_atlas",
+            "selection_source": "calibration_only",
+            "diagnostic_selection_receipt_path": str(output/"phase1/diagnostic_selection_receipt.json"),
+            "diagnostic_selection_authorization_path": str(output/"phase1/diagnostic_selection_authorization.json"),
+            "diagnostic_protocol_sha256": "2d14427c2391422dd372b0528d6d784d1066d8d059e1405597cfb1954f260c6a",
+            "evaluation_open_deny_until_diagnostic_proof": True,
+        })
     target=REG/"templates"/f"{run_id}.json"
     if target.exists():raise RuntimeError("template already exists")
     target.write_text(json.dumps(template,indent=2)+"\n")
@@ -93,4 +106,5 @@ exec /mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/r16p14_s1_cu124_20260907/bin/python 
 if __name__=="__main__":
     p=argparse.ArgumentParser();p.add_argument("--phase",choices=("collect","grid","atlas"),required=True)
     p.add_argument("--task-index",type=int,choices=(0,1),required=True);p.add_argument("--run-id",required=True);p.add_argument("--source-commit",required=True)
+    p.add_argument("--diagnostic-atlas",action="store_true")
     print(json.dumps(build(**vars(p.parse_args())),indent=2))
