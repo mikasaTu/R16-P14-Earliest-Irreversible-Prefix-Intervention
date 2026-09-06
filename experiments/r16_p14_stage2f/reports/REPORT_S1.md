@@ -77,7 +77,7 @@ bowl的一个calibration事件anchor位于316/320步，k8/12/16及对应部分�
 
 实际算子预算经同事件、同k、同recovery seed和同预算的四臂配对核验：tail4/action32时四臂均执行32个新恢复动作，8次recovery policy调用加1次validation。hold/rollback的单步前导动作占用相同action budget，因此其余policy动作是31步，fresh为32步。算子名字中的h16还会受configured tail_horizon截断；不能只根据名字声称h16始终16步重规划。27个完整跨预算/seed配对组（每组108行）的detection和pre-tail状态一致，未发现D4错配；这些是工程验收而非恢复成功率结论。
 
-当前CPU全套回归为71 passed，覆盖样本短缺、源事件/参考臂缺失、真/伪horizon越界、COMPLETE携带错误、伪造排除标记、越界anchor和正式selection禁止规则；旧测试回执保留对应历史代码，不与当前测试重复累加。
+统计证据修复时CPU全套回归为71 passed，覆盖样本短缺、源事件/参考臂缺失、真/伪horizon越界、COMPLETE携带错误、伪造排除标记、越界anchor和正式selection禁止规则；旧测试回执保留对应历史代码，不与当前测试重复累加。
 
 ## 本阶段没有测的东西
 
@@ -88,3 +88,13 @@ bowl的一个calibration事件anchor位于316/320步，k8/12/16及对应部分�
 北京时间04:32，两作业因一条600秒超时和全局取消Stopped。该超时分支的1144条完整trace在04:22:28已经落盘。代码发现父进程先join子进程再Queue.get；2MiB结果的CPU反例可复现超时，改为先drain队列再join后通过。全套72项测试通过，另有2项队列/精确SHA兼容检查通过（其中1项与全套重合，不重复累加）。这仅修改IPC传输次序，actor、seed、动作、预算、仿真和measurement代码均不变。
 
 1条超时与45条取消及存在的11条trace已在两个JobId terminal Stopped后逐文件SHA核验归档。7029条COMPLETE与378条真horizon BLOCKED保留原地。恢复仅重试未完成/取消/超时的同一请求、同一seed，保留旧失败尝试；不会按success筛选重跑。dispatch_compatibility.json将复用许可绑定到旧a088源、唯一旧/新dispatch SHA和其余五个模块完全相同的SHA。
+
+## 已恢复进度与六对机理证据
+
+Phase1 r2源码为93872b41ad48d24e1c6cb46d8c46690dae359b62，tree9f25ad3ec3e98d7ce378a46fd163dfbe383d6c3d；cream作业dlcgtvdvu94wlto1、bowl作业dlc1n05o22ewi5dx均已Running并产生真实新COMPLETE，实际UseOversoldResource=true。原超时请求恢复后返回结果pickle大小342396字节；新旧trace解压后均15225576字节，逐字节完全一致。该证据支持IPC传输故障修复未改变此分支动作与物理轨迹。04:55北京保守GPU小时上界约4.68。
+
+已完成hold、rollback与fresh_h16/fresh_h4三个比较的双向六个个案，12条trace由主线程独立核验并发布。共同anchor、生成/恢复checkpoint、chunk与env一致，独立PID不同；三类比较都能观察到成功与失败方向，不能据此代替最终总体统计。
+
+代码机理：hold插入六维零位移并保留夹爪的一步；rollback对cached prefix末尾动作old[k-1]的前六维取负、保留夹爪；fresh_h4/h16在configured tail允许时改变重规划间隔。六对trace显示首动或首次重新规划后对象/目标位置、接触和释放时序发生分化，完整时序见MECHANISM_PHASE1_CASES.md。
+
+一个关键计分细节：fresh16_up个案的fresh_h4在control27的物理子步7–16短暂满足任务条件，但控制步末已失去，最终失败；fresh_h16从control26子步10保持到步末，实际成功。这解释了“出现目标接触/瞬时成功”与分支safe success的区别。六对release violation均为false，差异来自任务成功判定；没有据个案推断总体收益或未记录的力学因果。

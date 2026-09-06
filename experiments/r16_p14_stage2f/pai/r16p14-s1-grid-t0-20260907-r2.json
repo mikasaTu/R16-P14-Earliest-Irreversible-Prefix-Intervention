@@ -1,0 +1,139 @@
+{
+  "schema_version": 2,
+  "kind": "pytorchjob",
+  "name_prefix": "r16p14-s1-grid",
+  "description": "Stage2F zero-injection grid task=put_the_cream_cheese_in_the_bowl; committed S1 protocol; immutable shards; no actor training",
+  "resource_alias": "exp-robot-oversold-r16p14-stage2f-2gpu",
+  "workspace_id": "179169",
+  "provenance": {
+    "contract_source_job_id": "dlcfp1szuc2cgqfp",
+    "resource_source_job_id": "dlc1k4y4965q71yw",
+    "submission_method": "cli_create",
+    "pai_clone_performed": false,
+    "source_role": "readback_reference"
+  },
+  "network": {},
+  "storage": {
+    "data_sources": [
+      {
+        "id": "d-mkixtohdn75dp8x9tb",
+        "version": "v1",
+        "mount_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon",
+        "options": ""
+      },
+      {
+        "id": "d-lg9t2b6xajpukeqqeb",
+        "version": "v1",
+        "mount_path": "/mnt/cpfs/zbl-cpfs-new/SHARE/leon",
+        "options": ""
+      },
+      {
+        "id": "d-36p023eg0f2vuqny8y",
+        "version": "v1",
+        "mount_path": "/mnt/cpfs/zbl-cpfs-new/CKPT/leon",
+        "options": ""
+      },
+      {
+        "id": "d-ejgj2ej7io1t2t32uc",
+        "version": "v1",
+        "mount_path": "/mnt/cpfs/zbl-cpfs-new/dataset/leon",
+        "options": ""
+      },
+      {
+        "id": "d-7fi8hehav247qi6x5o",
+        "version": "v1",
+        "mount_path": "/mnt/cpfs/zbl-cpfs-new/Models/",
+        "options": ""
+      }
+    ],
+    "output_root": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/pai_runs"
+  },
+  "worker": {
+    "count": 1,
+    "image": "dsw-registry-vpc.cn-wulanchabu.cr.aliyuncs.com/pai/modelscope:1.29.0-pytorch2.3.1tensorflow2.16.1-gpu-py311-cu121-ubuntu22.04",
+    "cpu": 24,
+    "gpu": 2,
+    "memory": "200Gi",
+    "shared_memory": "200Gi"
+  },
+  "runtime": {
+    "command_file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/pai-job-registry/launchers/r16p14_stage2f_grid_0_93872b41ad.sh",
+    "identity_mechanism": "controller_inline_bootstrap_then_setpriv",
+    "uid": 2254,
+    "gid": 2254,
+    "pod_env": {},
+    "secret_env_names": [],
+    "write_paths": [
+      "{{ARTIFACT_DIR}}",
+      "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f",
+      "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/control"
+    ],
+    "output_mode": "resume",
+    "create_artifact_dir": true,
+    "recursive_repair": false,
+    "payload_transport": "base64"
+  },
+  "fault_tolerance": {
+    "aimaster_args": "--job-execution-mode=Sync --enable-job-restart=True --max-num-of-job-restart=50 --fault-tolerant-policy=OnFailure",
+    "maximum_platform_restarts": 50,
+    "launcher_attempts": 1,
+    "retry_sleep_seconds": 30,
+    "pai_automatic_fault_tolerance": true,
+    "application_auto_resume": true
+  },
+  "evidence": {
+    "kind": "r16p14_stage2f_formal_evaluation",
+    "idle_8gpu_contract": "generic_formal_quota_idle_2gpu_v1",
+    "quota_idle_override": {
+      "authorized": true,
+      "pool": "exp-robot",
+      "resource_id": "quota1ssrabud0bh",
+      "resource_source_job_id": "dlc1k4y4965q71yw",
+      "source_oversold_type": "ForbiddenQuotaOverSold",
+      "target_oversold_type": "AcceptQuotaOverSold"
+    },
+    "contract_ready": true,
+    "workload_type": "evaluation",
+    "task_id": "r16p14-s1-grid-task0",
+    "model_id": "frozen-shared-multitask-act-seeds7-17-29-h16",
+    "success_gate": "persisted_completed_evaluation_result",
+    "require_actual_idle": true,
+    "pai_probe_created": false,
+    "validation_method": "static+dev14_smoke",
+    "validation_status": "passed",
+    "validated_payload_sha256": "2b9403c15199602d166c5e765782aad59b19b72ffc3942e19591b7c9a2ea27df",
+    "expected_first_work_uid": 2254,
+    "expected_first_work_gid": 2254,
+    "first_work_evidence_path": "{{ARTIFACT_DIR}}/pai_state/FIRST_REAL_WORK.json",
+    "completed_evidence_path": "{{ARTIFACT_DIR}}/pai_state/COMPLETED.json",
+    "source_manifest_sha256": "343d03011d2a515b463efa2719d53feab37d24dee09a7f39d6b6fe4ab05bd0ca",
+    "source_commit": "93872b41ad48d24e1c6cb46d8c46690dae359b62",
+    "source_tree": "9f25ad3ec3e98d7ce378a46fd163dfbe383d6c3d",
+    "resume_contract": "immutable completed JSON and gzip shards; exact source and request hash; failed attempts retained",
+    "zero_injection": true,
+    "training": false,
+    "selection_open_deny": true,
+    "budget_gpu_hours": 20,
+    "blackouts_beijing": [
+      "09:30-09:40",
+      "19:30-19:40"
+    ],
+    "external_controller": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/control/heartbeat.json"
+  },
+  "submission": {
+    "priority": 9,
+    "disable_ecs_stock_check": true,
+    "job_reserved_policy": "",
+    "job_reserved_minutes": 0,
+    "job_max_running_time_minutes": 290,
+    "tags": {
+      "managed_by": "pai-job-registry",
+      "purpose": "formal-evaluation",
+      "task": "r16p14-s1-grid-task0",
+      "model": "frozen-shared-multitask-act-seeds7-17-29-h16",
+      "hardware": "2xa800-idle",
+      "resource_pool": "exp-robot",
+      "experiment_role": "stage2f-s1"
+    }
+  }
+}

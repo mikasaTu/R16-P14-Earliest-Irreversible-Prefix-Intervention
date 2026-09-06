@@ -22,9 +22,9 @@ A-up/B-up 表示该 pair 中 A/B 的 safe_success=true 而另一臂为 false；�
 
 ## 六对时序证据总表
 
-首个对象 divergence 的括号是 A/B 在该 control step 的 object-target XY 距离；对象-目标接触首步、release control、task_success control 均为 A/B。actions 为新 recovery actions；calls 写成 recovery+validation。
+首个对象 divergence 的括号是 A/B 在该 control step 的 object-target XY 距离；对象-目标接触首步、release control、瞬时task_success control（包含physics子步，非必然control-end成功）均为 A/B。actions 为新 recovery actions；calls 写成 recovery+validation。
 
-| case | pair / safe A-B | 首个对象 divergence | 首个全 normalized topology divergence | 对象-目标接触首步 | release control | task_success control | new actions；calls |
+| case | pair / safe A-B | 首个对象 divergence | 首个全 normalized topology divergence | 对象-目标接触首步 | release control | 瞬时task_success control | new actions；calls |
 |---|---|---|---|---|---|---|---|
 | hold_up | hold_1+fresh_h4 vs fresh_h4 / True-False | c2 (0.1161/0.1135) | c19 | 22/19 | unknown/21 | 22/none | 21 ; 5+1 / 32 ; 8+1 |
 | hold_down | hold_1+fresh_h4 vs fresh_h4 / False-True | c4 (0.1094/0.1060) | c18 | 18/21 | unknown/21 | none/21 | 32 ; 8+1 / 18 ; 5+1 |
@@ -117,7 +117,7 @@ anchor 对照：detection/pre_tail 相同=True/True；generator checkpoint、rec
 
 六对入选臂的 release-based violation 都为 false；safe_success 差别由 task_success 取值造成。对象-目标接触也不是充分条件：例如 rollback_down 的失败臂后来出现对象-目标接触并 release，末态仍 task_success=false。release index 记录 transition 时刻，但不能从 XY 距离或接触集合单独推出任务判定原因。
 
-本报告只确证：固定 anchor 对照下，hold/rollback 首动或 fresh16/fresh4 批长改变 action stream；trace 中对象/目标 qpos、normalized contact topology、release transition 与 task_success 的时序随后不同。trace 没有力、冲量或反事实控制，因此更具体的动力学因果解释均为 unknown，不把个案方向外推为总体效果。
+本报告只确证：固定 anchor 对照下，hold/rollback 首动或 fresh16/fresh4 批长改变 action stream；trace 中对象/目标 qpos、normalized contact topology、release transition 与 task_success 的时序随后不同。trace 没有力、冲量记录，也没有用于分离某一具体动力学路径的额外干预，因此更细的动力学原因保持 unknown，不把个案方向外推为总体效果。
 
 ## 源码对应的可证机制
 
@@ -134,3 +134,12 @@ anchor 对照：detection/pre_tail 相同=True/True；generator checkpoint、rec
 - stage2f_s1_runtime.py: 3203db2452eef4bf6fe8b304eae2b14b1dc7ae80630479317c4610f063cf4417 (25881 bytes)
 
 机器可读的完整计数、6 对 row metadata、12 条 trace SHA 与时序 divergence 字段见 artifacts/stage2f/phase1/mechanism_cases.json。
+
+
+## 主线程补充：物理子步瞬时成功与实际成功判定
+
+六对共12条trace已由主线程独立核验SHA、源行身份、完整raw contact pairs与排序集合的一致性、25个physics子步/控制步、动作预算和两臂结果。这里发现一个需要明确区分的机制：表中“首次task_success”包含物理子步，runtime在env.step返回后检查成功，不能把子步瞬时true当成分支成功。
+
+fresh16_up个案中，fresh_h4在control27的physics substep7–16短暂task_success=true，共10个子步；到该控制步末已经为false，后续所有control-end也未成功。fresh_h16则在control26的substep10起进入成功条件，并保持到substep25和action_step，runtime在该步末停止。因此该例的差别包含“重规划时点改变轨迹，成功条件是否保持到实际检查时刻”的因素，不是release violation差别。两条轨迹共同的首个恢复动作相同，首次对象状态分开恰在第4个恢复动作之后（control16），与h4开始下一次重规划、h16继续原chunk的调度代码一致。
+
+其余5个例子的胜出臂均在相应control-end为true，失败臂从未在control-end为true。这个观察解释了为何接触目标或短暂进入任务几何条件仍不足以计成safe success；没有改变成功检查频率、任务定义或计分。逐子步证据记录于mechanism_cases.json的parent_success_sampling_audit。
