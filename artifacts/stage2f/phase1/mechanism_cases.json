@@ -1,0 +1,1033 @@
+{
+  "analysis": "phase1_calibration_mechanism_cases",
+  "cases": [
+    {
+      "case_id": "hold_up",
+      "comparison": {
+        "chunk_same": true,
+        "detection_same": true,
+        "env_same": true,
+        "generator_checkpoint_same": true,
+        "pid_distinct": true,
+        "pre_tail_same": true,
+        "recovery_checkpoint_same": true,
+        "trace_sha_fields_match_actual": [
+          true,
+          true
+        ]
+      },
+      "direction": "operator_a_up",
+      "group_key": {
+        "configured_action_budget": 32,
+        "configured_policy_call_cap": 8,
+        "configured_tail_horizon": 16,
+        "event_id": "put_the_cream_cheese_in_the_bowl__init012__actor7",
+        "prefix_k": 2,
+        "recovery_actor_seed": 17,
+        "task": "put_the_cream_cheese_in_the_bowl"
+      },
+      "operator_a": "hold_1+fresh_h4",
+      "operator_b": "fresh_h4",
+      "pair": "hold",
+      "rows": {
+        "operator_a": {
+          "actual_new_recovery_actions": 21,
+          "actual_total_action_steps": 23,
+          "behavior_operator": "hold_1+fresh_h4",
+          "chunk_hash": "acda4b97f8de25a806083723c9fe9b8f77d0e7c41ad55f299910379467f5301a",
+          "configured_action_budget": 32,
+          "configured_policy_call_cap": 8,
+          "configured_tail_horizon": 16,
+          "detection_complete_signature_hash": "b43b167e7763390c143708237770f0312a6e8920ebaaef11fd822e11facec99d",
+          "detection_signature_sha256": "6f743b935bd024d73b508e2590532155c71406fbb757e3edbe9d34e3bc8427b5",
+          "effective_execution_horizon": 4,
+          "env_hash": "453239538d25eb10f50b1fa73aff0c5f8f2031cb2519f44b94ed4592a53ec6fa",
+          "event_id": "put_the_cream_cheese_in_the_bowl__init012__actor7",
+          "event_instance_id": "put_the_cream_cheese_in_the_bowl__init012__actor7",
+          "generator_checkpoint_sha256": "821177a82cc470e108082fd3c0f6913983236a2fdf142de2fe51fc37c44240ca",
+          "operator": "hold_1+fresh_h4",
+          "pid": 36242,
+          "pre_tail_complete_signature_hash": "42b2de5bd7acfaf5f4b359ef8545ed04fe26e06bb2ab344df7f5c8a5e81e7ba0",
+          "pre_tail_signature_sha256": "75b228f59011bf11d35d3edaafd606ba49b26faa25de1ebc86271b5208240878",
+          "prefix_k": 2,
+          "recovery_actor_seed": 17,
+          "recovery_checkpoint_sha256": "83ee61e31ffdae6f2ef57203a2c0085df41e284039cd81c6ecf1210694521604",
+          "recovery_policy_calls": 5,
+          "release_based_violation": false,
+          "release_label": {
+            "first_index": null,
+            "missing": [],
+            "release_indices": [],
+            "violation": false,
+            "violation_indices": []
+          },
+          "row_file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/shards/put_the_cream_cheese_in_the_bowl/ebde14d988a312e6df297c0a37022b0f391eb32095bcc786d4679e91018814fa.json",
+          "row_sha256": "a46824e43a9b590835ac4a301970a9c35d6be961fda55461071adbe6beb4dbab",
+          "safe_success": true,
+          "safe_success_unblocked_observation": true,
+          "split": "calibration",
+          "status": "COMPLETE",
+          "tail_horizon": 16,
+          "task_success": true,
+          "topology_candidate": {
+            "candidate": false,
+            "candidate_indices": [],
+            "first_index": null,
+            "missing": []
+          },
+          "total_policy_calls": 6,
+          "trace": {
+            "action_records": 23,
+            "control_steps": 23,
+            "event_ids": [
+              "put_the_cream_cheese_in_the_bowl__init012__actor7"
+            ],
+            "exists": true,
+            "first_cached_action_hash": "94bbf7734e3e8055ebd58094717b56edd87c63c7c3f5e57bd32986cb4c5b249e",
+            "first_new_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "first_new_action_hash": "aeb42fef4924a9bd2abe763611882c97cf0928d30c70a77f6479778754e5a552",
+            "first_new_actor_seed": 17,
+            "first_new_control_step": 2,
+            "kind_counts": {
+              "action_step": 23,
+              "physics_step": 575
+            },
+            "path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/contact_topology/put_the_cream_cheese_in_the_bowl/ebde14d988a312e6df297c0a37022b0f391eb32095bcc786d4679e91018814fa.jsonl.gz",
+            "physics_per_control_counts": {
+              "25": 23
+            },
+            "physics_substeps_head": [
+              1,
+              2,
+              3
+            ],
+            "physics_substeps_tail": [
+              23,
+              24,
+              25
+            ],
+            "records": 598,
+            "trace_sha256_actual": "6853cecddbb6a1c7cab9c3ed282eaa0f759bc0ae1cc7bbb39df7c88a81d97618"
+          },
+          "trace_content_sha256": "2d6ecf29ed77adc1c478df4aa03f957881e034fe1f4d07ad26fdb9001090ea4d",
+          "trace_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/contact_topology/put_the_cream_cheese_in_the_bowl/ebde14d988a312e6df297c0a37022b0f391eb32095bcc786d4679e91018814fa.jsonl.gz",
+          "trace_sha256_actual": "6853cecddbb6a1c7cab9c3ed282eaa0f759bc0ae1cc7bbb39df7c88a81d97618",
+          "trace_sha256_field": "6853cecddbb6a1c7cab9c3ed282eaa0f759bc0ae1cc7bbb39df7c88a81d97618",
+          "trace_sha256_matches_field": true,
+          "validation_policy_calls": 1
+        },
+        "operator_b": {
+          "actual_new_recovery_actions": 32,
+          "actual_total_action_steps": 34,
+          "behavior_operator": "fresh_h4",
+          "chunk_hash": "acda4b97f8de25a806083723c9fe9b8f77d0e7c41ad55f299910379467f5301a",
+          "configured_action_budget": 32,
+          "configured_policy_call_cap": 8,
+          "configured_tail_horizon": 16,
+          "detection_complete_signature_hash": "b43b167e7763390c143708237770f0312a6e8920ebaaef11fd822e11facec99d",
+          "detection_signature_sha256": "6f743b935bd024d73b508e2590532155c71406fbb757e3edbe9d34e3bc8427b5",
+          "effective_execution_horizon": 4,
+          "env_hash": "453239538d25eb10f50b1fa73aff0c5f8f2031cb2519f44b94ed4592a53ec6fa",
+          "event_id": "put_the_cream_cheese_in_the_bowl__init012__actor7",
+          "event_instance_id": "put_the_cream_cheese_in_the_bowl__init012__actor7",
+          "generator_checkpoint_sha256": "821177a82cc470e108082fd3c0f6913983236a2fdf142de2fe51fc37c44240ca",
+          "operator": "fresh_h4",
+          "pid": 36010,
+          "pre_tail_complete_signature_hash": "42b2de5bd7acfaf5f4b359ef8545ed04fe26e06bb2ab344df7f5c8a5e81e7ba0",
+          "pre_tail_signature_sha256": "75b228f59011bf11d35d3edaafd606ba49b26faa25de1ebc86271b5208240878",
+          "prefix_k": 2,
+          "recovery_actor_seed": 17,
+          "recovery_checkpoint_sha256": "83ee61e31ffdae6f2ef57203a2c0085df41e284039cd81c6ecf1210694521604",
+          "recovery_policy_calls": 8,
+          "release_based_violation": false,
+          "release_label": {
+            "first_index": null,
+            "missing": [],
+            "release_indices": [
+              571
+            ],
+            "violation": false,
+            "violation_indices": []
+          },
+          "row_file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/shards/put_the_cream_cheese_in_the_bowl/fe4656d8f775fa34c663d2a4b6e15a1e02624a725dbcc800a311e44b84d2e508.json",
+          "row_sha256": "340ed48a9b288cb4c9164dda576f4b3a5bee3eadea0e6ca5515e397b38c69677",
+          "safe_success": false,
+          "safe_success_unblocked_observation": false,
+          "split": "calibration",
+          "status": "COMPLETE",
+          "tail_horizon": 16,
+          "task_success": false,
+          "topology_candidate": {
+            "candidate": false,
+            "candidate_indices": [],
+            "first_index": null,
+            "missing": []
+          },
+          "total_policy_calls": 9,
+          "trace": {
+            "action_records": 34,
+            "control_steps": 34,
+            "event_ids": [
+              "put_the_cream_cheese_in_the_bowl__init012__actor7"
+            ],
+            "exists": true,
+            "first_cached_action_hash": "94bbf7734e3e8055ebd58094717b56edd87c63c7c3f5e57bd32986cb4c5b249e",
+            "first_new_action": [
+              0.1310977041721344,
+              -0.677229642868042,
+              0.8149974942207336,
+              0.06407618522644043,
+              0.024842459708452225,
+              0.008544592186808586,
+              1.0
+            ],
+            "first_new_action_hash": "1123bd9f1b0145dc3a02b9bb0e9fb035ddedeec8d98f04a85591b520f890c7b2",
+            "first_new_actor_seed": 17,
+            "first_new_control_step": 2,
+            "kind_counts": {
+              "action_step": 34,
+              "physics_step": 850
+            },
+            "path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/contact_topology/put_the_cream_cheese_in_the_bowl/fe4656d8f775fa34c663d2a4b6e15a1e02624a725dbcc800a311e44b84d2e508.jsonl.gz",
+            "physics_per_control_counts": {
+              "25": 34
+            },
+            "physics_substeps_head": [
+              1,
+              2,
+              3
+            ],
+            "physics_substeps_tail": [
+              23,
+              24,
+              25
+            ],
+            "records": 884,
+            "trace_sha256_actual": "55d97e65bb6c77274e31ab69d8cb87ae657a5cf5aabd7e48197bfb1b1dfc3712"
+          },
+          "trace_content_sha256": "de29195e5286eea04cb61c035ff78fd5d48b107087c7a8d32d85361b19d8b183",
+          "trace_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/contact_topology/put_the_cream_cheese_in_the_bowl/fe4656d8f775fa34c663d2a4b6e15a1e02624a725dbcc800a311e44b84d2e508.jsonl.gz",
+          "trace_sha256_actual": "55d97e65bb6c77274e31ab69d8cb87ae657a5cf5aabd7e48197bfb1b1dfc3712",
+          "trace_sha256_field": "55d97e65bb6c77274e31ab69d8cb87ae657a5cf5aabd7e48197bfb1b1dfc3712",
+          "trace_sha256_matches_field": true,
+          "validation_policy_calls": 1
+        }
+      },
+      "safe_success_delta": "A_up"
+    },
+    {
+      "case_id": "hold_down",
+      "comparison": {
+        "chunk_same": true,
+        "detection_same": true,
+        "env_same": true,
+        "generator_checkpoint_same": true,
+        "pid_distinct": true,
+        "pre_tail_same": true,
+        "recovery_checkpoint_same": true,
+        "trace_sha_fields_match_actual": [
+          true,
+          true
+        ]
+      },
+      "direction": "operator_b_up",
+      "group_key": {
+        "configured_action_budget": 32,
+        "configured_policy_call_cap": 8,
+        "configured_tail_horizon": 8,
+        "event_id": "put_the_cream_cheese_in_the_bowl__init018__actor29",
+        "prefix_k": 4,
+        "recovery_actor_seed": 29,
+        "task": "put_the_cream_cheese_in_the_bowl"
+      },
+      "operator_a": "hold_1+fresh_h4",
+      "operator_b": "fresh_h4",
+      "pair": "hold",
+      "rows": {
+        "operator_a": {
+          "actual_new_recovery_actions": 32,
+          "actual_total_action_steps": 36,
+          "behavior_operator": "hold_1+fresh_h4",
+          "chunk_hash": "558b621fd721e83a65bb3ee186aed83a48dc2465946d24df44e579e3ee90cccb",
+          "configured_action_budget": 32,
+          "configured_policy_call_cap": 8,
+          "configured_tail_horizon": 8,
+          "detection_complete_signature_hash": "1800d83b086b47cbff307dece2a0233d787aa0167d9a48bffaadcf7b7d560713",
+          "detection_signature_sha256": "b55f3324e781b7ecd118bcbdcfc768d12710c463835a25d29f6657892f52ff3e",
+          "effective_execution_horizon": 4,
+          "env_hash": "453239538d25eb10f50b1fa73aff0c5f8f2031cb2519f44b94ed4592a53ec6fa",
+          "event_id": "put_the_cream_cheese_in_the_bowl__init018__actor29",
+          "event_instance_id": "put_the_cream_cheese_in_the_bowl__init018__actor29",
+          "generator_checkpoint_sha256": "0cf34a3e535525345306a2b322aae3b1bd6ebd6cd71dc653e2a91393e2b79d1a",
+          "operator": "hold_1+fresh_h4",
+          "pid": 49623,
+          "pre_tail_complete_signature_hash": "5e2a9b5bdb758e222211bba6bc6e7bf42ddff22fe6b79c627c3e0823f317008e",
+          "pre_tail_signature_sha256": "80e008ca9aa1ea92640daa897c408dd4119e39ed9ac5d3edc8e18aa3408acfca",
+          "prefix_k": 4,
+          "recovery_actor_seed": 29,
+          "recovery_checkpoint_sha256": "0cf34a3e535525345306a2b322aae3b1bd6ebd6cd71dc653e2a91393e2b79d1a",
+          "recovery_policy_calls": 8,
+          "release_based_violation": false,
+          "release_label": {
+            "first_index": null,
+            "missing": [],
+            "release_indices": [],
+            "violation": false,
+            "violation_indices": []
+          },
+          "row_file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/shards/put_the_cream_cheese_in_the_bowl/cf43f6eaf4e72998e5daebc544a4eba49d1a0e2f3883386df96d13724bd70d3a.json",
+          "row_sha256": "fab459bf850a31f6d43062331b6e758679bb42b3534d3e1e454068d6363e05c3",
+          "safe_success": false,
+          "safe_success_unblocked_observation": false,
+          "split": "calibration",
+          "status": "COMPLETE",
+          "tail_horizon": 8,
+          "task_success": false,
+          "topology_candidate": {
+            "candidate": false,
+            "candidate_indices": [],
+            "first_index": null,
+            "missing": []
+          },
+          "total_policy_calls": 9,
+          "trace": {
+            "action_records": 36,
+            "control_steps": 36,
+            "event_ids": [
+              "put_the_cream_cheese_in_the_bowl__init018__actor29"
+            ],
+            "exists": true,
+            "first_cached_action_hash": "2a9d8c6c63474b40aca53977684e5c499f2e74d9a009b6e46de2b8eec3797478",
+            "first_new_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "first_new_action_hash": "aeb42fef4924a9bd2abe763611882c97cf0928d30c70a77f6479778754e5a552",
+            "first_new_actor_seed": 29,
+            "first_new_control_step": 4,
+            "kind_counts": {
+              "action_step": 36,
+              "physics_step": 900
+            },
+            "path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/contact_topology/put_the_cream_cheese_in_the_bowl/cf43f6eaf4e72998e5daebc544a4eba49d1a0e2f3883386df96d13724bd70d3a.jsonl.gz",
+            "physics_per_control_counts": {
+              "25": 36
+            },
+            "physics_substeps_head": [
+              1,
+              2,
+              3
+            ],
+            "physics_substeps_tail": [
+              23,
+              24,
+              25
+            ],
+            "records": 936,
+            "trace_sha256_actual": "4f8516b2b5186ceb8b054cac52d1c2419e2847d03796d21817a4c22d7b8b4e19"
+          },
+          "trace_content_sha256": "12892a290361b2ddbe902432976387077792682b0454c1df7d086d292decb134",
+          "trace_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/contact_topology/put_the_cream_cheese_in_the_bowl/cf43f6eaf4e72998e5daebc544a4eba49d1a0e2f3883386df96d13724bd70d3a.jsonl.gz",
+          "trace_sha256_actual": "4f8516b2b5186ceb8b054cac52d1c2419e2847d03796d21817a4c22d7b8b4e19",
+          "trace_sha256_field": "4f8516b2b5186ceb8b054cac52d1c2419e2847d03796d21817a4c22d7b8b4e19",
+          "trace_sha256_matches_field": true,
+          "validation_policy_calls": 1
+        },
+        "operator_b": {
+          "actual_new_recovery_actions": 18,
+          "actual_total_action_steps": 22,
+          "behavior_operator": "fresh_h4",
+          "chunk_hash": "558b621fd721e83a65bb3ee186aed83a48dc2465946d24df44e579e3ee90cccb",
+          "configured_action_budget": 32,
+          "configured_policy_call_cap": 8,
+          "configured_tail_horizon": 8,
+          "detection_complete_signature_hash": "1800d83b086b47cbff307dece2a0233d787aa0167d9a48bffaadcf7b7d560713",
+          "detection_signature_sha256": "b55f3324e781b7ecd118bcbdcfc768d12710c463835a25d29f6657892f52ff3e",
+          "effective_execution_horizon": 4,
+          "env_hash": "453239538d25eb10f50b1fa73aff0c5f8f2031cb2519f44b94ed4592a53ec6fa",
+          "event_id": "put_the_cream_cheese_in_the_bowl__init018__actor29",
+          "event_instance_id": "put_the_cream_cheese_in_the_bowl__init018__actor29",
+          "generator_checkpoint_sha256": "0cf34a3e535525345306a2b322aae3b1bd6ebd6cd71dc653e2a91393e2b79d1a",
+          "operator": "fresh_h4",
+          "pid": 49286,
+          "pre_tail_complete_signature_hash": "5e2a9b5bdb758e222211bba6bc6e7bf42ddff22fe6b79c627c3e0823f317008e",
+          "pre_tail_signature_sha256": "80e008ca9aa1ea92640daa897c408dd4119e39ed9ac5d3edc8e18aa3408acfca",
+          "prefix_k": 4,
+          "recovery_actor_seed": 29,
+          "recovery_checkpoint_sha256": "0cf34a3e535525345306a2b322aae3b1bd6ebd6cd71dc653e2a91393e2b79d1a",
+          "recovery_policy_calls": 5,
+          "release_based_violation": false,
+          "release_label": {
+            "first_index": null,
+            "missing": [],
+            "release_indices": [
+              571
+            ],
+            "violation": false,
+            "violation_indices": []
+          },
+          "row_file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/shards/put_the_cream_cheese_in_the_bowl/0790d63c47585cf1e2b37255a992bf5cc787dfa0c00cd721ad62de3a0df09fd5.json",
+          "row_sha256": "5ebc459795b4b90054f74ec967064a9e18e6bc5d8fb3c159600a759802c0045e",
+          "safe_success": true,
+          "safe_success_unblocked_observation": true,
+          "split": "calibration",
+          "status": "COMPLETE",
+          "tail_horizon": 8,
+          "task_success": true,
+          "topology_candidate": {
+            "candidate": false,
+            "candidate_indices": [],
+            "first_index": null,
+            "missing": []
+          },
+          "total_policy_calls": 6,
+          "trace": {
+            "action_records": 22,
+            "control_steps": 22,
+            "event_ids": [
+              "put_the_cream_cheese_in_the_bowl__init018__actor29"
+            ],
+            "exists": true,
+            "first_cached_action_hash": "2a9d8c6c63474b40aca53977684e5c499f2e74d9a009b6e46de2b8eec3797478",
+            "first_new_action": [
+              0.07095261663198471,
+              -0.7547697424888611,
+              0.6488856077194214,
+              0.03893190622329712,
+              0.022749563679099083,
+              -0.03337360918521881,
+              1.0
+            ],
+            "first_new_action_hash": "cfc91a8c11e45044601cb522fa68c165f274adf456db720d4f603976fc6689ab",
+            "first_new_actor_seed": 29,
+            "first_new_control_step": 4,
+            "kind_counts": {
+              "action_step": 22,
+              "physics_step": 550
+            },
+            "path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/contact_topology/put_the_cream_cheese_in_the_bowl/0790d63c47585cf1e2b37255a992bf5cc787dfa0c00cd721ad62de3a0df09fd5.jsonl.gz",
+            "physics_per_control_counts": {
+              "25": 22
+            },
+            "physics_substeps_head": [
+              1,
+              2,
+              3
+            ],
+            "physics_substeps_tail": [
+              23,
+              24,
+              25
+            ],
+            "records": 572,
+            "trace_sha256_actual": "f5a77c7ba424e63c1ec5c720068314bf5cf005d63086860c8ac7882119e22017"
+          },
+          "trace_content_sha256": "2b4e156a964e618361dba7faec88ebe3ad2145f995978d18c1cc037f6ea7671a",
+          "trace_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/contact_topology/put_the_cream_cheese_in_the_bowl/0790d63c47585cf1e2b37255a992bf5cc787dfa0c00cd721ad62de3a0df09fd5.jsonl.gz",
+          "trace_sha256_actual": "f5a77c7ba424e63c1ec5c720068314bf5cf005d63086860c8ac7882119e22017",
+          "trace_sha256_field": "f5a77c7ba424e63c1ec5c720068314bf5cf005d63086860c8ac7882119e22017",
+          "trace_sha256_matches_field": true,
+          "validation_policy_calls": 1
+        }
+      },
+      "safe_success_delta": "B_up"
+    },
+    {
+      "case_id": "rollback_up",
+      "comparison": {
+        "chunk_same": true,
+        "detection_same": true,
+        "env_same": true,
+        "generator_checkpoint_same": true,
+        "pid_distinct": true,
+        "pre_tail_same": true,
+        "recovery_checkpoint_same": true,
+        "trace_sha_fields_match_actual": [
+          true,
+          true
+        ]
+      },
+      "direction": "operator_a_up",
+      "group_key": {
+        "configured_action_budget": 32,
+        "configured_policy_call_cap": 8,
+        "configured_tail_horizon": 8,
+        "event_id": "put_the_bowl_on_the_plate__init022__actor17",
+        "prefix_k": 2,
+        "recovery_actor_seed": 29,
+        "task": "put_the_bowl_on_the_plate"
+      },
+      "operator_a": "rollback_1+fresh_h16",
+      "operator_b": "fresh_h16",
+      "pair": "rollback",
+      "rows": {
+        "operator_a": {
+          "actual_new_recovery_actions": 27,
+          "actual_total_action_steps": 29,
+          "behavior_operator": "rollback_1+fresh_h16",
+          "chunk_hash": "38cc21c98285406e4675f2282c97ff9161a88223d9f918c879799a0f658f78d5",
+          "configured_action_budget": 32,
+          "configured_policy_call_cap": 8,
+          "configured_tail_horizon": 8,
+          "detection_complete_signature_hash": "9160d7514fa67a64e00d1707569daf74cf0282be8a3b7dcddeaca58ba3492dd4",
+          "detection_signature_sha256": "bd2ac2e10d0d441746d2cc9e3dc94de7e74720e57d343ba9a6eea7ec32ac321a",
+          "effective_execution_horizon": 8,
+          "env_hash": "1215bb8a20bf8d929d115b1d5acd6a18daffd0a0dfa1975b33c5446b45fe0556",
+          "event_id": "put_the_bowl_on_the_plate__init022__actor17",
+          "event_instance_id": "put_the_bowl_on_the_plate__init022__actor17",
+          "generator_checkpoint_sha256": "83ee61e31ffdae6f2ef57203a2c0085df41e284039cd81c6ecf1210694521604",
+          "operator": "rollback_1+fresh_h16",
+          "pid": 59021,
+          "pre_tail_complete_signature_hash": "dfd8aa843dff6ae031f35c5abe3c546fac308757b8c52201b7fbe33dcafc3547",
+          "pre_tail_signature_sha256": "3eac48e39fa4fc6d5eb184dec7d0e532bcda0a3254404b7726ac3b635c584c95",
+          "prefix_k": 2,
+          "recovery_actor_seed": 29,
+          "recovery_checkpoint_sha256": "0cf34a3e535525345306a2b322aae3b1bd6ebd6cd71dc653e2a91393e2b79d1a",
+          "recovery_policy_calls": 4,
+          "release_based_violation": false,
+          "release_label": {
+            "first_index": null,
+            "missing": [],
+            "release_indices": [],
+            "violation": false,
+            "violation_indices": []
+          },
+          "row_file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/shards/put_the_bowl_on_the_plate/8e21da14d1926376a04aa7ad7b8fff388100e511a8aad3d8532d59257438d736.json",
+          "row_sha256": "3577b55baf1493c652029a3fe2607d872095d5358d923c311a3c7ca816a0b4ed",
+          "safe_success": true,
+          "safe_success_unblocked_observation": true,
+          "split": "calibration",
+          "status": "COMPLETE",
+          "tail_horizon": 8,
+          "task_success": true,
+          "topology_candidate": {
+            "candidate": false,
+            "candidate_indices": [],
+            "first_index": null,
+            "missing": []
+          },
+          "total_policy_calls": 5,
+          "trace": {
+            "action_records": 29,
+            "control_steps": 29,
+            "event_ids": [
+              "put_the_bowl_on_the_plate__init022__actor17"
+            ],
+            "exists": true,
+            "first_cached_action_hash": "025af765306f6fb0734033cbc84097a16542cd83d9dda0c00b1bfb93db03fd22",
+            "first_new_action": [
+              -0.8724420070648193,
+              -0.0894884392619133,
+              -0.7207463383674622,
+              0.011128724552690983,
+              -0.006350073032081127,
+              0.029505696147680283,
+              1.0
+            ],
+            "first_new_action_hash": "4d0424a62de830c42ecdbf021cb1acd84161431b5ff957360059c61d849e0daa",
+            "first_new_actor_seed": 29,
+            "first_new_control_step": 2,
+            "kind_counts": {
+              "action_step": 29,
+              "physics_step": 725
+            },
+            "path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/contact_topology/put_the_bowl_on_the_plate/8e21da14d1926376a04aa7ad7b8fff388100e511a8aad3d8532d59257438d736.jsonl.gz",
+            "physics_per_control_counts": {
+              "25": 29
+            },
+            "physics_substeps_head": [
+              1,
+              2,
+              3
+            ],
+            "physics_substeps_tail": [
+              23,
+              24,
+              25
+            ],
+            "records": 754,
+            "trace_sha256_actual": "e6bcedc7a281f93c452698535054d095fafab6b536af5045c081de681f2a785e"
+          },
+          "trace_content_sha256": "ff48fd3489d1a7a283de065732e1223ad19610efde808934a87f784d3e924d24",
+          "trace_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/contact_topology/put_the_bowl_on_the_plate/8e21da14d1926376a04aa7ad7b8fff388100e511a8aad3d8532d59257438d736.jsonl.gz",
+          "trace_sha256_actual": "e6bcedc7a281f93c452698535054d095fafab6b536af5045c081de681f2a785e",
+          "trace_sha256_field": "e6bcedc7a281f93c452698535054d095fafab6b536af5045c081de681f2a785e",
+          "trace_sha256_matches_field": true,
+          "validation_policy_calls": 1
+        },
+        "operator_b": {
+          "actual_new_recovery_actions": 32,
+          "actual_total_action_steps": 34,
+          "behavior_operator": "fresh_h16",
+          "chunk_hash": "38cc21c98285406e4675f2282c97ff9161a88223d9f918c879799a0f658f78d5",
+          "configured_action_budget": 32,
+          "configured_policy_call_cap": 8,
+          "configured_tail_horizon": 8,
+          "detection_complete_signature_hash": "9160d7514fa67a64e00d1707569daf74cf0282be8a3b7dcddeaca58ba3492dd4",
+          "detection_signature_sha256": "bd2ac2e10d0d441746d2cc9e3dc94de7e74720e57d343ba9a6eea7ec32ac321a",
+          "effective_execution_horizon": 8,
+          "env_hash": "1215bb8a20bf8d929d115b1d5acd6a18daffd0a0dfa1975b33c5446b45fe0556",
+          "event_id": "put_the_bowl_on_the_plate__init022__actor17",
+          "event_instance_id": "put_the_bowl_on_the_plate__init022__actor17",
+          "generator_checkpoint_sha256": "83ee61e31ffdae6f2ef57203a2c0085df41e284039cd81c6ecf1210694521604",
+          "operator": "fresh_h16",
+          "pid": 58853,
+          "pre_tail_complete_signature_hash": "dfd8aa843dff6ae031f35c5abe3c546fac308757b8c52201b7fbe33dcafc3547",
+          "pre_tail_signature_sha256": "3eac48e39fa4fc6d5eb184dec7d0e532bcda0a3254404b7726ac3b635c584c95",
+          "prefix_k": 2,
+          "recovery_actor_seed": 29,
+          "recovery_checkpoint_sha256": "0cf34a3e535525345306a2b322aae3b1bd6ebd6cd71dc653e2a91393e2b79d1a",
+          "recovery_policy_calls": 4,
+          "release_based_violation": false,
+          "release_label": {
+            "first_index": null,
+            "missing": [],
+            "release_indices": [
+              857
+            ],
+            "violation": false,
+            "violation_indices": []
+          },
+          "row_file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/shards/put_the_bowl_on_the_plate/b22cfd7ad32f240845dc86238ed8c033c1d6f460f42335fc9a2d46b6424097f6.json",
+          "row_sha256": "67a6bc97d049efe47a698f57b867bde3e61fe613405a0e3b3a82a841624af08e",
+          "safe_success": false,
+          "safe_success_unblocked_observation": false,
+          "split": "calibration",
+          "status": "COMPLETE",
+          "tail_horizon": 8,
+          "task_success": false,
+          "topology_candidate": {
+            "candidate": false,
+            "candidate_indices": [],
+            "first_index": null,
+            "missing": []
+          },
+          "total_policy_calls": 5,
+          "trace": {
+            "action_records": 34,
+            "control_steps": 34,
+            "event_ids": [
+              "put_the_bowl_on_the_plate__init022__actor17"
+            ],
+            "exists": true,
+            "first_cached_action_hash": "025af765306f6fb0734033cbc84097a16542cd83d9dda0c00b1bfb93db03fd22",
+            "first_new_action": [
+              0.9197178483009338,
+              0.018135234713554382,
+              0.6684122085571289,
+              -0.010610978119075298,
+              0.0063922218978405,
+              -0.012241903692483902,
+              1.0
+            ],
+            "first_new_action_hash": "a0b0824335c11ec1f1236caf6af4ab1d649402b0971ec3f735ab2f0b86d01e7b",
+            "first_new_actor_seed": 29,
+            "first_new_control_step": 2,
+            "kind_counts": {
+              "action_step": 34,
+              "physics_step": 850
+            },
+            "path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/contact_topology/put_the_bowl_on_the_plate/b22cfd7ad32f240845dc86238ed8c033c1d6f460f42335fc9a2d46b6424097f6.jsonl.gz",
+            "physics_per_control_counts": {
+              "25": 34
+            },
+            "physics_substeps_head": [
+              1,
+              2,
+              3
+            ],
+            "physics_substeps_tail": [
+              23,
+              24,
+              25
+            ],
+            "records": 884,
+            "trace_sha256_actual": "022111dabdfc2132d44b5bd231534a5e7818c98d9f605c975188720350bf62d7"
+          },
+          "trace_content_sha256": "2e0e2d38e1f68cd6b45798ecae31a01bb5037b9fcba0629e5865df9cc318a94f",
+          "trace_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/contact_topology/put_the_bowl_on_the_plate/b22cfd7ad32f240845dc86238ed8c033c1d6f460f42335fc9a2d46b6424097f6.jsonl.gz",
+          "trace_sha256_actual": "022111dabdfc2132d44b5bd231534a5e7818c98d9f605c975188720350bf62d7",
+          "trace_sha256_field": "022111dabdfc2132d44b5bd231534a5e7818c98d9f605c975188720350bf62d7",
+          "trace_sha256_matches_field": true,
+          "validation_policy_calls": 1
+        }
+      },
+      "safe_success_delta": "A_up"
+    },
+    {
+      "case_id": "fresh16_up",
+      "comparison": {
+        "chunk_same": true,
+        "detection_same": true,
+        "env_same": true,
+        "generator_checkpoint_same": true,
+        "pid_distinct": true,
+        "pre_tail_same": true,
+        "recovery_checkpoint_same": true,
+        "trace_sha_fields_match_actual": [
+          true,
+          true
+        ]
+      },
+      "direction": "operator_a_up",
+      "group_key": {
+        "configured_action_budget": 32,
+        "configured_policy_call_cap": 8,
+        "configured_tail_horizon": 16,
+        "event_id": "put_the_cream_cheese_in_the_bowl__init018__actor29",
+        "prefix_k": 12,
+        "recovery_actor_seed": 7,
+        "task": "put_the_cream_cheese_in_the_bowl"
+      },
+      "operator_a": "fresh_h16",
+      "operator_b": "fresh_h4",
+      "pair": "fresh16",
+      "rows": {
+        "operator_a": {
+          "actual_new_recovery_actions": 15,
+          "actual_total_action_steps": 27,
+          "behavior_operator": "fresh_h16",
+          "chunk_hash": "558b621fd721e83a65bb3ee186aed83a48dc2465946d24df44e579e3ee90cccb",
+          "configured_action_budget": 32,
+          "configured_policy_call_cap": 8,
+          "configured_tail_horizon": 16,
+          "detection_complete_signature_hash": "1800d83b086b47cbff307dece2a0233d787aa0167d9a48bffaadcf7b7d560713",
+          "detection_signature_sha256": "b55f3324e781b7ecd118bcbdcfc768d12710c463835a25d29f6657892f52ff3e",
+          "effective_execution_horizon": 16,
+          "env_hash": "453239538d25eb10f50b1fa73aff0c5f8f2031cb2519f44b94ed4592a53ec6fa",
+          "event_id": "put_the_cream_cheese_in_the_bowl__init018__actor29",
+          "event_instance_id": "put_the_cream_cheese_in_the_bowl__init018__actor29",
+          "generator_checkpoint_sha256": "0cf34a3e535525345306a2b322aae3b1bd6ebd6cd71dc653e2a91393e2b79d1a",
+          "operator": "fresh_h16",
+          "pid": 54384,
+          "pre_tail_complete_signature_hash": "cc4f05b7e9af83d7b8fa8f890c812b17298dfcfc0ffc475a6eed10c82475ee98",
+          "pre_tail_signature_sha256": "5fe5008f017020be39d5b9f264f4d1a3960fcadf4d95a3e22ab7eb9d77153ff8",
+          "prefix_k": 12,
+          "recovery_actor_seed": 7,
+          "recovery_checkpoint_sha256": "821177a82cc470e108082fd3c0f6913983236a2fdf142de2fe51fc37c44240ca",
+          "recovery_policy_calls": 1,
+          "release_based_violation": false,
+          "release_label": {
+            "first_index": null,
+            "missing": [],
+            "release_indices": [
+              545
+            ],
+            "violation": false,
+            "violation_indices": []
+          },
+          "row_file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/shards/put_the_cream_cheese_in_the_bowl/493442dcdf63e210baf2da0916cb9b6f3e42d5bb41f2aae424d95e6d0384902d.json",
+          "row_sha256": "cd9a205b7a8ba7d176704bc7ce5b7084e4cdab7eb3633d2417570c829887d84b",
+          "safe_success": true,
+          "safe_success_unblocked_observation": true,
+          "split": "calibration",
+          "status": "COMPLETE",
+          "tail_horizon": 16,
+          "task_success": true,
+          "topology_candidate": {
+            "candidate": false,
+            "candidate_indices": [],
+            "first_index": null,
+            "missing": []
+          },
+          "total_policy_calls": 2,
+          "trace": {
+            "action_records": 27,
+            "control_steps": 27,
+            "event_ids": [
+              "put_the_cream_cheese_in_the_bowl__init018__actor29"
+            ],
+            "exists": true,
+            "first_cached_action_hash": "2a9d8c6c63474b40aca53977684e5c499f2e74d9a009b6e46de2b8eec3797478",
+            "first_new_action": [
+              -0.29329830408096313,
+              -0.32699570059776306,
+              -0.6535674333572388,
+              -0.006941031198948622,
+              -0.014703677967190742,
+              -0.014861991629004478,
+              1.0
+            ],
+            "first_new_action_hash": "321d7b22cb7dfeee4dac6603c74d87c1e1a6d465b899923d604483fb4011e6c1",
+            "first_new_actor_seed": 7,
+            "first_new_control_step": 12,
+            "kind_counts": {
+              "action_step": 27,
+              "physics_step": 675
+            },
+            "path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/contact_topology/put_the_cream_cheese_in_the_bowl/493442dcdf63e210baf2da0916cb9b6f3e42d5bb41f2aae424d95e6d0384902d.jsonl.gz",
+            "physics_per_control_counts": {
+              "25": 27
+            },
+            "physics_substeps_head": [
+              1,
+              2,
+              3
+            ],
+            "physics_substeps_tail": [
+              23,
+              24,
+              25
+            ],
+            "records": 702,
+            "trace_sha256_actual": "cb1af4bbd9fc7c144defaca088a8ca0851d45736ebf4ce6736cc2361b2e2a9aa"
+          },
+          "trace_content_sha256": "e2bfbc7db8a772734c7035081bcb45a69e3b71cc6e77d3c806731494a6ecc4c4",
+          "trace_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/contact_topology/put_the_cream_cheese_in_the_bowl/493442dcdf63e210baf2da0916cb9b6f3e42d5bb41f2aae424d95e6d0384902d.jsonl.gz",
+          "trace_sha256_actual": "cb1af4bbd9fc7c144defaca088a8ca0851d45736ebf4ce6736cc2361b2e2a9aa",
+          "trace_sha256_field": "cb1af4bbd9fc7c144defaca088a8ca0851d45736ebf4ce6736cc2361b2e2a9aa",
+          "trace_sha256_matches_field": true,
+          "validation_policy_calls": 1
+        },
+        "operator_b": {
+          "actual_new_recovery_actions": 32,
+          "actual_total_action_steps": 44,
+          "behavior_operator": "fresh_h4",
+          "chunk_hash": "558b621fd721e83a65bb3ee186aed83a48dc2465946d24df44e579e3ee90cccb",
+          "configured_action_budget": 32,
+          "configured_policy_call_cap": 8,
+          "configured_tail_horizon": 16,
+          "detection_complete_signature_hash": "1800d83b086b47cbff307dece2a0233d787aa0167d9a48bffaadcf7b7d560713",
+          "detection_signature_sha256": "b55f3324e781b7ecd118bcbdcfc768d12710c463835a25d29f6657892f52ff3e",
+          "effective_execution_horizon": 4,
+          "env_hash": "453239538d25eb10f50b1fa73aff0c5f8f2031cb2519f44b94ed4592a53ec6fa",
+          "event_id": "put_the_cream_cheese_in_the_bowl__init018__actor29",
+          "event_instance_id": "put_the_cream_cheese_in_the_bowl__init018__actor29",
+          "generator_checkpoint_sha256": "0cf34a3e535525345306a2b322aae3b1bd6ebd6cd71dc653e2a91393e2b79d1a",
+          "operator": "fresh_h4",
+          "pid": 54220,
+          "pre_tail_complete_signature_hash": "cc4f05b7e9af83d7b8fa8f890c812b17298dfcfc0ffc475a6eed10c82475ee98",
+          "pre_tail_signature_sha256": "5fe5008f017020be39d5b9f264f4d1a3960fcadf4d95a3e22ab7eb9d77153ff8",
+          "prefix_k": 12,
+          "recovery_actor_seed": 7,
+          "recovery_checkpoint_sha256": "821177a82cc470e108082fd3c0f6913983236a2fdf142de2fe51fc37c44240ca",
+          "recovery_policy_calls": 8,
+          "release_based_violation": false,
+          "release_label": {
+            "first_index": null,
+            "missing": [],
+            "release_indices": [
+              571
+            ],
+            "violation": false,
+            "violation_indices": []
+          },
+          "row_file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/shards/put_the_cream_cheese_in_the_bowl/b3fff980cf13a5da8b658eac59cd44cc94360517f8e3522cb796ff3539d0d6c5.json",
+          "row_sha256": "3175712767d48e8389706c8b344efd3c6865e9c49958fccbd1e4a3c4afcaec30",
+          "safe_success": false,
+          "safe_success_unblocked_observation": false,
+          "split": "calibration",
+          "status": "COMPLETE",
+          "tail_horizon": 16,
+          "task_success": false,
+          "topology_candidate": {
+            "candidate": false,
+            "candidate_indices": [],
+            "first_index": null,
+            "missing": []
+          },
+          "total_policy_calls": 9,
+          "trace": {
+            "action_records": 44,
+            "control_steps": 44,
+            "event_ids": [
+              "put_the_cream_cheese_in_the_bowl__init018__actor29"
+            ],
+            "exists": true,
+            "first_cached_action_hash": "2a9d8c6c63474b40aca53977684e5c499f2e74d9a009b6e46de2b8eec3797478",
+            "first_new_action": [
+              -0.29329830408096313,
+              -0.32699570059776306,
+              -0.6535674333572388,
+              -0.006941031198948622,
+              -0.014703677967190742,
+              -0.014861991629004478,
+              1.0
+            ],
+            "first_new_action_hash": "321d7b22cb7dfeee4dac6603c74d87c1e1a6d465b899923d604483fb4011e6c1",
+            "first_new_actor_seed": 7,
+            "first_new_control_step": 12,
+            "kind_counts": {
+              "action_step": 44,
+              "physics_step": 1100
+            },
+            "path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/contact_topology/put_the_cream_cheese_in_the_bowl/b3fff980cf13a5da8b658eac59cd44cc94360517f8e3522cb796ff3539d0d6c5.jsonl.gz",
+            "physics_per_control_counts": {
+              "25": 44
+            },
+            "physics_substeps_head": [
+              1,
+              2,
+              3
+            ],
+            "physics_substeps_tail": [
+              23,
+              24,
+              25
+            ],
+            "records": 1144,
+            "trace_sha256_actual": "0d732000b725447e5e23c4d6dd2dd76e4d463f382152cf1cc5e6903dd98eb700"
+          },
+          "trace_content_sha256": "c7440511205947e082df09bd1a7de1459232bfff4040d670b07538db7c9bb576",
+          "trace_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/contact_topology/put_the_cream_cheese_in_the_bowl/b3fff980cf13a5da8b658eac59cd44cc94360517f8e3522cb796ff3539d0d6c5.jsonl.gz",
+          "trace_sha256_actual": "0d732000b725447e5e23c4d6dd2dd76e4d463f382152cf1cc5e6903dd98eb700",
+          "trace_sha256_field": "0d732000b725447e5e23c4d6dd2dd76e4d463f382152cf1cc5e6903dd98eb700",
+          "trace_sha256_matches_field": true,
+          "validation_policy_calls": 1
+        }
+      },
+      "safe_success_delta": "A_up"
+    }
+  ],
+  "diagnostic_only": true,
+  "discordance": {
+    "fresh16_vs_fresh4": {
+      "a_up": 30,
+      "b_up": 18,
+      "by_task": {
+        "a_up": {
+          "put_the_bowl_on_the_plate": 11,
+          "put_the_cream_cheese_in_the_bowl": 19
+        },
+        "b_up": {
+          "put_the_bowl_on_the_plate": 10,
+          "put_the_cream_cheese_in_the_bowl": 8
+        }
+      },
+      "discordant_groups": 48,
+      "groups_compared": 1335
+    },
+    "hold_vs_fresh4": {
+      "a_up": 48,
+      "b_up": 80,
+      "by_task": {
+        "a_up": {
+          "put_the_bowl_on_the_plate": 33,
+          "put_the_cream_cheese_in_the_bowl": 15
+        },
+        "b_up": {
+          "put_the_bowl_on_the_plate": 15,
+          "put_the_cream_cheese_in_the_bowl": 65
+        }
+      },
+      "discordant_groups": 128,
+      "groups_compared": 1335
+    },
+    "rollback_vs_fresh16": {
+      "a_up": 13,
+      "b_up": 164,
+      "by_task": {
+        "a_up": {
+          "put_the_bowl_on_the_plate": 5,
+          "put_the_cream_cheese_in_the_bowl": 8
+        },
+        "b_up": {
+          "put_the_bowl_on_the_plate": 43,
+          "put_the_cream_cheese_in_the_bowl": 121
+        }
+      },
+      "discordant_groups": 177,
+      "groups_compared": 1335
+    }
+  },
+  "formal_effect_estimate": false,
+  "new_idea_generated": false,
+  "scan": {
+    "ambiguous_all_arm_groups": 0,
+    "calibration_complete_rows_all_operators": 6453,
+    "complete_by_task": {
+      "put_the_bowl_on_the_plate": 585,
+      "put_the_cream_cheese_in_the_bowl": 750
+    },
+    "complete_four_arm_groups": 1335,
+    "core_by_operator": {
+      "fresh_h16": 1345,
+      "fresh_h4": 1343,
+      "hold_1+fresh_h4": 1344,
+      "rollback_1+fresh_h16": 1340
+    },
+    "core_reference_rows": 0,
+    "core_rows": 5372,
+    "files_seen": 6831,
+    "group_key_fields": [
+      "task",
+      "event_id/event_instance_id",
+      "prefix_k",
+      "recovery_actor_seed",
+      "configured_tail_horizon",
+      "configured_action_budget",
+      "configured_policy_call_cap"
+    ],
+    "group_keys": 1349,
+    "incomplete_group_keys": 14,
+    "missing_by_operator": {
+      "fresh_h16": 4,
+      "fresh_h4": 6,
+      "hold_1+fresh_h4": 5,
+      "rollback_1+fresh_h16": 9
+    },
+    "read_errors": 0,
+    "selection_rule": "Require exactly one COMPLETE calibration core row for each of the four operators under the exact group key; mark safe_success discordance; inspect four preselected directional pairs only, with one bowl case for task coverage. These are explanatory cases, not an effect estimate."
+  },
+  "schema_version": 1,
+  "scope": {
+    "contact_topology_root": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/contact_topology",
+    "core_operators": [
+      "fresh_h4",
+      "fresh_h16",
+      "hold_1+fresh_h4",
+      "rollback_1+fresh_h16"
+    ],
+    "evaluation_rows_used": false,
+    "evaluation_traces_opened": false,
+    "reference_operators_excluded": true,
+    "scan_finished_utc": "2026-09-06T20:29:04.353311+00:00",
+    "scan_started_utc": "2026-09-06T20:28:34.237479+00:00",
+    "shards_root": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/shards",
+    "split": "calibration",
+    "status": "COMPLETE"
+  },
+  "selected_case_count": 4,
+  "source": {
+    "files": {
+      "stage2c_runtime.py": {
+        "bytes": 17543,
+        "path": "/mnt/cpfs/zbl-cpfs-new/share/leon/codex-archives/Explore-claude-local-worktrees/R16-P14-stage2f-step8-20260907/experiments/r16_p14_stage2c/r16_p14_stage2c/runtime.py",
+        "sha256": "bc25cb9f3ad15ac627d24b02d6b3de982f0e48044fbaeb7b71d57c7d37eee051"
+      },
+      "stage2f_measurement.py": {
+        "bytes": 28919,
+        "path": "/mnt/cpfs/zbl-cpfs-new/share/leon/codex-archives/Explore-claude-local-worktrees/R16-P14-stage2f-step8-20260907/experiments/r16_p14_stage2f/s1/measurement.py",
+        "sha256": "b31dc34270905c6d76ea342c6a1deef8739c53e8bc9813e38d127ee48aab8c62"
+      },
+      "stage2f_s1_runtime.py": {
+        "bytes": 25881,
+        "path": "/mnt/cpfs/zbl-cpfs-new/share/leon/codex-archives/Explore-claude-local-worktrees/R16-P14-stage2f-step8-20260907/experiments/r16_p14_stage2f/s1/runtime.py",
+        "sha256": "3203db2452eef4bf6fe8b304eae2b14b1dc7ae80630479317c4610f063cf4417"
+      }
+    },
+    "runtime_line_refs": {
+      "call_accounting": "experiments/r16_p14_stage2f/s1/runtime.py:443-449",
+      "contract_horizon_budget": "experiments/r16_p14_stage2f/s1/runtime.py:66-117",
+      "hold_rollback_definitions": "experiments/r16_p14_stage2c/r16_p14_stage2c/runtime.py:392-400",
+      "labels_safe_success_provenance": "experiments/r16_p14_stage2f/s1/runtime.py:409-419",
+      "operators_and_preludes": "experiments/r16_p14_stage2f/s1/runtime.py:60-63",
+      "prefix_and_signatures": "experiments/r16_p14_stage2f/s1/runtime.py:358-381",
+      "prelude_and_recovery_loop": "experiments/r16_p14_stage2f/s1/runtime.py:389-407"
+    },
+    "source_tree_commit_at_scan": "dc482d85b82478fbb8ed5452e4df9fa96956d06d"
+  }
+}
