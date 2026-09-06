@@ -310,6 +310,7 @@ def _execute_impl(
     recovery_chunks: list[str] = []
     inference_side_effects: list[bool] = []
     executed_prefix: list[np.ndarray] = []
+    recovery_action_hashes: list[str] = []
     tracker: TraceTracker | None = None
     error: BaseException | None = None
     try:
@@ -346,7 +347,10 @@ def _execute_impl(
             history.update(observation, action_array)
             row = recorder.finish_action()
             tracker.observe(row, action_array, new_action)
-            executed_prefix.append(action_array.copy())
+            if new_action:
+                recovery_action_hashes.append(raw_array_hash(action_array, np.float32))
+            else:
+                executed_prefix.append(action_array.copy())
             step_index += 1
 
         old = np.asarray(event["original_chunk"], dtype=np.float32).reshape(-1, ACTION_DIM)
@@ -429,6 +433,7 @@ def _execute_impl(
             "recovery_checkpoint_sha256": recovery_checkpoint_sha256,
             "generator_chunk_hash": event["original_chunk_hash"],
             "chunk_hash": event["original_chunk_hash"], "recovery_chunk_hashes": recovery_chunks,
+            "recovery_action_hashes": recovery_action_hashes,
             "pid": os.getpid(), "parent_pid": os.getppid(), "process_start_method": "spawn",
             "fresh_environment_created": True, "env_hash": env_hash, "zero_injection": True, "injection_calls": 0,
             "reconstruction": reconstruction,

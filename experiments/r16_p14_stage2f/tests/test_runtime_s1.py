@@ -201,6 +201,10 @@ def test_recorder_physics_probe_does_not_change_sim_and_writes_once(monkeypatch:
     with gzip.open(trace_path, "rt", encoding="utf-8") as stream:
         trace_rows = [json.loads(line) for line in stream]
     assert [row["step_kind"] for row in trace_rows] == ["physics_step", "action_step"]
+    assert trace_rows[0]["control_step"] == 0
+    assert trace_rows[0]["substep"] == 1
+    assert trace_rows[1]["control_step"] == 0
+    assert trace_rows[1]["substep"] == 0
     assert hashlib.sha256(trace_path.read_bytes()).hexdigest() == digest
 
 
@@ -311,5 +315,8 @@ def test_execute_branch_stub_enforces_recovery_budget_and_call_cap(monkeypatch: 
     assert row["policy_call_cap_respected"] is True
     assert row["action_budget_respected"] is True
     assert row["physics_instrumented"] is True
+    assert row["d4_signatures"]["pre_tail"]["executed_prefix_length"] == 2
+    assert row["d4_signatures"]["final"]["executed_prefix_length"] == 2
+    assert len(row["recovery_action_hashes"]) == 3
     assert row["status"] == "OK"
     assert row["safe_success"] is False
