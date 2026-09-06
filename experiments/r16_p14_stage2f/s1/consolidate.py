@@ -816,6 +816,15 @@ def _summary_grid(
                 "sample_complete": bool(sample.get("sample_complete")),
             }
         )
+        completeness = dict(summary.get("completeness", {}))
+        completeness.update(
+            {
+                "planned_sample_complete": summary["planned_sample_complete"],
+                "observed_events_by_task": dict(summary["observed_events_by_task"]),
+                "shortfall": dict(summary["shortfall"]),
+            }
+        )
+        summary["completeness"] = completeness
         if not summary["sample_complete"]:
             # Keep all observed per-budget metrics, but make the descriptive
             # summary ineligible for K2 selection.
