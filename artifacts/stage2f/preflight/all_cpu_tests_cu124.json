@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "passed": 48,
+  "elapsed_seconds": 11.65,
+  "command": "PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES='' /mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/r16p14_s1_cu124_20260907/bin/python -m pytest -q -p no:cacheprovider experiments/r16_p14_stage2f/tests experiments/r16_p14_stage2f/pai",
+  "actual_runtime_identity_import_check": "PASS; torch2.6.0+cu124, CUDA12.4; exact module paths/versions/SHA and runtime bindings",
+  "time_utc": "2026-09-06T19:28:43.649170+00:00",
+  "module_sha256": {
+    "experiments/r16_p14_stage2f/s1/runtime.py": "3203db2452eef4bf6fe8b304eae2b14b1dc7ae80630479317c4610f063cf4417",
+    "experiments/r16_p14_stage2f/s1/pai_entry.py": "327d3d78d9774436d1c7d8d683c1111cb3f3daee282152c1051bfdc6691ea630",
+    "experiments/r16_p14_stage2f/s1/statistics.py": "52be508533f191cde44140fd4ecfeab7bb6896410e7c6153fafaa2355387003b",
+    "experiments/r16_p14_stage2f/s1/matrix.py": "a0662309977e307eea93169e3b2dad840f14df293918673d1c3235b5130f85e2",
+    "experiments/r16_p14_stage2f/s1/__init__.py": "2652358c3ced821d9eab04b563edfbea8e72f9ccce455b11472fffd564bf1fb8",
+    "experiments/r16_p14_stage2f/s1/assets.py": "8af027b6a775848bc400de22490f4cd82637e6de5861f3b368cbb79db3b7afca",
+    "experiments/r16_p14_stage2f/s1/common.py": "d9a0a292d55100ccbde0c2474bc445529b65108852d4411ffb1ea77b412fa4df",
+    "experiments/r16_p14_stage2f/s1/measurement.py": "b31dc34270905c6d76ea342c6a1deef8739c53e8bc9813e38d127ee48aab8c62",
+    "experiments/r16_p14_stage2f/s1/runtime_identity.py": "fb7c195cbb4649e26ffd3264a0603067174ed659055b70c79837884642821c56",
+    "experiments/r16_p14_stage2f/s1/consolidate.py": "34210df1c176113b89300e564e7fa62926949fa6c15d9caa3740e2c929146a5e",
+    "experiments/r16_p14_stage2f/s1/dispatch.py": "f946d0b12212d257898c7becc5663baaa53f3ce3691554118f3742496dceaef8",
+    "experiments/r16_p14_stage2f/s1/selection.py": "eb6b57b52cb453be5c6adb815d81a8a2f5fc718c72d73a084a53e57b109fe121",
+    "experiments/r16_p14_stage2f/s1/collector.py": "1926761145e9cc8fa1d059d850092acc0424070c4055961ec5c2616f9322305a",
+    "experiments/r16_p14_stage2f/pai/seal_selection.py": "5af31db4807f47da59161604939cf57a6bedc343d68e6be78946c1bc6f72a280",
+    "experiments/r16_p14_stage2f/pai/test_admission.py": "788910d8d4a4d35d16d93408d17c5491c29ce5579fd97324483f60659d11cf4a",
+    "experiments/r16_p14_stage2f/pai/control.py": "14e86f8746941cebaea9e442484f833ab5f9ec2378987784e4953892e1c28b4a",
+    "experiments/r16_p14_stage2f/pai/test_registry_idle2.py": "18d4e16a01e71b4ba647b6ca04aeb584eaaaab9608fca8ef83356d0a8be6d846",
+    "experiments/r16_p14_stage2f/pai/test_resume.py": "4e9a0373aa8d039345521d758ee5f94289613d6f0cccc84ff9191b32981a4478",
+    "experiments/r16_p14_stage2f/pai/resume.py": "dfd25e240f1fcae313ede983b4d0760d857d869b3ad10533d412505f62d5beb1",
+    "experiments/r16_p14_stage2f/pai/test_control_io.py": "03730a3670ce238ab4f4ee0fb1443c6a03b30d8c59e82fe87491c903565edbf2",
+    "experiments/r16_p14_stage2f/pai/submit.py": "5335e6987a0701b7b15a905a30228bdfd83f9034291b1a7eee04232e85c965b7",
+    "experiments/r16_p14_stage2f/pai/build_submission.py": "ccb13859fc85584f2fb80b306369b70847f3db06640ae4730b4ba0dbd5c2e7ef"
+  },
+  "passes": [
+    {
+      "suite": "s1 tests plus existing pai tests",
+      "passed": 42,
+      "elapsed_seconds": 14.69
+    },
+    {
+      "suite": "new controller CPFS tests",
+      "passed": 6,
+      "elapsed_seconds": 0.11
+    }
+  ]
+}

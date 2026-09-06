@@ -57,7 +57,7 @@ def run_task(phase,task,output_root,workers=12,device="cuda"):
         budgets=((int(b["tail_horizon"]),int(b["action_budget"])),);prefixes=ATLAS_K
         events=load_events(root,task,"calibration")+load_events(root,task,"evaluation")
     else:raise ValueError(phase)
-    module_hashes={name:file_sha(Path(__file__).parent/name) for name in ("runtime.py","measurement.py","dispatch.py")}
+    module_hashes={name:file_sha(Path(__file__).parent/name) for name in ("runtime.py","measurement.py","dispatch.py","common.py","assets.py","runtime_identity.py")}
     requests=[]
     for event,(tail,budget),seed in itertools.product(events,budgets,SEEDS):
         for op,k in itertools.product(OPERATORS,prefixes):
@@ -75,14 +75,18 @@ def run_task(phase,task,output_root,workers=12,device="cuda"):
         path=phase_dir/"shards"/task/f"{key}.json"
         if path.exists():
             row=json.loads(path.read_text())
-            if row.get("status")!="COMPLETE":raise RuntimeError(f"immutable failed shard {path}")
+            if row.get("runtime_module_hashes")!=module_hashes or row.get("runtime_receipt_sha256")!=os.environ.get("S1_RUNTIME_RECEIPT_SHA256"):
+                raise RuntimeError(f"existing shard runtime binding changed: {path}")
+            if row.get("status")!="COMPLETE" and row.get("error_type")!="PrefixOutsideTaskHorizon":
+                raise RuntimeError(f"immutable failed shard {path}")
             return
         # Phase1 calibration branches are identical interventions at shared k/budget.
         prior=root/"phase1/shards"/task/f"{key}.json"
         if phase=="atlas" and event["split"]=="calibration" and prior.exists():
             row=json.loads(prior.read_text())
-            if row.get("status")!="COMPLETE":raise RuntimeError("cannot reuse failed calibration")
-            if row.get("runtime_module_hashes")!=module_hashes:raise RuntimeError("calibration runtime changed before atlas")
+            if row.get("status")!="COMPLETE" and row.get("error_type")!="PrefixOutsideTaskHorizon":
+                raise RuntimeError("cannot reuse failed calibration")
+            if row.get("runtime_module_hashes")!=module_hashes or row.get("runtime_receipt_sha256")!=os.environ.get("S1_RUNTIME_RECEIPT_SHA256"):raise RuntimeError("calibration runtime changed before atlas")
             row={**row,"reused_calibration_shard":str(prior),"reused_calibration_sha256":file_sha(prior)}
         else:
             trace=phase_dir/"contact_topology"/task/f"{key}.jsonl.gz"
@@ -95,14 +99,18 @@ def run_task(phase,task,output_root,workers=12,device="cuda"):
                 row["status"]="BLOCKED";row["request_mismatch"]=True
             row["returned_configuration"]={key:row.get(key) for key in req}
             row.update(**req)
-            row.update(source_commit=os.environ.get("S1_SOURCE_COMMIT"),runtime_module_hashes=module_hashes,
+            row.update(source_commit=os.environ.get("S1_SOURCE_COMMIT"),runtime_module_hashes=module_hashes,runtime_receipt_sha256=os.environ.get("S1_RUNTIME_RECEIPT_SHA256"),
                  pai_run_id=os.environ.get("PAI_CANARY_RUN_ID"),job_id=os.environ.get("S1_JOB_ID"),task=task,event_instance_id=event["event_instance_id"],init_state_id=event["init_state_id"],
                  generator_actor_seed=event["actor_seed"],split=event["split"],is_reference=reference,
                  configured_budget={"tail_horizon":req["tail_horizon"],"action_budget":req["action_budget"],"policy_call_cap":8})
         if any(not row.get(k) for k in ("pid","env_hash","chunk_hash")):
             row["status"]="BLOCKED";row["provenance_missing"]=True
-        atomic_json(path,row);record_first_work(path)
+        atomic_json(path,row)
+        if row.get("error_type")=="PrefixOutsideTaskHorizon":
+            print(f"preserved infeasible prefix; continuing independent requests: {path}",flush=True)
+            return
         if row.get("status")!="COMPLETE":raise RuntimeError(f"branch blocked: {path}")
+        record_first_work(path)
         print(f"persisted {phase} task={task} index={index+1}/{len(requests)}",flush=True)
     with ThreadPoolExecutor(max_workers=workers) as pool:
         futures=[pool.submit(run,item) for item in enumerate(requests)]
@@ -115,8 +123,10 @@ def run_task(phase,task,output_root,workers=12,device="cuda"):
             if marker:Path(marker).write_text("S1_MATRIX_FAILURE")
             raise
     paths=sorted((phase_dir/"shards"/task).glob("*.json"))
+    blocked=sum(json.loads(p.read_text()).get("status")!="COMPLETE" for p in paths)
     result={"task":task,"phase":phase,"events":len(events),"requested_rows":len(requests),"persisted_rows":len(paths),
-            "core_rows":sum(not json.loads(p.read_text()).get("is_reference",False) for p in paths),"status":"COMPLETE"}
+            "core_rows":sum(not json.loads(p.read_text()).get("is_reference",False) for p in paths),"blocked_contract_rows":blocked,
+            "status":"COMPLETE_WITH_BLOCKED_CONTRACT_ROWS" if blocked else "COMPLETE"}
     if len(paths)!=len(requests):raise RuntimeError("shard count mismatch")
     atomic_json(phase_dir/f"completion_{task}.json",result)
     return result

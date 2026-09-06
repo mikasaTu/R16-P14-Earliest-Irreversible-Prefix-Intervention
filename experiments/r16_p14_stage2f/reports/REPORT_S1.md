@@ -4,7 +4,7 @@
 
 ## 当前结论
 
-Phase0A 已完成：补入 immediate_fresh_h16 后，G0-1 为 INCONCLUSIVE。S1 的 200 个固定初始状态已生成并验证；一条 infrastructure clean episode 已完成，包含 360 个控制步、9000 个物理步和完整接触拓扑。正式采集首批两作业已提交并确认UseOversoldResource=true，但由于跨节点CPFS控制文件读取发生ESTALE，已全部停止，尚无正式episode。修复重提中；K1、K2、K3均未判决。
+Phase0A 已完成：补入 immediate_fresh_h16 后，G0-1 为 INCONCLUSIVE。S1 的 200 个固定初始状态已生成并验证；一条 infrastructure clean episode 已完成，包含 360 个控制步、9000 个物理步和完整接触拓扑。正式采集先后4个作业均确认UseOversoldResource=true，因CPFS读取ESTALE和CUDA运行时不兼容先后停止，尚无正式episode。兼容环境修复与控制器I/O加固中；K1、K2、K3均未判决。
 
 原冻结 Stage2D 执行入口存在隐式注入路径，其历史 BLOCKED 事实保留。按照用户后续明确授权，在 Stage2F 新增零注入后端；没有改写 Stage2A–E，没有调用注入函数。新的独立分支后端已完成ROOT-first同源LIBERO的真实基础设施检查：4core+4reference+重复分支，anchor重建误差0，D1每控制步25个物理步，测量有无的终态/历史hash一致，预算与pid/env/chunk校验全部通过。首轮资源路径失败原样保留；这些是工程验证，不能计作科学成功。
 
@@ -42,3 +42,19 @@ event mean 与 cluster mean 不可混用。38.1%→19.4% 的分解为 restricted
 - dlcfesoi2j9tp8y5（cream，r2）：Stopped，exact idle=true，2254身份；读取控制heartbeat触发ESTALE，0正式episode。
 - dlc189mgayv5nwjf（bowl，r1）：Stopped，exact idle=true，2254身份；收到全局停止标记后退出，0正式episode。
 - 两者源commit94d46b86、tree306953eabdc5a3c2680551c8078c1b67c92c2e05。失败FATAL_ERROR和最终readback已保存到artifacts/stage2f/pai_jobs。新版本为可恢复的CPFS短暂inode替换增加有界重读；持续错误仍停止。黑窗及20GPU小时上限保持。
+
+## CUDA 兼容性修复（03:03，北京时间）
+
+CPFS修复后的dlcwm6bd6bomjggq和dlc1qayvbetb16ji也已Stopped，均为真实闲时A800资源。环境回读为driver550.54.15、PyTorch2.12.1+cu130；CUDA初始化明确报告驱动版本12040过旧，未执行正式episode。将独立建立CUDA12兼容环境并重新验证，保留原共享环境。checkpoint、任务、初始状态、split和统计门槛不变。当前4个已提交作业均停止，0正式qualification分片；上述问题是运行环境失败，不是K1失败。
+
+官方兼容版本安装来源：[PyTorch previous versions](https://docs.pytorch.org/get-started/previous-versions/)。最终使用版本、包路径及GPU验证receipt将在兼容环境完成后封存。
+
+## CUDA12.4 独立环境及执行完整性（03:22，北京时间）
+
+独立环境r16p14_s1_cu124_20260907实际导入torch2.6.0+cu124，保留NumPy2.4.6、MuJoCo3.6.0、robosuite1.4.0、wandb0.27.2。共享环境未修改。兼容环境CPU回归42项通过（11.65s），运行入口按实际模块路径、版本与SHA校验，不以混合site-packages的pip freeze展示替代运行身份。包来源、symlink与pth完整receipt位于preflight/runtime_compat。新的正式数据不会复用旧torch2.12基础设施episode。
+
+矩阵执行对anchor+prefix超出任务horizon的组合保存明确BLOCKED行，并继续其他独立请求；不将未执行的组合记为失败概率或真实工作完成。统计仍要求完整有效证据，不能凭缺失值通过K2。
+
+兼容GPU实测总计70.27秒（0.01952 GPU小时）：cream init0 actor7完整360控制步、9000物理步、9360条trace，anchor在294步；fresh_h4、k2、seed17独立分支250物理步，anchor误差0，恢复动作8/预算8，policy calls3/上限8。两条原始trace哈希由主线程验证。smoke汇总脚本误将空missing_fields列表作为布尔检查导致初始BLOCKED；原summary保留，原始数据已独立验收。旧torch2.12的anchor293与新torch2.6的294不做等价断言，不混用事件。
+
+控制器CPFS修复已部署并重新启动：有界重读，持续失败拒绝新提交并停止last-known活跃作业，Stop失败下一轮继续尝试；48项CPU检查通过（原42+控制器6）。新控制器SHA14e86f8746941cebaea9e442484f833ab5f9ec2378987784e4953892e1c28b4a。

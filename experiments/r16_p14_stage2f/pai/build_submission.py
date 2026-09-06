@@ -12,7 +12,7 @@ def build(phase,task_index,run_id,source_commit):
     resolved_commit=subprocess.check_output(["git","rev-parse",source_commit+"^{commit}"],cwd=ROOT,text=True).strip()
     assert resolved_commit==source_commit and (os.getuid(),os.getgid())==(2254,2254)
     payload=Path("/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16p14-stage2f-payloads")/source_commit
-    paths=[f"experiments/r16_p14_stage2{s}" for s in "abcdf"]+["experiments/r16_p14_libero_stage1/libero_config","artifacts/stage2a/actor/checkpoints","libero"]
+    paths=[f"experiments/r16_p14_stage2{s}" for s in "abcdf"]+["experiments/r16_p14_libero_stage1/libero_config","artifacts/stage2a/actor/checkpoints","libero","artifacts/stage2f/preflight/runtime_compat/runtime_compat_receipt.json"]
     if not payload.exists():
         payload.mkdir(parents=True)
         tar=payload/"source.tar"
@@ -39,12 +39,12 @@ def build(phase,task_index,run_id,source_commit):
     launcher=REG/"launchers"/f"r16p14_stage2f_{phase}_{task_index}_{source_commit[:10]}.sh"
     body=f"""#!/usr/bin/env bash
 set -euo pipefail
-export PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
+export PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
 export MUJOCO_GL=egl WANDB_PROJECT=r16-p14-stage2f-s1
 export LIBERO_ASSETS_PATH=/mnt/cpfs/zbl-cpfs-new/dataset/leon/libero/assets/90001343cb134b7e26e18fde0fa2416f3ed6e6a3
 export LIBERO_CONFIG_PATH={payload}/experiments/r16_p14_libero_stage1/libero_config
 cd {payload}
-exec /mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/libero_sim/bin/python -m experiments.r16_p14_stage2f.s1.pai_entry --phase {phase} --task {tasks[task_index]} --output-root {output} --control-root {control} --source-commit {source_commit} --source-manifest-sha256 {source_manifest_sha} --workers 12
+exec /mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/r16p14_s1_cu124_20260907/bin/python -m experiments.r16_p14_stage2f.s1.pai_entry --phase {phase} --task {tasks[task_index]} --output-root {output} --control-root {control} --source-commit {source_commit} --source-manifest-sha256 {source_manifest_sha} --workers 24
 """
     if launcher.exists():
         if launcher.read_text()!=body:raise RuntimeError("immutable launcher differs")

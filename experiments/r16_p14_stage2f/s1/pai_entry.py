@@ -24,7 +24,7 @@ def main():
     p=argparse.ArgumentParser();p.add_argument("--phase",choices=("collect","grid","atlas"),required=True)
     p.add_argument("--task",choices=TASKS,required=True);p.add_argument("--output-root",required=True)
     p.add_argument("--control-root",required=True);p.add_argument("--source-commit",required=True);p.add_argument("--source-manifest-sha256",required=True)
-    p.add_argument("--workers",type=int,default=12);args=p.parse_args()
+    p.add_argument("--workers",type=int,default=24);args=p.parse_args()
     if (os.getuid(),os.getgid())!=(2254,2254):raise RuntimeError("requires2254:2254")
     os.environ["S1_STOP_FILE"]=str(Path(args.control_root)/"STOP")
     os.environ["S1_CONTROL_HEARTBEAT"]=str(Path(args.control_root)/"heartbeat.json")
@@ -37,12 +37,15 @@ def main():
     from .assets import configure_assets
     assets=configure_assets()
     import torch,wandb
+    from .runtime_identity import verify_runtime
+    runtime_identity=verify_runtime()
+    os.environ["S1_RUNTIME_RECEIPT_SHA256"]=runtime_identity["receipt_sha256"]
     state=Path(os.environ["PAI_CANARY_RUN_DIR"])/"pai_state";state.mkdir(exist_ok=True)
     smi=subprocess.run(["nvidia-smi","--query-gpu=name,driver_version,uuid","--format=csv,noheader"],
                        capture_output=True,text=True,timeout=20)
     atomic_json(state/"ENVIRONMENT.json",dict(uid=os.getuid(),gid=os.getgid(),
         source_commit=args.source_commit,job_id=job["job_id"],python=os.sys.executable,
-        torch=torch.__version__,cuda_build=torch.version.cuda,assets=assets,
+        torch=torch.__version__,cuda_build=torch.version.cuda,assets=assets,runtime_identity=runtime_identity,
         nvidia_smi=smi.stdout.strip(),nvidia_smi_returncode=smi.returncode),immutable=False)
     if torch.cuda.device_count()!=2:raise RuntimeError("exactly two visible A800 GPUs required")
     if not all("A800" in torch.cuda.get_device_name(i) for i in range(2)):raise RuntimeError("A800 required")

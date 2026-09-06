@@ -72,7 +72,7 @@ restricted support 只有 12 个 cluster、21 个事件，事件并非每个 clu
 
 ## 增补：A1 原始计数与 Phase0A 表格的逐行对账
 
-父验收发现，A1 的冻结 evaluation 原始计数是 `immediate_fresh_h16=23/144`、`fixed_delay_8=16/144`，而 Phase0A `table.csv` 的 full-support 行是 `24/144`、`17/144`。这不是四舍五入，也不是 fallback 或 cluster 重加权造成的 +1；两处读取的是同一个 `c_baseline` artifact 的不同 split。
+逐行核对显示，A1 的冻结 evaluation 原始计数是 `immediate_fresh_h16=23/144`、`fixed_delay_8=16/144`，而 Phase0A `table.csv` 的 full-support 行是 `24/144`、`17/144`。这不是四舍五入，也不是 fallback 或 cluster 重加权造成的 +1；两处读取的是同一个 `c_baseline` artifact 的不同 split。
 
 代码路径可以逐行定位这个分叉。`experiments/r16_p14_stage2f/phase0a.py:33-37` 只读并校验四个冻结输入：`c_recovery`、`c_boundaries`、`c_invalid`、`c_baseline`。随后 `phase0a.py:46` 明确构造 `calibration = c_baseline[split == "calibration"]`，并在 `phase0a.py:52-55` 用这批 calibration rows 调用 `_method_summary`；因此它写入的 `table.csv` 是 calibration support。冻结 `scripts/run_r16p14_stage2e_s0.py:638-645` 则明确构造 `eval_baseline = baseline[split == "evaluation"]`，A1 对该集合计数。故两者的分母都为 48 events × 3 heldout actors = 144 rows，但事件集合不是同一批：该 artifact 中 calibration 行的 `init_state_id` 为 30–37，evaluation 行为 40–48；没有同一 `event_instance_id` 的 calibration/evaluation 配对。
 

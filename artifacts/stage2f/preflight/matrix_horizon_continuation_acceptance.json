@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "evidence_kind": "synthetic CPU regression; no scientific observations",
+  "reviewer": "phase0a_cpu",
+  "matrix_sha256": "a0662309977e307eea93169e3b2dad840f14df293918673d1c3235b5130f85e2",
+  "grid_expected_horizon_blocked": 60,
+  "atlas_persisted": 240,
+  "atlas_expected_blocked": 120,
+  "checks": [
+    "grid and atlas continue independent requests",
+    "FIRST_REAL_WORK only COMPLETE valid row",
+    "repeated atlas performs no dispatcher calls for existing rows",
+    "unexpected RuntimeError raises and sets S1_MATRIX_FAILURE without first-work",
+    "runtime module and receipt binding retained"
+  ],
+  "cpu_runtime_statistics_consolidation_tests_passed": 21
+}

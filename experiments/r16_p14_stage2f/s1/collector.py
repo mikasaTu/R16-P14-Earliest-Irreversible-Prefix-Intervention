@@ -89,7 +89,7 @@ def collect_episode(task,init_state_id,actor_seed,pool_path,output_root,device="
         labels=label_trace(cause_records,task)
         env_hash=digest({"task":task,"reset_seed":0,"init_hash":init["state_hash"],
                          "camera":False,"fresh_environment":True})
-        result=dict(schema_version=1,elapsed_seconds=time.monotonic()-started,source_commit=os.environ.get("S1_SOURCE_COMMIT"),pai_run_id=os.environ.get("PAI_CANARY_RUN_ID"),job_id=os.environ.get("S1_JOB_ID"),event_instance_id=eid,task=task,init_state_id=init_state_id,
+        result=dict(schema_version=1,runtime_receipt_sha256=os.environ.get("S1_RUNTIME_RECEIPT_SHA256"),elapsed_seconds=time.monotonic()-started,source_commit=os.environ.get("S1_SOURCE_COMMIT"),pai_run_id=os.environ.get("PAI_CANARY_RUN_ID"),job_id=os.environ.get("S1_JOB_ID"),event_instance_id=eid,task=task,init_state_id=init_state_id,
           actor_seed=actor_seed,split=init["split"],pid=os.getpid(),env_hash=env_hash,
           chunk_hash=chunk_hash(chunk) if event is None else event["original_chunk_hash"],clean_success=success,
           steps=len(actions),structural_anchor_found=event is not None,qualified_natural_failure=qualified,
