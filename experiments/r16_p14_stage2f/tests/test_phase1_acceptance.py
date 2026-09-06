@@ -16,7 +16,10 @@ from s1.accept_phase1 import (  # noqa: E402
     SEEDS,
     SOURCE_COMMIT,
     TASKS,
+    _check_d4_groups,
+    _check_reconstruction,
     _check_trace,
+    _expected_behavior_operator,
     _expected_keys,
     _load_grid_jobs,
     evaluate_base,
@@ -181,32 +184,69 @@ def test_expected_grid_has_complete_cross_operator_budget_seed_keys():
     assert all(key[-2] == 8 for key in core | reference)
 
 
-def test_trace_full_and_hash_only_are_explicit_scopes(tmp_path):
-    record = {
-        "event_instance_id": "e",
-        "operator": "fresh_h4",
-        "prefix_k": 2,
-        "actor_seed": 7,
-        "normalized_contact_pairs": [["object_g1", "robot_pad"]],
-        "contact_stream_available": True,
+def _trace_fixture(tmp_path: Path, *, physics_count: int = 25, alias_ok: bool = True):
+    records = []
+    pair = {
+        "geom1_name": "object_g1",
+        "geom2_name": "robot_pad",
+        "normalized_pair": ["object_g1", "robot_pad"],
     }
-    payload = json.dumps(record, sort_keys=True, separators=(",", ":")).encode() + b"\n"
+    for substep in range(1, physics_count + 1):
+        records.append(
+            {
+                "event_instance_id": "e",
+                "operator": "fresh_h4",
+                "prefix_k": 2,
+                "actor_seed": 7,
+                "step_kind": "physics_step",
+                "step": 0,
+                "control_step": 0,
+                "substep": substep,
+                "physics_step_index": substep,
+                "raw_contact_pairs": [pair],
+                "normalized_contact_pairs": [["object_g1", "robot_pad"]],
+                "contact_pairs": [["object_g1", "robot_pad"]] if alias_ok else [],
+                "contact_count": 1,
+                "contact_stream_available": True,
+            }
+        )
+    records.append(
+        {
+            "event_instance_id": "e",
+            "operator": "fresh_h4",
+            "prefix_k": 2,
+            "actor_seed": 7,
+            "step_kind": "action_step",
+            "step": 0,
+            "control_step": 0,
+            "substep": 0,
+            "physics_step_index": None,
+            "raw_contact_pairs": [pair],
+            "normalized_contact_pairs": [["object_g1", "robot_pad"]],
+            "contact_pairs": [["object_g1", "robot_pad"]] if alias_ok else [],
+            "contact_count": 1,
+            "contact_stream_available": True,
+        }
+    )
+    payload = b"".join(
+        json.dumps(record, sort_keys=True, separators=(",", ":")).encode() + b"\n"
+        for record in records
+    )
     path = tmp_path / "e.jsonl.gz"
+    path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("wb") as raw:
         with gzip.GzipFile(fileobj=raw, mode="wb", mtime=0) as handle:
             handle.write(payload)
-    raw_sha = hashlib.sha256(path.read_bytes()).hexdigest()
-    content_sha = hashlib.sha256(payload).hexdigest()
     row = {
         "task": TASKS[0],
         "event_instance_id": "e",
         "operator": "fresh_h4",
         "prefix_k": 2,
         "recovery_actor_seed": 7,
-        "trace_sha256": raw_sha,
-        "trace_content_sha256": content_sha,
-        "trace_records": 1,
-        "labels": {"record_count": 1, "label_complete": True},
+        "trace_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+        "trace_content_sha256": hashlib.sha256(payload).hexdigest(),
+        "trace_records": len(records),
+        "labels": {"record_count": len(records), "label_complete": True},
     }
     report = {
         "files": 0,
@@ -215,18 +255,94 @@ def test_trace_full_and_hash_only_are_explicit_scopes(tmp_path):
         "bytes_by_task": {TASKS[0]: 0, TASKS[1]: 0},
         "files_by_task": {TASKS[0]: 0, TASKS[1]: 0},
     }
+    return row, path, report
+
+
+def test_reference_behavior_operator_uses_fresh_h16():
+    assert _expected_behavior_operator("immediate_fresh", True) == "fresh_h16"
+    assert _expected_behavior_operator("fresh_h4", False) == "fresh_h4"
+
+
+def test_trace_full_and_hash_only_are_explicit_scopes(tmp_path):
+    row, path, report = _trace_fixture(tmp_path)
     issues = []
     _check_trace(row, path, "full", issues, report)
     assert issues == []
-    assert report["records"] == 1
+    assert report["records"] == 26
+    assert report["physics_per_control_counts"] == {"25": 1}
     issues = []
     _check_trace(row, path, "hash-only", issues, report)
     assert issues == []
     assert "not parsed" in report["scope_note"]
 
 
+def test_trace_requires_raw_pair_alias_and_25_physics_records(tmp_path):
+    row, path, report = _trace_fixture(tmp_path, alias_ok=False)
+    issues = []
+    _check_trace(row, path, "full", issues, report)
+    assert any("contact_pairs alias" in reason for reason in issues)
+    row, path, report = _trace_fixture(tmp_path / "short", physics_count=24)
+    issues = []
+    _check_trace(row, path, "full", issues, report)
+    assert any("25 physics" in reason for reason in issues)
+
+
+def test_reconstruction_error_must_be_finite_and_nonnegative():
+    row = {
+        "reconstruction": {
+            "action_history_exact": True,
+            "actor_inference_side_effect_free": True,
+            "anchor_state_exact": True,
+            "event_chunk_exact": True,
+            "state_history_exact": True,
+            "max_anchor_state_error": float("nan"),
+        }
+    }
+    issues = []
+    _check_reconstruction(row, issues, "fixture")
+    assert any("finite" in reason for reason in issues)
+    row["reconstruction"]["max_anchor_state_error"] = -1e-12
+    issues = []
+    _check_reconstruction(row, issues, "fixture")
+    assert any("[0,1e-9]" in reason for reason in issues)
+
+
+def test_d4_group_requires_cross_budget_seed_operator_signature_match():
+    base = {
+        "tail_horizon": 4,
+        "action_budget": 8,
+        "policy_call_cap": 8,
+        "recovery_actor_seed": 7,
+        "operator": "fresh_h4",
+        "d4_signatures": {
+            "detection": {"complete_signature_hash": "a" * 64},
+            "pre_tail": {"complete_signature_hash": "b" * 64},
+            "final": {"complete_signature_hash": "c" * 64},
+        },
+    }
+    rows = []
+    for tail in (4, 8, 16):
+        for action in (8, 16, 32):
+            for seed in SEEDS:
+                for operator in OPERATORS:
+                    row = dict(base, tail_horizon=tail, action_budget=action,
+                               recovery_actor_seed=seed, operator=operator)
+                    row["d4_signatures"] = {
+                        part: dict(value)
+                        for part, value in base["d4_signatures"].items()
+                    }
+                    rows.append(row)
+    issues = []
+    report = _check_d4_groups({(TASKS[0], "e", 2): rows}, issues)
+    assert report["complete_groups"] == 1
+    assert issues == []
+    rows[0]["d4_signatures"]["detection"]["complete_signature_hash"] = "d" * 64
+    issues = []
+    _check_d4_groups({(TASKS[0], "e", 2): rows}, issues)
+    assert any("signature differs" in reason for reason in issues)
+
+
 def test_acceptance_output_must_not_be_inside_gpu_base(tmp_path):
     report = {"status": "INCOMPLETE"}
     with pytest.raises(ValueError):
         write_report(report, tmp_path / "acceptance.json", tmp_path)
-

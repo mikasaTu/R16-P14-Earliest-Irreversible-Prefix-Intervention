@@ -11,6 +11,7 @@ import argparse
 import gzip
 import hashlib
 import json
+import math
 import re
 from pathlib import Path
 from typing import Any, Iterable, Mapping
@@ -370,6 +371,23 @@ def _valid_hex(value: Any) -> bool:
     return isinstance(value, str) and bool(HEX64.fullmatch(value))
 
 
+def _check_owned(path: Path, issues: list[str], label: str) -> None:
+    try:
+        stat = path.stat()
+    except OSError as exc:
+        _issue(issues, f"{label}: cannot stat artifact: {exc}")
+        return
+    if stat.st_uid != UID_GID or stat.st_gid != UID_GID:
+        _issue(
+            issues,
+            f"{label}: artifact ownership {stat.st_uid}:{stat.st_gid} != {UID_GID}:{UID_GID}",
+        )
+
+
+def _expected_behavior_operator(operator: str, is_reference: bool) -> str:
+    return "fresh_h16" if is_reference else operator
+
+
 def _check_reconstruction(row: Mapping[str, Any], issues: list[str], label: str) -> None:
     reconstruction = row.get("reconstruction")
     if not isinstance(reconstruction, Mapping):
@@ -382,8 +400,12 @@ def _check_reconstruction(row: Mapping[str, Any], issues: list[str], label: str)
         if reconstruction.get(key) is not True:
             _issue(issues, f"{label}: reconstruction {key} is not true")
     try:
-        if float(reconstruction.get("max_anchor_state_error")) > 1e-9:
-            _issue(issues, f"{label}: reconstruction error exceeds 1e-9")
+        error = float(reconstruction.get("max_anchor_state_error"))
+        if not math.isfinite(error) or not 0.0 <= error <= 1e-9:
+            _issue(
+                issues,
+                f"{label}: reconstruction max_anchor_state_error must be finite in [0,1e-9]",
+            )
     except (TypeError, ValueError):
         _issue(issues, f"{label}: reconstruction max_anchor_state_error missing")
 
@@ -397,6 +419,127 @@ def _check_d4(row: Mapping[str, Any], issues: list[str], label: str) -> None:
         value = signatures.get(part)
         if not isinstance(value, Mapping) or not _valid_hex(value.get("complete_signature_hash")):
             _issue(issues, f"{label}: d4 {part} signature missing")
+
+
+def _trace_contact_pairs(record: Mapping[str, Any]) -> list[list[str]]:
+    raw_pairs = record.get("raw_contact_pairs")
+    if not isinstance(raw_pairs, list):
+        raise ValueError("raw_contact_pairs missing")
+    expected: list[list[str]] = []
+    seen: set[tuple[str, str]] = set()
+    for index, raw_pair in enumerate(raw_pairs):
+        if not isinstance(raw_pair, Mapping):
+            raise ValueError(f"raw contact pair {index} is not an object")
+        geom1 = raw_pair.get("geom1_name")
+        geom2 = raw_pair.get("geom2_name")
+        normalized = raw_pair.get("normalized_pair")
+        if not all(isinstance(value, str) and value for value in (geom1, geom2)):
+            raise ValueError(f"raw contact pair {index} lacks geometry names")
+        if (
+            not isinstance(normalized, list)
+            or len(normalized) != 2
+            or not all(isinstance(value, str) and value for value in normalized)
+        ):
+            raise ValueError(f"raw contact pair {index} has invalid normalized_pair")
+        canonical = sorted((geom1, geom2))
+        if normalized != canonical:
+            raise ValueError(
+                f"raw contact pair {index} normalized_pair is not sorted/canonical"
+            )
+        key = (normalized[0], normalized[1])
+        if key not in seen:
+            seen.add(key)
+    expected = [list(key) for key in sorted(seen)]
+    normalized_pairs = record.get("normalized_contact_pairs")
+    alias_pairs = record.get("contact_pairs")
+    if normalized_pairs != expected:
+        raise ValueError("normalized_contact_pairs is not the complete stable unique raw set")
+    if alias_pairs != expected:
+        raise ValueError("contact_pairs alias disagrees with normalized_contact_pairs")
+    if "contact_count" in record:
+        try:
+            contact_count = _int(record["contact_count"], "contact_count")
+        except (TypeError, ValueError) as exc:
+            raise ValueError(f"invalid contact_count: {exc}") from exc
+        if contact_count != len(raw_pairs):
+            raise ValueError("contact_count does not equal raw contact pair count")
+    return expected
+
+
+def _check_d4_groups(
+    groups: Mapping[tuple[str, str, int], list[Mapping[str, Any]]],
+    issues: list[str],
+) -> dict[str, Any]:
+    expected = {
+        (tail, action, POLICY_CALL_CAP, seed, operator)
+        for tail in TAILS
+        for action in ACTION_BUDGETS
+        for seed in SEEDS
+        for operator in OPERATORS
+    }
+    report = {
+        "expected_rows_per_group": len(expected),
+        "groups": len(groups),
+        "complete_groups": 0,
+        "mismatch_groups": [],
+    }
+    for group_key, rows in sorted(groups.items()):
+        task, event_id, prefix = group_key
+        label = f"d4 group task={task} event={event_id} prefix={prefix}"
+        observed: set[tuple[int, int, int, int, str]] = set()
+        for row in rows:
+            try:
+                combo = (
+                    _int(row["tail_horizon"], "tail_horizon"),
+                    _int(row["action_budget"], "action_budget"),
+                    _int(row["policy_call_cap"], "policy_call_cap"),
+                    _int(row["recovery_actor_seed"], "recovery_actor_seed"),
+                    str(row["operator"]),
+                )
+            except (KeyError, TypeError, ValueError, OverflowError) as exc:
+                _issue(issues, f"{label}: invalid cross-budget/seed/operator key: {exc}")
+                continue
+            if combo in observed:
+                _issue(issues, f"{label}: duplicate cross-budget/seed/operator row")
+            observed.add(combo)
+        if len(rows) != len(expected) or observed != expected:
+            _issue(
+                issues,
+                f"{label}: expected one complete 9-budget x 3-seed x 4-core group "
+                f"({len(expected)} rows), observed {len(rows)}",
+            )
+            report["mismatch_groups"].append(
+                {
+                    "task": task,
+                    "event_instance_id": event_id,
+                    "prefix_k": prefix,
+                    "observed_rows": len(rows),
+                    "observed_combinations": len(observed),
+                }
+            )
+            continue
+        for part in ("detection", "pre_tail"):
+            hashes = {
+                str(row["d4_signatures"][part]["complete_signature_hash"])
+                for row in rows
+                if isinstance(row.get("d4_signatures"), Mapping)
+                and isinstance(row["d4_signatures"].get(part), Mapping)
+            }
+            if len(hashes) != 1:
+                _issue(issues, f"{label}: d4 {part} signature differs across core operators")
+                report["mismatch_groups"].append(
+                    {
+                        "task": task,
+                        "event_instance_id": event_id,
+                        "prefix_k": prefix,
+                        "part": part,
+                        "distinct_hashes": sorted(hashes),
+                    }
+                )
+                break
+        else:
+            report["complete_groups"] += 1
+    return report
 
 
 def _check_trace(
@@ -418,6 +561,7 @@ def _check_trace(
         return
     content_sha = hashlib.sha256()
     count, nonempty_normalized = 0, False
+    controls: dict[int, dict[str, Any]] = {}
     try:
         with gzip.open(path, "rb") as handle:
             for raw_line in handle:
@@ -439,17 +583,28 @@ def _check_trace(
                     raise ValueError("prefix_k mismatch")
                 if _int(record.get("actor_seed"), "trace actor_seed") != _int(row["recovery_actor_seed"], "recovery_actor_seed"):
                     raise ValueError("actor_seed mismatch")
-                pairs = record.get("normalized_contact_pairs")
-                if not isinstance(pairs, list):
-                    raise ValueError("normalized_contact_pairs missing")
-                for pair in pairs:
-                    if not isinstance(pair, (list, tuple)) or len(pair) != 2:
-                        raise ValueError("normalized contact pair is not a two-item pair")
-                    if not all(isinstance(item, str) and item for item in pair):
-                        raise ValueError("normalized contact pair contains a non-string")
-                nonempty_normalized |= bool(pairs)
+                normalized = _trace_contact_pairs(record)
+                nonempty_normalized |= bool(normalized)
                 if record.get("contact_stream_available") is not True:
                     raise ValueError("contact stream is not marked available")
+                control_step = _int(record.get("control_step"), "trace control_step")
+                if control_step < 0:
+                    raise ValueError("trace control_step is negative")
+                group = controls.setdefault(
+                    control_step,
+                    {"actions": 0, "physics_substeps": [], "record_indices": []},
+                )
+                group["record_indices"].append(count - 1)
+                kind = record.get("step_kind")
+                if kind == "physics_step":
+                    substep = _int(record.get("substep"), "trace physics substep")
+                    if not 1 <= substep <= 25:
+                        raise ValueError("trace physics substep must be in 1..25")
+                    group["physics_substeps"].append(substep)
+                elif kind == "action_step":
+                    group["actions"] += 1
+                else:
+                    raise ValueError(f"unknown trace step_kind: {kind!r}")
     except (OSError, EOFError, TypeError, ValueError, json.JSONDecodeError) as exc:
         _issue(issues, f"{label}: invalid gzip trace: {exc}")
         return
@@ -463,6 +618,31 @@ def _check_trace(
     labels = row.get("labels")
     if not isinstance(labels, Mapping) or labels.get("record_count") != count or labels.get("label_complete") is not True:
         _issue(issues, f"{label}: label receipt incomplete")
+    if not controls:
+        _issue(issues, f"{label}: no control steps")
+        return
+    control_steps = sorted(controls)
+    if control_steps != list(range(control_steps[-1] + 1)):
+        _issue(issues, f"{label}: control steps are not contiguous")
+    physics_distribution: dict[str, int] = {}
+    for control_step, group in controls.items():
+        physics = group["physics_substeps"]
+        if group["actions"] != 1:
+            _issue(issues, f"{label}: control_step={control_step} does not have exactly one action record")
+        if len(physics) != 25:
+            _issue(issues, f"{label}: control_step={control_step} does not have 25 physics records")
+        if sorted(physics) != list(range(1, 26)):
+            _issue(issues, f"{label}: control_step={control_step} physics substeps are not 1..25")
+        physics_distribution[str(len(physics))] = physics_distribution.get(str(len(physics)), 0) + 1
+    trace_report.setdefault("action_records", 0)
+    trace_report["action_records"] += sum(group["actions"] for group in controls.values())
+    trace_report.setdefault("physics_records", 0)
+    trace_report["physics_records"] += sum(len(group["physics_substeps"]) for group in controls.values())
+    trace_report.setdefault("physics_per_control_counts", {})
+    for key, value in physics_distribution.items():
+        trace_report["physics_per_control_counts"][key] = (
+            trace_report["physics_per_control_counts"].get(key, 0) + value
+        )
 
 
 def _validate_rows(
@@ -488,6 +668,7 @@ def _validate_rows(
     trace_rows: dict[Path, Mapping[str, Any]] = {}
     runtime_receipts: set[str] = set()
     structural_by_task = {task: 0 for task in TASKS}
+    d4_groups: dict[tuple[str, str, int], list[Mapping[str, Any]]] = {}
     for task in TASKS:
         shard_dir = phase1 / "shards" / task
         paths = sorted(shard_dir.glob("*.json")) if shard_dir.is_dir() else []
@@ -496,6 +677,7 @@ def _validate_rows(
             _issue(issues, f"{task}: shard file count {len(paths)} != expected {expected_task_rows}")
         for path in paths:
             label = str(path)
+            _check_owned(path, issues, label)
             try:
                 row = _read_json(path)
             except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
@@ -541,7 +723,8 @@ def _validate_rows(
                 _issue(issues, f"{label}: generator actor seed mismatch")
             if operator not in OPERATORS + tuple(REFERENCE_PREFIXES):
                 _issue(issues, f"{label}: unknown operator {operator!r}")
-            if str(row.get("behavior_operator", operator)) != operator:
+            expected_behavior = _expected_behavior_operator(operator, is_reference)
+            if str(row.get("behavior_operator", expected_behavior)) != expected_behavior:
                 _issue(issues, f"{label}: behavior_operator mismatch")
             if row.get("configured_budget") != {
                 "action_budget": row.get("action_budget"),
@@ -585,6 +768,13 @@ def _validate_rows(
                     _issue(issues, f"{label}: COMPLETE row has error_type")
                 _check_reconstruction(row, issues, label)
                 _check_d4(row, issues, label)
+                if not is_reference:
+                    group_key = (
+                        str(row["task"]),
+                        str(row["event_instance_id"]),
+                        _int(row["prefix_k"], "prefix_k"),
+                    )
+                    d4_groups.setdefault(group_key, []).append(row)
                 if not isinstance(row.get("labels"), Mapping):
                     _issue(issues, f"{label}: labels missing")
                 trace_raw = row.get("trace_path")
@@ -598,6 +788,7 @@ def _validate_rows(
                     elif trace_path in trace_rows:
                         _issue(issues, f"{label}: duplicate trace path")
                     else:
+                        _check_owned(trace_path, issues, str(trace_path))
                         trace_rows[trace_path] = row
             elif status.startswith("BLOCKED") and str(row.get("error_type")) == "PrefixOutsideTaskHorizon":
                 valid, reason = structural_exclusion_is_valid(row, source_event)
@@ -625,12 +816,15 @@ def _validate_rows(
             _issue(issues, f"{task}: core row count mismatch")
         if counts[task]["reference_rows"] != expected_ref_count:
             _issue(issues, f"{task}: reference row count mismatch")
+    d4_report = _check_d4_groups(d4_groups, issues)
     trace_roots = {task: phase1 / "contact_topology" / task for task in TASKS}
     actual_trace_paths: set[Path] = set()
     listed_bytes_by_task, listed_files_by_task = {}, {}
     for task, directory in trace_roots.items():
         actual = {path.resolve() for path in directory.glob("*.jsonl.gz")} if directory.is_dir() else set()
         actual_trace_paths |= actual
+        for path in actual:
+            _check_owned(path, issues, str(path))
         listed_files_by_task[task] = len(actual)
         listed_bytes_by_task[task] = sum(path.stat().st_size for path in actual if path.is_file())
     if actual_trace_paths != set(trace_rows):
@@ -658,6 +852,7 @@ def _validate_rows(
         "missing_key_count": len(missing), "unexpected_key_count": len(extra),
         "duplicate_key_count": len(duplicate_keys),
         "runtime_receipt_hashes": sorted(runtime_receipts),
+        "d4": d4_report,
         "trace": trace_report,
     }
 
