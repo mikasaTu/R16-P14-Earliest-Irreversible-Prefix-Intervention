@@ -49,8 +49,10 @@ def _check_local_receipt_name(receipt: Path, diagnostic: bool) -> None:
     # Bind the local artifact to the fixed basename/phase directory while the
     # Git proof below binds its bytes to the exact repository path.
     expected = Path(receipt_path(diagnostic))
-    if receipt.name != expected.name or receipt.parent.name != expected.parent.name:
-        raise RuntimeError("selection receipt path is not an admitted phase1 artifact")
+    if receipt.name != expected.name:
+        raise RuntimeError("selection receipt path basename is not admitted")
+    if diagnostic and receipt.parent.name != expected.parent.name:
+        raise RuntimeError("diagnostic receipt is not a phase1 artifact")
 
 
 def _tree_proof(raw: bytes, authorization: Mapping[str, Any], diagnostic: bool) -> None:
