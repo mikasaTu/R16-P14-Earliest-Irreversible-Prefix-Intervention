@@ -79,7 +79,7 @@ def _make_source(root: Path, phase: str = "phase1") -> tuple[Path, list[dict[str
         trace_name="branch-ref.jsonl.gz",
     )
     ref["is_reference"] = True
-    rows_by_file = ([rows[0]], [ref]) if phase == "phase1" else ([rows[0]], [ref])
+    rows_by_file = ([rows[0], rows[1]], [ref])
     for filename, material in zip(names, rows_by_file):
         source = root / phase / filename
         source.parent.mkdir(parents=True, exist_ok=True)
@@ -151,6 +151,25 @@ def test_phase1_projection_is_lossless_deterministic_and_provenanced(tmp_path: P
         assert (output / "phase1" / name).read_bytes() == (output2 / "phase1" / name).read_bytes()
 
 
+def test_phase1_accepts_only_known_consolidation_type_normalizations(tmp_path: Path):
+    source, _ = _make_source(tmp_path / "source")
+    raw = source / "phase1" / "shards" / TASK_BOWL / "branch-2.json"
+    value = json.loads(raw.read_text(encoding="utf-8"))
+    # Actual runtime shard schema uses int init_state_id and bool outcome;
+    # consolidated grid_rows uses str init_state_id and float safe_success.
+    value["init_state_id"] = 12
+    value["safe_success"] = True
+    _write(raw, value)
+    result = publisher.publish_rows(source, tmp_path / "repo", "phase1")
+    assert result["status"] == "COMPLETE", result
+
+    value["init_state_id"] = 13
+    _write(raw, value)
+    result = publisher.publish_rows(source, tmp_path / "repo2", "phase1")
+    assert result["status"] == "BLOCKED"
+    assert "disagrees on init_state_id" in result["blocking_reasons"][0]
+
+
 def test_phase1_rejects_raw_shard_identity_mismatch_without_publishing(tmp_path: Path):
     source, _ = _make_source(tmp_path / "source")
     raw = source / "phase1" / "shards" / TASK_CREAM / "branch-1.json"
@@ -161,7 +180,7 @@ def test_phase1_rejects_raw_shard_identity_mismatch_without_publishing(tmp_path:
     assert result["status"] == "BLOCKED"
     assert "disagrees on event_instance_id" in result["blocking_reasons"][0]
     assert not (tmp_path / "repo" / "phase1" / "grid_rows.jsonl").exists()
-    assert not list((tmp_path / "repo" / "phase1").glob("*.tmp")) if (tmp_path / "repo" / "phase1").exists() else True
+    assert not list((tmp_path / "repo" / "phase1").glob("*.tmp"))
 
 
 def test_phase2_calls_diagnostic_admission_before_reading_rows(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
@@ -210,7 +229,7 @@ def test_phase2_authorized_projection_uses_phase2_raw_for_reused_trace(tmp_path:
 def test_unknown_error_and_duplicate_identity_fail_closed(tmp_path: Path):
     source, _ = _make_source(tmp_path / "source")
     path = source / "phase1" / "grid_rows.jsonl"
-    row = json.loads(path.read_text())
+    row = json.loads(path.read_text().splitlines()[0])
     row["status"] = "BLOCKED"
     row["error_type"] = "Timeout"
     path.write_text(json.dumps(row) + "\n", encoding="utf-8")
@@ -220,7 +239,7 @@ def test_unknown_error_and_duplicate_identity_fail_closed(tmp_path: Path):
 
     source2, _ = _make_source(tmp_path / "source2")
     grid = source2 / "phase1" / "grid_rows.jsonl"
-    first = json.loads(grid.read_text())
+    first = json.loads(grid.read_text().splitlines()[0])
     grid.write_text(json.dumps(first) + "\n" + json.dumps(first) + "\n", encoding="utf-8")
     result2 = publisher.publish_rows(source2, tmp_path / "repo2", "phase1")
     assert result2["status"] == "BLOCKED"

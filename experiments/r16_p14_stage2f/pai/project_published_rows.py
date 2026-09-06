@@ -193,6 +193,31 @@ def _raw_shard_path(source_root: Path, phase: str, row: Mapping[str, Any], label
     return raw_path, relative.as_posix()
 
 
+def _raw_identity_equal(field: str, raw: Any, published: Any) -> bool:
+    """Accept only the two known consolidation type normalizations.
+
+    Runtime shards keep ``init_state_id`` as an integer and ``safe_success``
+    as a boolean; ``consolidate._canonical_row`` publishes the former as a
+    string and the latter as a float.  The value comparison remains exact
+    after this explicit normalization, so another init/event cannot match by
+    accident and arbitrary coercions are not accepted.
+    """
+    if _strict_equal(raw, published):
+        return True
+    if field == "init_state_id":
+        if isinstance(raw, bool) or not isinstance(published, str):
+            return False
+        if isinstance(raw, int):
+            return str(raw) == published
+        return False
+    if field == "safe_success":
+        if isinstance(raw, bool) and isinstance(published, float):
+            return published == float(raw)
+        if isinstance(raw, int) and not isinstance(raw, bool) and isinstance(published, float):
+            return published == float(raw) and raw in (0, 1)
+    return False
+
+
 def _read_raw_shard(path: Path, row: Mapping[str, Any], label: str) -> str:
     raw_sha, _ = _sha256_stream(path)
     try:
@@ -203,12 +228,12 @@ def _read_raw_shard(path: Path, row: Mapping[str, Any], label: str) -> str:
     if not isinstance(source, Mapping):
         raise PublicationError(f"{label}: raw shard {path} is not a JSON object")
     for field in IDENTITY_FIELDS:
-        if field not in source or not _strict_equal(source[field], row[field]):
+        if field not in source or not _raw_identity_equal(field, source[field], row[field]):
             raise PublicationError(f"{label}: raw shard {path} disagrees on {field}")
     # safe_success is the scientific outcome and is checked whenever the
     # consolidated row carries it.  Structural rows may legitimately omit it.
     if "safe_success" in row:
-        if "safe_success" not in source or not _strict_equal(source["safe_success"], row["safe_success"]):
+        if "safe_success" not in source or not _raw_identity_equal("safe_success", source["safe_success"], row["safe_success"]):
             raise PublicationError(f"{label}: raw shard {path} disagrees on safe_success")
     return raw_sha
 
