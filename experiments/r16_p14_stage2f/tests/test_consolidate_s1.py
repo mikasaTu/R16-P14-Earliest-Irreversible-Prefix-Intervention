@@ -68,6 +68,7 @@ def test_phase0b_incomplete_qualification_is_blocked(tmp_path):
     assert result["status"] == "BLOCKED"
     assert result["evaluation_clean_read"] is False
     assert result["k1"]["source"] == "qualification metadata only"
+    assert result["gate_status"] == "BLOCKED_BY_NATURAL_EVENT_YIELD"
 
 
 def test_phase2_open_deny_happens_before_shard_read(tmp_path):

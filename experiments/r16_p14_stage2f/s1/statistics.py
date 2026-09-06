@@ -325,8 +325,60 @@ def summarize_grid(rows: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
 
 def select_budget(grid_summary: Mapping[str, Any]) -> dict[str, Any]:
     """Apply K2: both tasks oracle in [.25,.85] and gap >= .15."""
+    # A partially observed planned grid may still have useful descriptive
+    # metrics, but it can never produce an admission receipt.  Keep this
+    # guard here as well as in the consolidator so callers that pass an
+    # annotated summary cannot accidentally turn a shortfall into SELECTED.
+    sample = grid_summary.get("sample")
+    if not isinstance(sample, Mapping):
+        sample = {}
+    sample_complete = grid_summary.get("sample_complete")
+    if sample_complete is None:
+        sample_complete = grid_summary.get("planned_sample_complete")
+    if sample_complete is None:
+        sample_complete = sample.get("complete")
+    excluded_count = grid_summary.get(
+        "structurally_excluded_event_count",
+        sample.get("structurally_excluded_event_count", 0),
+    )
+    try:
+        excluded_count = int(excluded_count or 0)
+    except (TypeError, ValueError):
+        excluded_count = 1
+    if excluded_count:
+        return {
+            "schema_version": 1,
+            "status": "BLOCKED",
+            "selected_budget": None,
+            "selected": None,
+            "selection_source": "calibration_only",
+            "blocking_reasons": [
+                f"structurally excluded events are not selection observations: {excluded_count}"
+            ],
+            "qualifying_budgets": [],
+            "ranked_candidates": [],
+            "selection_eligible": False,
+        }
+    if sample_complete is False:
+        observed = grid_summary.get("observed_events_by_task", sample.get("observed_events_by_task"))
+        planned = grid_summary.get("planned_events", sample.get("planned_events", 20))
+        shortfall = grid_summary.get("shortfall", sample.get("shortfall"))
+        return {
+            "schema_version": 1,
+            "status": "BLOCKED",
+            "selected_budget": None,
+            "selected": None,
+            "selection_source": "calibration_only",
+            "blocking_reasons": [
+                "planned calibration sample incomplete: "
+                f"observed={observed!r}, planned={planned!r}, shortfall={shortfall!r}"
+            ],
+            "qualifying_budgets": [],
+            "ranked_candidates": [],
+            "selection_eligible": False,
+        }
     if grid_summary.get("blocked") or (grid_summary.get("status") is not None and grid_summary.get("status") != "COMPLETE"):
-        return {"schema_version": 1, "status": "BLOCKED", "selected_budget": None, "selected": None, "selection_source": "calibration_only", "blocking_reasons": list(grid_summary.get("blocking_reasons", ())) or ["grid summary is not complete"], "qualifying_budgets": [], "ranked_candidates": []}
+        return {"schema_version": 1, "status": "BLOCKED", "selected_budget": None, "selected": None, "selection_source": "calibration_only", "blocking_reasons": list(grid_summary.get("blocking_reasons", ())) or ["grid summary is not complete"], "qualifying_budgets": [], "ranked_candidates": [], "selection_eligible": False}
     records = grid_summary.get("grid")
     if records is None:
         raw = grid_summary.get("budgets", {})

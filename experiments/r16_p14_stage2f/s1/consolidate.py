@@ -199,9 +199,21 @@ def _canonical_row(row: Mapping[str, Any], phase: str) -> tuple[dict[str, Any] |
         key: value for key, value in row.items() if not str(key).startswith("__")
     }
     reasons: list[str] = []
+    raw_status = _value(row, "status", *containers)
+    raw_error = _value(row, "error_type", *containers)
+    structural_exclusion = (
+        str(raw_status).strip().upper() == "BLOCKED"
+        and str(raw_error).strip() == "PrefixOutsideTaskHorizon"
+        and phase == "phase1"
+    )
     for field in CORE_FIELDS:
         value = _value(row, field, *containers)
         if value is None:
+            # PrefixOutsideTaskHorizon is a structural infeasibility marker,
+            # never a safe-success=0 observation.  Its branch key is still
+            # required below; missing identity/provenance remains a blocker.
+            if structural_exclusion and field == "safe_success":
+                continue
             reasons.append(f"missing {field}")
             continue
         result[field] = value
@@ -218,12 +230,13 @@ def _canonical_row(row: Mapping[str, Any], phase: str) -> tuple[dict[str, Any] |
         result["prefix_k"] = _int(result["prefix_k"], "prefix_k")
         for field in ("tail_horizon", "action_budget", "policy_call_cap"):
             result[field] = _int(result[field], field)
-        result["safe_success"] = float(result["safe_success"])
-        if not 0 <= result["safe_success"] <= 1:
-            raise ValueError("safe_success must be in [0,1]")
+        if "safe_success" in result:
+            result["safe_success"] = float(result["safe_success"])
+            if not 0 <= result["safe_success"] <= 1:
+                raise ValueError("safe_success must be in [0,1]")
     except (TypeError, ValueError, OverflowError) as exc:
         reasons.append(str(exc))
-    if str(result.get("status", "")).strip().upper() != "COMPLETE":
+    if str(result.get("status", "")).strip().upper() != "COMPLETE" and not structural_exclusion:
         reasons.append(f"status is not COMPLETE: {result.get('status')!r}")
     for field in ("pid", "env_hash", "chunk_hash"):
         if result.get(field) is None or not str(result.get(field)).strip():
@@ -236,6 +249,9 @@ def _canonical_row(row: Mapping[str, Any], phase: str) -> tuple[dict[str, Any] |
         reasons.append(f"Phase-2 row has invalid split: {result.get('split')!r}")
     if reasons:
         return None, reasons
+    if structural_exclusion:
+        result["structurally_excluded"] = True
+        result["structural_exclusion_reason"] = "PrefixOutsideTaskHorizon"
     return result, []
 
 
@@ -382,6 +398,7 @@ def consolidate_phase0b(input_root: str | Path, output_root: str | Path) -> dict
             "phase0b", output_root, reasons,
             qualification_count=len(qualifications),
             k1={"counts": k1_counts, "pass": k1_pass, "source": "qualification metadata only"},
+            gate_status="PASS" if k1_pass else "BLOCKED_BY_NATURAL_EVENT_YIELD",
             evaluation_clean_read=False,
             evaluation_outcome_read=False,
         )
@@ -391,6 +408,7 @@ def consolidate_phase0b(input_root: str | Path, output_root: str | Path) -> dict
             "phase0b", output_root, event_reasons,
             qualification_count=len(qualifications),
             k1={"counts": k1_counts, "pass": k1_pass, "source": "qualification metadata only"},
+            gate_status="PASS" if k1_pass else "BLOCKED_BY_NATURAL_EVENT_YIELD",
             evaluation_clean_read=False,
             evaluation_outcome_read=False,
         )
@@ -407,6 +425,7 @@ def consolidate_phase0b(input_root: str | Path, output_root: str | Path) -> dict
         "blocked": False,
         "qualification_count": len(qualifications),
         "k1": {"counts": k1_counts, "pass": k1_pass, "source": "qualification metadata only"},
+        "gate_status": "PASS" if k1_pass else "BLOCKED_BY_NATURAL_EVENT_YIELD",
         "calibration_event_count": len(events),
         "evaluation_clean_read": False,
         "evaluation_outcome_read": False,
@@ -449,6 +468,14 @@ def _check_duplicates(rows: Sequence[Mapping[str, Any]], reasons: list[str]) -> 
 
 
 def _event_inventory(rows: Sequence[Mapping[str, Any]], phase: str, reasons: list[str]) -> list[tuple[Any, ...]]:
+    """Return observed event identities without inventing a 20-event sample.
+
+    Phase 1 may describe every available qualified calibration event when the
+    natural-failure yield is below the planned 20.  The source-event and
+    completion checks in consolidate_phase1 decide whether this observed
+    inventory is complete; this helper only rejects over-sampling and a
+    missing task.
+    """
     identities = sorted({_event_key(row) for row in rows})
     tasks = {identity[0] for identity in identities}
     if tasks != set(TASKS):
@@ -456,16 +483,96 @@ def _event_inventory(rows: Sequence[Mapping[str, Any]], phase: str, reasons: lis
     if phase == "phase1":
         for task in TASKS:
             count = sum(identity[0] == task for identity in identities)
-            if count != 20:
-                reasons.append(f"Phase-1 requires exactly 20 events for {task}; observed {count}")
+            if count > 20:
+                reasons.append(f"Phase-1 exceeds planned 20 events for {task}; observed {count}")
     return identities
 
 
+def _phase1_completion_metadata(
+    input_root: Path,
+    source_events: Sequence[tuple[Any, ...]],
+    shard_events: Sequence[tuple[Any, ...]],
+    reasons: list[str],
+) -> dict[str, Any]:
+    """Cross-check matrix completion receipts against source and shard identity.
+
+    The receipt is evidence that the matrix finished its available requests;
+    it is never used as the source of event identity or branch completeness.
+    """
+    metadata: dict[str, Any] = {}
+    for task in TASKS:
+        path = input_root / "phase1" / f"completion_{task}.json"
+        source_count = sum(identity[0] == task for identity in source_events)
+        shard_count = sum(identity[0] == task for identity in shard_events)
+        if not path.is_file():
+            reasons.append(f"missing Phase-1 completion receipt for {task}: {path}")
+            continue
+        try:
+            payload = _read_json(path)
+            if not isinstance(payload, Mapping):
+                raise ValueError("completion receipt is not an object")
+            if payload.get("task") not in (None, task):
+                raise ValueError(f"task mismatch: {payload.get('task')!r}")
+            if payload.get("phase") not in (None, "grid"):
+                raise ValueError(f"phase mismatch: {payload.get('phase')!r}")
+            observed = _int(payload.get("events"), "events")
+            planned = _int(payload.get("planned_events"), "planned_events")
+            if observed < 0 or planned < 0:
+                raise ValueError("event counts must be non-negative")
+            if planned != 20:
+                raise ValueError(f"planned_events must remain 20, observed {planned}")
+            if observed != source_count:
+                raise ValueError(f"events={observed} disagrees with source event count {source_count}")
+            if observed != shard_count:
+                raise ValueError(f"events={observed} disagrees with shard event count {shard_count}")
+            complete = payload.get("planned_sample_complete", payload.get("sample_complete"))
+            if not isinstance(complete, bool):
+                raise ValueError("planned_sample_complete/sample_complete must be boolean")
+            expected_complete = observed == planned
+            if complete is not expected_complete:
+                raise ValueError(
+                    f"sample-complete flag {complete} disagrees with observed/planned "
+                    f"{observed}/{planned}"
+                )
+            shortfall = max(0, planned - observed)
+            declared_shortfall = payload.get("missing_planned_events", payload.get("shortfall"))
+            if declared_shortfall is not None and _int(declared_shortfall, "shortfall") != shortfall:
+                raise ValueError(
+                    f"shortfall disagrees with observed/planned: {declared_shortfall!r} vs {shortfall}"
+                )
+            metadata[task] = {
+                "task": task,
+                "planned_events": planned,
+                "observed_events": observed,
+                "shortfall": shortfall,
+                "sample_complete": expected_complete,
+                "completion_path": str(path),
+            }
+        except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
+            reasons.append(f"invalid Phase-1 completion receipt {path}: {exc}")
+    if len(metadata) == len(TASKS):
+        observed = {task: metadata[task]["observed_events"] for task in TASKS}
+        shortfall = {task: metadata[task]["shortfall"] for task in TASKS}
+        complete = all(metadata[task]["sample_complete"] for task in TASKS)
+        metadata["_summary"] = {
+            "planned_events": 20,
+            "observed_events_by_task": observed,
+            "shortfall": shortfall,
+            "planned_sample_complete": complete,
+            "sample_complete": complete,
+        }
+    return metadata
+
+
 def _phase1_reference_events(input_root: Path) -> tuple[list[tuple[Any, ...]], list[str]]:
-    """Use the sealed calibration export to reject a residual/substituted grid."""
+    """Build the fixed first-min(20, available) event identity source.
+
+    Calibration events are the only event source for Phase 1.  Completion
+    receipts are checked separately and cannot substitute for this file.
+    """
     path = input_root / "phase0b" / "calibration_events.jsonl"
     if not path.is_file():
-        return [], []
+        return [], [f"missing calibration event export: {path}"]
     material: list[dict[str, Any]] = []
     reasons: list[str] = []
     try:
@@ -477,23 +584,61 @@ def _phase1_reference_events(input_root: Path) -> tuple[list[tuple[Any, ...]], l
                 material.append(dict(value))
     except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
         return [], [f"cannot read calibration event export: {exc}"]
+
     expected: list[tuple[Any, ...]] = []
     for task in TASKS:
-        task_events = [row for row in material if _text(row.get("task")) == task and row.get("split") == "calibration"]
-        task_events.sort(key=lambda row: (int(row["init_state_id"]), int(row.get("actor_seed", row.get("generator_actor_seed", 0))), _text(row["event_instance_id"])))
-        if len(task_events) < 20:
-            reasons.append(f"calibration event export has fewer than 20 events for {task}")
-            continue
-        expected.extend(
-            (
-                task,
-                _text(row["event_instance_id"]),
-                _text(row["init_state_id"]),
-                "calibration",
-                _int(row.get("actor_seed", row.get("generator_actor_seed")), "generator_actor_seed"),
+        task_events = [
+            row for row in material
+            if _text(row.get("task")) == task and row.get("split") == "calibration"
+        ]
+        try:
+            task_events.sort(
+                key=lambda row: (
+                    int(row["init_state_id"]),
+                    int(row.get("actor_seed", row.get("generator_actor_seed", 0))),
+                    _text(row["event_instance_id"]),
+                )
             )
-            for row in task_events[:20]
-        )
+        except (KeyError, TypeError, ValueError) as exc:
+            reasons.append(f"invalid calibration event identity for {task}: {exc}")
+            continue
+        if not task_events:
+            reasons.append(f"calibration event export has no events for {task}")
+            continue
+
+        all_keys: set[tuple[Any, ...]] = set()
+        for row in task_events:
+            try:
+                key = (
+                    task,
+                    _text(row["event_instance_id"]),
+                    _text(row["init_state_id"]),
+                    "calibration",
+                    _seed(row.get("actor_seed", row.get("generator_actor_seed")), "generator_actor_seed"),
+                )
+            except (KeyError, TypeError, ValueError) as exc:
+                reasons.append(f"invalid calibration event identity for {task}: {exc}")
+                continue
+            if key in all_keys:
+                reasons.append(f"duplicate calibration event identity: {key!r}")
+            all_keys.add(key)
+
+        # Retain the original fixed ordering; fewer than 20 selects every
+        # available source event without fabrication.
+        for row in task_events[:20]:
+            try:
+                expected.append(
+                    (
+                        task,
+                        _text(row["event_instance_id"]),
+                        _text(row["init_state_id"]),
+                        "calibration",
+                        _seed(row.get("actor_seed", row.get("generator_actor_seed")), "generator_actor_seed"),
+                    )
+                )
+            except (KeyError, TypeError, ValueError) as exc:
+                reasons.append(f"invalid calibration event identity for {task}: {exc}")
+
     if len(expected) != len(set(expected)):
         reasons.append("calibration event export contains duplicate Phase-1 identities")
     return sorted(expected), reasons
@@ -566,23 +711,129 @@ def _validate_matrix_rows(rows: Sequence[Mapping[str, Any]], events: Sequence[tu
     return sorted(core, key=_sort_key), sorted(reference, key=_sort_key), reasons
 
 
-def _summary_grid(output_root: Path, rows: Sequence[Mapping[str, Any]], reasons: list[str]) -> dict[str, Any]:
+def _structural_support_rows(
+    core: Sequence[Mapping[str, Any]],
+    reference: Sequence[Mapping[str, Any]],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """Exclude whole events containing structural horizon blocks from metrics.
+
+    A PrefixOutsideTaskHorizon row is a configured request with no scientific
+    safe-success observation.  Keeping its branch in the persisted matrix
+    preserves identity and completeness, while removing the whole event from
+    the diagnostic support prevents any false zero from entering statistics.
+    """
+    excluded: dict[tuple[Any, ...], dict[str, Any]] = {}
+    for row in list(core) + list(reference):
+        if row.get("structurally_excluded"):
+            key = _event_key(row)
+            excluded.setdefault(
+                key,
+                {
+                    "task": key[0],
+                    "event_instance_id": key[1],
+                    "init_state_id": key[2],
+                    "split": key[3],
+                    "generator_actor_seed": key[4],
+                    "reason": row.get("structural_exclusion_reason", "structural infeasibility"),
+                },
+            )
+    support = [
+        dict(row)
+        for row in core
+        if not row.get("structurally_excluded") and _event_key(row) not in excluded
+    ]
+    return support, sorted(excluded.values(), key=lambda row: (_text(row["task"]), _text(row["init_state_id"]), _text(row["event_instance_id"]), _text(row["generator_actor_seed"])))
+
+
+def _summary_grid(
+    output_root: Path,
+    rows: Sequence[Mapping[str, Any]],
+    reasons: list[str],
+    sample_metadata: Mapping[str, Any] | None = None,
+    excluded_events: Sequence[Mapping[str, Any]] = (),
+    raw_grid_row_count: int | None = None,
+    raw_reference_row_count: int | None = None,
+    structural_row_count: int | None = None,
+) -> dict[str, Any]:
     if reasons:
         return _blocked("phase1", output_root, reasons, grid_row_count=len(rows), selection_receipt_written=False)
     try:
         summary = summarize_grid(rows)
     except (TypeError, ValueError, KeyError) as exc:
-        return _blocked("phase1", output_root, [f"grid statistics failed closed: {exc}"]) 
+        return _blocked("phase1", output_root, [f"grid statistics failed closed: {exc}"])
     if summary.get("status") != "COMPLETE":
-        return _blocked("phase1", output_root, summary.get("blocking_reasons", ["grid statistics is incomplete"]), grid_summary=summary, selection_receipt_written=False)
-    receipt = select_budget(summary)
+        return _blocked(
+            "phase1",
+            output_root,
+            summary.get("blocking_reasons", ["grid statistics is incomplete"]),
+            grid_summary=summary,
+            selection_receipt_written=False,
+        )
+
     summary = dict(summary)
+    excluded = [dict(item) for item in excluded_events]
+    if structural_row_count is None:
+        structural_row_count = sum(
+            int(bool(row.get("structurally_excluded")))
+            for row in list(rows)
+        )
+    structural_row_count = int(structural_row_count)
+    summary["structurally_excluded_events"] = excluded
+    summary["structurally_excluded_event_count"] = len(excluded)
+    summary["structurally_excluded_row_count"] = structural_row_count
+    support_keys = {_event_key(row) for row in rows}
+    summary["support_event_count_by_task"] = {
+        task: sum(key[0] == task for key in support_keys)
+        for task in TASKS
+    }
+    summary["support_grid_row_count"] = len(rows)
+    if raw_grid_row_count is not None:
+        summary["grid_row_count"] = int(raw_grid_row_count)
+    if raw_reference_row_count is not None:
+        summary["reference_row_count"] = int(raw_reference_row_count)
+    completeness = dict(summary.get("completeness", {}))
+    completeness.update(
+        {
+            "planned_event_count": 20,
+            "support_event_count_by_task": dict(summary["support_event_count_by_task"]),
+            "structurally_excluded_event_count": len(excluded),
+            "structurally_excluded_row_count": structural_row_count,
+            "structurally_excluded_events": excluded,
+        }
+    )
+    summary["completeness"] = completeness
+    if sample_metadata:
+        sample = dict(sample_metadata)
+        summary.update(
+            {
+                "sample": sample,
+                "planned_events": sample.get("planned_events", 20),
+                "observed_events_by_task": sample.get("observed_events_by_task", {}),
+                "shortfall": sample.get("shortfall", {}),
+                "planned_sample_complete": bool(sample.get("planned_sample_complete")),
+                "sample_complete": bool(sample.get("sample_complete")),
+            }
+        )
+        if not summary["sample_complete"]:
+            # Keep all observed per-budget metrics, but make the descriptive
+            # summary ineligible for K2 selection.
+            summary["status"] = "COMPLETE_AVAILABLE_REQUESTS_SAMPLE_SHORTFALL"
+            summary["selection_eligible"] = False
+    if excluded:
+        summary["selection_eligible"] = False
+    receipt = select_budget(summary)
     summary["selection"] = receipt
     summary["selection_source"] = "calibration_only"
+    summary["selection_eligible"] = receipt.get("status") == "SELECTED"
     _write_json(output_root / "phase1" / "summary.json", summary)
     receipt = dict(receipt)
     receipt["selected_budget"] = receipt.get("selected_budget")
     receipt["selection_source"] = "calibration_only"
+    receipt["sample_complete"] = summary.get("sample_complete")
+    receipt["observed_events_by_task"] = summary.get("observed_events_by_task")
+    receipt["shortfall"] = summary.get("shortfall")
+    receipt["structurally_excluded_event_count"] = len(excluded)
+    receipt["structurally_excluded_row_count"] = structural_row_count
     receipt["grid_summary_sha256"] = _sha256(output_root / "phase1" / "summary.json")
     _write_json(output_root / "phase1" / "selection_receipt.json", receipt)
     return summary
@@ -591,18 +842,57 @@ def _summary_grid(output_root: Path, rows: Sequence[Mapping[str, Any]], reasons:
 def consolidate_phase1(input_root: str | Path, output_root: str | Path) -> dict[str, Any]:
     input_root, output_root = Path(input_root), Path(output_root)
     rows, reasons = _normalize_shards(input_root, "phase1")
-    events = _event_inventory(rows, "phase1", reasons)
-    reference_events, reference_reasons = _phase1_reference_events(input_root)
-    reasons.extend(reference_reasons)
-    if reference_events and set(events) != set(reference_events):
-        reasons.append("Phase-1 shard event identities do not match the first 20 exported calibration events")
-    core, reference, matrix_reasons = _validate_matrix_rows(rows, events, "phase1")
+    observed_events = _event_inventory(rows, "phase1", reasons)
+    source_events, source_reasons = _phase1_reference_events(input_root)
+    reasons.extend(source_reasons)
+    if source_events and set(observed_events) != set(source_events):
+        reasons.append("Phase-1 shard event identities do not match fixed first-min(20) calibration source")
+    sample_metadata = _phase1_completion_metadata(input_root, source_events, observed_events, reasons)
+    # Use source identities to form expected keys.  Falling back to observed
+    # keys is diagnostic only; source failure remains a hard blocker.
+    expected_events = source_events or observed_events
+    core, reference, matrix_reasons = _validate_matrix_rows(rows, expected_events, "phase1")
     reasons.extend(matrix_reasons)
     if reasons:
-        return _blocked("phase1", output_root, reasons, grid_row_count=len(core), reference_row_count=len(reference), selection_receipt_written=False)
+        return _blocked(
+            "phase1",
+            output_root,
+            reasons,
+            grid_row_count=len(core),
+            reference_row_count=len(reference),
+            selection_receipt_written=False,
+            sample=sample_metadata.get("_summary") if sample_metadata else None,
+        )
+    support_rows, excluded_events = _structural_support_rows(core, reference)
+    if not support_rows:
+        return _blocked(
+            "phase1",
+            output_root,
+            ["no complete-event support remains after structural exclusions"],
+            grid_row_count=len(core),
+            reference_row_count=len(reference),
+            structurally_excluded_events=excluded_events,
+            selection_receipt_written=False,
+            sample=sample_metadata.get("_summary") if sample_metadata else None,
+        )
+    # Persist every configured branch, including structural blocked rows; the
+    # statistics below consume only complete-event support rows.
     _write_jsonl(output_root / "phase1" / "grid_rows.jsonl", core)
     _write_jsonl(output_root / "phase1" / "reference_rows.jsonl", reference)
-    return _summary_grid(output_root, core, [])
+    sample = sample_metadata.get("_summary")
+    return _summary_grid(
+        output_root,
+        support_rows,
+        [],
+        sample,
+        excluded_events,
+        raw_grid_row_count=len(core),
+        raw_reference_row_count=len(reference),
+        structural_row_count=sum(
+            int(bool(row.get("structurally_excluded")))
+            for row in list(core) + list(reference)
+        ),
+    )
 
 
 def _read_selection(input_root: Path) -> tuple[dict[str, Any] | None, list[str]]:
