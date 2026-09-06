@@ -30,6 +30,8 @@ def selected_budget(root):
     verify_commit_proof(receipt,auth)
     data=json.loads(receipt.read_text())
     if data.get("status")!="SELECTED" or data.get("selection_source")!="calibration_only":raise RuntimeError("no valid calibration selection")
+    if data.get("planned_sample_complete") is False or data.get("sample_complete") is False:
+        raise RuntimeError("evaluation OPEN_DENY: planned calibration sample incomplete")
     budget=data.get("selected_budget") or {}
     if budget.get("tail_horizon") not in (4,8,16) or budget.get("action_budget") not in (8,16,32) or budget.get("policy_call_cap")!=8:raise RuntimeError("budget outside preregistered grid")
     candidates=data.get("ranked_candidates",[])
@@ -51,7 +53,8 @@ def run_task(phase,task,output_root,workers=12,device="cuda"):
     root=Path(output_root);phase_dir=root/("phase1" if phase=="grid" else "phase2")
     if phase=="grid":
         events=load_events(root,task,"calibration")[:20];budgets=BUDGETS;prefixes=GRID_K
-        if len(events)<20:raise RuntimeError("fewer than20 calibration events; cannot fill grid")
+        # Execute every available independent request without fabricating missing events.
+        # Incomplete planned sampling can never authorize evaluation selection.
     elif phase=="atlas":
         b=selected_budget(root)
         budgets=((int(b["tail_horizon"]),int(b["action_budget"])),);prefixes=ATLAS_K
@@ -127,6 +130,11 @@ def run_task(phase,task,output_root,workers=12,device="cuda"):
     result={"task":task,"phase":phase,"events":len(events),"requested_rows":len(requests),"persisted_rows":len(paths),
             "core_rows":sum(not json.loads(p.read_text()).get("is_reference",False) for p in paths),"blocked_contract_rows":blocked,
             "status":"COMPLETE_WITH_BLOCKED_CONTRACT_ROWS" if blocked else "COMPLETE"}
+    result.update(planned_events=20 if phase=="grid" else len(events),
+                  planned_sample_complete=phase!="grid" or len(events)==20,
+                  missing_planned_events=max(0,20-len(events)) if phase=="grid" else 0)
+    if not result["planned_sample_complete"]:
+        result["status"]="COMPLETE_AVAILABLE_REQUESTS_SAMPLE_SHORTFALL"
     if len(paths)!=len(requests):raise RuntimeError("shard count mismatch")
     atomic_json(phase_dir/f"completion_{task}.json",result)
     return result

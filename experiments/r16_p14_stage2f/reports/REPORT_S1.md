@@ -4,7 +4,7 @@
 
 ## 当前结论
 
-Phase0A 已完成，G0-1 为 INCONCLUSIVE。S1正式采集已经开始，截至2026-09-06T19:33:14.240367+00:00已落盘84/600个episode。新作业dlc1hzmadm185c68和dlc1rz7o5mf1vajn均确认UseOversoldResource=true；实际A800节点driver550.54.15下运行torch2.6.0+cu124。首个episode的source commit、JobId、runtime receipt和trace SHA已核验。K1、K2、K3仍未判决。
+Phase0A 已完成，G0-1 为 INCONCLUSIVE。Phase0B正式600/600条已完成，两个采集Job均Succeeded。K1不通过：cream calibration/evaluation=19/23，bowl=11/13，均低于25。按用户正文继续现有30个calibration事件上的所有配置与算子，共19440个请求（16200 core +3240 reference）；原计划40事件缺10个，不补样或更换split。K2/K3尚未评估，样本不足不能形成有效selection，evaluation保持open-deny。
 
 原冻结 Stage2D 执行入口存在隐式注入路径，其历史 BLOCKED 事实保留。按照用户后续明确授权，在 Stage2F 新增零注入后端；没有改写 Stage2A–E，没有调用注入函数。新的独立分支后端已完成ROOT-first同源LIBERO的真实基础设施检查：4core+4reference+重复分支，anchor重建误差0，D1每控制步25个物理步，测量有无的终态/历史hash一致，预算与pid/env/chunk校验全部通过。首轮资源路径失败原样保留；这些是工程验证，不能计作科学成功。
 
@@ -62,3 +62,12 @@ CPFS修复后的dlcwm6bd6bomjggq和dlc1qayvbetb16ji也已Stopped，均为真实�
 ## 当前正式采集运行身份
 
 运行源码已发布到GitHub main：[6b788a0764904e11e022c4330a74fa3e009c9a33](https://github.com/mikasaTu/R16-P14-Earliest-Irreversible-Prefix-Intervention/commit/6b788a0764904e11e022c4330a74fa3e009c9a33)，tree为f13e12a2b006632e48e5aa64ac2c53e30928de51。两个新job每个2×A800/24CPU/200Gi，24个独立spawn worker。所有episode及恢复分片记录兼容runtime receipt SHA，复用要求后端模块哈希和runtime receipt一致。首个已验收episode为cream init2 actor17，87步完成，正式计数只以持久化qualification分片为准。
+
+## K1最终结果与后续可执行请求
+
+| 任务 | calibration合格/120 | evaluation合格/120 | K1 | Phase1可用/计划 |
+|---|---:|---:|---|---:|
+| cream cheese in bowl | 19 | 23 | BLOCKED_BY_NATURAL_EVENT_YIELD | 19/20 |
+| bowl on plate | 11 | 13 | BLOCKED_BY_NATURAL_EVENT_YIELD | 11/20 |
+
+两任务各300个episode已核验持久化，固定init/seed集合无缺失。evaluation只使用公开qualification计数，clean outcome和trace留在CPFS密封区，发布不解释内容的文件hash清单。可用样本网格的执行说明EXECUTION_CONTINUATION_AVAILABLE_CALIBRATION.md在首次Phase1恢复结果之前封存，明确原样本缺口、每档真实分母、K2 selection禁止规则；PREREG和数值判据不变。

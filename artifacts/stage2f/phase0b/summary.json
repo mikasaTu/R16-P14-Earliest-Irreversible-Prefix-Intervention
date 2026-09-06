@@ -1,23 +1,36 @@
 {
-  "phase": "phase0b",
-  "execution_status": "FORMAL_COLLECTION_RUNTIME_COMPATIBILITY_REPAIR",
-  "blocker": "BLOCKED_BY_FROZEN_SPAWN_ZERO_INJECTION_CONTRACT",
-  "gate": "K1",
-  "gate_status": "NOT_EVALUATED",
-  "all_planned_experiments_completed": false,
-  "observations": {
-    "fixed_reset_states": 200,
-    "clean_infrastructure_episodes": 1,
-    "control_steps": 360,
-    "physics_steps": 9000,
-    "calibration_actor_episodes": 0,
-    "evaluation_actor_episodes": 0
+  "blocked": false,
+  "calibration_event_count": 30,
+  "evaluation_clean_read": false,
+  "evaluation_outcome_read": false,
+  "k1": {
+    "counts": {
+      "put_the_bowl_on_the_plate": {
+        "calibration": 11,
+        "evaluation": 13,
+        "infrastructure": 4,
+        "reserve": 2
+      },
+      "put_the_cream_cheese_in_the_bowl": {
+        "calibration": 19,
+        "evaluation": 23,
+        "infrastructure": 5,
+        "reserve": 2
+      }
+    },
+    "pass": false,
+    "source": "qualification metadata only"
   },
-  "rollouts": 0,
-  "gpu_hours": 0.0,
-  "reason": "Static preflight found forbidden injection in the mandated frozen branch dispatcher before any Phase-0B data collection. Scientific gate continuation does not override the zero-injection stop rule.",
-  "formal_completed_episodes": 84,
-  "submitted_jobs": 4,
-  "stopped_jobs": 4,
-  "status": "FORMAL_COLLECTION_RUNNING"
+  "phase": "phase0b",
+  "qualification_count": 600,
+  "schema_version": 1,
+  "selection_eligible": false,
+  "status": "COMPLETE",
+  "gate_status": "BLOCKED_BY_NATURAL_EVENT_YIELD",
+  "formal_completed_episodes": 600,
+  "planned_phase1_events_per_task": 20,
+  "phase1_available_events": {
+    "put_the_cream_cheese_in_the_bowl": 19,
+    "put_the_bowl_on_the_plate": 11
+  }
 }
