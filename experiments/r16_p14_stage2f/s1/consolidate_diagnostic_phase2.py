@@ -545,9 +545,11 @@ def _validate_reused_calibration(
         path = input_root / path
     try:
         path = path.resolve()
-        path.relative_to(input_root.resolve())
-    except ValueError:
-        _issue(reasons, f"{label}: reused calibration shard escapes input root")
+        relative = path.relative_to(input_root.resolve())
+        if len(relative.parts) < 3 or relative.parts[:2] != ("phase1", "shards"):
+            raise ValueError("reused calibration shard is outside phase1/shards")
+    except ValueError as exc:
+        _issue(reasons, f"{label}: invalid reused calibration path: {exc}")
         return
     try:
         if not path.is_file():
@@ -557,6 +559,12 @@ def _validate_reused_calibration(
         previous = _read_json(path)
         if not isinstance(previous, Mapping):
             raise ValueError("reused calibration shard is not an object")
+        previous_status = _text(previous.get("status")).strip().upper()
+        if previous_status != "COMPLETE" and not (
+            previous_status.startswith("BLOCKED")
+            and _text(previous.get("error_type")) == "PrefixOutsideTaskHorizon"
+        ):
+            raise ValueError("reused calibration shard is not COMPLETE or structural")
         for name in (
             "task", "event_instance_id", "init_state_id", "split",
             "generator_actor_seed", "recovery_actor_seed", "operator",
@@ -791,7 +799,11 @@ def _check_grid(
     excluded_keys = set(structural_events)
     support = [
         dict(row) for row in rows
-        if not row.get("structurally_excluded") and _event_key(row) not in excluded_keys
+        if (
+            not row.get("structurally_excluded")
+            and not bool(row.get("is_reference"))
+            and _event_key(row) not in excluded_keys
+        )
     ]
     core = [dict(row) for row in rows if not bool(row.get("is_reference"))]
     reference = [dict(row) for row in rows if bool(row.get("is_reference"))]

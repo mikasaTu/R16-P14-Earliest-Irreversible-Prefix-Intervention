@@ -210,7 +210,7 @@ def test_reused_calibration_path_hash_and_key_are_verified(tmp_path):
         "task": TASK_BOWL, "event_instance_id": "event", "init_state_id": "316",
         "split": "calibration", "generator_actor_seed": 7, "recovery_actor_seed": 17,
         "operator": "fresh_h4", "prefix_k": 2, "tail_horizon": 4,
-        "action_budget": 8, "policy_call_cap": 8,
+        "action_budget": 8, "policy_call_cap": 8, "status": "COMPLETE",
         "source_commit": "a" * 40, "runtime_receipt_sha256": "c" * 64,
     }
     path = tmp_path / "phase1" / "shards" / TASK_BOWL / "old.json"
