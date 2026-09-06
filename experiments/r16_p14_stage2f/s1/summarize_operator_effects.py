@@ -193,18 +193,46 @@ def _load_summary(summary_path: Path) -> tuple[dict[str, Any] | None, list[str]]
     if not isinstance(payload, Mapping):
         return None, ["Phase-1 summary is not an object"]
     summary = dict(payload)
+    required_summary_keys = {
+        "status",
+        "blocked",
+        "split",
+        "sample_complete",
+        "planned_sample_complete",
+        "planned_events",
+        "observed_events_by_task",
+        "shortfall",
+        "structurally_excluded_events",
+        "structurally_excluded_event_count",
+        "completeness",
+    }
+    missing_summary_keys = sorted(required_summary_keys - set(summary))
+    if missing_summary_keys:
+        reasons.append(
+            f"Phase-1 summary missing required keys: {missing_summary_keys}"
+        )
     status = summary.get("status")
     available_shortfall = status == "COMPLETE_AVAILABLE_REQUESTS_SAMPLE_SHORTFALL"
-    if status not in ("COMPLETE", "COMPLETE_AVAILABLE_REQUESTS_SAMPLE_SHORTFALL") or summary.get("blocked") is True:
+    if (
+        status not in ("COMPLETE", "COMPLETE_AVAILABLE_REQUESTS_SAMPLE_SHORTFALL")
+        or summary.get("blocked") is not False
+    ):
         reasons.append(
             f"refusing incomplete/blocked consolidated summary: "
             f"status={status!r}, blocked={summary.get('blocked')!r}"
         )
-    if summary.get("split") not in (None, "calibration"):
+    if summary.get("split") != "calibration":
         reasons.append(f"Phase-1 summary has non-calibration split: {summary.get('split')!r}")
     complete = summary.get("sample_complete")
-    if complete is None:
-        complete = summary.get("planned_sample_complete")
+    planned_complete = summary.get("planned_sample_complete")
+    if not isinstance(complete, bool) or not isinstance(planned_complete, bool):
+        reasons.append(
+            "sample_complete and planned_sample_complete must both be boolean"
+        )
+    elif complete is not planned_complete:
+        reasons.append(
+            "sample_complete and planned_sample_complete disagree"
+        )
     if available_shortfall:
         if complete is not False:
             reasons.append(
@@ -225,12 +253,14 @@ def _load_summary(summary_path: Path) -> tuple[dict[str, Any] | None, list[str]]
     if not isinstance(completeness, Mapping):
         reasons.append("Phase-1 summary lacks completeness metadata")
     else:
-        if completeness.get("status") not in (None, "COMPLETE"):
+        if completeness.get("status") != "COMPLETE":
             reasons.append(
                 f"Phase-1 completeness is not COMPLETE: {completeness.get('status')!r}"
             )
     planned = summary.get("planned_events")
-    if planned is not None:
+    if planned is None:
+        reasons.append("summary lacks planned_events")
+    else:
         try:
             if _int(planned, "planned_events") != 20:
                 reasons.append(f"planned_events must remain 20, observed {planned!r}")
@@ -295,7 +325,9 @@ def _load_summary(summary_path: Path) -> tuple[dict[str, Any] | None, list[str]]
         reasons.append("structurally_excluded_events is not a list")
         excluded = []
     excluded_count = summary.get("structurally_excluded_event_count")
-    if excluded_count is not None:
+    if excluded_count is None:
+        reasons.append("summary lacks structurally_excluded_event_count")
+    else:
         try:
             if _int(excluded_count, "structurally_excluded_event_count") != len(excluded):
                 reasons.append(
