@@ -88,6 +88,21 @@ def _blocked_row(
     }
 
 
+def _add_request_metadata(row: dict[str, Any], request: dict[str, Any]) -> dict[str, Any]:
+    """Keep bounded configuration visible even when a child fails closed."""
+    row.update({
+        "prefix_k": int(request.get("prefix_k", 0)),
+        "configured_tail_horizon": int(request.get("tail_horizon", 0)),
+        "configured_action_budget": int(request.get("action_budget", 0)),
+        "configured_policy_call_cap": int(request.get("policy_call_cap", 8)),
+        "validation_policy_calls": None,
+        "recovery_policy_calls": None,
+        "total_policy_calls": None,
+        "actual_new_recovery_actions": None,
+    })
+    return row
+
+
 def _child_entry(request: dict[str, Any], result_queue: Any) -> None:
     event = request["event"]
     recovery_actor_seed = int(request["recovery_actor_seed"])
@@ -124,6 +139,7 @@ def _child_entry(request: dict[str, Any], result_queue: Any) -> None:
             event, recovery_actor_seed, operator, exc,
             repeat=repeat, trace_path=request.get("trace_path"),
         )
+        _add_request_metadata(row, request)
         row["dispatch_seed"] = int(dispatch_seed)
         result_queue.put(row)
 
@@ -191,6 +207,7 @@ def run_spawned_branch(
             event, int(recovery_actor_seed), operator, cancel_reason or "branch cancelled",
             repeat=int(repeat), trace_path=request["trace_path"],
         )
+        _add_request_metadata(row, request)
         row.update({
             "status": status,
             "error_type": "TimeoutError" if status == "BLOCKED_BY_TIMEOUT" else "CancelledError",
@@ -208,6 +225,7 @@ def run_spawned_branch(
             f"spawn child exited without result (exitcode={process.exitcode})",
             repeat=int(repeat), trace_path=request["trace_path"],
         )
+        _add_request_metadata(row, request)
         row["status"] = "BLOCKED_BY_CHILD_EXIT"
         row["error_type"] = "ChildProcessError"
         row["dispatch_seed"] = _branch_seed(event, int(recovery_actor_seed), int(repeat))
