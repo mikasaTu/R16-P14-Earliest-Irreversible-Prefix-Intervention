@@ -207,3 +207,32 @@ def test_complete_flag_cannot_mask_runtime_error_status():
     assert receipt["status"] == "BLOCKED"
     assert receipt["selected_budget"] is None
     assert any("status" in item for item in receipt["prerequisite_failures"])
+
+
+def test_actual_phase1_consolidation_schema_can_bind_omitted_phase_to_path(tmp_path):
+    # This mirrors the committed Phase-1 consolidator output: analysis=grid,
+    # split=calibration, shortfall status, and no redundant phase key.
+    summary = _summary()
+    summary.pop("phase")
+    path = tmp_path / "artifacts" / "stage2f" / "phase1" / "summary.json"
+    path.parent.mkdir(parents=True)
+    path.write_text(json.dumps(summary), encoding="utf-8")
+
+    receipt = write_diagnostic_selection_receipt(path)
+
+    assert receipt["status"] == "DIAGNOSTIC_SELECTED"
+    assert receipt["input_summary_path"] == str(path)
+    assert not any("summary.phase must be phase1" in item for item in receipt["prerequisite_failures"])
+
+
+def test_omitted_phase_without_phase1_path_stays_fail_closed():
+    summary = _summary()
+    summary.pop("phase")
+    receipt = build_diagnostic_selection_receipt(
+        summary,
+        input_summary_sha256=_sha(summary),
+        input_summary_path="/fixture/not_phase1/summary.json",
+    )
+
+    assert receipt["status"] == "BLOCKED"
+    assert any("summary.phase must be phase1" in item for item in receipt["prerequisite_failures"])

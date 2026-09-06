@@ -1,0 +1,398 @@
+{
+  "allowed_source_commits": [
+    "93872b41ad48d24e1c6cb46d8c46690dae359b62",
+    "a0888d751117cbf7c5a73080d1ee1f421689e8bf"
+  ],
+  "base": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907",
+  "blocking_reasons": [],
+  "checks": {
+    "calibration_source": true,
+    "grid_jobs_terminal_succeeded": true,
+    "pai_state_complete_and_owned": true,
+    "phase1_grid_keys_and_provenance": true,
+    "task_completions_present": true
+  },
+  "completions": {
+    "put_the_bowl_on_the_plate": {
+      "blocked_contract_rows": 378,
+      "core_rows": 5940,
+      "events": 11,
+      "missing_planned_events": 9,
+      "persisted_rows": 7128,
+      "phase": "grid",
+      "planned_events": 20,
+      "planned_sample_complete": false,
+      "requested_rows": 7128,
+      "status": "COMPLETE_AVAILABLE_REQUESTS_SAMPLE_SHORTFALL",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    "put_the_cream_cheese_in_the_bowl": {
+      "blocked_contract_rows": 0,
+      "core_rows": 10260,
+      "events": 19,
+      "missing_planned_events": 1,
+      "persisted_rows": 12312,
+      "phase": "grid",
+      "planned_events": 20,
+      "planned_sample_complete": false,
+      "requested_rows": 12312,
+      "status": "COMPLETE_AVAILABLE_REQUESTS_SAMPLE_SHORTFALL",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    }
+  },
+  "evaluation_raw_read": false,
+  "incomplete_reasons": [],
+  "job_history": {
+    "put_the_bowl_on_the_plate": [
+      {
+        "artifact_dir": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/pai_runs/r16p14-s1-grid-t1-20260907-r1",
+        "job_id": "dlc4vt6h6pcw6jzk",
+        "run_id": "r16p14-s1-grid-t1-20260907-r1",
+        "source_commit": "a0888d751117cbf7c5a73080d1ee1f421689e8bf",
+        "status": "Stopped"
+      },
+      {
+        "artifact_dir": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/pai_runs/r16p14-s1-grid-t1-20260907-r2",
+        "job_id": "dlc1n05o22ewi5dx",
+        "run_id": "r16p14-s1-grid-t1-20260907-r2",
+        "source_commit": "93872b41ad48d24e1c6cb46d8c46690dae359b62",
+        "status": "Succeeded"
+      }
+    ],
+    "put_the_cream_cheese_in_the_bowl": [
+      {
+        "artifact_dir": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/pai_runs/r16p14-s1-grid-t0-20260907-r1",
+        "job_id": "dlc14obea2cugtbf",
+        "run_id": "r16p14-s1-grid-t0-20260907-r1",
+        "source_commit": "a0888d751117cbf7c5a73080d1ee1f421689e8bf",
+        "status": "Stopped"
+      },
+      {
+        "artifact_dir": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/pai_runs/r16p14-s1-grid-t0-20260907-r2",
+        "job_id": "dlcgtvdvu94wlto1",
+        "run_id": "r16p14-s1-grid-t0-20260907-r2",
+        "source_commit": "93872b41ad48d24e1c6cb46d8c46690dae359b62",
+        "status": "Succeeded"
+      }
+    ]
+  },
+  "jobs": {
+    "put_the_bowl_on_the_plate": {
+      "artifact_dir": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/pai_runs/r16p14-s1-grid-t1-20260907-r2",
+      "job_id": "dlc1n05o22ewi5dx",
+      "run_id": "r16p14-s1-grid-t1-20260907-r2",
+      "selected_latest": true,
+      "status": "Succeeded"
+    },
+    "put_the_cream_cheese_in_the_bowl": {
+      "artifact_dir": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/pai_runs/r16p14-s1-grid-t0-20260907-r2",
+      "job_id": "dlcgtvdvu94wlto1",
+      "run_id": "r16p14-s1-grid-t0-20260907-r2",
+      "selected_latest": true,
+      "status": "Succeeded"
+    }
+  },
+  "pai_state": {
+    "put_the_bowl_on_the_plate": {
+      "artifact_dir": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/pai_runs/r16p14-s1-grid-t1-20260907-r2",
+      "job_id": "dlc1n05o22ewi5dx",
+      "run_id": "r16p14-s1-grid-t1-20260907-r2",
+      "state": {
+        "COMPLETED.json": {
+          "gid": 2254,
+          "phase": "grid",
+          "result": {
+            "blocked_contract_rows": 378,
+            "core_rows": 5940,
+            "events": 11,
+            "missing_planned_events": 9,
+            "persisted_rows": 7128,
+            "phase": "grid",
+            "planned_events": 20,
+            "planned_sample_complete": false,
+            "requested_rows": 7128,
+            "status": "COMPLETE_AVAILABLE_REQUESTS_SAMPLE_SHORTFALL",
+            "task": "put_the_bowl_on_the_plate"
+          },
+          "source_commit": "93872b41ad48d24e1c6cb46d8c46690dae359b62",
+          "task": "put_the_bowl_on_the_plate",
+          "uid": 2254
+        },
+        "ENVIRONMENT.json": {
+          "assets": {
+            "assets": "/mnt/cpfs/zbl-cpfs-new/dataset/leon/libero/assets/90001343cb134b7e26e18fde0fa2416f3ed6e6a3",
+            "config_sha256": "528990e0cdd466a063def065fddb835fe2f37609cfef305d1910a1bf91a353ce",
+            "package_sha256": "999901d941ac107d29c11fd0e0f4dbf2587470794b779b5cb8353681b4267e81",
+            "package_source": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16p14-stage2f-payloads/93872b41ad48d24e1c6cb46d8c46690dae359b62/libero/libero/__init__.py",
+            "scene_sha256": "bb118118e3e02a0f23295c072d77c5a7c6b44cc773032dc79c17070b4e133f86"
+          },
+          "cuda_build": "12.4",
+          "gid": 2254,
+          "job_id": "dlc1n05o22ewi5dx",
+          "nvidia_smi": "NVIDIA A800-SXM4-80GB, 550.54.15, GPU-1e0ac1a5-5798-e58a-5f93-9426a6e076b7\nNVIDIA A800-SXM4-80GB, 550.54.15, GPU-28128dd5-e844-4981-e030-865e1304d18c",
+          "nvidia_smi_returncode": 0,
+          "python": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/r16p14_s1_cu124_20260907/bin/python",
+          "runtime_identity": {
+            "actual_imports": {
+              "libero": {
+                "file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16p14-stage2f-payloads/93872b41ad48d24e1c6cb46d8c46690dae359b62/libero/__init__.py",
+                "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+                "version": null
+              },
+              "libero.libero": {
+                "file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16p14-stage2f-payloads/93872b41ad48d24e1c6cb46d8c46690dae359b62/libero/libero/__init__.py",
+                "sha256": "999901d941ac107d29c11fd0e0f4dbf2587470794b779b5cb8353681b4267e81",
+                "version": null
+              },
+              "mujoco": {
+                "file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/libero_sim/lib/python3.11/site-packages/mujoco/__init__.py",
+                "sha256": "f8e5b528617004b6215e16cb0c945faf1f8c7b5d798e5b92e3aabce19c838497",
+                "version": "3.6.0"
+              },
+              "numpy": {
+                "file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/libero_sim/lib/python3.11/site-packages/numpy/__init__.py",
+                "sha256": "92a46f791e453926d3292af2582b89995a289475f0eaaea71a949823200b838a",
+                "version": "2.4.6"
+              },
+              "robosuite": {
+                "file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/libero_sim/lib/python3.11/site-packages/robosuite/__init__.py",
+                "sha256": "5d2f28b31e57c07739cd9a9029ec7180ff67496bd465f5e5e936ed985b023b99",
+                "version": "1.4.0"
+              },
+              "torch": {
+                "file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/ta-vla-py311/lib/python3.11/site-packages/torch/__init__.py",
+                "sha256": "5a190666c3853aa236c4d48ed64e2d4bbcd23bd32c21e64c0867646a6852e43f",
+                "version": "2.6.0+cu124"
+              },
+              "wandb": {
+                "file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/libero_sim/lib/python3.11/site-packages/wandb/__init__.py",
+                "sha256": "a9ecac2edebc22a2a996aaa7b9b84d152841a62fe6d2efb7d75853164dc645c5",
+                "version": "0.27.2"
+              }
+            },
+            "cuda_build": "12.4",
+            "prefix": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/r16p14_s1_cu124_20260907",
+            "python_version": "3.11.11 (main, Mar 17 2025, 21:02:09) [Clang 20.1.0 ]",
+            "receipt_sha256": "3d7b252885b4047fb93140c305a3ef4a1d3ec9aa450d90341befd2b7e26a5e44"
+          },
+          "source_commit": "93872b41ad48d24e1c6cb46d8c46690dae359b62",
+          "torch": "2.6.0+cu124",
+          "uid": 2254
+        },
+        "RUNTIME.json": {
+          "assets": {
+            "assets": "/mnt/cpfs/zbl-cpfs-new/dataset/leon/libero/assets/90001343cb134b7e26e18fde0fa2416f3ed6e6a3",
+            "config_sha256": "528990e0cdd466a063def065fddb835fe2f37609cfef305d1910a1bf91a353ce",
+            "package_sha256": "999901d941ac107d29c11fd0e0f4dbf2587470794b779b5cb8353681b4267e81",
+            "package_source": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16p14-stage2f-payloads/93872b41ad48d24e1c6cb46d8c46690dae359b62/libero/libero/__init__.py",
+            "scene_sha256": "bb118118e3e02a0f23295c072d77c5a7c6b44cc773032dc79c17070b4e133f86"
+          },
+          "cuda": "12.4",
+          "devices": [
+            "NVIDIA A800-SXM4-80GB",
+            "NVIDIA A800-SXM4-80GB"
+          ],
+          "gid": 2254,
+          "job_id": "dlc1n05o22ewi5dx",
+          "phase": "grid",
+          "pid": 1,
+          "python": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/r16p14_s1_cu124_20260907/bin/python",
+          "source_commit": "93872b41ad48d24e1c6cb46d8c46690dae359b62",
+          "torch": "2.6.0+cu124",
+          "uid": 2254
+        }
+      }
+    },
+    "put_the_cream_cheese_in_the_bowl": {
+      "artifact_dir": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/pai_runs/r16p14-s1-grid-t0-20260907-r2",
+      "job_id": "dlcgtvdvu94wlto1",
+      "run_id": "r16p14-s1-grid-t0-20260907-r2",
+      "state": {
+        "COMPLETED.json": {
+          "gid": 2254,
+          "phase": "grid",
+          "result": {
+            "blocked_contract_rows": 0,
+            "core_rows": 10260,
+            "events": 19,
+            "missing_planned_events": 1,
+            "persisted_rows": 12312,
+            "phase": "grid",
+            "planned_events": 20,
+            "planned_sample_complete": false,
+            "requested_rows": 12312,
+            "status": "COMPLETE_AVAILABLE_REQUESTS_SAMPLE_SHORTFALL",
+            "task": "put_the_cream_cheese_in_the_bowl"
+          },
+          "source_commit": "93872b41ad48d24e1c6cb46d8c46690dae359b62",
+          "task": "put_the_cream_cheese_in_the_bowl",
+          "uid": 2254
+        },
+        "ENVIRONMENT.json": {
+          "assets": {
+            "assets": "/mnt/cpfs/zbl-cpfs-new/dataset/leon/libero/assets/90001343cb134b7e26e18fde0fa2416f3ed6e6a3",
+            "config_sha256": "528990e0cdd466a063def065fddb835fe2f37609cfef305d1910a1bf91a353ce",
+            "package_sha256": "999901d941ac107d29c11fd0e0f4dbf2587470794b779b5cb8353681b4267e81",
+            "package_source": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16p14-stage2f-payloads/93872b41ad48d24e1c6cb46d8c46690dae359b62/libero/libero/__init__.py",
+            "scene_sha256": "bb118118e3e02a0f23295c072d77c5a7c6b44cc773032dc79c17070b4e133f86"
+          },
+          "cuda_build": "12.4",
+          "gid": 2254,
+          "job_id": "dlcgtvdvu94wlto1",
+          "nvidia_smi": "NVIDIA A800-SXM4-80GB, 550.54.15, GPU-b8ee6450-4979-a1c3-fee6-50d6f9f48762\nNVIDIA A800-SXM4-80GB, 550.54.15, GPU-aea746ce-7b8a-c3d6-5e98-0841a0edc093",
+          "nvidia_smi_returncode": 0,
+          "python": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/r16p14_s1_cu124_20260907/bin/python",
+          "runtime_identity": {
+            "actual_imports": {
+              "libero": {
+                "file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16p14-stage2f-payloads/93872b41ad48d24e1c6cb46d8c46690dae359b62/libero/__init__.py",
+                "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+                "version": null
+              },
+              "libero.libero": {
+                "file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16p14-stage2f-payloads/93872b41ad48d24e1c6cb46d8c46690dae359b62/libero/libero/__init__.py",
+                "sha256": "999901d941ac107d29c11fd0e0f4dbf2587470794b779b5cb8353681b4267e81",
+                "version": null
+              },
+              "mujoco": {
+                "file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/libero_sim/lib/python3.11/site-packages/mujoco/__init__.py",
+                "sha256": "f8e5b528617004b6215e16cb0c945faf1f8c7b5d798e5b92e3aabce19c838497",
+                "version": "3.6.0"
+              },
+              "numpy": {
+                "file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/libero_sim/lib/python3.11/site-packages/numpy/__init__.py",
+                "sha256": "92a46f791e453926d3292af2582b89995a289475f0eaaea71a949823200b838a",
+                "version": "2.4.6"
+              },
+              "robosuite": {
+                "file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/libero_sim/lib/python3.11/site-packages/robosuite/__init__.py",
+                "sha256": "5d2f28b31e57c07739cd9a9029ec7180ff67496bd465f5e5e936ed985b023b99",
+                "version": "1.4.0"
+              },
+              "torch": {
+                "file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/ta-vla-py311/lib/python3.11/site-packages/torch/__init__.py",
+                "sha256": "5a190666c3853aa236c4d48ed64e2d4bbcd23bd32c21e64c0867646a6852e43f",
+                "version": "2.6.0+cu124"
+              },
+              "wandb": {
+                "file": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/libero_sim/lib/python3.11/site-packages/wandb/__init__.py",
+                "sha256": "a9ecac2edebc22a2a996aaa7b9b84d152841a62fe6d2efb7d75853164dc645c5",
+                "version": "0.27.2"
+              }
+            },
+            "cuda_build": "12.4",
+            "prefix": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/r16p14_s1_cu124_20260907",
+            "python_version": "3.11.11 (main, Mar 17 2025, 21:02:09) [Clang 20.1.0 ]",
+            "receipt_sha256": "3d7b252885b4047fb93140c305a3ef4a1d3ec9aa450d90341befd2b7e26a5e44"
+          },
+          "source_commit": "93872b41ad48d24e1c6cb46d8c46690dae359b62",
+          "torch": "2.6.0+cu124",
+          "uid": 2254
+        },
+        "RUNTIME.json": {
+          "assets": {
+            "assets": "/mnt/cpfs/zbl-cpfs-new/dataset/leon/libero/assets/90001343cb134b7e26e18fde0fa2416f3ed6e6a3",
+            "config_sha256": "528990e0cdd466a063def065fddb835fe2f37609cfef305d1910a1bf91a353ce",
+            "package_sha256": "999901d941ac107d29c11fd0e0f4dbf2587470794b779b5cb8353681b4267e81",
+            "package_source": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16p14-stage2f-payloads/93872b41ad48d24e1c6cb46d8c46690dae359b62/libero/libero/__init__.py",
+            "scene_sha256": "bb118118e3e02a0f23295c072d77c5a7c6b44cc773032dc79c17070b4e133f86"
+          },
+          "cuda": "12.4",
+          "devices": [
+            "NVIDIA A800-SXM4-80GB",
+            "NVIDIA A800-SXM4-80GB"
+          ],
+          "gid": 2254,
+          "job_id": "dlcgtvdvu94wlto1",
+          "phase": "grid",
+          "pid": 1,
+          "python": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/r16p14_s1_cu124_20260907/bin/python",
+          "source_commit": "93872b41ad48d24e1c6cb46d8c46690dae359b62",
+          "torch": "2.6.0+cu124",
+          "uid": 2254
+        }
+      }
+    }
+  },
+  "phase": "phase1",
+  "rows": {
+    "counts": {
+      "put_the_bowl_on_the_plate": {
+        "complete_rows": 6750,
+        "core_rows": 5940,
+        "reference_rows": 1188,
+        "rows": 7128,
+        "structural_rows": 378
+      },
+      "put_the_cream_cheese_in_the_bowl": {
+        "complete_rows": 12312,
+        "core_rows": 10260,
+        "reference_rows": 2052,
+        "rows": 12312,
+        "structural_rows": 0
+      }
+    },
+    "d4": {
+      "complete_groups": 147,
+      "expected_rows_per_group": 108,
+      "groups": 147,
+      "mismatch_groups": []
+    },
+    "duplicate_key_count": 0,
+    "expected_rows": 19440,
+    "expected_rows_by_task": {
+      "put_the_bowl_on_the_plate": 7128,
+      "put_the_cream_cheese_in_the_bowl": 12312
+    },
+    "missing_key_count": 0,
+    "observed_rows": 19440,
+    "runtime_receipt_hashes": [
+      "3d7b252885b4047fb93140c305a3ef4a1d3ec9aa450d90341befd2b7e26a5e44"
+    ],
+    "trace": {
+      "action_records": 472447,
+      "bytes": 2586702974,
+      "bytes_by_task": {
+        "put_the_bowl_on_the_plate": 866477865,
+        "put_the_cream_cheese_in_the_bowl": 1720225109
+      },
+      "files": 19062,
+      "files_by_task": {
+        "put_the_bowl_on_the_plate": 6750,
+        "put_the_cream_cheese_in_the_bowl": 12312
+      },
+      "listed_bytes_by_task": {
+        "put_the_bowl_on_the_plate": 866477865,
+        "put_the_cream_cheese_in_the_bowl": 1720225109
+      },
+      "listed_files_by_task": {
+        "put_the_bowl_on_the_plate": 6750,
+        "put_the_cream_cheese_in_the_bowl": 12312
+      },
+      "physics_per_control_counts": {
+        "25": 472447
+      },
+      "physics_records": 11811175,
+      "records": 12283622,
+      "scope": "full",
+      "scope_note": "gzip JSONL parsed record-by-record with canonical content SHA-256"
+    },
+    "unexpected_key_count": 0
+  },
+  "schema_version": 1,
+  "source": {
+    "events_by_task": {
+      "put_the_bowl_on_the_plate": 11,
+      "put_the_cream_cheese_in_the_bowl": 19
+    },
+    "total_events": 30
+  },
+  "source_commit": "a0888d751117cbf7c5a73080d1ee1f421689e8bf",
+  "status": "PASS",
+  "trace_validation_scope": "full",
+  "trace_workers": 8,
+  "uid_gid": [
+    2254,
+    2254
+  ]
+}

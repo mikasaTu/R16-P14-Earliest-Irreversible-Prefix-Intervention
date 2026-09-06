@@ -116,15 +116,23 @@ def _records(summary: Mapping[str, Any]) -> list[Any]:
     return list(value) if isinstance(value, list) else []
 
 
-def _summary_failures(summary: Mapping[str, Any]) -> list[str]:
+def _summary_failures(summary: Mapping[str, Any], *, expected_phase: str | None = None) -> list[str]:
     failures: list[str] = []
     status = summary.get("status")
     if summary.get("blocked") is True:
         failures.append("summary.blocked=true")
     if status not in {"COMPLETE", "COMPLETE_AVAILABLE_REQUESTS_SAMPLE_SHORTFALL"}:
         failures.append(f"summary.status is not final numerical status: {status!r}")
-    if summary.get("phase") != "phase1":
-        failures.append(f"summary.phase must be phase1: {summary.get('phase')!r}")
+    phase = summary.get("phase")
+    # The committed Phase-1 consolidator historically omitted this redundant
+    # field while binding the same identity through the phase1/summary.json
+    # path. Accept that one path-bound omission; an explicit wrong phase, an
+    # unbound summary, or any other missing identity remains a hard failure.
+    if phase is None:
+        if expected_phase != "phase1":
+            failures.append(f"summary.phase must be phase1: {phase!r}")
+    elif phase != "phase1":
+        failures.append(f"summary.phase must be phase1: {phase!r}")
     if summary.get("analysis") not in (None, "grid"):
         failures.append(f"summary.analysis must be grid: {summary.get('analysis')!r}")
     if summary.get("split") != "calibration":
@@ -476,7 +484,12 @@ def build_diagnostic_selection_receipt(
     if not _map(summary):
         receipt["prerequisite_failures"] = _dedupe(failures + ["Phase-1 summary must be a JSON object"])
         return receipt
-    failures.extend(_summary_failures(summary))
+    expected_phase = None
+    if input_summary_path is not None:
+        candidate_path = Path(input_summary_path)
+        if candidate_path.name == "summary.json" and candidate_path.parent.name == "phase1":
+            expected_phase = "phase1"
+    failures.extend(_summary_failures(summary, expected_phase=expected_phase))
     candidates, candidate_failures = _candidates(summary)
     failures.extend(candidate_failures)
     receipt["all_candidates"] = candidates
