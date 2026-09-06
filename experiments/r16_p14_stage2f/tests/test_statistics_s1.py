@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import copy
 import sys
+
+import numpy as np
 from pathlib import Path
 
 import pytest
@@ -17,6 +19,8 @@ from s1.statistics import (  # noqa: E402
     select_budget,
     summarize_grid,
     _crossing_scope,
+    _family_success,
+    _reference_summary,
 )
 
 
@@ -267,3 +271,110 @@ def test_wrong_recovery_seed_triplet_is_blocked():
     result = analyze_crossing(rows, replicates=10)
     assert result["status"] == "BLOCKED"
     assert any("expected recovery actor seeds" in reason for reason in result["blocking_reasons"])
+
+
+def _family_event(*, task, init_state_id, event_instance_id, value, operators):
+    return {
+        "task": task,
+        "init_state_id": init_state_id,
+        "event_instance_id": event_instance_id,
+        "values": {
+            prefix: {
+                operator: {"7": value, "17": value, "29": value}
+                for operator in operators
+            }
+            for prefix in PHASE2_PREFIXES
+        },
+    }
+
+
+def test_phase2_family_ci_resamples_init_clusters_not_independent_events():
+    events = [
+        _family_event(
+            task="task_a",
+            init_state_id="init-a",
+            event_instance_id=f"event-a-{index}",
+            value=1.0,
+            operators=FAMILY_A,
+        )
+        for index in range(3)
+    ]
+    events.append(
+        _family_event(
+            task="task_a",
+            init_state_id="init-b",
+            event_instance_id="event-b-0",
+            value=0.0,
+            operators=FAMILY_A,
+        )
+    )
+
+    first = _family_success(events, FAMILY_A)
+    second = _family_success(events, FAMILY_A)
+    scope = first["by_task"]["task_a"]
+    bootstrap = scope["bootstrap"]
+
+    assert scope["oracle"] == pytest.approx(0.5)
+    assert scope["arm_means"]["fresh_h4"] == pytest.approx(0.5)
+    assert bootstrap["cluster_count"] == 2
+    assert bootstrap["cluster_unit"] == ["task", "init_state_id"]
+    assert bootstrap["replicates"] == 10000
+    assert bootstrap["seed"] == 216214
+    assert bootstrap["oracle"]["estimate"] == pytest.approx(0.5)
+    assert bootstrap["oracle"]["ci95"] == second["by_task"]["task_a"]["bootstrap"]["oracle"]["ci95"]
+    assert bootstrap["arm_means"]["fresh_h4"]["ci95"] == bootstrap["oracle"]["ci95"]
+
+    # An independent-event bootstrap sees three repeated observations from
+    # init-a and therefore has a different lower tail from the prescribed
+    # two-init cluster bootstrap.
+    rng = np.random.default_rng(216214)
+    event_values = [1.0, 1.0, 1.0, 0.0]
+    independent_draws = [
+        float(np.mean([event_values[int(index)] for index in rng.integers(0, 4, size=4)]))
+        for _ in range(10000)
+    ]
+    independent_ci = [
+        float(np.quantile(independent_draws, 0.025)),
+        float(np.quantile(independent_draws, 0.975)),
+    ]
+    assert bootstrap["oracle"]["ci95"][0] != pytest.approx(independent_ci[0])
+
+
+def test_phase2_reference_ci_is_reported_per_task_and_operator():
+    rows = []
+    for init_state_id, event_instance_id, value in (
+        ("init-a", "event-a-0", 1.0),
+        ("init-a", "event-a-1", 1.0),
+        ("init-b", "event-b-0", 0.0),
+    ):
+        for recovery_seed in (7, 17, 29):
+            rows.append(
+                {
+                    "task": "task_a",
+                    "init_state_id": init_state_id,
+                    "event_instance_id": event_instance_id,
+                    "prefix_k": 2,
+                    "operator": "immediate_fresh",
+                    "recovery_actor_seed": recovery_seed,
+                    "safe_success": value,
+                }
+            )
+
+    summary = _reference_summary(
+        rows,
+        ("immediate_fresh",),
+        (2,),
+        include_bootstrap=True,
+    )
+    metrics = summary["by_task"]["task_a"]
+    arm = metrics["bootstrap"]["arm_means"]["immediate_fresh"]
+
+    assert metrics["oracle"] == pytest.approx(0.5)
+    assert arm["estimate"] == pytest.approx(0.5)
+    assert arm["ci95"] == metrics["bootstrap"]["oracle"]["ci95"]
+    assert arm["defined_cluster_count"] == 2
+    assert metrics["bootstrap"]["cluster_unit"] == ["task", "init_state_id"]
+    assert metrics["bootstrap"]["replicates"] == 10000
+    assert metrics["bootstrap"]["seed"] == 216214
+    assert summary["bootstrap_replicates"] == 10000
+    assert summary["bootstrap_seed"] == 216214

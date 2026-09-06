@@ -17,6 +17,8 @@ FAMILY_FULL = FAMILY_A + FAMILY_B
 PHASE1_PREFIXES = (2, 4, 8, 12, 16)
 PHASE2_PREFIXES = (2, 4, 6, 8, 10, 12, 14, 16)
 EXPECTED_RECOVERY_SEEDS = ("7", "17", "29")
+PHASE2_BOOTSTRAP_REPLICATES = 10000
+PHASE2_BOOTSTRAP_SEED = 216214
 REQUIRED_FIELDS = (
     "event_instance_id", "task", "init_state_id", "split", "generator_actor_seed",
     "recovery_actor_seed", "operator", "prefix_k", "tail_horizon", "action_budget",
@@ -169,6 +171,84 @@ def _cluster_mean(values: Mapping[tuple[str, str, str], float]) -> tuple[float |
     return _mean(means.values()), len(means), means
 
 
+def _bootstrap_success_means(
+    cluster_rows: Sequence[Mapping[str, Any]],
+    operators: Sequence[str],
+    *,
+    replicates: int = PHASE2_BOOTSTRAP_REPLICATES,
+    seed: int = PHASE2_BOOTSTRAP_SEED,
+) -> dict[str, Any]:
+    """Bootstrap success means over (task, init_state_id) clusters.
+
+    Each cluster row already contains the prescribed event/prefix/actor
+    aggregation.  A draw resamples whole cluster rows with replacement and
+    takes the mean of the supported cluster values.  The same resampled
+    cluster indices are used for the oracle and every arm so their CIs share
+    the prescribed cluster unit.
+    """
+    metric_names = ("oracle",) + tuple(operators)
+    point_values: dict[str, list[float]] = {"oracle": [], **{op: [] for op in operators}}
+    for row in cluster_rows:
+        oracle = row.get("oracle")
+        if oracle is not None:
+            point_values["oracle"].append(float(oracle))
+        arms = row.get("arm_means", {})
+        for op in operators:
+            value = arms.get(op) if isinstance(arms, Mapping) else None
+            if value is not None:
+                point_values[op].append(float(value))
+    point = {name: _mean(point_values[name]) for name in metric_names}
+    cluster_count = len(cluster_rows)
+    draws: dict[str, list[float]] = {name: [] for name in metric_names}
+    if cluster_count and replicates > 0:
+        rng = np.random.default_rng(seed)
+        for _ in range(replicates):
+            indices = rng.integers(0, cluster_count, size=cluster_count)
+            for name in metric_names:
+                values: list[float] = []
+                for index in indices:
+                    row = cluster_rows[int(index)]
+                    if name == "oracle":
+                        value = row.get("oracle")
+                    else:
+                        arms = row.get("arm_means", {})
+                        value = arms.get(name) if isinstance(arms, Mapping) else None
+                    if value is not None:
+                        values.append(float(value))
+                if values:
+                    draws[name].append(float(np.mean(values)))
+
+    def metric_result(name: str) -> dict[str, Any]:
+        values = draws[name]
+        return {
+            "estimate": point[name],
+            "ci95": [
+                float(np.quantile(values, 0.025)),
+                float(np.quantile(values, 0.975)),
+            ] if values else [None, None],
+            "defined_cluster_count": len(point_values[name]),
+            "defined_draw_count": len(values),
+            "undefined_draw_count": int(replicates) - len(values),
+        }
+
+    arm_results = {op: metric_result(op) for op in operators}
+    return {
+        "oracle": metric_result("oracle"),
+        "arm_means": arm_results,
+        "individual_arm_means": {
+            op: dict(value) for op, value in arm_results.items()
+        },
+        "cluster_count": cluster_count,
+        "cluster_unit": ["task", "init_state_id"],
+        "replicates": int(replicates),
+        "seed": int(seed),
+        "point_estimand": (
+            "event/prefix means followed by equal (task,init_state_id) "
+            "cluster weighting"
+        ),
+    }
+
+
 def _prefix_arm_means(event: Mapping[str, Any], prefixes: Sequence[int], operators: Sequence[str]) -> tuple[dict[int, dict[str, float]], dict[int, float]]:
     arms: dict[int, dict[str, float]] = {}
     oracles: dict[int, float] = {}
@@ -184,7 +264,7 @@ def _prefix_arm_means(event: Mapping[str, Any], prefixes: Sequence[int], operato
     return arms, oracles
 
 
-def _grid_metrics(events: Sequence[Mapping[str, Any]], prefixes: Sequence[int], operators: Sequence[str], actor_count: int) -> dict[str, Any]:
+def _grid_metrics(events: Sequence[Mapping[str, Any]], prefixes: Sequence[int], operators: Sequence[str], actor_count: int, *, include_bootstrap: bool = False) -> dict[str, Any]:
     event_summaries = []
     event_prefix_summaries = []
     prefix_oracles: dict[int, dict[tuple[str, str, str], float]] = defaultdict(dict)
@@ -253,7 +333,7 @@ def _grid_metrics(events: Sequence[Mapping[str, Any]], prefixes: Sequence[int], 
     }
     weakest_name = next((op for op in operators if arm_means.get(op) == weakest), None)
     gap = float(oracle - weakest) if oracle is not None and weakest is not None else None
-    return {
+    result = {
         "oracle": oracle, "oracle_best": oracle, "arm_means": arm_means, "individual_arm_means": dict(arm_means),
         "weakest_arm": weakest, "weakest_operator": weakest_name, "gap": gap, "oracle_minus_weakest": gap, "cluster_count": cluster_count,
         "event_count": len(events), "cluster_oracles": {f"{task}/{init_state}": value for (task, init_state), value in clusters.items()},
@@ -263,18 +343,61 @@ def _grid_metrics(events: Sequence[Mapping[str, Any]], prefixes: Sequence[int], 
         "completeness": completeness,
         "estimand": "cluster mean after event/prefix means; prefix rows are not independent clusters",
     }
+    if include_bootstrap:
+        cluster_keys = set(clusters)
+        for values in cluster_arms.values():
+            cluster_keys.update(values)
+        cluster_rows = [
+            {
+                "oracle": clusters.get(key),
+                "arm_means": {
+                    op: cluster_arms.get(op, {}).get(key) for op in operators
+                },
+            }
+            for key in sorted(cluster_keys)
+        ]
+        result["bootstrap"] = _bootstrap_success_means(cluster_rows, operators)
+        result["bootstrap_replicates"] = PHASE2_BOOTSTRAP_REPLICATES
+        result["bootstrap_seed"] = PHASE2_BOOTSTRAP_SEED
+    return result
 
 
-def _reference_summary(rows: Sequence[Mapping[str, Any]], operators: Sequence[str], prefixes: Sequence[int]) -> dict[str, Any]:
+def _reference_summary(
+    rows: Sequence[Mapping[str, Any]],
+    operators: Sequence[str],
+    prefixes: Sequence[int],
+    *,
+    include_bootstrap: bool = False,
+) -> dict[str, Any]:
     if not operators:
-        return {"operators": [], "row_count": 0, "by_task": {}, "selection_eligible": False}
+        result = {"operators": [], "row_count": 0, "by_task": {}, "selection_eligible": False}
+        if include_bootstrap:
+            result.update({
+                "bootstrap_replicates": PHASE2_BOOTSTRAP_REPLICATES,
+                "bootstrap_seed": PHASE2_BOOTSTRAP_SEED,
+            })
+        return result
     events, _ = _events(rows, operators=operators)
     by_task = {}
     for task in sorted({_text(event["task"]) for event in events}, key=_sort):
         task_events = [event for event in events if _text(event["task"]) == task]
         actor_count = max([len(actor_values) for event in task_events for ops in event["values"].values() for actor_values in ops.values()] or [0])
-        by_task[task] = _grid_metrics(task_events, prefixes, operators, actor_count)
-    return {"operators": list(operators), "row_count": sum(_text(row["operator"]) in operators for row in rows), "by_task": by_task, "selection_eligible": False}
+        by_task[task] = _grid_metrics(
+            task_events, prefixes, operators, actor_count,
+            include_bootstrap=include_bootstrap,
+        )
+    result = {
+        "operators": list(operators),
+        "row_count": sum(_text(row["operator"]) in operators for row in rows),
+        "by_task": by_task,
+        "selection_eligible": False,
+    }
+    if include_bootstrap:
+        result.update({
+            "bootstrap_replicates": PHASE2_BOOTSTRAP_REPLICATES,
+            "bootstrap_seed": PHASE2_BOOTSTRAP_SEED,
+        })
+    return result
 
 
 def summarize_grid(rows: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
@@ -538,9 +661,22 @@ def _family_success(events: Sequence[Mapping[str, Any]], operators: Sequence[str
         cluster_rows = [{"oracle": _mean(row["oracle"] for row in cluster if row["oracle"] is not None), "arm_means": {op: _mean(row["arm_means"][op] for row in cluster if row["arm_means"].get(op) is not None) for op in operators}} for cluster in clusters.values()]
         arms = {op: _mean(row["arm_means"][op] for row in cluster_rows if row["arm_means"].get(op) is not None) for op in operators}
         oracle = _mean(row["oracle"] for row in cluster_rows if row["oracle"] is not None)
-        return {"oracle": oracle, "oracle_best": oracle, "arm_means": arms, "individual_arm_means": dict(arms), "cluster_count": len(cluster_rows), "event_count": len(selected), "estimand": "family oracle is the mean over prefixes of the per-prefix max operator after actor aggregation; event means are averaged within (task,init_state_id) clusters with equal cluster weight"}
+        return {
+            "oracle": oracle, "oracle_best": oracle, "arm_means": arms,
+            "individual_arm_means": dict(arms), "cluster_count": len(cluster_rows),
+            "event_count": len(selected),
+            "estimand": "family oracle is the mean over prefixes of the per-prefix max operator after actor aggregation; event means are averaged within (task,init_state_id) clusters with equal cluster weight",
+            "bootstrap": _bootstrap_success_means(cluster_rows, operators),
+        }
     tasks = sorted({_text(row["task"]) for row in per_event}, key=_sort)
-    return {"operators": list(operators), "by_task": {task: scope([row for row in per_event if row["task"] == task]) for task in tasks}, "overall": scope(per_event), "per_event": per_event, "selection_eligible": False}
+    return {
+        "operators": list(operators),
+        "by_task": {task: scope([row for row in per_event if row["task"] == task]) for task in tasks},
+        "overall": scope(per_event), "per_event": per_event,
+        "selection_eligible": False,
+        "bootstrap_replicates": PHASE2_BOOTSTRAP_REPLICATES,
+        "bootstrap_seed": PHASE2_BOOTSTRAP_SEED,
+    }
 
 
 def _split_half(events: Sequence[Mapping[str, Any]], family: str, operators: Sequence[str], seeds: Sequence[str], replicates: int, seed: int) -> dict[str, Any]:
@@ -617,7 +753,7 @@ def analyze_crossing(rows: Iterable[Mapping[str, Any]], split: str = "evaluation
     split_half_null = {"family_A": half_a, "family_B": half_b, "by_task": null_by_task, "bootstrap_seed": int(seed), "method": "for each task, merge the three 10000-draw cluster-bootstrap distributions from family A with the three from family B and take one 95th percentile; partition point estimates are descriptive only, and reverse directions are not duplicated"}
     family_success = {"A": _family_success(events, FAMILY_A), "B": _family_success(events, FAMILY_B), "full": _family_success(events, FAMILY_FULL)}
     reference_ops = sorted({_text(row["operator"]) for row in usable if _text(row["operator"]) not in OPERATORS}, key=_sort)
-    references = _reference_summary(usable, reference_ops, PHASE2_PREFIXES)
+    references = _reference_summary(usable, reference_ops, PHASE2_PREFIXES, include_bootstrap=True)
     references.update({"retained_separately": True, "used_for_selection": False})
     gate_by_task = {}
     for task, metrics in by_task.items():
