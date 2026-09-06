@@ -1,0 +1,43 @@
+{
+  "actual_gpu_hours_1gpu": 0.0668048580372124,
+  "actual_wall_s": 240.49748893396463,
+  "batch_size": 1,
+  "branch_labels": [
+    "replay_no_recorder",
+    "replay_with_recorder",
+    "fresh_h4__seed17__repeat0",
+    "fresh_h4__seed17__repeat1",
+    "fresh_h16__seed17__repeat0",
+    "hold_1+fresh_h4__seed17__repeat0",
+    "rollback_1+fresh_h16__seed17__repeat0",
+    "immediate_fresh__seed17__repeat0",
+    "fixed_delay_2__seed17__repeat0",
+    "fixed_delay_4__seed17__repeat0",
+    "fixed_delay_8__seed17__repeat0"
+  ],
+  "checks": {
+    "all_branch_budgets_respected": true,
+    "anchor_reconstruction_bit_exact": true,
+    "branch_pids_unique": true,
+    "branch_required_pid_env_chunk": true,
+    "event_is_repaired_copy": true,
+    "four_core_operators_present": true,
+    "four_reference_operators_present": true,
+    "fresh_h4_repeat_pre_tail_and_safe_success_equal": false,
+    "recorder_d1_25_physics_per_control": true,
+    "replay_terminal_and_history_hashes_equal": true
+  },
+  "configured_outer_budget_s": 600.0,
+  "device": "cuda:0",
+  "engineering_evidence_only": true,
+  "event_instance_id": "put_the_cream_cheese_in_the_bowl__init000__actor7",
+  "failed_rows_preserved_before_summary": true,
+  "formal_gate_claim_allowed": false,
+  "row_count": 11,
+  "rows_file": "/mnt/cpfs/zbl-cpfs-new/share/leon/codex-archives/Explore-claude-local-worktrees/R16-P14-stage2f-runtime-worker-20260907/artifacts/stage2f/preflight/live_backend_s1/attempt_20260906T182459_3811260/rows_raw.jsonl",
+  "run_id": "attempt_20260906T182459_3811260",
+  "schema_version": 1,
+  "source_event_path": "/mnt/cpfs/zbl-cpfs-new/share/leon/codex-archives/Explore-claude-local-worktrees/R16-P14-stage2f-runtime-worker-20260907/artifacts/stage2f/preflight/live_backend_s1/input/event_repaired_row.json",
+  "status": "BLOCKED_ENGINEERING_ACCEPTANCE",
+  "visible_gpu_count_expected": 1
+}

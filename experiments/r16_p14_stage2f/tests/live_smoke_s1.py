@@ -24,15 +24,21 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[3]
 EXPERIMENTS = ROOT / "experiments"
-for _path in (
+_IMPORT_ROOTS = (
+    ROOT,
     EXPERIMENTS,
     EXPERIMENTS / "r16_p14_stage2a",
     EXPERIMENTS / "r16_p14_stage2b",
     EXPERIMENTS / "r16_p14_stage2c",
     EXPERIMENTS / "r16_p14_stage2d",
-):
-    if str(_path) not in sys.path:
-        sys.path.insert(0, str(_path))
+)
+# The tracked repository LIBERO package must win over site-packages.  Rebuild
+# this prefix deterministically in spawned children before any env import.
+for _path in reversed(_IMPORT_ROOTS):
+    _value = str(_path)
+    while _value in sys.path:
+        sys.path.remove(_value)
+    sys.path.insert(0, _value)
 
 from r16_p14_stage2a.envs import state_sha256  # noqa: E402
 from r16_p14_stage2a.settings import TASK_SPECS  # noqa: E402
@@ -42,7 +48,7 @@ from r16_p14_stage2d.io_utils import sha256_array as d_sha256_array  # noqa: E40
 from r16_p14_stage2d.runtime import reconstruct_anchor  # noqa: E402
 from r16_p14_stage2f.s1.dispatch import run_spawned_branch  # noqa: E402
 from r16_p14_stage2f.s1.measurement import SimulationStepRecorder, trace_content_sha256  # noqa: E402
-from r16_p14_stage2f.s1.runtime import OPERATORS, REFERENCE_OPERATORS, _configure_local_libero_assets  # noqa: E402
+from r16_p14_stage2f.s1.runtime import OPERATORS, REFERENCE_OPERATORS  # noqa: E402
 
 TASK = "put_the_cream_cheese_in_the_bowl"
 DEFAULT_EVENT = ROOT / "artifacts/stage2f/preflight/live_backend_s1/input/event_repaired_row.json"
@@ -54,6 +60,39 @@ POLICY_CALL_CAP = 8
 RECOVERY_ACTOR_SEED = 17
 REPLAY_ACTIONS = 16
 OUTER_BUDGET_S = 780.0
+EXPECTED_LIBERO_SOURCE = ROOT / "libero/libero/__init__.py"
+EXPECTED_LIBERO_SOURCE_SHA256 = "999901d941ac107d29c11fd0e0f4dbf2587470794b779b5cb8353681b4267e81"
+
+
+def _configure_live_libero_assets() -> dict[str, str]:
+    # Bind exact frozen assets/config and reject pip LIBERO imports.
+    config = ROOT / "experiments/r16_p14_libero_stage1/libero_config"
+    scene = DEFAULT_ASSETS / "scenes/libero_tabletop_base_style.xml"
+    config_file = config / "config.yaml"
+    if not scene.is_file() or not config_file.is_file():
+        raise RuntimeError("exact frozen LIBERO assets/config unavailable")
+    os.environ["LIBERO_CONFIG_PATH"] = str(config)
+    import libero.libero as package
+
+    source = Path(package.__file__).resolve()
+    source_sha256 = hashlib.sha256(source.read_bytes()).hexdigest()
+    if source != EXPECTED_LIBERO_SOURCE.resolve() or source_sha256 != EXPECTED_LIBERO_SOURCE_SHA256:
+        raise RuntimeError(
+            f"wrong LIBERO package; expected {EXPECTED_LIBERO_SOURCE.resolve()} "
+            f"sha={EXPECTED_LIBERO_SOURCE_SHA256}, got {source} sha={source_sha256}"
+        )
+    package.libero_config_path = str(config)
+    package.config_file = str(config_file)
+    package._assets_path_cache = str(DEFAULT_ASSETS)
+    if Path(package.get_assets_path()).resolve() != DEFAULT_ASSETS.resolve():
+        raise RuntimeError("LIBERO asset selection drift")
+    return {
+        "assets": str(DEFAULT_ASSETS),
+        "scene_sha256": hashlib.sha256(scene.read_bytes()).hexdigest(),
+        "config_sha256": hashlib.sha256(config_file.read_bytes()).hexdigest(),
+        "package_source": str(source),
+        "package_sha256": source_sha256,
+    }
 
 
 def _write_json_atomic(path: Path, payload: Any) -> None:
@@ -78,14 +117,15 @@ def _json_safe(value: Any) -> Any:
 def _replay_child(event: dict[str, Any], with_recorder: bool, trace_path: str | None, result_queue: Any, device: str) -> None:
     env = None
     recorder = None
+    libero_identity = None
     try:
-        _configure_local_libero_assets()
+        libero_identity = _configure_live_libero_assets()
         bundle = ActorBundle.load(int(event["actor_seed"]), device)
         env, history, reconstruction = reconstruct_anchor(event, bundle)
         if not all(bool(value) for key, value in reconstruction.items() if key != "max_anchor_state_error"):
             raise RuntimeError(f"reconstruction checks failed: {reconstruction}")
         if float(reconstruction.get("max_anchor_state_error", float("inf"))) > 1e-9:
-            raise RuntimeError(f"anchor max error={reconstruction.get(max_anchor_state_error)}")
+            raise RuntimeError(f"anchor max error={reconstruction.get('max_anchor_state_error')}")
         if with_recorder:
             initial_z = float(np.asarray(event["initial_manipulated_qpos"], dtype=np.float64)[2])
             recorder = SimulationStepRecorder(
@@ -125,12 +165,14 @@ def _replay_child(event: dict[str, Any], with_recorder: bool, trace_path: str | 
             "trace_records": None if recorder is None else int(len(recorder.records)),
             "trace_content_sha256": None if recorder is None else trace_content_sha256(recorder.records),
             "trace_sha256": None if recorder is None else recorder.trace_sha256,
+            "libero_identity": libero_identity,
             "pid": os.getpid(),
         })
     except BaseException as exc:
         result_queue.put({
             "status": "ERROR",
             "with_recorder": bool(with_recorder),
+            "libero_identity": libero_identity,
             "pid": os.getpid(),
             "error_type": type(exc).__name__,
             "error": str(exc),
@@ -185,7 +227,7 @@ def _load_repaired_row(path: Path) -> tuple[dict[str, Any], dict[str, Any]]:
         raise RuntimeError("event_instance_id != event_id")
     expected = d_sha256_array(event["init_state"], np.float64)
     if event.get("init_state_hash") != expected:
-        raise RuntimeError(f"repaired init_state_hash mismatch: {event.get(init_state_hash)} != {expected}")
+        raise RuntimeError(f"repaired init_state_hash mismatch: {event.get('init_state_hash')} != {expected}")
     return row, event
 
 
@@ -302,6 +344,9 @@ def run(event_path: Path, output_root: Path, device: str = "cuda:0", budget_s: f
         "device": device,
         "visible_gpu_count_expected": 1,
         "batch_size": 1,
+        "libero_identity": with_recorder.get("libero_identity") or no_recorder.get("libero_identity"),
+        "libero_source_expected": str(EXPECTED_LIBERO_SOURCE.resolve()),
+        "libero_source_sha256_expected": EXPECTED_LIBERO_SOURCE_SHA256,
         "configured_outer_budget_s": float(budget_s),
         "actual_wall_s": wall_s,
         "actual_gpu_hours_1gpu": wall_s / 3600.0,
