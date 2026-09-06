@@ -217,8 +217,144 @@ def test_admission_is_open_deny_before_evaluation_source_or_shards(tmp_path, mon
 
     assert result["status"] == "BLOCKED"
     assert result["evaluation_read"] is False
+    assert result["evaluation_read_stage"] == "NOT_ADMITTED"
+    assert result["no_evaluation_outcomes_read"] is True
     assert any("OPEN_DENY" in item for item in result["blocking_reasons"])
     assert not any("must-not-read" in item for item in result["blocking_reasons"])
+
+
+
+def _write_job_persistence_fixture(root: Path, *, missing_completed: str | None = None) -> Path:
+    source_commit = next(iter(acceptance.DEFAULT_PHASE2_SOURCE_COMMITS))
+    jobs: list[dict[str, object]] = []
+    for index, task in enumerate(acceptance.TASKS):
+        job_id = f"job-{index}"
+        run_id = f"run-{index}"
+        artifact = root / "pai_runs" / task
+        state_dir = artifact / "pai_state"
+        receipt = artifact / "completion_receipt.json"
+        _write(
+            receipt,
+            {
+                "task": task,
+                "phase": "atlas",
+                "status": "COMPLETE",
+                "uid": acceptance.UID_GID,
+                "gid": acceptance.UID_GID,
+            },
+        )
+        if task != missing_completed:
+            _write(
+                state_dir / "COMPLETED.json",
+                {
+                    "uid": acceptance.UID_GID,
+                    "gid": acceptance.UID_GID,
+                    "task": task,
+                    "phase": "atlas",
+                    "status": "COMPLETE",
+                    "job_id": job_id,
+                    "run_id": run_id,
+                    "source_commit": source_commit,
+                },
+            )
+        jobs.append(
+            {
+                "phase": "atlas",
+                "task": task,
+                "job_id": job_id,
+                "run_id": run_id,
+                "created_at_utc": f"2026-09-07T00:0{index}:00Z",
+                "status": "Succeeded",
+                "readback": {"Status": "Succeeded", "JobId": job_id},
+                "gpus": 2,
+                # This field is intentionally false: it is a publication-side
+                # summary, while the acceptance checker derives proof below.
+                "persisted_completion_verified": False,
+                "source_commit": source_commit,
+                "artifact_dir": str(artifact),
+                "completion_receipt": str(receipt),
+            }
+        )
+    jobs_path = root / "control" / "jobs.json"
+    _write(jobs_path, {"jobs": jobs})
+    return jobs_path
+
+
+def test_job_acceptance_derives_persistence_and_requires_completed_state(tmp_path):
+    jobs_path = _write_job_persistence_fixture(tmp_path)
+    source_commit = next(iter(acceptance.DEFAULT_PHASE2_SOURCE_COMMITS))
+    reasons: list[str] = []
+    selected, report = acceptance._load_jobs(
+        tmp_path,
+        reasons,
+        jobs_path=jobs_path,
+        phase2_source_commits={source_commit},
+    )
+
+    assert reasons == []
+    assert set(selected) == set(acceptance.TASKS)
+    assert all(
+        job["persisted_completion_verified"] is False for job in selected.values()
+    )
+    assert all(
+        report["selected"][task]["persisted_completion_verified"] is False
+        for task in acceptance.TASKS
+    )
+
+    completed = (
+        tmp_path
+        / "pai_runs"
+        / acceptance.TASKS[0]
+        / "pai_state"
+        / "COMPLETED.json"
+    )
+    completed.unlink()
+    missing_reasons: list[str] = []
+    acceptance._load_jobs(
+        tmp_path,
+        missing_reasons,
+        jobs_path=jobs_path,
+        phase2_source_commits={source_commit},
+    )
+    assert any("COMPLETED.json is missing" in item for item in missing_reasons)
+
+
+def test_admitted_acceptance_marks_raw_evaluation_records_as_read(tmp_path, monkeypatch):
+    _budget, receipt_sha = _receipt(tmp_path)
+    monkeypatch.setattr(
+        acceptance.matrix,
+        "selected_diagnostic_budget",
+        lambda _root: {
+            "selected_budget": dict(BUDGET),
+            "selection_receipt_sha256": receipt_sha,
+        },
+        raising=False,
+    )
+    monkeypatch.setattr(
+        acceptance.matrix, "diagnostic_selected_budget", None, raising=False
+    )
+
+    result = acceptance.evaluate_phase2(tmp_path, trace_workers=1)
+
+    assert result["status"] == "BLOCKED"
+    assert result["evaluation_read"] is True
+    assert result["evaluation_read_stage"] == "ADMITTED_RAW_RECORD_VALIDATION"
+    assert result["no_evaluation_outcomes_read"] is False
+
+
+def test_cli_exception_marks_evaluation_read_stage_unknown(tmp_path, monkeypatch):
+    def crash(*_args, **_kwargs):
+        raise ValueError("synthetic checker failure")
+
+    monkeypatch.setattr(acceptance, "evaluate_phase2", crash)
+    output = tmp_path / "phase2-acceptance.json"
+    assert acceptance.main(
+        ["--input-root", str(tmp_path), "--output", str(output)]
+    ) == 2
+    report = json.loads(output.read_text(encoding="utf-8"))
+    assert report["evaluation_read"] is None
+    assert report["evaluation_read_stage"] == "UNKNOWN_AFTER_EXCEPTION"
+    assert report["no_evaluation_outcomes_read"] is None
 
 
 def test_admission_binds_real_receipt_sha_and_protocol(tmp_path, monkeypatch):

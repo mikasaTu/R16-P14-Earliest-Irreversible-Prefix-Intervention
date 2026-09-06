@@ -2,8 +2,10 @@
 
 The checker is intentionally separate from the Phase-2 consolidator.  It
 validates the complete source/terminal/shard/trace chain after the diagnostic
-selection proof has admitted the run.  It does not read evaluation outcomes or
-write any artifact below the input root.
+selection proof has admitted the run.  After admission it reads sealed raw
+evaluation records and Phase-2 traces only for provenance and integrity checks;
+it does not compute statistics or make a selection, and it does not write any
+artifact below the input root.
 """
 from __future__ import annotations
 
@@ -980,8 +982,11 @@ def _load_jobs(
             _issue(reasons, f"{label}: run_id is missing")
         if selected_job.get("gpus") != 2:
             _issue(reasons, f"{label}: gpus must be exactly 2")
-        if selected_job.get("persisted_completion_verified") is not True:
-            _issue(reasons, f"{label}: persisted completion verification is not true")
+        # ``persisted_completion_verified`` is a publication-side summary.  The
+        # acceptance decision derives persistence from the terminal state,
+        # completion receipts, complete rows, traces, and ownership checks
+        # below.  A stale false value must not reject otherwise valid evidence;
+        # retain the field in the returned job metadata for auditability.
         source_commit = selected_job.get("source_commit")
         if not _valid_sha(source_commit, HEX40) or source_commit not in phase2_source_commits:
             _issue(reasons, f"{label}: source_commit is not an allowed Phase-2 commit")
@@ -1519,6 +1524,8 @@ def evaluate_phase2(
         "confirmatory": False,
         "diagnostic_continuation": True,
         "evaluation_read": False,
+        "evaluation_read_stage": "NOT_ADMITTED",
+        "no_evaluation_outcomes_read": True,
         "selection_receipt_sha256": selection_sha,
         "selected_budget": budget,
         "phase2_source_commits": sorted(source_commits),
@@ -1533,6 +1540,8 @@ def evaluate_phase2(
     # The matrix API has now verified the real proof.  Only from this point
     # onward may the checker read sealed evaluation source metadata.
     base_report["evaluation_read"] = True
+    base_report["evaluation_read_stage"] = "ADMITTED_RAW_RECORD_VALIDATION"
+    base_report["no_evaluation_outcomes_read"] = False
     qualified = _qualification_rows(input_path, reasons)
     source = _source_events(input_path, qualified, reasons)
     expected_core, expected_reference = _all_expected_keys(source, budget)
@@ -1602,7 +1611,7 @@ def evaluate_phase2(
             },
             "trace": trace_report,
             "d4": d4_report,
-            "no_evaluation_outcomes_read": True,
+            "no_evaluation_outcomes_read": False,
         }
     )
     if output is not None:
@@ -1656,7 +1665,9 @@ def main(argv: Sequence[str] | None = None) -> int:
             "status": "BLOCKED",
             "accepted": False,
             "blocked": True,
-            "evaluation_read": False,
+            "evaluation_read": None,
+            "evaluation_read_stage": "UNKNOWN_AFTER_EXCEPTION",
+            "no_evaluation_outcomes_read": None,
             "blocking_reasons": [f"acceptance crashed closed: {exc}"],
         }
         write_report(args.output, report)
