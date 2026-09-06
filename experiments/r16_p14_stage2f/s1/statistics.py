@@ -520,7 +520,7 @@ def _crossing_scope(rows: Sequence[Mapping[str, Any]], task: str | None, replica
     rate_a, rate_b = _mean(a), _mean(b)
     bootstrap_rows = [{**row, "crossing_A": x, "crossing_B": y} for row, x, y in zip(selected, a, b)]
     bootstrap = _bootstrap_crossing(bootstrap_rows, replicates, seed, task, include_draws=include_bootstrap_draws)
-    result = {"both_defined": len(selected), "defined_event_count": len(selected), "missing_both": missing_both, "missing_one": missing_one, "missing_A": missing_a, "missing_B": missing_b, "crossing_A_rate": rate_a, "crossing_B_rate": rate_b, "minority_crossing_rate": min(rate_a, rate_b) if rate_a is not None and rate_b is not None else None, "spearman": _spearman([row["boundary_A"] for row in selected], [row["boundary_B"] for row in selected]), "spearman_bootstrap": _bootstrap_spearman(selected, replicates, seed + 1, task), "bootstrap": bootstrap, "bootstrap_unit": ["task", "init_state_id"], "bootstrap_point_estimand": "event mean after actor aggregation; sampled init clusters retain all event rows", "actor_aggregation_before_boundary": True, "prefix_rows_are_not_bootstrap_units": True}
+    result = {"both_defined": len(selected), "defined_event_count": len(selected), "missing_both": missing_both, "missing_one": missing_one, "missing_A": missing_a, "missing_B": missing_b, "crossing_A_rate": rate_a, "crossing_B_rate": rate_b, "minority_crossing_rate": min(rate_a, rate_b) if rate_a is not None and rate_b is not None else None, "spearman": _spearman([row["boundary_A"] for row in selected], [row["boundary_B"] for row in selected]), "spearman_bootstrap": _bootstrap_spearman(selected, replicates, seed, task), "bootstrap": bootstrap, "bootstrap_seed": int(seed), "bootstrap_unit": ["task", "init_state_id"], "bootstrap_point_estimand": "event mean after actor aggregation; sampled init clusters retain all event rows", "actor_aggregation_before_boundary": True, "prefix_rows_are_not_bootstrap_units": True}
     if include_bootstrap_draws:
         result["_bootstrap_draws"] = bootstrap.pop("_draws", np.asarray([], dtype=float))
     return result
@@ -538,20 +538,20 @@ def _family_success(events: Sequence[Mapping[str, Any]], operators: Sequence[str
         cluster_rows = [{"oracle": _mean(row["oracle"] for row in cluster if row["oracle"] is not None), "arm_means": {op: _mean(row["arm_means"][op] for row in cluster if row["arm_means"].get(op) is not None) for op in operators}} for cluster in clusters.values()]
         arms = {op: _mean(row["arm_means"][op] for row in cluster_rows if row["arm_means"].get(op) is not None) for op in operators}
         oracle = _mean(row["oracle"] for row in cluster_rows if row["oracle"] is not None)
-        return {"oracle": oracle, "oracle_best": oracle, "arm_means": arms, "individual_arm_means": dict(arms), "cluster_count": len(cluster_rows), "event_count": len(selected), "estimand": "family oracle=max operator after actor and prefix means; cluster mean over init_state_id"}
+        return {"oracle": oracle, "oracle_best": oracle, "arm_means": arms, "individual_arm_means": dict(arms), "cluster_count": len(cluster_rows), "event_count": len(selected), "estimand": "family oracle is the mean over prefixes of the per-prefix max operator after actor aggregation; event means are averaged within (task,init_state_id) clusters with equal cluster weight"}
     tasks = sorted({_text(row["task"]) for row in per_event}, key=_sort)
     return {"operators": list(operators), "by_task": {task: scope([row for row in per_event if row["task"] == task]) for task in tasks}, "overall": scope(per_event), "per_event": per_event, "selection_eligible": False}
 
 
 def _split_half(events: Sequence[Mapping[str, Any]], family: str, operators: Sequence[str], seeds: Sequence[str], replicates: int, seed: int) -> dict[str, Any]:
     partitions = []
-    for index, singleton in enumerate(seeds):
+    for singleton in seeds:
         pair = [actor_seed for actor_seed in seeds if actor_seed != singleton]
         rows = []
         for event in events:
             rows.append({"task": event["task"], "init_state_id": event["init_state_id"], "event_instance_id": event["event_instance_id"], "boundary_A": _boundary(event, operators, [singleton], 1.0, PHASE2_PREFIXES), "boundary_B": _boundary(event, operators, pair, 1.0, PHASE2_PREFIXES)})
-        crossing = _crossing_scope(rows, None, replicates, seed + index * 100)
-        by_task = {task: _crossing_scope(rows, task, replicates, seed + index * 100 + task_index + 1, include_bootstrap_draws=True) for task_index, task in enumerate(sorted({_text(row["task"]) for row in rows}, key=_sort))}
+        crossing = _crossing_scope(rows, None, replicates, seed)
+        by_task = {task: _crossing_scope(rows, task, replicates, seed, include_bootstrap_draws=True) for task in sorted({_text(row["task"]) for row in rows}, key=_sort)}
         partitions.append({"singleton_seed": singleton, "pair_seeds": pair, "threshold_singleton": "1/1", "threshold_pair": "2/2", "crossing": crossing, "by_task": by_task, "direction_reversed_is_same_partition": True})
     by_task: dict[str, dict[str, Any]] = {}
     bootstrap_by_task: dict[str, list[float]] = defaultdict(list)
@@ -565,7 +565,7 @@ def _split_half(events: Sequence[Mapping[str, Any]], family: str, operators: Seq
             part["by_task"].get(task, {}).pop("_bootstrap_draws", None)
     all_values = [value for item in by_task.values() for value in item["point_estimates"]]
     pooled_bootstrap = [value for values in bootstrap_by_task.values() for value in values]
-    return {"family": family, "partitions": partitions, "by_task": by_task, "pooled_point_estimates": all_values, "pooled_point_p95": float(np.quantile(all_values, .95)) if all_values else None, "pooled_bootstrap_null_p95": (float(np.quantile(pooled_bootstrap, .95)) if pooled_bootstrap else None), "pooled_bootstrap_null_draws": pooled_bootstrap, "method": "unique singleton-vs-complement partitions; singleton uses 1/1 and pair uses 2/2; reverse direction is retained in the same partition and is not a duplicate partition"}
+    return {"family": family, "partitions": partitions, "by_task": by_task, "pooled_point_estimates": all_values, "pooled_point_p95": float(np.quantile(all_values, .95)) if all_values else None, "pooled_bootstrap_null_p95": (float(np.quantile(pooled_bootstrap, .95)) if pooled_bootstrap else None), "pooled_bootstrap_null_draws": pooled_bootstrap, "bootstrap_seed": int(seed), "method": "unique singleton-vs-complement partitions; singleton uses 1/1 and pair uses 2/2; reverse direction is retained in the same partition and is not a duplicate partition"}
 
 
 def _matrix_reasons(events: Sequence[Mapping[str, Any]], seeds: Sequence[str], observed_prefixes: Sequence[int]) -> list[str]:
@@ -602,10 +602,10 @@ def analyze_crossing(rows: Iterable[Mapping[str, Any]], split: str = "evaluation
         return result
     boundaries = _boundary_rows(events, seeds)
     tasks = sorted({_text(row["task"]) for row in boundaries}, key=_sort)
-    by_task = {task: _crossing_scope(boundaries, task, replicates, seed + index * 10) for index, task in enumerate(tasks)}
-    crossing = {"overall": _crossing_scope(boundaries, None, replicates, seed), "by_task": by_task, "defined_only": True, "missing_events_reported_separately": True}
-    half_a = _split_half(events, "A", FAMILY_A, seeds, replicates, seed + 1000)
-    half_b = _split_half(events, "B", FAMILY_B, seeds, replicates, seed + 2000)
+    by_task = {task: _crossing_scope(boundaries, task, replicates, seed) for task in tasks}
+    crossing = {"overall": _crossing_scope(boundaries, None, replicates, seed), "by_task": by_task, "bootstrap_seed": int(seed), "defined_only": True, "missing_events_reported_separately": True}
+    half_a = _split_half(events, "A", FAMILY_A, seeds, replicates, seed)
+    half_b = _split_half(events, "B", FAMILY_B, seeds, replicates, seed)
     null_by_task = {}
     for task in sorted(set(half_a["by_task"]) | set(half_b["by_task"]), key=_sort):
         a, b = half_a["by_task"].get(task, {}), half_b["by_task"].get(task, {})
@@ -614,7 +614,7 @@ def analyze_crossing(rows: Iterable[Mapping[str, Any]], split: str = "evaluation
         bootstrap_draws = list(a.get("bootstrap_null_draws", ())) + list(b.get("bootstrap_null_draws", ()))
         bootstrap_p95 = float(np.quantile(bootstrap_draws, .95)) if bootstrap_draws else None
         null_by_task[task] = {"family_A_point_p95": a.get("point_p95"), "family_B_point_p95": b.get("point_p95"), "point_p95": point_p95, "bootstrap_null_p95": bootstrap_p95, "p95": bootstrap_p95, "bootstrap_null_draws": bootstrap_draws, "point_estimates": values, "partition_count": len(values), "null_draw_count": len(bootstrap_draws)}
-    split_half_null = {"family_A": half_a, "family_B": half_b, "by_task": null_by_task, "method": "for each task, merge the three 10000-draw cluster-bootstrap distributions from family A with the three from family B and take one 95th percentile; partition point estimates are descriptive only, and reverse directions are not duplicated"}
+    split_half_null = {"family_A": half_a, "family_B": half_b, "by_task": null_by_task, "bootstrap_seed": int(seed), "method": "for each task, merge the three 10000-draw cluster-bootstrap distributions from family A with the three from family B and take one 95th percentile; partition point estimates are descriptive only, and reverse directions are not duplicated"}
     family_success = {"A": _family_success(events, FAMILY_A), "B": _family_success(events, FAMILY_B), "full": _family_success(events, FAMILY_FULL)}
     reference_ops = sorted({_text(row["operator"]) for row in usable if _text(row["operator"]) not in OPERATORS}, key=_sort)
     references = _reference_summary(usable, reference_ops, PHASE2_PREFIXES)
