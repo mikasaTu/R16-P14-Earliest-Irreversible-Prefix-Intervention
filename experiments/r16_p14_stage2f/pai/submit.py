@@ -14,6 +14,9 @@ def submit(template,run_id,phase,task):
     # All CLI output stays private; publish only allowlisted run and resource data.
     completed=subprocess.run([str(REG/"bin/pai-job"),"submit",str(Path(template).resolve()),"--run-id",run_id,
         "--config","/workspace/leon/.dlc/config"],capture_output=True,text=True,timeout=1200)
+    if target.is_dir():
+        for label,value in (("wrapper.stdout.txt",completed.stdout),("wrapper.stderr.txt",completed.stderr)):
+            log=target/label;log.write_text(value);log.chmod(0o600)
     rp=target/"result.json"
     if not rp.is_file():
         raise RuntimeError(f"no CreateJob receipt; canonical sealed run needs inspection, rc={completed.returncode}")

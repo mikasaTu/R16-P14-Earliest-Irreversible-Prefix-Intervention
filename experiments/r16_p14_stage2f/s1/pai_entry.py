@@ -2,7 +2,7 @@
 from __future__ import annotations
 import argparse,json,os,time,subprocess
 from pathlib import Path
-from .common import ROOT,TASKS,atomic_json,file_sha,guard_execution
+from .common import ROOT,TASKS,atomic_json,file_sha,guard_execution,read_json_retry
 def wait_controller(control_root):
     p=Path(control_root);run_id=os.environ["PAI_CANARY_RUN_ID"]
     deadline=time.monotonic()+600
@@ -10,7 +10,7 @@ def wait_controller(control_root):
         guard_execution()
         hp=p/"heartbeat.json";mp=p/"jobs.json"
         if hp.exists() and mp.exists():
-            h=json.loads(hp.read_text());m=json.loads(mp.read_text())
+            h=read_json_retry(hp);m=read_json_retry(mp)
             from datetime import datetime,timezone
             age=(datetime.now(timezone.utc)-datetime.fromisoformat(h["time"])).total_seconds()
             for j in m["jobs"]:
@@ -37,6 +37,13 @@ def main():
     from .assets import configure_assets
     assets=configure_assets()
     import torch,wandb
+    state=Path(os.environ["PAI_CANARY_RUN_DIR"])/"pai_state";state.mkdir(exist_ok=True)
+    smi=subprocess.run(["nvidia-smi","--query-gpu=name,driver_version,uuid","--format=csv,noheader"],
+                       capture_output=True,text=True,timeout=20)
+    atomic_json(state/"ENVIRONMENT.json",dict(uid=os.getuid(),gid=os.getgid(),
+        source_commit=args.source_commit,job_id=job["job_id"],python=os.sys.executable,
+        torch=torch.__version__,cuda_build=torch.version.cuda,assets=assets,
+        nvidia_smi=smi.stdout.strip(),nvidia_smi_returncode=smi.returncode),immutable=False)
     if torch.cuda.device_count()!=2:raise RuntimeError("exactly two visible A800 GPUs required")
     if not all("A800" in torch.cuda.get_device_name(i) for i in range(2)):raise RuntimeError("A800 required")
     task_index=TASKS.index(args.task)

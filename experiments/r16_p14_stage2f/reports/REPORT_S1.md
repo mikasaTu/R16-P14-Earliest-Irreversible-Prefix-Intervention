@@ -4,9 +4,9 @@
 
 ## 当前结论
 
-Phase0A 已完成：补入 immediate_fresh_h16 后，G0-1 为 INCONCLUSIVE。S1 的 200 个固定初始状态已生成并验证；一条 infrastructure clean episode 已完成，包含 360 个控制步、9000 个物理步和完整接触拓扑。正式600条自然事件采集尚未提交。K1、K2、K3 均未判决。
+Phase0A 已完成：补入 immediate_fresh_h16 后，G0-1 为 INCONCLUSIVE。S1 的 200 个固定初始状态已生成并验证；一条 infrastructure clean episode 已完成，包含 360 个控制步、9000 个物理步和完整接触拓扑。正式采集首批两作业已提交并确认UseOversoldResource=true，但由于跨节点CPFS控制文件读取发生ESTALE，已全部停止，尚无正式episode。修复重提中；K1、K2、K3均未判决。
 
-原冻结 Stage2D 执行入口存在隐式注入路径，其历史 BLOCKED 事实保留。按照用户后续明确授权，在 Stage2F 新增零注入后端；没有改写 Stage2A–E，没有调用注入函数。新的独立分支后端仍在做真实基础设施检查，首轮资源路径失败已保留，不能计作恢复成功。
+原冻结 Stage2D 执行入口存在隐式注入路径，其历史 BLOCKED 事实保留。按照用户后续明确授权，在 Stage2F 新增零注入后端；没有改写 Stage2A–E，没有调用注入函数。新的独立分支后端已完成ROOT-first同源LIBERO的真实基础设施检查：4core+4reference+重复分支，anchor重建误差0，D1每控制步25个物理步，测量有无的终态/历史hash一致，预算与pid/env/chunk校验全部通过。首轮资源路径失败原样保留；这些是工程验证，不能计作科学成功。
 
 ## 冻结协议及执行边界
 
@@ -31,8 +31,14 @@ event mean 与 cluster mean 不可混用。38.1%→19.4% 的分解为 restricted
 - K1：calibration/evaluation 合格自然失败事件正式计数尚未获得，未判决。
 - Phase1 / K2：9个配置预算档、4算子、3 recovery seeds、20 calibration events/任务尚未执行完；没有 selection。
 - Phase2 / K3：未打开 evaluation；两族平均 safe success、k*、跨族minority crossing、Spearman以及族内split-half噪声地板均尚无可报告结果。
-- 静态PAI测试：新2GPU资源合同4项、提交黑窗与待提交cap5项、canonical回归25项及7subtests通过。统计/汇总/后端20项测试通过；两个任务init0在正式spawn启动路径下逐字段复现。真实后端检查仍在核验源码身份，后续在报告中回填。
+- 静态PAI测试：新2GPU资源合同4项、提交黑窗与待提交cap5项、canonical回归25项及7subtests通过。统计/汇总/后端20项测试通过；两个任务init0在正式spawn启动路径下逐字段复现。真实后端11rows与9条trace已由主线程逐项验收，源码SHA为999901d941ac107d29c11fd0e0f4dbf2587470794b779b5cb8353681b4267e81；CPFS读取3项测试、自动resume9项测试通过。
 
 ## 本阶段没有测的东西
 
 没有训练 actor，没有 VLA、世界模型、RGB策略、扰动注入或真实机器人评测；不测性能赢面，不重新验证冻结的 universal hypothesis，不提出新idea，不启动S2。没有把代码测试、基础设施 episode 或 Running 状态写成科学成功。
+
+## PAI 首批执行记录
+
+- dlcfesoi2j9tp8y5（cream，r2）：Stopped，exact idle=true，2254身份；读取控制heartbeat触发ESTALE，0正式episode。
+- dlc189mgayv5nwjf（bowl，r1）：Stopped，exact idle=true，2254身份；收到全局停止标记后退出，0正式episode。
+- 两者源commit94d46b86、tree306953eabdc5a3c2680551c8078c1b67c92c2e05。失败FATAL_ERROR和最终readback已保存到artifacts/stage2f/pai_jobs。新版本为可恢复的CPFS短暂inode替换增加有界重读；持续错误仍停止。黑窗及20GPU小时上限保持。

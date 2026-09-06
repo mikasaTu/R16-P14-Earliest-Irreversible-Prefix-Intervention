@@ -26,6 +26,17 @@ def atomic_json(path,value,immutable=True):
     tmp=path.with_name(path.name+f".{os.getpid()}.tmp")
     with tmp.open("w") as f:f.write(data);f.flush();os.fsync(f.fileno())
     os.replace(tmp,path)
+def read_json_retry(path,attempts=8,delay=0.25):
+    """Reopen CPFS control files after transient inode replacement/ESTALE."""
+    path=Path(path)
+    for attempt in range(attempts):
+        try:return json.loads(path.read_text())
+        except OSError as exc:
+            if exc.errno not in (2,116) or attempt==attempts-1:raise
+        except json.JSONDecodeError:
+            if attempt==attempts-1:raise
+        time.sleep(delay)
+    raise RuntimeError("unreachable read retry")
 def split_for(i):
     if not 0<=i<100:raise ValueError(i)
     return "infrastructure" if i<10 else "calibration" if i<50 else "evaluation" if i<90 else "reserve"
@@ -40,7 +51,7 @@ def guard_execution(now=None):
         from datetime import timezone
         p=Path(heartbeat)
         if not p.exists():raise RuntimeError("external controller heartbeat missing")
-        h=json.loads(p.read_text());age=(datetime.now(timezone.utc)-datetime.fromisoformat(h["time"])).total_seconds()
+        h=read_json_retry(p);age=(datetime.now(timezone.utc)-datetime.fromisoformat(h["time"])).total_seconds()
         if age>90:raise RuntimeError("external controller heartbeat stale")
     marker=os.environ.get("S1_STOP_FILE")
     if marker and Path(marker).exists():raise RuntimeError("external S1 stop marker: "+Path(marker).read_text()[:200])

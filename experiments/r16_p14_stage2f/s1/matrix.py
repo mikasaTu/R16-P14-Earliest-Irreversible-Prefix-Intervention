@@ -87,6 +87,7 @@ def run_task(phase,task,output_root,workers=12,device="cuda"):
         else:
             trace=phase_dir/"contact_topology"/task/f"{key}.jsonl.gz"
             row=run_spawned_branch(event=event,**req,device=(f"cuda:{index%2}" if device=="cuda" else device),trace_path=str(trace),cancel_event=cancelled)
+            row["trace_path"]=str(trace)
             row["runtime_status"]=row.get("status")
             if row.get("status")=="OK" and not row.get("blocked") and not row.get("error"):
                 row["status"]="COMPLETE"

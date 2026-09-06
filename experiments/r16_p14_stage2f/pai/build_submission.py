@@ -28,6 +28,7 @@ def build(phase,task_index,run_id,source_commit):
     else:manifest_path.write_text(json.dumps(actual,indent=2)+"\n")
     source_manifest_sha=sha(manifest_path)
     output=BASE/"artifacts/stage2f";control=BASE/"control";control.mkdir(parents=True,exist_ok=True)
+    (BASE/"pai_runs").mkdir(parents=True,exist_ok=True)
     if not (control/"jobs.json").exists():(control/"jobs.json").write_text(json.dumps({"lineage":"s1-20260907","jobs":[]},indent=2)+"\n")
     init=output/"phase0b/init_pool";init.mkdir(parents=True,exist_ok=True)
     for p in (ROOT/"artifacts/stage2f/phase0b/init_pool").glob("*.json"):
@@ -45,7 +46,10 @@ export LIBERO_CONFIG_PATH={payload}/experiments/r16_p14_libero_stage1/libero_con
 cd {payload}
 exec /mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/libero_sim/bin/python -m experiments.r16_p14_stage2f.s1.pai_entry --phase {phase} --task {tasks[task_index]} --output-root {output} --control-root {control} --source-commit {source_commit} --source-manifest-sha256 {source_manifest_sha} --workers 12
 """
-    launcher.write_text(body);launcher.chmod(0o555)
+    if launcher.exists():
+        if launcher.read_text()!=body:raise RuntimeError("immutable launcher differs")
+    else:
+        launcher.write_text(body);launcher.chmod(0o555)
     subprocess.run(["bash","-n",str(launcher)],check=True)
     resources=json.loads((REG/"config/resources.json").read_text())["resources"];resource=resources[ALIAS]
     import runpy

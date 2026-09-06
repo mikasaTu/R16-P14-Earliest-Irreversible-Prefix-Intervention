@@ -1,0 +1,6 @@
+{
+  "error_type": "RuntimeError",
+  "message": "external S1 stop marker: PLACEMENT_REJECTED",
+  "traceback": "Traceback (most recent call last):\n  File \"/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16p14-stage2f-payloads/94d46b8649f4bc05ac447f9812b3ac5e4f9a3785/experiments/r16_p14_stage2f/s1/pai_entry.py\", line 66, in <module>\n    try:main()\n        ^^^^^^\n  File \"/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16p14-stage2f-payloads/94d46b8649f4bc05ac447f9812b3ac5e4f9a3785/experiments/r16_p14_stage2f/s1/pai_entry.py\", line 35, in main\n    job=wait_controller(args.control_root)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16p14-stage2f-payloads/94d46b8649f4bc05ac447f9812b3ac5e4f9a3785/experiments/r16_p14_stage2f/s1/pai_entry.py\", line 10, in wait_controller\n    guard_execution()\n  File \"/mnt/cpfs/zbl-cpfs-new/USERS/leon/code/r16p14-stage2f-payloads/94d46b8649f4bc05ac447f9812b3ac5e4f9a3785/experiments/r16_p14_stage2f/s1/common.py\", line 46, in guard_execution\n    if marker and Path(marker).exists():raise RuntimeError(\"external S1 stop marker: \"+Path(marker).read_text()[:200])\n                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: external S1 stop marker: PLACEMENT_REJECTED\n",
+  "uid": 2254
+}

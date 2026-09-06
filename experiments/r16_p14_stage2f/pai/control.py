@@ -78,7 +78,9 @@ def run(manifest,interval=15,once=False):
             if job["status"]=="Running" and readback.get("UseOversoldResource") is not True:
                 job["placement_rejected"]=True
         d=decision(jobs,extra_gpu_hours=float(state.get("dev14_gpu_hours_upper_bound",0.5)))
-        d["stop_job_ids"]+= [j["job_id"] for j in jobs if j.get("placement_rejected") and j.get("status") not in TERMINAL]
+        active_rejected=[j for j in jobs if j.get("placement_rejected") and j.get("status") not in TERMINAL]
+        d["stop_job_ids"]+= [j["job_id"] for j in active_rejected]
+        if active_rejected:d["resume_allowed"]=False
         if d["stop_job_ids"]:
             (base/"STOP").write_text(d["reason"] or "PLACEMENT_REJECTED")
             for jid in set(d["stop_job_ids"]):
@@ -92,7 +94,7 @@ def run(manifest,interval=15,once=False):
                     continue
                 with (base/"control_actions.jsonl").open("a") as f:
                     f.write(json.dumps({"time":now_utc().isoformat(),"action":"StopJob","job_id":jid,"reason":d["reason"] or "PLACEMENT_REJECTED"})+"\n")
-        elif d["resume_allowed"] and not any(j.get("placement_rejected") for j in jobs):
+        elif d["resume_allowed"] and not active_rejected:
             (base/"STOP").unlink(missing_ok=True)
         import fcntl
         with manifest.with_suffix(".lock").open("a") as lock:
