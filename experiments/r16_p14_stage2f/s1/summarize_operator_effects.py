@@ -193,17 +193,33 @@ def _load_summary(summary_path: Path) -> tuple[dict[str, Any] | None, list[str]]
     if not isinstance(payload, Mapping):
         return None, ["Phase-1 summary is not an object"]
     summary = dict(payload)
-    if summary.get("status") != "COMPLETE" or summary.get("blocked") is True:
+    status = summary.get("status")
+    available_shortfall = status == "COMPLETE_AVAILABLE_REQUESTS_SAMPLE_SHORTFALL"
+    if status not in ("COMPLETE", "COMPLETE_AVAILABLE_REQUESTS_SAMPLE_SHORTFALL") or summary.get("blocked") is True:
         reasons.append(
             f"refusing incomplete/blocked consolidated summary: "
-            f"status={summary.get('status')!r}, blocked={summary.get('blocked')!r}"
+            f"status={status!r}, blocked={summary.get('blocked')!r}"
         )
     if summary.get("split") not in (None, "calibration"):
         reasons.append(f"Phase-1 summary has non-calibration split: {summary.get('split')!r}")
     complete = summary.get("sample_complete")
     if complete is None:
         complete = summary.get("planned_sample_complete")
-    if complete is not True:
+    if available_shortfall:
+        if complete is not False:
+            reasons.append(
+                "available-request shortfall must declare sample_complete=false"
+            )
+        selection = summary.get("selection")
+        if not isinstance(selection, Mapping):
+            reasons.append(
+                "available-request shortfall lacks formal selection receipt"
+            )
+        elif selection.get("status") != "BLOCKED" or selection.get("selected_budget") is not None:
+            reasons.append(
+                "available-request shortfall must retain BLOCKED/null selection"
+            )
+    elif complete is not True:
         reasons.append("formal Phase-1 sample_complete is not true")
     completeness = summary.get("completeness")
     if not isinstance(completeness, Mapping):
@@ -228,16 +244,52 @@ def _load_summary(summary_path: Path) -> tuple[dict[str, Any] | None, list[str]]
     elif not isinstance(observed, Mapping):
         reasons.append("observed_events_by_task is not an object")
     else:
+        observed_counts: dict[str, int] = {}
         for task in TASKS:
             try:
                 count = _int(observed.get(task), f"observed_events_by_task[{task}]")
+                observed_counts[task] = count
             except (TypeError, ValueError) as exc:
                 reasons.append(str(exc))
                 continue
-            if count != 20:
+            if available_shortfall:
+                if not 0 < count <= 20:
+                    reasons.append(
+                        f"available Phase-1 event count for {task} must be in [1,20], "
+                        f"observed {count}"
+                    )
+            elif count != 20:
                 reasons.append(
                     f"formal Phase-1 sample is not complete for {task}: observed {count}"
                 )
+        if available_shortfall and observed_counts and all(
+            count == 20 for count in observed_counts.values()
+        ):
+            reasons.append(
+                "shortfall status requires at least one planned event count below 20"
+            )
+        if available_shortfall:
+            shortfall = summary.get("shortfall")
+            if shortfall is None and isinstance(completeness, Mapping):
+                shortfall = completeness.get("shortfall")
+            if not isinstance(shortfall, Mapping):
+                reasons.append("available-request shortfall lacks shortfall metadata")
+            else:
+                for task, count in observed_counts.items():
+                    try:
+                        declared = _int(
+                            shortfall.get(task),
+                            f"shortfall[{task}]",
+                        )
+                    except (TypeError, ValueError) as exc:
+                        reasons.append(str(exc))
+                        continue
+                    expected = 20 - count
+                    if declared != expected:
+                        reasons.append(
+                            f"shortfall for {task} disagrees with observed/planned: "
+                            f"{declared} vs {expected}"
+                        )
     excluded = summary.get("structurally_excluded_events", [])
     if not isinstance(excluded, list):
         reasons.append("structurally_excluded_events is not a list")
@@ -1084,7 +1136,8 @@ def summarize_operator_effects(
         "grid_rows_path": str(grid_path),
         "summary_path": str(summary_path),
         "summary_status": summary.get("status"),
-        "sample_complete": True,
+        "sample_complete": bool(summary.get("sample_complete", summary.get("planned_sample_complete"))),
+        "planned_sample_complete": bool(summary.get("planned_sample_complete", summary.get("sample_complete"))),
         "selection_performed": False,
         "evaluation_read": False,
         "references_read": False,

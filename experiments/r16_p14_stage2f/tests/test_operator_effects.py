@@ -7,7 +7,14 @@ from pathlib import Path
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from s1.consolidate import BUDGETS, OPERATORS, PHASE1_PREFIXES, SEEDS, TASKS  # noqa: E402
+from s1.consolidate import (  # noqa: E402
+    BUDGETS,
+    OPERATORS,
+    PHASE1_PREFIXES,
+    SEEDS,
+    TASKS,
+    consolidate_phase1,
+)
 from s1.summarize_operator_effects import (  # noqa: E402
     PAIR_DEFINITIONS,
     summarize_operator_effects,
@@ -95,16 +102,21 @@ def _fixture(
     hash_mismatch: bool = False,
     incomplete_summary: bool = False,
     same_fresh: bool = False,
+    counts: tuple[int, int] = (20, 20),
 ) -> tuple[list[dict], dict]:
     rows: list[dict] = []
     excluded_events = []
-    for task in TASKS:
-        for event_index in range(20):
+    for task_index, task in enumerate(TASKS):
+        for event_index in range(counts[task_index]):
             if task == TASKS[0]:
                 init_state_id = "cream-a" if event_index < 19 else "cream-b"
             else:
                 init_state_id = "bowl-a"
-            is_excluded = excluded and task == TASKS[1] and event_index == 19
+            is_excluded = (
+                excluded
+                and task == TASKS[1]
+                and event_index == counts[1] - 1
+            )
             if is_excluded:
                 excluded_events.append(
                     {
@@ -164,19 +176,45 @@ def _fixture(
         "sample_complete": not incomplete_summary,
         "planned_sample_complete": not incomplete_summary,
         "planned_events": 20,
-        "observed_events_by_task": {task: 20 for task in TASKS},
+        "observed_events_by_task": {
+            task: counts[index] for index, task in enumerate(TASKS)
+        },
+        "shortfall": {
+            task: 20 - counts[index] for index, task in enumerate(TASKS)
+        },
         "grid_row_count": len(rows),
         "support_grid_row_count": sum(
             not (
                 excluded
                 and row["task"] == TASKS[1]
-                and row["event_instance_id"].endswith("-19")
+                and row["event_instance_id"].endswith(f"-{counts[1] - 1}")
             )
             for row in rows
         ),
         "structurally_excluded_events": excluded_events,
         "structurally_excluded_event_count": len(excluded_events),
-        "completeness": {"status": "COMPLETE"},
+        "completeness": {
+            "status": "COMPLETE",
+            "planned_sample_complete": not incomplete_summary,
+            "observed_events_by_task": {
+                task: counts[index] for index, task in enumerate(TASKS)
+            },
+        },
+        "selection": (
+            {
+                "status": "BLOCKED",
+                "selected_budget": None,
+            }
+            if incomplete_summary
+            else {
+                "status": "SELECTED",
+                "selected_budget": {
+                    "tail_horizon": 4,
+                    "action_budget": 8,
+                    "policy_call_cap": 8,
+                },
+            }
+        ),
     }
     _write(phase / "summary.json", summary)
     return rows, summary
@@ -209,20 +247,49 @@ def test_full_support_uses_equal_init_clusters_and_paired_events(tmp_path):
     assert result["action_stream_check"]["checked_pairs"] == 3 * 2 * 20 * 5 * 3
 
 
-def test_structural_blocked_rows_are_excluded_not_zero_failures(tmp_path):
-    _fixture(tmp_path, excluded=True)
+def test_available_shortfall_and_structural_blocked_rows_are_excluded_not_zero_failures(tmp_path):
+    _fixture(
+        tmp_path,
+        excluded=True,
+        incomplete_summary=True,
+        counts=(19, 11),
+    )
     result = summarize_operator_effects(tmp_path, replicates=40)
     assert result["status"] == "COMPLETE"
+    assert result["summary_status"] == "COMPLETE_AVAILABLE_REQUESTS_SAMPLE_SHORTFALL"
+    assert result["sample_complete"] is False
     bowl = result["budgets"][
         "tail_horizon=4/action_budget=8/policy_call_cap=8"
     ]["by_task"][TASKS[1]]
-    assert bowl["raw_event_count"] == 20
-    assert bowl["event_count"] == 19
+    assert bowl["raw_event_count"] == 11
+    assert bowl["event_count"] == 10
     assert bowl["excluded_event_count"] == 1
     assert bowl["absolute"]["fresh_h4"]["estimate"] == pytest.approx(0.2)
-    assert bowl["branch_count"] == 19 * 4 * 5 * 3
-    assert result["structurally_excluded_events"][0]["event_instance_id"].endswith("-19")
+    assert bowl["branch_count"] == 10 * 4 * 5 * 3
+    assert result["structurally_excluded_events"][0]["event_instance_id"].endswith("-10")
 
+
+
+def test_accepts_real_available_consolidation_schema(tmp_path):
+    # Reuse the existing phase1 collector fixture so this exercises the exact
+    # COMPLETE_AVAILABLE_REQUESTS_SAMPLE_SHORTFALL summary emitted by
+    # consolidate_phase1, including 19/11 source identities and one structural
+    # bowl event.  No evaluation tree is created or read.
+    from test_partial_sample_s1 import _phase1_input
+
+    _phase1_input(tmp_path, (19, 11), structural_last_bowl=True)
+    consolidated = consolidate_phase1(tmp_path, tmp_path)
+    assert consolidated["status"] == "COMPLETE_AVAILABLE_REQUESTS_SAMPLE_SHORTFALL"
+    result = summarize_operator_effects(tmp_path, replicates=20)
+    assert result["status"] == "COMPLETE"
+    assert result["sample_complete"] is False
+    assert result["support_event_count_by_task"] == {
+        TASKS[0]: 19,
+        TASKS[1]: 10,
+    }
+    assert result["budgets"][
+        "tail_horizon=4/action_budget=8/policy_call_cap=8"
+    ]["by_task"][TASKS[1]]["excluded_event_count"] == 1
 
 def test_action_stream_check_keeps_mismatch_evidence(tmp_path):
     _fixture(tmp_path, hash_mismatch=True, same_fresh=True)
@@ -264,7 +331,10 @@ def test_partial_summary_denies_grid_read(tmp_path):
     result = summarize_operator_effects(tmp_path, replicates=10)
     assert result["status"] == "BLOCKED"
     assert result["grid_rows_read"] is False
-    assert any("incomplete" in reason or "sample_complete" in reason for reason in result["blocking_reasons"])
+    assert any(
+        "INCOMPLETE" in reason or "sample_complete" in reason
+        for reason in result["blocking_reasons"]
+    )
 
 
 def test_cli_writes_explicit_output_path(tmp_path):
