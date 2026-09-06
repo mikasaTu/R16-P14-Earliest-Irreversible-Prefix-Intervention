@@ -91,7 +91,7 @@ exec /mnt/cpfs/zbl-cpfs-new/USERS/leon/envs/r16p14_s1_cu124_20260907/bin/python 
     if diagnostic_atlas:
         template["evidence"].update({
             "diagnostic_continuation": True,
-            "kind": "r16p14_stage2f_diagnostic_atlas",
+            "kind": "r16p14_stage2f_diagnostic_atlas_formal_evaluation",
             "selection_source": "calibration_only",
             "diagnostic_selection_receipt_path": str(output/"phase1/diagnostic_selection_receipt.json"),
             "diagnostic_selection_authorization_path": str(output/"phase1/diagnostic_selection_authorization.json"),
