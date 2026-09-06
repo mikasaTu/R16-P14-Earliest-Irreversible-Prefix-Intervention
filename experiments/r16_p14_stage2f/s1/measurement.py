@@ -46,6 +46,16 @@ def _as_pair(left: Any, right: Any) -> tuple[str, str]:
     return tuple(sorted((str(left), str(right))))
 
 
+def _maybe_int(value: Any) -> int | None:
+    """Keep numeric MuJoCo ids numeric while accepting name-only stubs."""
+    if value is None:
+        return None
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
 def _name_from_geom_id(env: Any, geom_id: Any) -> str:
     model = getattr(getattr(env, "sim", None), "model", None)
     resolver = getattr(model, "geom_id2name", None)
@@ -89,8 +99,8 @@ def _contact_snapshot(env: Any) -> dict[str, Any]:
             raw.append(
                 {
                     "raw_index": int(index),
-                    "geom1_id": None if left_id is None else int(left_id),
-                    "geom2_id": None if right_id is None else int(right_id),
+                    "geom1_id": _maybe_int(left_id),
+                    "geom2_id": _maybe_int(right_id),
                     "geom1_name": str(left_name),
                     "geom2_name": str(right_name),
                     "normalized_pair": list(_as_pair(left_name, right_name)),
@@ -117,8 +127,8 @@ def _contact_snapshot(env: Any) -> dict[str, Any]:
                 raw.append(
                     {
                         "raw_index": int(index),
-                        "geom1_id": None if left_id is None else int(left_id),
-                        "geom2_id": None if right_id is None else int(right_id),
+                        "geom1_id": _maybe_int(left_id),
+                        "geom2_id": _maybe_int(right_id),
                         "geom1_name": str(left_name),
                         "geom2_name": str(right_name),
                         "normalized_pair": list(_as_pair(left_name, right_name)),
@@ -312,6 +322,14 @@ def _pair_sets(record: dict[str, Any]) -> tuple[set[tuple[str, str]] | None, set
     return current_set, baseline_set
 
 
+def _is_pre_anchor_record(record: dict[str, Any]) -> bool:
+    phase = record.get("phase")
+    if phase is None:
+        task_phase = record.get("task_phase") or {}
+        phase = task_phase.get("phase")
+    return str(phase).strip().lower() in {"pre_anchor", "before_anchor", "pre-anchor"}
+
+
 def label_trace(records: Iterable[dict[str, Any]], task: str) -> dict[str, Any]:
     """Purely label release failure and a parallel pre-release topology candidate."""
     if task not in TASK_SPECS:
@@ -329,6 +347,8 @@ def label_trace(records: Iterable[dict[str, Any]], task: str) -> dict[str, Any]:
     first_candidate_index = None
     release_seen = False
     lifted_closed_indices: list[int] = []
+    ignored_pre_lift_release_indices: list[int] = []
+    ignored_pre_anchor_candidate_indices: list[int] = []
     for index, record in enumerate(rows):
         phase = record.get("task_phase") or {}
         action = record.get("action")
@@ -346,11 +366,13 @@ def label_trace(records: Iterable[dict[str, Any]], task: str) -> dict[str, Any]:
             release_transition = False
         lifted = bool(phase.get("ever_lifted", phase.get("lifted_now", record.get("ever_lifted", False))))
         if release_transition:
-            release_seen = True
-            release_indices.append(index)
-            if first_release_index is None:
-                first_release_index = index
-            if lifted:
+            if not lifted:
+                ignored_pre_lift_release_indices.append(index)
+            else:
+                release_seen = True
+                release_indices.append(index)
+                if first_release_index is None:
+                    first_release_index = index
                 object_qpos = record.get("object_qpos")
                 target_qpos = record.get("target_qpos")
                 if object_qpos is None:
@@ -359,26 +381,25 @@ def label_trace(records: Iterable[dict[str, Any]], task: str) -> dict[str, Any]:
                     release_missing.add("target_qpos")
                 if object_qpos is not None and target_qpos is not None:
                     try:
-                        distance = float(
-                            np.linalg.norm(
-                                np.asarray(object_qpos, dtype=np.float64)[:2]
-                                - np.asarray(target_qpos, dtype=np.float64)[:2]
-                            )
-                        )
+                        distance = float(np.linalg.norm(
+                            np.asarray(object_qpos, dtype=np.float64)[:2]
+                            - np.asarray(target_qpos, dtype=np.float64)[:2]
+                        ))
                         if distance > float(spec.placement_xy_tolerance):
                             release_violation_indices.append(index)
                             if first_release_violation_index is None:
                                 first_release_violation_index = index
                     except (TypeError, ValueError, IndexError):
-                        release_missing.add("object_target_qpos_numeric")
-            else:
-                release_missing.add("lift_before_release")
+                        release_missing.add("release_distance")
         gripper_closed = bool(
             phase.get("gripper_closed", current_gripper is not None and float(current_gripper) > 0.0)
         )
         if lifted and gripper_closed:
             lifted_closed_indices.append(index)
         if lifted and gripper_closed and not release_seen:
+            if _is_pre_anchor_record(record):
+                ignored_pre_anchor_candidate_indices.append(index)
+                continue
             current_pairs, baseline_pairs = _pair_sets(record)
             names = record.get("geometry_names") or {}
             object_names = set(record.get("object_geometry_names", names.get("object", [])))
@@ -431,11 +452,13 @@ def label_trace(records: Iterable[dict[str, Any]], task: str) -> dict[str, Any]:
         "violation_type": "release_outside_original_target" if release_violation_indices else None,
         "first_index": first_release_violation_index,
         "release_indices": release_indices,
+        "ignored_pre_lift_release_indices": ignored_pre_lift_release_indices,
         "release_violation_indices": release_violation_indices,
         "placement_xy_tolerance_m": float(spec.placement_xy_tolerance),
         "missing": release_missing_list,
         "time_order": {
             "first_release_index": first_release_index,
+            "ignored_pre_lift_release_indices": ignored_pre_lift_release_indices,
             "first_violation_index": first_release_violation_index,
             "lift_before_release_required": True,
             "complete": not release_missing_list,
@@ -448,6 +471,7 @@ def label_trace(records: Iterable[dict[str, Any]], task: str) -> dict[str, Any]:
         "candidate_indices": sorted(set(candidate_indices)),
         "new_pairs": candidate_pairs,
         "lifted_closed_indices": lifted_closed_indices,
+        "ignored_pre_anchor_indices": ignored_pre_anchor_candidate_indices,
         "missing": candidate_missing_list,
         "time_order": {
             "first_candidate_index": first_candidate_index,
@@ -462,6 +486,7 @@ def label_trace(records: Iterable[dict[str, Any]], task: str) -> dict[str, Any]:
         "task": task,
         "record_count": len(rows),
         "first_release_index": first_release_index,
+        "ignored_pre_lift_release_indices": ignored_pre_lift_release_indices,
         "first_candidate_index": first_candidate_index,
         "missing": sorted(set(release_missing_list + candidate_missing_list)),
         "release_based": release_based,
@@ -542,6 +567,7 @@ class SimulationStepRecorder:
         self.physics_probe_error: str | None = None
         self.trace_sha256: str | None = None
         self._pending: dict[str, Any] | None = None
+        self._closed = False
         self._patches: list[tuple[Any, str, Any]] = []
         self._install_physics_probe()
 
@@ -625,6 +651,8 @@ class SimulationStepRecorder:
         return row
 
     def close(self) -> str | None:
+        if self._closed:
+            return self.trace_sha256
         self._pending = None
         for target, name, original in reversed(self._patches):
             try:
@@ -634,6 +662,7 @@ class SimulationStepRecorder:
         self._patches.clear()
         if self.trace_path is not None:
             self.trace_sha256 = write_trace_gzip_atomic(self.trace_path, self.records)
+        self._closed = True
         return self.trace_sha256
 
     def __enter__(self) -> "SimulationStepRecorder":
