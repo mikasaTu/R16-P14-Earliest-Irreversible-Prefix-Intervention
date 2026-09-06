@@ -40,6 +40,13 @@ TASKS = (
     "put_the_cream_cheese_in_the_bowl",
     "put_the_bowl_on_the_plate",
 )
+# These are frozen by the Stage-2F runtime contract.  They are deliberately
+# explicit here: structural exclusions are accepted only when their source
+# event proves that the requested prefix lies beyond this task's horizon.
+TASK_HORIZONS = {
+    TASKS[0]: 360,
+    TASKS[1]: 320,
+}
 SEEDS = (7, 17, 29)
 SEED_TEXT = tuple(str(seed) for seed in SEEDS)
 BUDGETS = tuple((tail, action, 8) for tail in (4, 8, 16) for action in (8, 16, 32))
@@ -566,7 +573,9 @@ def _phase1_completion_metadata(
     return metadata
 
 
-def _phase1_reference_events(input_root: Path) -> tuple[list[tuple[Any, ...]], list[str]]:
+def _phase1_reference_events(
+    input_root: Path,
+) -> tuple[list[tuple[Any, ...]], list[str], dict[tuple[Any, ...], dict[str, Any]]]:
     """Build the fixed first-min(20, available) event identity source.
 
     Calibration events are the only event source for Phase 1.  Completion
@@ -574,7 +583,7 @@ def _phase1_reference_events(input_root: Path) -> tuple[list[tuple[Any, ...]], l
     """
     path = input_root / "phase0b" / "calibration_events.jsonl"
     if not path.is_file():
-        return [], [f"missing calibration event export: {path}"]
+        return [], [f"missing calibration event export: {path}"], {}
     material: list[dict[str, Any]] = []
     reasons: list[str] = []
     try:
@@ -585,9 +594,10 @@ def _phase1_reference_events(input_root: Path) -> tuple[list[tuple[Any, ...]], l
                     raise ValueError(f"line {line_number} is not an object")
                 material.append(dict(value))
     except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
-        return [], [f"cannot read calibration event export: {exc}"]
+        return [], [f"cannot read calibration event export: {exc}"], {}
 
     expected: list[tuple[Any, ...]] = []
+    source_metadata: dict[tuple[Any, ...], dict[str, Any]] = {}
     for task in TASKS:
         task_events = [
             row for row in material
@@ -638,12 +648,79 @@ def _phase1_reference_events(input_root: Path) -> tuple[list[tuple[Any, ...]], l
                         _seed(row.get("actor_seed", row.get("generator_actor_seed")), "generator_actor_seed"),
                     )
                 )
+                anchor_raw = row.get("anchor_global_step")
+                try:
+                    anchor = None if anchor_raw is None else _int(anchor_raw, "anchor_global_step")
+                except (TypeError, ValueError, OverflowError):
+                    # A missing or malformed anchor is tolerated for ordinary
+                    # rows.  It becomes a hard blocker only if a shard marks
+                    # the corresponding row structurally excluded.
+                    anchor = None
+                source_metadata[expected[-1]] = {
+                    "anchor_global_step": anchor,
+                    "task_horizon": TASK_HORIZONS.get(task),
+                }
             except (KeyError, TypeError, ValueError) as exc:
                 reasons.append(f"invalid calibration event identity for {task}: {exc}")
 
     if len(expected) != len(set(expected)):
         reasons.append("calibration event export contains duplicate Phase-1 identities")
-    return sorted(expected), reasons
+    return sorted(expected), reasons, source_metadata
+
+
+def _validate_structural_exclusions(
+    rows: Sequence[Mapping[str, Any]],
+    source_metadata: Mapping[tuple[Any, ...], Mapping[str, Any]],
+    reasons: list[str],
+) -> None:
+    """Require source evidence for every structural horizon exclusion.
+
+    The status/error pair is a producer marker, not proof of infeasibility.
+    Only rows already classified as structural exclusions are checked here;
+    ordinary complete rows keep the existing provenance path.
+    """
+    reported: set[tuple[Any, ...]] = set()
+    for row in rows:
+        if not row.get("structurally_excluded"):
+            continue
+        event_key = _event_key(row)
+        metadata = source_metadata.get(event_key)
+        if metadata is None:
+            marker = ("missing-source", event_key)
+            if marker not in reported:
+                reasons.append(
+                    "structural exclusion has no matching calibration source event "
+                    f"for {event_key!r}"
+                )
+                reported.add(marker)
+            continue
+        anchor = metadata.get("anchor_global_step")
+        if anchor is None:
+            marker = ("missing-anchor", event_key)
+            if marker not in reported:
+                reasons.append(
+                    "structural exclusion requires source anchor_global_step "
+                    f"for {event_key!r}"
+                )
+                reported.add(marker)
+            continue
+        horizon = metadata.get("task_horizon")
+        if horizon is None:
+            marker = ("missing-horizon", event_key)
+            if marker not in reported:
+                reasons.append(f"unknown frozen task horizon for structural event {event_key!r}")
+                reported.add(marker)
+            continue
+        prefix = int(row["prefix_k"])
+        if int(anchor) + prefix <= int(horizon):
+            marker = ("feasible", event_key, prefix)
+            if marker not in reported:
+                reasons.append(
+                    "structural exclusion is feasible under source anchor_global_step "
+                    f"({anchor}) + prefix_k ({prefix}) <= task horizon ({horizon}) "
+                    f"for {event_key!r}"
+                )
+                reported.add(marker)
 
 
 def _expected_grid_keys(events: Sequence[tuple[Any, ...]]) -> tuple[set[tuple[Any, ...]], set[tuple[Any, ...]]]:
@@ -854,8 +931,9 @@ def consolidate_phase1(input_root: str | Path, output_root: str | Path) -> dict[
     input_root, output_root = Path(input_root), Path(output_root)
     rows, reasons = _normalize_shards(input_root, "phase1")
     observed_events = _event_inventory(rows, "phase1", reasons)
-    source_events, source_reasons = _phase1_reference_events(input_root)
+    source_events, source_reasons, source_metadata = _phase1_reference_events(input_root)
     reasons.extend(source_reasons)
+    _validate_structural_exclusions(rows, source_metadata, reasons)
     if source_events and set(observed_events) != set(source_events):
         reasons.append("Phase-1 shard event identities do not match fixed first-min(20) calibration source")
     sample_metadata = _phase1_completion_metadata(input_root, source_events, observed_events, reasons)

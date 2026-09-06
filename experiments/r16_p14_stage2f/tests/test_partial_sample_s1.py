@@ -52,6 +52,15 @@ def _phase1_input(
                     "init_state_id": init_state_id,
                     "split": "calibration",
                     "actor_seed": 7,
+                    # The final bowl source event is the real structural
+                    # fixture: 316 + prefix_k(8) exceeds the frozen 320-step
+                    # bowl horizon.  Other source anchors are irrelevant to
+                    # this fixture because their rows are complete.
+                    "anchor_global_step": (
+                        316
+                        if structural_last_bowl and task_index == 1 and event_index == count - 1
+                        else 300
+                    ),
                 }
             )
             for recovery_seed in SEEDS:
@@ -188,6 +197,37 @@ def test_structural_horizon_rows_are_retained_but_excluded_from_support(tmp_path
     raw_reference = (tmp_path / "phase1" / "reference_rows.jsonl").read_text().splitlines()
     assert sum('"status": "BLOCKED"' in line for line in raw_core) == 324
     assert sum('"status": "BLOCKED"' in line for line in raw_reference) == 54
+
+
+def test_structural_horizon_rejects_feasible_source_anchor(tmp_path):
+    _phase1_input(tmp_path, (19, 11), structural_last_bowl=True)
+    path = tmp_path / "phase0b" / "calibration_events.jsonl"
+    rows = [json.loads(line) for line in path.read_text().splitlines()]
+    for row in rows:
+        if row["task"] == TASKS[1] and row["event_instance_id"] == "event-1-10":
+            row["anchor_global_step"] = 300
+    path.write_text("".join(json.dumps(row) + "\n" for row in rows))
+    result = consolidate_phase1(tmp_path, tmp_path)
+    assert result["status"] == "BLOCKED"
+    assert any(
+        "anchor_global_step" in reason and "task horizon" in reason
+        for reason in result["blocking_reasons"]
+    )
+    assert not (tmp_path / "phase1" / "selection_receipt.json").exists()
+
+
+def test_structural_horizon_requires_source_anchor(tmp_path):
+    _phase1_input(tmp_path, (19, 11), structural_last_bowl=True)
+    path = tmp_path / "phase0b" / "calibration_events.jsonl"
+    rows = [json.loads(line) for line in path.read_text().splitlines()]
+    for row in rows:
+        if row["task"] == TASKS[1] and row["event_instance_id"] == "event-1-10":
+            del row["anchor_global_step"]
+    path.write_text("".join(json.dumps(row) + "\n" for row in rows))
+    result = consolidate_phase1(tmp_path, tmp_path)
+    assert result["status"] == "BLOCKED"
+    assert any("source anchor_global_step" in reason for reason in result["blocking_reasons"])
+    assert not (tmp_path / "phase1" / "selection_receipt.json").exists()
 
 
 def test_completion_receipt_cannot_replace_source_identity(tmp_path):
