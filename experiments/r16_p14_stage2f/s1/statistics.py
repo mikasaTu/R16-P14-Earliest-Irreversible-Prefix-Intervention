@@ -16,6 +16,7 @@ FAMILY_B = ("fresh_h16", "rollback_1+fresh_h16")
 FAMILY_FULL = FAMILY_A + FAMILY_B
 PHASE1_PREFIXES = (2, 4, 8, 12, 16)
 PHASE2_PREFIXES = (2, 4, 6, 8, 10, 12, 14, 16)
+EXPECTED_RECOVERY_SEEDS = ("7", "17", "29")
 REQUIRED_FIELDS = (
     "event_instance_id", "task", "init_state_id", "split", "generator_actor_seed",
     "recovery_actor_seed", "operator", "prefix_k", "tail_horizon", "action_budget",
@@ -290,8 +291,8 @@ def summarize_grid(rows: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
     if not fixed:
         return _blocked("grid", "calibration", material, validation, ["no fixed operator rows"])
     _, seeds = _events(fixed, operators=OPERATORS)
-    if len(seeds) != 3:
-        return _blocked("grid", "calibration", material, validation, [f"expected exactly three recovery actor seeds; observed {seeds}"])
+    if tuple(seeds) != EXPECTED_RECOVERY_SEEDS:
+        return _blocked("grid", "calibration", material, validation, [f"expected recovery actor seeds {list(EXPECTED_RECOVERY_SEEDS)}; observed {seeds}"])
     grouped: dict[tuple[int, int, int], list[Mapping[str, Any]]] = defaultdict(list)
     for row in fixed:
         budget = _budget(row)
@@ -416,14 +417,18 @@ def _bootstrap_crossing(rows: Sequence[Mapping[str, Any]], replicates: int, seed
     grouped: dict[str, dict[str, list[Mapping[str, Any]]]] = defaultdict(lambda: defaultdict(list))
     for row in selected:
         grouped[_text(row["task"])][_text(row["init_state_id"])].append(row)
-    clusters = {row_task: {init: (float(np.mean([r["crossing_A"] for r in items])), float(np.mean([r["crossing_B"] for r in items]))) for init, items in by_init.items()} for row_task, by_init in grouped.items()}
-    def value(sample: Mapping[str, Sequence[tuple[float, float]]]) -> float:
-        values = []
-        for pairs in sample.values():
-            if pairs:
-                a, b = np.mean([pair[0] for pair in pairs]), np.mean([pair[1] for pair in pairs])
-                values.append(min(float(a), float(b)))
-        return float(np.mean(values)) if values else float("nan")
+    # Keep all event rows inside a sampled (task, init_state_id) cluster.  The
+    # point estimand is the event mean; a cluster contributes all of its event
+    # rows when sampled, so the bootstrap CI estimates the same event-level
+    # quantity while respecting cluster dependence.
+    clusters = {row_task: dict(by_init) for row_task, by_init in grouped.items()}
+    def value(sample: Mapping[str, Sequence[Sequence[Mapping[str, Any]]]]) -> float:
+        sampled_rows = [row for cluster_rows in sample.values() for cluster in cluster_rows for row in cluster]
+        if not sampled_rows:
+            return float("nan")
+        a = float(np.mean([float(row["crossing_A"]) for row in sampled_rows]))
+        b = float(np.mean([float(row["crossing_B"]) for row in sampled_rows]))
+        return min(a, b)
     point = value({row_task: list(by_init.values()) for row_task, by_init in clusters.items()})
     rng = np.random.default_rng(seed)
     draws = np.empty(replicates, dtype=float)
@@ -469,7 +474,7 @@ def _crossing_scope(rows: Sequence[Mapping[str, Any]], task: str | None, replica
     rate_a, rate_b = _mean(a), _mean(b)
     bootstrap_rows = [{**row, "crossing_A": x, "crossing_B": y} for row, x, y in zip(selected, a, b)]
     bootstrap = _bootstrap_crossing(bootstrap_rows, replicates, seed, task, include_draws=include_bootstrap_draws)
-    result = {"both_defined": len(selected), "defined_event_count": len(selected), "missing_both": missing_both, "missing_one": missing_one, "missing_A": missing_a, "missing_B": missing_b, "crossing_A_rate": rate_a, "crossing_B_rate": rate_b, "minority_crossing_rate": min(rate_a, rate_b) if rate_a is not None and rate_b is not None else None, "spearman": _spearman([row["boundary_A"] for row in selected], [row["boundary_B"] for row in selected]), "spearman_bootstrap": _bootstrap_spearman(selected, replicates, seed + 1, task), "bootstrap": bootstrap, "bootstrap_unit": ["task", "init_state_id"], "actor_aggregation_before_boundary": True, "prefix_rows_are_not_bootstrap_units": True}
+    result = {"both_defined": len(selected), "defined_event_count": len(selected), "missing_both": missing_both, "missing_one": missing_one, "missing_A": missing_a, "missing_B": missing_b, "crossing_A_rate": rate_a, "crossing_B_rate": rate_b, "minority_crossing_rate": min(rate_a, rate_b) if rate_a is not None and rate_b is not None else None, "spearman": _spearman([row["boundary_A"] for row in selected], [row["boundary_B"] for row in selected]), "spearman_bootstrap": _bootstrap_spearman(selected, replicates, seed + 1, task), "bootstrap": bootstrap, "bootstrap_unit": ["task", "init_state_id"], "bootstrap_point_estimand": "event mean after actor aggregation; sampled init clusters retain all event rows", "actor_aggregation_before_boundary": True, "prefix_rows_are_not_bootstrap_units": True}
     if include_bootstrap_draws:
         result["_bootstrap_draws"] = bootstrap.pop("_draws", np.asarray([], dtype=float))
     return result
@@ -481,8 +486,9 @@ def _family_success(events: Sequence[Mapping[str, Any]], operators: Sequence[str
         arms, oracles = _prefix_arm_means(event, PHASE2_PREFIXES, operators)
         per_event.append({"task": event["task"], "init_state_id": event["init_state_id"], "event_instance_id": event["event_instance_id"], "oracle": _mean(oracles.values()), "arm_means": {op: _mean(arms[prefix][op] for prefix in PHASE2_PREFIXES if op in arms.get(prefix, {})) for op in operators}, "per_prefix_oracle": [{"prefix_k": int(prefix), "oracle": value} for prefix, value in sorted(oracles.items())]})
     def scope(selected: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
-        clusters: dict[str, list[Mapping[str, Any]]] = defaultdict(list)
-        for row in selected: clusters[_text(row["init_state_id"])].append(row)
+        clusters: dict[tuple[str, str], list[Mapping[str, Any]]] = defaultdict(list)
+        for row in selected:
+            clusters[(_text(row["task"]), _text(row["init_state_id"]))].append(row)
         cluster_rows = [{"oracle": _mean(row["oracle"] for row in cluster if row["oracle"] is not None), "arm_means": {op: _mean(row["arm_means"][op] for row in cluster if row["arm_means"].get(op) is not None) for op in operators}} for cluster in clusters.values()]
         arms = {op: _mean(row["arm_means"][op] for row in cluster_rows if row["arm_means"].get(op) is not None) for op in operators}
         oracle = _mean(row["oracle"] for row in cluster_rows if row["oracle"] is not None)
@@ -508,24 +514,24 @@ def _split_half(events: Sequence[Mapping[str, Any]], family: str, operators: Seq
         for part in partitions:
             draws = part["by_task"].get(task, {}).get("_bootstrap_draws", ())
             bootstrap_by_task[task].extend(float(value) for value in draws if math.isfinite(float(value)))
-        by_task[task] = {"point_estimates": values, "point_p95": float(np.quantile(values, .95)) if values else None, "bootstrap_null_p95": (float(np.quantile(bootstrap_by_task[task], .95)) if bootstrap_by_task[task] else None), "partition_count": len(values)}
+        by_task[task] = {"point_estimates": values, "point_p95": float(np.quantile(values, .95)) if values else None, "bootstrap_null_p95": (float(np.quantile(bootstrap_by_task[task], .95)) if bootstrap_by_task[task] else None), "bootstrap_null_draws": list(bootstrap_by_task[task]), "partition_count": len(values)}
         for part in partitions:
             part["by_task"].get(task, {}).pop("_bootstrap_draws", None)
     all_values = [value for item in by_task.values() for value in item["point_estimates"]]
     pooled_bootstrap = [value for values in bootstrap_by_task.values() for value in values]
-    return {"family": family, "partitions": partitions, "by_task": by_task, "pooled_point_estimates": all_values, "pooled_point_p95": float(np.quantile(all_values, .95)) if all_values else None, "pooled_bootstrap_null_p95": (float(np.quantile(pooled_bootstrap, .95)) if pooled_bootstrap else None), "method": "unique singleton-vs-complement partitions; singleton uses 1/1 and pair uses 2/2; reverse direction is retained in the same partition and is not a duplicate partition"}
+    return {"family": family, "partitions": partitions, "by_task": by_task, "pooled_point_estimates": all_values, "pooled_point_p95": float(np.quantile(all_values, .95)) if all_values else None, "pooled_bootstrap_null_p95": (float(np.quantile(pooled_bootstrap, .95)) if pooled_bootstrap else None), "pooled_bootstrap_null_draws": pooled_bootstrap, "method": "unique singleton-vs-complement partitions; singleton uses 1/1 and pair uses 2/2; reverse direction is retained in the same partition and is not a duplicate partition"}
 
 
 def _matrix_reasons(events: Sequence[Mapping[str, Any]], seeds: Sequence[str], observed_prefixes: Sequence[int]) -> list[str]:
     reasons = []
     if set(observed_prefixes) != set(PHASE2_PREFIXES): reasons.append(f"expected Phase-2 prefixes {list(PHASE2_PREFIXES)}; observed {list(observed_prefixes)}")
-    if len(seeds) != 3: reasons.append(f"expected exactly three recovery actor seeds; observed {list(seeds)}")
+    if tuple(seeds) != EXPECTED_RECOVERY_SEEDS: reasons.append(f"expected recovery actor seeds {list(EXPECTED_RECOVERY_SEEDS)}; observed {list(seeds)}")
     for event in events:
         for prefix in PHASE2_PREFIXES:
             pdata = event.get("values", {}).get(prefix, {})
             for op in OPERATORS:
                 actor_values = pdata.get(op, {})
-                if any(actor_seed not in actor_values for actor_seed in seeds) or len(actor_values) != len(seeds):
+                if set(actor_values) != set(EXPECTED_RECOVERY_SEEDS):
                     reasons.append(f"incomplete Phase-2 cell {event['task']}/{event['init_state_id']}/{event['event_instance_id']} k={prefix} op={op}")
     return reasons
 
@@ -559,10 +565,10 @@ def analyze_crossing(rows: Iterable[Mapping[str, Any]], split: str = "evaluation
         a, b = half_a["by_task"].get(task, {}), half_b["by_task"].get(task, {})
         values = list(a.get("point_estimates", [])) + list(b.get("point_estimates", []))
         point_p95 = float(np.quantile(values, .95)) if values else None
-        bootstrap_candidates = [value for value in (a.get("bootstrap_null_p95"), b.get("bootstrap_null_p95")) if value is not None]
-        bootstrap_p95 = max(bootstrap_candidates) if bootstrap_candidates else None
-        null_by_task[task] = {"family_A_point_p95": a.get("point_p95"), "family_B_point_p95": b.get("point_p95"), "point_p95": point_p95, "bootstrap_null_p95": bootstrap_p95, "p95": max(value for value in (point_p95, bootstrap_p95) if value is not None) if point_p95 is not None or bootstrap_p95 is not None else None, "point_estimates": values, "partition_count": len(values)}
-    split_half_null = {"family_A": half_a, "family_B": half_b, "by_task": null_by_task, "method": "cluster bootstrap is performed inside each unique 1-vs-2 actor partition; finite partition point estimates form the within-family null and reverse directions are not duplicated"}
+        bootstrap_draws = list(a.get("bootstrap_null_draws", ())) + list(b.get("bootstrap_null_draws", ()))
+        bootstrap_p95 = float(np.quantile(bootstrap_draws, .95)) if bootstrap_draws else None
+        null_by_task[task] = {"family_A_point_p95": a.get("point_p95"), "family_B_point_p95": b.get("point_p95"), "point_p95": point_p95, "bootstrap_null_p95": bootstrap_p95, "p95": bootstrap_p95, "bootstrap_null_draws": bootstrap_draws, "point_estimates": values, "partition_count": len(values), "null_draw_count": len(bootstrap_draws)}
+    split_half_null = {"family_A": half_a, "family_B": half_b, "by_task": null_by_task, "method": "for each task, merge the three 10000-draw cluster-bootstrap distributions from family A with the three from family B and take one 95th percentile; partition point estimates are descriptive only, and reverse directions are not duplicated"}
     family_success = {"A": _family_success(events, FAMILY_A), "B": _family_success(events, FAMILY_B), "full": _family_success(events, FAMILY_FULL)}
     reference_ops = sorted({_text(row["operator"]) for row in usable if _text(row["operator"]) not in OPERATORS}, key=_sort)
     references = _reference_summary(usable, reference_ops, PHASE2_PREFIXES)

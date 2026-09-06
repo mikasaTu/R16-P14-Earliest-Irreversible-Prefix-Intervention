@@ -16,6 +16,7 @@ from s1.statistics import (  # noqa: E402
     analyze_crossing,
     select_budget,
     summarize_grid,
+    _crossing_scope,
 )
 
 
@@ -25,7 +26,7 @@ def _row(
     event=0,
     init=None,
     split="evaluation",
-    recovery_seed=0,
+    recovery_seed=7,
     operator="fresh_h4",
     prefix=2,
     tail=4,
@@ -66,7 +67,7 @@ def _crossing_rows(kind="crossing"):
             for prefix in PHASE2_PREFIXES:
                 for operator in OPERATORS:
                     family_boundary = boundary_a if operator in FAMILY_A else boundary_b
-                    for recovery_seed in (0, 1, 2):
+                    for recovery_seed in (7, 17, 29):
                         safe = float(
                             family_boundary is not None and prefix <= family_boundary
                         )
@@ -78,6 +79,33 @@ def _crossing_rows(kind="crossing"):
                                 operator=operator,
                                 prefix=prefix,
                                 safe=safe,
+                            )
+                        )
+    return rows
+
+
+def _split_null_counterexample_rows():
+    """Make the family bootstrap tails differ from the merged null tail."""
+    rows = []
+    for task in ("task_a", "task_b"):
+        for event in range(20):
+            for operator in OPERATORS:
+                for recovery_seed in (7, 17, 29):
+                    if operator in FAMILY_A and event < 2:
+                        bound = ({7: 16, 17: 4, 29: 4} if event == 0 else {7: 4, 17: 16, 29: 16})[recovery_seed]
+                    elif operator in FAMILY_B and event < 10:
+                        bound = ({7: 16, 17: 4, 29: 4} if event % 2 == 0 else {7: 4, 17: 16, 29: 16})[recovery_seed]
+                    else:
+                        bound = 8
+                    for prefix in PHASE2_PREFIXES:
+                        rows.append(
+                            _row(
+                                task=task,
+                                event=event,
+                                recovery_seed=recovery_seed,
+                                operator=operator,
+                                prefix=prefix,
+                                safe=float(prefix <= bound),
                             )
                         )
     return rows
@@ -96,7 +124,7 @@ def _grid_rows(split="calibration"):
             for event in range(2):
                 for prefix in PHASE1_PREFIXES:
                     for operator in OPERATORS:
-                        for recovery_seed in (0, 1, 2):
+                        for recovery_seed in (7, 17, 29):
                             value = arm_values[operator] - (0.1 if budget_index else 0.0)
                             rows.append(
                                 _row(
@@ -187,7 +215,55 @@ def test_undefined_boundaries_are_reported_separately():
 
 def test_crossing_missing_matrix_cell_is_blocked():
     rows = _crossing_rows()
-    rows = [row for row in rows if not (row["event_instance_id"].endswith("task_a-0") and row["prefix_k"] == 2 and row["operator"] == "fresh_h4" and row["recovery_actor_seed"] == 1)]
+    rows = [row for row in rows if not (row["event_instance_id"].endswith("task_a-0") and row["prefix_k"] == 2 and row["operator"] == "fresh_h4" and row["recovery_actor_seed"] == 17)]
     result = analyze_crossing(rows, replicates=10)
     assert result["status"] == "BLOCKED"
     assert any("incomplete Phase-2 cell" in reason for reason in result["blocking_reasons"])
+
+
+def test_crossing_bootstrap_keeps_event_mean_with_unequal_cluster_sizes():
+    rows = []
+    for init_state_id, count, boundary_a, boundary_b in (
+        ("init-a", 3, 16, 4),
+        ("init-b", 1, 4, 16),
+    ):
+        for event in range(count):
+            rows.append(
+                {
+                    "task": "task_a",
+                    "init_state_id": init_state_id,
+                    "event_instance_id": f"{init_state_id}-{event}",
+                    "boundary_A": boundary_a,
+                    "boundary_B": boundary_b,
+                }
+            )
+    result = _crossing_scope(rows, "task_a", replicates=100, seed=216214)
+    assert result["minority_crossing_rate"] == pytest.approx(.25)
+    assert result["bootstrap"]["estimate"] == pytest.approx(.25)
+    assert result["bootstrap"]["cluster_count"] == 2
+
+
+def test_split_half_null_merges_family_draws_once_and_excludes_point_p95():
+    result = analyze_crossing(_split_null_counterexample_rows(), replicates=200, seed=216214)
+    null = result["split_half_null"]["by_task"]["task_a"]
+    family_a = result["split_half_null"]["family_A"]["by_task"]["task_a"]
+    family_b = result["split_half_null"]["family_B"]["by_task"]["task_a"]
+    assert len(null["bootstrap_null_draws"]) == 6 * 200
+    assert null["p95"] == pytest.approx(0.20)
+    assert null["p95"] == pytest.approx(
+        __import__("numpy").quantile(null["bootstrap_null_draws"], .95)
+    )
+    assert null["p95"] != max(
+        family_a["bootstrap_null_p95"],
+        family_b["bootstrap_null_p95"],
+        null["point_p95"],
+    )
+
+
+def test_wrong_recovery_seed_triplet_is_blocked():
+    rows = _crossing_rows()
+    for row in rows:
+        row["recovery_actor_seed"] = {7: 0, 17: 1, 29: 2}[row["recovery_actor_seed"]]
+    result = analyze_crossing(rows, replicates=10)
+    assert result["status"] == "BLOCKED"
+    assert any("expected recovery actor seeds" in reason for reason in result["blocking_reasons"])
