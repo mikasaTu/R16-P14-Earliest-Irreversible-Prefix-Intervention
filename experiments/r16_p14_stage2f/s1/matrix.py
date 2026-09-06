@@ -28,6 +28,7 @@ REFERENCES = (
 )
 _REPO_ROOT = Path(__file__).resolve().parents[3]
 _PROTOCOL = _REPO_ROOT / "experiments/r16_p14_stage2f/DIAGNOSTIC_ATLAS_CONTINUATION.md"
+_APPROVED_PROTOCOL_SHA256 = "2d14427c2391422dd372b0528d6d784d1066d8d059e1405597cfb1954f260c6a"
 _DIAGNOSTIC_RECEIPT_REL = "phase1/diagnostic_selection_receipt.json"
 
 
@@ -110,26 +111,85 @@ def selected_budget(root, *, diagnostic_atlas=False):
     return data["selected_budget"]
 
 
+def _recompute_diagnostic_receipt(summary_path, summary_sha256, protocol_sha256):
+    """Recompute calibration selection from the bound summary before eval."""
+    try:
+        from .diagnostic_selection import build_diagnostic_selection_receipt
+    except ImportError as exc:
+        raise RuntimeError(
+            "diagnostic selection implementation missing from payload"
+        ) from exc
+    try:
+        summary = json.loads(Path(summary_path).read_text())
+    except (OSError, json.JSONDecodeError) as exc:
+        raise RuntimeError("diagnostic calibration summary unreadable") from exc
+    try:
+        return build_diagnostic_selection_receipt(
+            summary,
+            input_summary_sha256=summary_sha256,
+            input_summary_path=summary_path,
+            diagnostic_continuation_doc_sha256=protocol_sha256,
+        )
+    except Exception as exc:
+        raise RuntimeError("diagnostic calibration selection recomputation failed") from exc
+
+
+def _assert_diagnostic_recomputed(receipt, recomputed):
+    fields = (
+        "status",
+        "selection_source",
+        "confirmatory",
+        "input_sha256",
+        "protocol_sha256",
+        "selected_budget",
+        "original_rank",
+        "all_candidates",
+        "selected_candidate",
+        "k2_numeric_status",
+        "fallback_used",
+    )
+    for field in fields:
+        if recomputed.get(field) != receipt.get(field):
+            raise RuntimeError(
+                f"diagnostic selection recomputation mismatch: {field}"
+            )
+
+
 def _diagnostic_binding(root):
-    """Verify the independent diagnostic proof before opening evaluation."""
+    """Verify proof and recompute calibration selection before evaluation."""
     root = Path(root)
     receipt = root / _DIAGNOSTIC_RECEIPT_REL
     authorization = root / "phase1/diagnostic_selection_authorization.json"
     if not receipt.is_file() or not authorization.is_file():
         raise RuntimeError("evaluation OPEN_DENY: diagnostic selection not committed")
+    protocol_sha256 = file_sha(_PROTOCOL)
+    if protocol_sha256 != _APPROVED_PROTOCOL_SHA256:
+        raise RuntimeError("diagnostic protocol SHA256 is not the approved document")
     auth = json.loads(authorization.read_text())
     from .selection import validate_diagnostic_receipt, verify_commit_proof
 
     verify_commit_proof(receipt, auth, diagnostic=True)
     data = validate_diagnostic_receipt(
         json.loads(receipt.read_text()),
-        protocol_sha256=file_sha(_PROTOCOL),
+        protocol_sha256=protocol_sha256,
     )
+    summary_path = root / "phase1/summary.json"
+    if not summary_path.is_file():
+        raise RuntimeError("evaluation OPEN_DENY: calibration summary missing")
+    summary_sha256 = file_sha(summary_path)
+    if data.get("input_sha256") != summary_sha256:
+        raise RuntimeError("diagnostic input summary SHA256 mismatch")
+    if data.get("input_summary_sha256", summary_sha256) != summary_sha256:
+        raise RuntimeError("diagnostic input summary alias SHA256 mismatch")
+    recomputed = _recompute_diagnostic_receipt(
+        summary_path, summary_sha256, protocol_sha256
+    )
+    _assert_diagnostic_recomputed(data, recomputed)
     return {
         "receipt_sha256": file_sha(receipt),
         "receipt_path": _DIAGNOSTIC_RECEIPT_REL,
-        "input_sha256": data["input_sha256"],
-        "protocol_sha256": data["protocol_sha256"],
+        "input_sha256": summary_sha256,
+        "protocol_sha256": protocol_sha256,
         "original_rank": int(data["original_rank"]),
         "selected_budget": dict(data["selected_budget"]),
     }
@@ -138,6 +198,11 @@ def _diagnostic_binding(root):
 def diagnostic_selected_budget(root):
     """Admit only a valid, independently sealed diagnostic selection."""
     return _diagnostic_binding(root)["selected_budget"]
+
+
+def selected_diagnostic_budget(root):
+    """Stable alias used by diagnostic statistics/atlas callers."""
+    return diagnostic_selected_budget(root)
 
 
 def compatible_runtime_row(row, module_hashes):
