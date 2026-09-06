@@ -39,20 +39,20 @@ release-outside-target 和 prerelease topology 是 collector 在 collector.py:88
 
 ## 真实样本与 trace 证据
 
-以下四条 trace 均来自 calibration，且已核对 episode 记录的 trace SHA 与文件 SHA；其余 trace 不纳入本报告。
+以下四条 trace 均来自 calibration，trace SHA 已由 episode 记录并核对；完整 gzip 行数采用验收时直接计数，labels_record_count 是 collector label_trace 的记录数。对 structural_anchor_found=true 的 episode（包括 clean success），label scope 从内部 anchor 开始（post-anchor）；成功 episode 不导出 anchor 坐标，因此坐标可能 unknown。只有无 structural anchor 的 episode 才是 full episode。其余 trace 不纳入本报告。
 
-- put_the_cream_cheese_in_the_bowl/init023__actor7.json — qualified；steps=360，anchor=131，records=5954，trace SHA256 0a5bab413b6688458df854bbeb3988f5958982b309bf18e68f3722ac5274af5e。release violation=False，topology candidate=True。
+- put_the_cream_cheese_in_the_bowl/init023__actor7.json — qualified；steps=360，anchor=131，trace_record_count=9360，labels_record_count=5954（post-anchor），trace SHA256 0a5bab413b6688458df854bbeb3988f5958982b309bf18e68f3722ac5274af5e。release violation=False，topology candidate=True。
   - event provenance: checkpoint 821177a82cc470e108082fd3c0f6913983236a2fdf142de2fe51fc37c44240ca，init-pool a41be3638b78409a15646ebd2f81c818a7773937c93951baebd25c6621d66b69，init state bd141f60d0f58925f4e1e55b1b15e817cd5051f24e6193d4aa0ceeefe9e8e662，actor run stage2a_shared_multitask_seed_7。
-- put_the_cream_cheese_in_the_bowl/init031__actor17.json — clean success；steps=89，anchor=None，records=650，trace SHA256 d36620094041e9977042aa758edb9f64e447dc56a8bf7cf358e014bd11ae0aa0。release violation=False，topology candidate=False。
-- put_the_cream_cheese_in_the_bowl/init011__actor7.json — failure without anchor；steps=360，anchor=None，records=9360，trace SHA256 474618350b1a6eda082fb982dfded7941aa4d57c41bf2ce30b6c176961ab3b60。release violation=False，topology candidate=False。
-- put_the_bowl_on_the_plate/init017__actor29.json — qualified；steps=320，anchor=146，records=4524，trace SHA256 3a387fb3afa1efb5ab099ff2897d7b0a13bb7680b3cd91850e995938b3fffa51。release violation=True，topology candidate=True。
+- put_the_cream_cheese_in_the_bowl/init031__actor17.json — clean success；steps=89，anchor=unknown（structural anchor true；成功行不导出坐标），trace_record_count=2314，labels_record_count=650（post-anchor），trace SHA256 d36620094041e9977042aa758edb9f64e447dc56a8bf7cf358e014bd11ae0aa0。release violation=False，topology candidate=False。
+- put_the_cream_cheese_in_the_bowl/init011__actor7.json — failure without anchor；steps=360，anchor=None，trace_record_count=9360，labels_record_count=9360（full episode），trace SHA256 474618350b1a6eda082fb982dfded7941aa4d57c41bf2ce30b6c176961ab3b60。release violation=False，topology candidate=False。
+- put_the_bowl_on_the_plate/init017__actor29.json — qualified；steps=320，anchor=146，trace_record_count=8320，labels_record_count=4524（post-anchor），trace SHA256 3a387fb3afa1efb5ab099ff2897d7b0a13bb7680b3cd91850e995938b3fffa51。release violation=True，topology candidate=True。
   - event provenance: checkpoint 0cf34a3e535525345306a2b322aae3b1bd6ebd6cd71dc653e2a91393e2b79d1a，init-pool bc30ad0916e950b3fed126a03d36f552484761f4ef8d1f9269c1ed21fe177e2b，init state deac07ec613e070bf70500528854d3f91494908c88acec6df8146db0a5ca80e6，actor run stage2a_shared_multitask_seed_29。
 
 cream init023/actor7 展示了 anchor 但未 release violation 也可 qualified；cream init011/actor7 展示了完整 horizon 但无 anchor，且其 ignored pre-lift release 不会被误标为 violation；bowl init017/actor29 展示了 anchor、topology candidate 和 release violation 同时出现。
 
 ## lineage 与限制
 
-Calibration rows 的 source_commit 全部为 6b788a0764904e11e022c4330a74fa3e009c9a33，runtime receipt 全部为 3d7b252885b4047fb93140c305a3ef4a1d3ec9aa450d90341befd2b7e26a5e44。qualified event 在两个 task 中对同一 actor seed 使用同一 checkpoint：seed 7=821177…21604，seed 17=83ee61…21604，seed 29=0cf34a…79d1a；task 各自 init pool hash 保持 task 内固定。该 provenance 支持“同一固定 actor/checkpoint/runtime 下的产出统计”，不证明 actor 被重新训练，也不把旧 infrastructure episode 与新正式 episode 混作性能改进。
+Calibration rows 的 source_commit 全部为 6b788a0764904e11e022c4330a74fa3e009c9a33，runtime receipt 全部为 3d7b252885b4047fb93140c305a3ef4a1d3ec9aa450d90341befd2b7e26a5e44。qualified event 在两个 task 中对同一 actor seed 使用同一 checkpoint：seed 7=821177…4240ca，seed 17=83ee61…21604，seed 29=0cf34a…79d1a；task 各自 init pool hash 保持 task 内固定。该 provenance 支持“同一固定 actor/checkpoint/runtime 下的产出统计”，不证明 actor 被重新训练，也不把旧 infrastructure episode 与新正式 episode 混作性能改进。
 
 对 no-anchor failures，代码和 episode 元数据只能保证“在 fixed horizon 内没有满足 event 条件”；由于没有 anchor/event，本分析无法把缺失归因到 grasp、两步 lift、previous gripper 或其他单一条件，细分保持 unknown。
 

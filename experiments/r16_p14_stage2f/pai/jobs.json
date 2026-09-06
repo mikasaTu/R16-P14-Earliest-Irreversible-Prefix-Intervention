@@ -1,5 +1,17 @@
 {
-  "schema_version": 1,
+  "blackout_current_compliance": "ALL_FOUR_INITIAL_JOBS_STOPPED",
+  "blackout_enforcement_status": "STOP_AND_RESUME_CONTROLLERS_RUNNING_WITH_TESTED_PRECREATE_ADMISSION",
+  "blackout_timezone": "Asia/Shanghai",
+  "blackout_windows": [
+    "09:30-09:40",
+    "19:30-19:40"
+  ],
+  "browser_not_used": "fifo_not_applicable",
+  "conservative_gpu_hours_upper_bound": 1.4730423400000001,
+  "cpu_per_node_max": 88,
+  "dev14_gpu_hours_reserved_upper_bound": 0.5,
+  "external_controller_pid": 19055,
+  "gpu_hours_limit": 20,
   "jobs": [
     {
       "application_fatal_error": true,
@@ -166,9 +178,7 @@
       "source_tree": "f13e12a2b006632e48e5aa64ac2c53e30928de51",
       "status": "Succeeded",
       "task": "put_the_cream_cheese_in_the_bowl",
-      "terminal_at_utc": "2026-09-06T19:39:18Z",
-      "verified_episode_count": 300,
-      "verified_source_runtime_and_trace_hashes": true
+      "terminal_at_utc": "2026-09-06T19:39:18Z"
     },
     {
       "artifact_dir": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/pai_runs/r16p14-s1-collect-t1-20260907-r3",
@@ -198,37 +208,125 @@
       "source_tree": "f13e12a2b006632e48e5aa64ac2c53e30928de51",
       "status": "Succeeded",
       "task": "put_the_bowl_on_the_plate",
-      "terminal_at_utc": "2026-09-06T19:40:20Z",
-      "verified_episode_count": 300,
-      "verified_source_runtime_and_trace_hashes": true
+      "terminal_at_utc": "2026-09-06T19:40:20Z"
+    },
+    {
+      "artifact_dir": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/pai_runs/r16p14-s1-grid-t0-20260907-r1",
+      "canonical_exit_code": 0,
+      "canonical_submission_state": "submitted_verified",
+      "created_at_utc": "2026-09-06T19:46:26.271524+00:00",
+      "gpus": 2,
+      "job_id": "dlc14obea2cugtbf",
+      "persisted_completion_verified": false,
+      "phase": "grid",
+      "readback": {
+        "Duration": 2333,
+        "GmtCreateTime": "2026-09-06T19:46:27Z",
+        "GmtFinishTime": null,
+        "GmtRunningTime": "2026-09-06T19:47:22Z",
+        "JobId": "dlc14obea2cugtbf",
+        "OversoldType": "AcceptQuotaOverSold",
+        "ResourceId": "quota1ssrabud0bh",
+        "Status": "Running",
+        "UseOversoldResource": true,
+        "placement_source": "exact_openapi_ListJobs"
+      },
+      "readback_error_streak": 0,
+      "root_run_id": "r16p14-s1-grid-t0-20260907-r1",
+      "run_id": "r16p14-s1-grid-t0-20260907-r1",
+      "source_commit": "a0888d751117cbf7c5a73080d1ee1f421689e8bf",
+      "source_tree": "58e48103f8459685108cb9ac89734f30e9b3519d",
+      "status": "Running",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "artifact_dir": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/pai_runs/r16p14-s1-grid-t1-20260907-r1",
+      "canonical_exit_code": 0,
+      "canonical_submission_state": "submitted_verified",
+      "control_readback_error": "Refused",
+      "created_at_utc": "2026-09-06T19:48:33.749076+00:00",
+      "gpus": 2,
+      "job_id": "dlc4vt6h6pcw6jzk",
+      "persisted_completion_verified": false,
+      "phase": "grid",
+      "readback": {
+        "Duration": 2205,
+        "GmtCreateTime": "2026-09-06T19:48:35Z",
+        "GmtFinishTime": null,
+        "GmtRunningTime": "2026-09-06T19:49:30Z",
+        "JobId": "dlc4vt6h6pcw6jzk",
+        "OversoldType": "AcceptQuotaOverSold",
+        "ResourceId": "quota1ssrabud0bh",
+        "Status": "Running",
+        "UseOversoldResource": true,
+        "placement_source": "exact_openapi_ListJobs"
+      },
+      "readback_error_streak": 0,
+      "root_run_id": "r16p14-s1-grid-t1-20260907-r1",
+      "run_id": "r16p14-s1-grid-t1-20260907-r1",
+      "source_commit": "a0888d751117cbf7c5a73080d1ee1f421689e8bf",
+      "source_tree": "58e48103f8459685108cb9ac89734f30e9b3519d",
+      "status": "Running",
+      "task": "put_the_bowl_on_the_plate"
     }
   ],
-  "submission_attempts": 5,
-  "total_gpu_hours": null,
-  "resource_intent": "exp-robot-oversold-r16p14-stage2f-2gpu; exact idle placement required before each job works",
+  "latest_control_snapshot": {
+    "conservative_gpu_hours": 3.831336143333333,
+    "dev14_gpu_hours_reserved_upper_bound": 0.5,
+    "jobs": [
+      {
+        "job_id": "dlcfesoi2j9tp8y5",
+        "status": "Stopped"
+      },
+      {
+        "job_id": "dlc189mgayv5nwjf",
+        "status": "Stopped"
+      },
+      {
+        "job_id": "dlcwm6bd6bomjggq",
+        "status": "Stopped"
+      },
+      {
+        "job_id": "dlc1qayvbetb16ji",
+        "status": "Stopped"
+      },
+      {
+        "job_id": "dlc1hzmadm185c68",
+        "status": "Succeeded"
+      },
+      {
+        "job_id": "dlc1rz7o5mf1vajn",
+        "status": "Succeeded"
+      },
+      {
+        "job_id": "dlc14obea2cugtbf",
+        "status": "Running"
+      },
+      {
+        "job_id": "dlc4vt6h6pcw6jzk",
+        "status": "Running"
+      }
+    ],
+    "pid": 648656,
+    "reason": null,
+    "resume_allowed": true,
+    "stop_job_ids": [],
+    "time": "2026-09-06T20:25:20.939322+00:00"
+  },
+  "latest_readback_utc": "2026-09-06T19:49:58.469204+00:00",
   "max_concurrent_jobs": 2,
   "max_gpu_per_job": 2,
-  "gpu_hours_limit": 20,
-  "cpu_per_node_max": 88,
   "memory_per_node_max_user": "1.4 TB",
-  "blackout_timezone": "Asia/Shanghai",
-  "blackout_windows": [
-    "09:30-09:40",
-    "19:30-19:40"
-  ],
-  "blackout_enforcement_status": "STOP_AND_RESUME_CONTROLLERS_RUNNING_WITH_TESTED_PRECREATE_ADMISSION",
-  "blackout_current_compliance": "ALL_FOUR_INITIAL_JOBS_STOPPED",
+  "resource_intent": "exp-robot-oversold-r16p14-stage2f-2gpu; exact idle placement required before each job works",
   "resubmission_policy": "Before any future submission, require tested exact-JobId stop controller and resume only after blackout end.",
+  "resumer_pid": 4110297,
+  "schema_version": 1,
+  "stage": "FORMAL_COLLECTION_RUNTIME_COMPATIBILITY_REPAIR",
+  "submission_attempts": 5,
   "superseded_cleanup": {
-    "eligible_targets": [],
     "count": 0,
+    "eligible_targets": [],
     "status": "ZERO_TARGET_NO_SUBMISSION"
   },
-  "browser_not_used": "fifo_not_applicable",
-  "external_controller_pid": 19055,
-  "dev14_gpu_hours_reserved_upper_bound": 0.5,
-  "conservative_gpu_hours_upper_bound": 1.30814029,
-  "resumer_pid": 4110297,
-  "stage": "FORMAL_COLLECTION_RUNTIME_COMPATIBILITY_REPAIR",
-  "latest_readback_utc": "2026-09-06T19:42:28.464175+00:00"
+  "total_gpu_hours": null
 }
