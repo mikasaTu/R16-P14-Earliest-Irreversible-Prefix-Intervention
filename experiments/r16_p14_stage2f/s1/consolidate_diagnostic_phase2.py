@@ -47,6 +47,10 @@ DIAGNOSTIC_SHA_FIELDS = (
     "selection_receipt_sha256",
     "diagnostic_selection_sha256",
 )
+DEFAULT_ALLOWED_SOURCE_COMMITS = frozenset({
+    "a0888d751117cbf7c5a73080d1ee1f421689e8bf",
+    "93872b41ad48d24e1c6cb46d8c46690dae359b62",
+})
 
 
 def _issue(reasons: list[str], message: str) -> None:
@@ -298,11 +302,27 @@ def _source_events(
                 payload = _read_json(path)
                 if not isinstance(payload, Mapping):
                     raise ValueError("episode is not an object")
-                event = dict(_event_from_payload(payload))
-                if _text(event.get("split")) != "evaluation":
+                # Match matrix.load_events: all episode records are checked for
+                # task/status first, but only qualified failures expose an event
+                # to the diagnostic atlas.  A normal non-qualified episode has
+                # event=None and must not become a fabricated source event.
+                if _text(payload.get("task")) != task or payload.get("status") != "COMPLETE":
+                    raise ValueError("sealed evaluation task/status binding mismatch")
+                if _text(payload.get("split")) != "evaluation":
                     continue
-                if _text(event.get("task")) != task:
-                    raise ValueError("sealed evaluation task/path mismatch")
+                if payload.get("qualified_natural_failure") is not True:
+                    continue
+                nested = payload.get("event")
+                if not isinstance(nested, Mapping):
+                    raise ValueError("qualified episode lacks event object")
+                event = dict(nested)
+                if (
+                    _text(event.get("task")) != task
+                    or _text(event.get("split")) != "evaluation"
+                    or _text(event.get("init_state_id")) != _text(payload.get("init_state_id"))
+                    or _text(event.get("event_instance_id")) != _text(payload.get("event_instance_id"))
+                ):
+                    raise ValueError("sealed evaluation event/shard identity mismatch")
                 key = _source_key(event)
                 if key in source:
                     _issue(reasons, f"duplicate evaluation source event: {key!r}")
@@ -464,14 +484,20 @@ def _structural_row(
 def _runtime_provenance(
     row: Mapping[str, Any], structural: bool, selection_sha: str,
     reasons: list[str], label: str,
+    *, allowed_source_commits: set[str],
+    expected_runtime_receipt_sha256: str | None = None,
 ) -> None:
     _diagnostic_marker(row, selection_sha, label, reasons)
-    if row.get("source_commit") is not None and not _valid_sha(row.get("source_commit"), HEX40):
+    source_commit = row.get("source_commit")
+    runtime_receipt = row.get("runtime_receipt_sha256")
+    if source_commit is not None and not _valid_sha(source_commit, HEX40):
         _issue(reasons, f"{label}: invalid source_commit")
-    if row.get("runtime_receipt_sha256") is not None and not _valid_sha(
-        row.get("runtime_receipt_sha256"), HEX64
-    ):
+    if source_commit is not None and source_commit not in allowed_source_commits:
+        _issue(reasons, f"{label}: source_commit is not in allowed diagnostic source set")
+    if runtime_receipt is not None and not _valid_sha(runtime_receipt, HEX64):
         _issue(reasons, f"{label}: invalid runtime_receipt_sha256")
+    if expected_runtime_receipt_sha256 is not None and runtime_receipt not in (None, expected_runtime_receipt_sha256):
+        _issue(reasons, f"{label}: runtime receipt does not match expected binding")
     if structural:
         return
     for name in ("source_commit", "runtime_receipt_sha256", "job_id", "pai_run_id"):
@@ -481,11 +507,141 @@ def _runtime_provenance(
         _issue(reasons, f"{label}: runtime receipt is not a SHA-256")
     if not _valid_sha(row.get("source_commit"), HEX40):
         _issue(reasons, f"{label}: source_commit is not a commit SHA")
+    if row.get("source_commit") not in allowed_source_commits:
+        _issue(reasons, f"{label}: source_commit is not in allowed diagnostic source set")
+    if expected_runtime_receipt_sha256 is not None and row.get("runtime_receipt_sha256") != expected_runtime_receipt_sha256:
+        _issue(reasons, f"{label}: runtime receipt binding mismatch")
     if not isinstance(row.get("pid"), int) or isinstance(row.get("pid"), bool) or row.get("pid") <= 0:
         _issue(reasons, f"{label}: invalid pid")
     for name in ("env_hash", "chunk_hash"):
         if row.get(name) in (None, ""):
             _issue(reasons, f"{label}: missing {name}")
+
+
+def _validate_reused_calibration(
+    input_root: Path,
+    row: Mapping[str, Any],
+    reasons: list[str],
+    label: str,
+    *,
+    allowed_source_commits: set[str],
+    expected_runtime_receipt_sha256: str | None = None,
+) -> None:
+    """Verify a diagnostic row that reuses a Phase-1 calibration shard.
+
+    Matrix reuse is intentional, but the persisted path/hash and branch identity
+    remain evidence.  A reused row must never silently turn into a different
+    source, budget, or runtime binding.
+    """
+    raw_path = row.get("reused_calibration_shard")
+    raw_digest = row.get("reused_calibration_sha256")
+    if raw_path is None and raw_digest is None:
+        return
+    if raw_path in (None, "") or not _valid_sha(raw_digest, HEX64):
+        _issue(reasons, f"{label}: reused calibration path/hash is incomplete")
+        return
+    path = Path(str(raw_path))
+    if not path.is_absolute():
+        path = input_root / path
+    try:
+        path = path.resolve()
+        path.relative_to(input_root.resolve())
+    except ValueError:
+        _issue(reasons, f"{label}: reused calibration shard escapes input root")
+        return
+    try:
+        if not path.is_file():
+            raise OSError("reused calibration shard is missing")
+        if _sha256(path) != raw_digest:
+            raise ValueError("reused calibration shard SHA-256 mismatch")
+        previous = _read_json(path)
+        if not isinstance(previous, Mapping):
+            raise ValueError("reused calibration shard is not an object")
+        for name in (
+            "task", "event_instance_id", "init_state_id", "split",
+            "generator_actor_seed", "recovery_actor_seed", "operator",
+            "prefix_k", "tail_horizon", "action_budget", "policy_call_cap",
+        ):
+            if name not in previous or name not in row:
+                raise ValueError(f"reused branch key missing {name}")
+            lhs, rhs = previous[name], row[name]
+            if name in {
+                "generator_actor_seed", "recovery_actor_seed", "prefix_k",
+                "tail_horizon", "action_budget", "policy_call_cap",
+            }:
+                if _int(lhs, name) != _int(rhs, name):
+                    raise ValueError(f"reused branch key mismatch {name}")
+            elif _text(lhs) != _text(rhs):
+                raise ValueError(f"reused branch key mismatch {name}")
+        previous_source = previous.get("source_commit")
+        current_source = row.get("source_commit")
+        if previous_source not in (None, ""):
+            if previous_source not in allowed_source_commits:
+                raise ValueError("reused source_commit is not in allowed diagnostic source set")
+            if current_source not in (None, "") and previous_source != current_source:
+                raise ValueError("reused source_commit differs from diagnostic row")
+        previous_receipt = previous.get("runtime_receipt_sha256")
+        current_receipt = row.get("runtime_receipt_sha256")
+        if previous_receipt not in (None, ""):
+            if not _valid_sha(previous_receipt, HEX64):
+                raise ValueError("reused runtime receipt is not a SHA-256")
+            if expected_runtime_receipt_sha256 is not None and previous_receipt != expected_runtime_receipt_sha256:
+                raise ValueError("reused runtime receipt does not match expected binding")
+            if current_receipt not in (None, "") and previous_receipt != current_receipt:
+                raise ValueError("reused runtime receipt differs from diagnostic row")
+    except (OSError, KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
+        _issue(reasons, f"{label}: invalid reused calibration evidence: {exc}")
+
+
+def _runtime_binding_summary(
+    rows: Sequence[Mapping[str, Any]],
+    reasons: list[str],
+    *,
+    allowed_source_commits: set[str],
+    expected_runtime_receipt_sha256: str | None = None,
+) -> dict[str, Any]:
+    """Summarize exact runtime bindings, split by source commit.
+
+    Reused calibration rows can retain the original source commit while new
+    evaluation rows use a repaired commit, so consistency is checked within
+    each source commit rather than incorrectly forcing one commit globally.
+    """
+    by_source: dict[str, set[str]] = {}
+    job_bindings: dict[str, set[tuple[str, str]]] = {}
+    for row in rows:
+        if row.get("structurally_excluded"):
+            continue
+        source = _text(row.get("source_commit"))
+        receipt = _text(row.get("runtime_receipt_sha256"))
+        by_source.setdefault(source, set()).add(receipt)
+        task = _text(row.get("task"))
+        job_bindings.setdefault(task, set()).add(
+            (_text(row.get("job_id")), _text(row.get("pai_run_id")))
+        )
+    if not by_source:
+        _issue(reasons, "no COMPLETE rows with runtime binding")
+    for source, receipts in sorted(by_source.items()):
+        if source not in allowed_source_commits:
+            _issue(reasons, f"source_commit {source!r} is not in allowed diagnostic source set")
+        if len(receipts) != 1:
+            _issue(reasons, f"source_commit {source!r} has multiple runtime receipt hashes")
+        if expected_runtime_receipt_sha256 is not None and receipts != {expected_runtime_receipt_sha256}:
+            _issue(reasons, f"source_commit {source!r} runtime receipt does not match expected binding")
+    return {
+        "allowed_source_commits": sorted(allowed_source_commits),
+        "observed_source_commits": sorted(by_source),
+        "runtime_receipts_by_source_commit": {
+            source: sorted(receipts) for source, receipts in sorted(by_source.items())
+        },
+        "job_bindings_by_task": {
+            task: [
+                {"job_id": job, "pai_run_id": run}
+                for job, run in sorted(bindings)
+            ]
+            for task, bindings in sorted(job_bindings.items())
+        },
+        "expected_runtime_receipt_sha256": expected_runtime_receipt_sha256,
+    }
 
 
 def _normalize_phase2_rows(
@@ -494,6 +650,8 @@ def _normalize_phase2_rows(
     budget: Mapping[str, Any],
     selection_sha: str,
     reasons: list[str],
+    *, allowed_source_commits: set[str],
+    expected_runtime_receipt_sha256: str | None = None,
 ) -> tuple[list[dict[str, Any]], set[tuple[str, str, str, str, int]]]:
     raw: list[dict[str, Any]] = []
     for task in TASKS:
@@ -534,7 +692,16 @@ def _normalize_phase2_rows(
                 row["is_reference"] = bool(
                     item.get("is_reference", row["operator"] in REFERENCE_OPERATORS)
                 )
-                _runtime_provenance(row, False, selection_sha, reasons, label)
+                _runtime_provenance(
+                    row, False, selection_sha, reasons, label,
+                    allowed_source_commits=allowed_source_commits,
+                    expected_runtime_receipt_sha256=expected_runtime_receipt_sha256,
+                )
+                _validate_reused_calibration(
+                    input_root, row, reasons, label,
+                    allowed_source_commits=allowed_source_commits,
+                    expected_runtime_receipt_sha256=expected_runtime_receipt_sha256,
+                )
                 source_key = (
                     _text(row.get("task")), _text(row.get("event_instance_id")),
                     _text(row.get("init_state_id")), _text(row.get("split")),
@@ -800,10 +967,21 @@ def _write_blocked(
 
 
 def consolidate_diagnostic_phase2(
-    input_root: str | Path, output_root: str | Path
+    input_root: str | Path,
+    output_root: str | Path,
+    *,
+    allowed_source_commits: Sequence[str] | None = None,
+    expected_runtime_receipt_sha256: str | None = None,
 ) -> dict[str, Any]:
     input_path, output_path = Path(input_root).resolve(), Path(output_root).resolve()
+    allowed_sources = set(allowed_source_commits or DEFAULT_ALLOWED_SOURCE_COMMITS)
     admission_reasons: list[str] = []
+    if not allowed_sources or any(not _valid_sha(item, HEX40) for item in allowed_sources):
+        _issue(admission_reasons, "invalid allowed diagnostic source commit set")
+    if expected_runtime_receipt_sha256 is not None and not _valid_sha(
+        expected_runtime_receipt_sha256, HEX64
+    ):
+        _issue(admission_reasons, "invalid expected runtime receipt SHA-256")
     budget, selection_sha, admission = _admit_diagnostic_budget(input_path, admission_reasons)
     if admission_reasons or budget is None or selection_sha is None:
         return _write_blocked(output_path, admission_reasons, evaluation_read=False)
@@ -811,7 +989,13 @@ def consolidate_diagnostic_phase2(
     qualified = _qualification_rows(input_path, reasons)
     source = _source_events(input_path, qualified, reasons)
     normalized, structural_events = _normalize_phase2_rows(
-        input_path, source, budget, selection_sha, reasons
+        input_path, source, budget, selection_sha, reasons,
+        allowed_source_commits=allowed_sources,
+        expected_runtime_receipt_sha256=expected_runtime_receipt_sha256,
+    )
+    runtime_binding = _runtime_binding_summary(
+        normalized, reasons, allowed_source_commits=allowed_sources,
+        expected_runtime_receipt_sha256=expected_runtime_receipt_sha256,
     )
     core, reference, support, excluded = _check_grid(
         normalized, source, budget, structural_events, reasons
@@ -835,6 +1019,7 @@ def consolidate_diagnostic_phase2(
         "excluded_events": excluded, "evaluation_read": True,
         "admission": admission,
         "completion_receipts": completions,
+        "runtime_binding": runtime_binding,
         "upstream_k_failures": _upstream_k_failures(input_path),
     }
     if reasons:
@@ -899,6 +1084,7 @@ def consolidate_diagnostic_phase2(
             for task in TASKS
         },
         "upstream_k_failures": upstream,
+        "runtime_binding": runtime_binding,
         "statistics": {
             "evaluation": {
                 "status": evaluation_stats.get("status"),
@@ -930,8 +1116,20 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input-root", "--input", dest="input_root", type=Path, required=True)
     parser.add_argument("--output-root", "--output", dest="output_root", type=Path, required=True)
+    parser.add_argument(
+        "--allowed-source-commit", dest="allowed_source_commits", action="append",
+        help="allowed exact runtime source commit (repeatable; defaults to the known repair set)",
+    )
+    parser.add_argument(
+        "--runtime-receipt-sha256", dest="expected_runtime_receipt_sha256",
+        help="require this exact runtime identity receipt SHA-256",
+    )
     args = parser.parse_args(argv)
-    result = consolidate_diagnostic_phase2(args.input_root, args.output_root)
+    result = consolidate_diagnostic_phase2(
+        args.input_root, args.output_root,
+        allowed_source_commits=args.allowed_source_commits,
+        expected_runtime_receipt_sha256=args.expected_runtime_receipt_sha256,
+    )
     print(json.dumps({"phase": "phase2", "status": result.get("status"), "output_root": str(args.output_root)}, sort_keys=True))
     return 0 if result.get("status") != "BLOCKED" else 2
 
