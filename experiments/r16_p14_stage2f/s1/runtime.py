@@ -191,6 +191,25 @@ def _validate_event_shape(event: dict[str, Any]) -> None:
         raise RuntimeBlocked("invalid generator actor_seed") from exc
 
 
+def _configure_local_libero_assets() -> None:
+    """Point the installed LIBERO loader at the frozen local asset bundle.
+
+    Newer LIBERO releases prefer a package-local assets directory and may try
+    the network when it is absent.  The live backend is offline and receives
+    an explicit ``LIBERO_ASSETS_PATH`` from its launcher; setting the package
+    cache here keeps frozen Stage-2A/D environment code unchanged.
+    """
+    assets_path = os.environ.get("LIBERO_ASSETS_PATH")
+    if not assets_path or not os.path.isdir(assets_path):
+        return
+    try:
+        import libero.libero as libero_package
+        if hasattr(libero_package, "_assets_path_cache"):
+            libero_package._assets_path_cache = str(assets_path)
+    except (ImportError, AttributeError, RuntimeError):
+        return
+
+
 def _environment_hash(env: Any, task: str) -> str:
     model = getattr(getattr(env, "sim", None), "model", None)
     descriptor: dict[str, Any] = {
@@ -304,6 +323,7 @@ def _execute_impl(
     generator_seed = int(event["actor_seed"])
     if _frozen_reconstruct_anchor is None:
         raise RuntimeBlocked("frozen Stage2D runtime is unavailable")
+    _configure_local_libero_assets()
     generator_bundle = ActorBundle.load(generator_seed, device)
     env, history, reconstruction = _frozen_reconstruct_anchor(event, generator_bundle)
     recorder: SimulationStepRecorder | None = None

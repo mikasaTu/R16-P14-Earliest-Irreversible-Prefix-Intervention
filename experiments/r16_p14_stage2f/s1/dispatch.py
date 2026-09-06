@@ -130,6 +130,7 @@ def _child_entry(request: dict[str, Any], result_queue: Any) -> None:
             )
         else:
             raise ValueError(f"unsupported operator: {operator}")
+        row["repeat"] = int(repeat)
         row["dispatch_seed"] = int(dispatch_seed)
         row["dispatch_repeat"] = int(repeat)
         row["dispatch_process_start_method"] = "spawn"
@@ -232,6 +233,7 @@ def run_spawned_branch(
     finally:
         result_queue.close()
         result_queue.join_thread()
+    row.setdefault("repeat", int(repeat))
     row.setdefault("pid", int(process.pid))
     row.setdefault("parent_pid", os.getpid())
     row["dispatcher_pid"] = os.getpid()
