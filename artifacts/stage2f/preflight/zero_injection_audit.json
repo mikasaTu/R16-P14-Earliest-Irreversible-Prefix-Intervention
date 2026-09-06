@@ -1,0 +1,56 @@
+{
+  "status": "BLOCKED_BY_FROZEN_SPAWN_ZERO_INJECTION_CONTRACT",
+  "evidence_level": "static_source_audit_only",
+  "rollouts_executed": 0,
+  "forbidden_function_executed": false,
+  "stage2d_historical_isolation_pass_unchanged": true,
+  "source_files": {
+    "spawn": {
+      "path": "experiments/r16_p14_stage2d/r16_p14_stage2d/fresh_process.py",
+      "sha256": "397d6e1de57f3c8b80e05a9a286c93f47b3bcc46c210888febbaab8ecc5a1e79"
+    },
+    "isolation": {
+      "path": "experiments/r16_p14_stage2d/r16_p14_stage2d/isolation.py",
+      "sha256": "d5d44087f9cc653f8366c88d657d371bc6e5128a6d6fbfc236eda1098a546123"
+    },
+    "d_runtime": {
+      "path": "experiments/r16_p14_stage2d/r16_p14_stage2d/runtime.py",
+      "sha256": "ca83474cfa6d230b77735921f0e19ab35fb537d69b5fad34cf5f9a1be3970e23"
+    },
+    "c_runtime": {
+      "path": "experiments/r16_p14_stage2c/r16_p14_stage2c/runtime.py",
+      "sha256": "bc25cb9f3ad15ac627d24b02d6b3de982f0e48044fbaeb7b71d57c7d37eee051"
+    }
+  },
+  "call_chain": {
+    "frozen_imports_execute_branch": true,
+    "spawn_child_execute_branch_lines": [
+      17
+    ],
+    "stage2d_apply_perturbation_lines": [
+      392
+    ],
+    "stage2d_injection_is_unconditional_within_try": true,
+    "stage2c_apply_perturbation_lines": [
+      381
+    ],
+    "spawn_keyword_parameters": [
+      "event",
+      "parameter",
+      "prefix_k",
+      "arm",
+      "repeat",
+      "device",
+      "timeout_s"
+    ]
+  },
+  "reason": "Frozen spawn child always invokes Stage-2D execute_branch, which unconditionally invokes apply_perturbation. No supported zero-injection backend argument exists. Zero magnitude still executes forbidden injection code; zero clearance also relocates the blocker.",
+  "constraint_source": "User plan background requires direct unchanged Stage-2D fresh_process/isolation reuse; hard constraint 3 says stop/report on implicit injection and do not bypass.",
+  "not_a_scientific_K_gate": true,
+  "allowed_independent_work": [
+    "phase0a_cpu_reanalysis",
+    "static_preregistration",
+    "report_and_github_publication"
+  ],
+  "change_needed_before_gpu": "Explicit plan amendment allowing a Stage-2F spawn dispatcher with a zero-injection branch backend while preserving frozen Stage-2D files and isolation requirements."
+}
