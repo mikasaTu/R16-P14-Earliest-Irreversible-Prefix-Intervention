@@ -1,11 +1,16 @@
 {
   "status": "PASS",
-  "scope": "published_cpu_analysis_and_blocked_gpu_disposition_only",
+  "scope": "integrity_of_published_evidence_not_a_claim_of_experiment_completion",
   "scientific_S1_success": false,
+  "phase_status": {
+    "K1": "BLOCKED_BY_NATURAL_EVENT_YIELD",
+    "K2": "COMPLETE_AVAILABLE_REQUESTS_SAMPLE_SHORTFALL",
+    "K3": "NOT_EVALUATED"
+  },
   "checks": [
     {
       "check": "output_hashes_and_coverage",
-      "files": 27
+      "files": 40350
     },
     {
       "check": "frozen_predecessor_paths",
@@ -17,11 +22,15 @@
       "status": "BLOCKED_BY_FROZEN_SPAWN_ZERO_INJECTION_CONTRACT"
     },
     {
-      "check": "no_fabricated_gpu_work",
-      "K1": "NOT_EVALUATED",
-      "K2": "NOT_EVALUATED",
-      "K3": "NOT_EVALUATED",
-      "gpu_hours": 0.0
+      "check": "frozen_S1_protocol_and_available_execution_evidence",
+      "phase_status": {
+        "K1": "BLOCKED_BY_NATURAL_EVENT_YIELD",
+        "K2": "COMPLETE_AVAILABLE_REQUESTS_SAMPLE_SHORTFALL",
+        "K3": "NOT_EVALUATED"
+      },
+      "PAI_jobs": 10,
+      "phase2_selection_mode": "formal_or_none",
+      "phase2_published_rows": null
     },
     {
       "check": "phase0a_frozen_inputs_A1_controls_and_estimands",
