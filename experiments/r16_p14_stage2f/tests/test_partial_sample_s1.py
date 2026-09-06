@@ -88,6 +88,7 @@ def _phase1_input(
                             }
                             if is_structural:
                                 row["error_type"] = "PrefixOutsideTaskHorizon"
+                                row["env_hash"] = None
                             rows_by_task[task].append(row)
                     for operator, prefix_k in REFERENCE_PREFIXES.items():
                         is_structural = (
@@ -115,6 +116,7 @@ def _phase1_input(
                                 "chunk_hash": "chunk-hash",
                                 "status": "BLOCKED" if is_structural else "COMPLETE",
                                 "error_type": "PrefixOutsideTaskHorizon" if is_structural else None,
+                                "env_hash": None if is_structural else "env-hash",
                                 "is_reference": True,
                             }
                         )

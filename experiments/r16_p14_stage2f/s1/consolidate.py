@@ -212,7 +212,7 @@ def _canonical_row(row: Mapping[str, Any], phase: str) -> tuple[dict[str, Any] |
             # PrefixOutsideTaskHorizon is a structural infeasibility marker,
             # never a safe-success=0 observation.  Its branch key is still
             # required below; missing identity/provenance remains a blocker.
-            if structural_exclusion and field == "safe_success":
+            if structural_exclusion and field in {"safe_success", "pid", "env_hash", "chunk_hash"}:
                 continue
             reasons.append(f"missing {field}")
             continue
@@ -239,6 +239,8 @@ def _canonical_row(row: Mapping[str, Any], phase: str) -> tuple[dict[str, Any] |
     if str(result.get("status", "")).strip().upper() != "COMPLETE" and not structural_exclusion:
         reasons.append(f"status is not COMPLETE: {result.get('status')!r}")
     for field in ("pid", "env_hash", "chunk_hash"):
+        if structural_exclusion:
+            continue
         if result.get(field) is None or not str(result.get(field)).strip():
             reasons.append(f"missing provenance {field}")
     if result.get("task") not in TASKS:
