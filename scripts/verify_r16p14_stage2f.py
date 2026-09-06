@@ -86,22 +86,13 @@ def _diagnostic_summary_marked(summary):
     )
 
 
-def _diagnostic_row_marked(row):
-    """Treat any diagnostic-only field as an opt-in requiring full checks."""
-    return (
-        row.get("diagnostic_continuation") is True
-        or row.get("diagnostic_atlas") is True
-        or any(str(key).startswith("diagnostic_") for key in row)
-    )
-
-
 def _scan_rows_for_diagnostic(path):
     """Find diagnostic markers without changing the ordinary formal path.
 
     Formal verification historically did not parse atlas rows. If a formal
     file has no diagnostic marker, malformed content therefore remains outside
-    this new branch. A file containing a diagnostic marker is parsed strictly
-    and fails closed if it is malformed.
+    this new branch. A file containing a diagnostic marker is admitted to the
+    diagnostic branch and parsed strictly after selection proof.
     """
     path = Path(path)
     if not path.exists():
@@ -117,8 +108,9 @@ def _scan_rows_for_diagnostic(path):
     )
     if not any(token in raw for token in marker_tokens):
         return False, None
-    rows = _read_jsonl(path, str(path))
-    return any(_diagnostic_row_marked(row) for row in rows), rows
+    # Defer JSON parsing until the diagnostic selection has been verified.
+    # This keeps the publication gate fail-closed before consuming row data.
+    return True, None
 
 
 def _validate_diagnostic_summary(summary):
@@ -251,8 +243,14 @@ def _verify_phase2_artifacts(phase2_summary, atlas, reference, root=ROOT):
     atlas = Path(atlas)
     reference = Path(reference)
     summary_marked = _diagnostic_summary_marked(phase2_summary)
-    atlas_marked, atlas_rows = _scan_rows_for_diagnostic(atlas)
-    reference_marked, reference_rows = _scan_rows_for_diagnostic(reference)
+    if summary_marked:
+        # The summary is sufficient to select the diagnostic path. Do not
+        # inspect row contents before the independent selection gate.
+        atlas_marked, atlas_rows = False, None
+        reference_marked, reference_rows = False, None
+    else:
+        atlas_marked, atlas_rows = _scan_rows_for_diagnostic(atlas)
+        reference_marked, reference_rows = _scan_rows_for_diagnostic(reference)
     diagnostic = summary_marked or atlas_marked or reference_marked
     if not diagnostic:
         _verify_formal_selection(root, atlas)
@@ -260,13 +258,14 @@ def _verify_phase2_artifacts(phase2_summary, atlas, reference, root=ROOT):
 
     _validate_diagnostic_summary(phase2_summary)
     require(atlas.exists(), "diagnostic Phase-2 summary has no atlas_rows.jsonl")
+    # Verify the independent selection before consuming published row data.
+    selection = _verify_diagnostic_selection(root)
     # A marker may have been found in the lightweight scan; re-read every
     # published file strictly once the diagnostic branch is selected.
     atlas_rows = _read_jsonl(atlas, str(atlas))
     all_rows = list(atlas_rows)
     if reference.exists():
         all_rows.extend(_read_jsonl(reference, str(reference)))
-    selection = _verify_diagnostic_selection(root)
     summary_receipt = phase2_summary.get("diagnostic_selection_receipt_sha256")
     if summary_receipt is not None:
         require(
