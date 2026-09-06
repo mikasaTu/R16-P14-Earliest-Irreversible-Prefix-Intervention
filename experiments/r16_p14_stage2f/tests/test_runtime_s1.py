@@ -69,13 +69,81 @@ def test_operator_contract_exact_and_task_horizon_clips_new_actions() -> None:
     assert contract["configured_operator_horizon"] == 4
     assert contract["effective_execution_horizon"] == 4
     assert contract["effective_action_budget"] == 32
-    clipped = runtime.execution_contract(TASK, "fresh_h16", 16, 16, 32, 8, anchor_global_step=350)
-    assert clipped["task_horizon_remaining_after_prefix"] == 0
-    assert clipped["effective_action_budget"] == 0
+    horizon = int(runtime.TASK_SPECS[TASK].horizon)
+    clipped = runtime.execution_contract(TASK, "fresh_h16", 16, 16, 32, 8, anchor_global_step=horizon - 20)
+    assert clipped["prefix_end_global_step"] == horizon - 4
+    assert clipped["task_horizon_remaining_after_prefix"] == 4
+    assert clipped["effective_action_budget"] == 4
     assert clipped["effective_execution_horizon"] == 16
     assert clipped["task_horizon_budget_clipped"] is True
+    legal = runtime.execution_contract(TASK, "fresh_h16", 16, 16, 32, 8, anchor_global_step=horizon - 16)
+    assert legal["prefix_end_global_step"] == horizon
+    assert legal["task_horizon_remaining_after_prefix"] == 0
+    assert legal["effective_action_budget"] == 0
+    with pytest.raises(runtime.PrefixOutsideTaskHorizon, match="cached prefix exceeds fixed task horizon"):
+        runtime.execution_contract(TASK, "fresh_h16", 16, 16, 32, 8, anchor_global_step=horizon - 15)
     with pytest.raises(ValueError):
         runtime.execution_contract(TASK, "fresh_h4", 2, 4, 8, 9)
+
+
+def _boundary_event(anchor_global_step: int) -> dict:
+    return {
+        "event_id": "boundary-event",
+        "event_instance_id": "boundary-event",
+        "task": TASK,
+        "actor_seed": 7,
+        "checkpoint_sha256": "generator-checkpoint",
+        "init_state": [0.0],
+        "init_state_hash": "init",
+        "pre_anchor_actions": [],
+        "pre_anchor_actions_hash": "pre",
+        "anchor_state": [0.0],
+        "anchor_state_hash": "anchor",
+        "state_history": [[0.0]],
+        "state_history_hash": "states",
+        "action_history": [[0.0] * 7] * 3,
+        "action_history_hash": "actions",
+        "original_chunk": [[0.0] * 7] * 16,
+        "original_chunk_hash": "chunk",
+        "anchor_global_step": int(anchor_global_step),
+        "initial_manipulated_qpos": [0.0, 0.0, 0.0],
+        "task_phase": {"stable_lift_two_steps": True},
+        "anchor_contacts": [["bowl_geom", "cream_geom"]],
+        "source_is_actor_generated_chunk": True,
+        "source_is_demonstration_chunk": False,
+        "global_step_fallback_used": False,
+    }
+
+
+def test_prefix_outside_task_horizon_rejects_before_actor_or_env(monkeypatch: pytest.MonkeyPatch) -> None:
+    horizon = int(runtime.TASK_SPECS[TASK].horizon)
+    event = _boundary_event(horizon - 1)
+    calls: list[str] = []
+
+    class ForbiddenBundle:
+        @classmethod
+        def load(cls, *_args, **_kwargs):
+            calls.append("actor")
+            raise AssertionError("invalid prefix must reject before actor loading")
+
+    monkeypatch.setattr(runtime, "ActorBundle", ForbiddenBundle)
+    monkeypatch.setattr(runtime, "_configure_local_libero_assets", lambda: calls.append("assets"))
+    monkeypatch.setattr(
+        runtime,
+        "_frozen_reconstruct_anchor",
+        lambda *_args, **_kwargs: calls.append("reconstruct"),
+    )
+    with pytest.raises(runtime.PrefixOutsideTaskHorizon, match="cached prefix exceeds fixed task horizon"):
+        runtime.execute_branch(
+            event,
+            recovery_actor_seed=17,
+            operator="fresh_h4",
+            prefix_k=2,
+            tail_horizon=4,
+            action_budget=8,
+            policy_call_cap=8,
+        )
+    assert calls == []
 
 
 def test_label_trace_ignores_early_release_and_starts_topology_at_anchor() -> None:
@@ -290,6 +358,7 @@ def test_execute_branch_stub_enforces_recovery_budget_and_call_cap(monkeypatch: 
         "actor_inference_side_effect_free": True,
         "max_anchor_state_error": 0.0,
     }))
+    monkeypatch.setattr(runtime, "_configure_local_libero_assets", lambda: None)
     monkeypatch.setattr(runtime, "_frozen_branch_signature", lambda _env, _history, _event, _tracker, prefix: {
         "complete_signature_hash": "stub",
         "executed_prefix_length": len(prefix),

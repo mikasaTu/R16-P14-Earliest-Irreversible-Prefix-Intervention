@@ -93,7 +93,14 @@ def execution_contract(
     configured_operator_horizon = int(_OPERATOR_HORIZON[operator])
     effective_execution_horizon = min(configured_operator_horizon, tail_horizon)
     task_horizon = int(TASK_SPECS[task].horizon)
-    remaining_after_prefix = max(0, task_horizon - anchor_global_step - prefix_k)
+    prefix_end_global_step = anchor_global_step + prefix_k
+    if prefix_end_global_step > task_horizon:
+        raise PrefixOutsideTaskHorizon(
+            "cached prefix exceeds fixed task horizon: "
+            f"anchor_global_step={anchor_global_step} + prefix_k={prefix_k} "
+            f"> task_horizon={task_horizon}"
+        )
+    remaining_after_prefix = max(0, task_horizon - prefix_end_global_step)
     effective_action_budget = min(action_budget, remaining_after_prefix)
     return {
         "configured_operator_horizon": configured_operator_horizon,
@@ -104,6 +111,7 @@ def execution_contract(
         "configured_policy_call_cap": policy_call_cap,
         "task_horizon": task_horizon,
         "anchor_global_step": anchor_global_step,
+        "prefix_end_global_step": prefix_end_global_step,
         "task_horizon_remaining_after_prefix": remaining_after_prefix,
         "task_horizon_budget_clipped": bool(effective_action_budget < action_budget),
     }
@@ -154,6 +162,10 @@ class TraceTracker:
 
 class RuntimeBlocked(RuntimeError):
     """A required provenance, replay, or budget contract failed."""
+
+
+class PrefixOutsideTaskHorizon(RuntimeBlocked):
+    """The cached clean prefix would execute beyond the fixed task horizon."""
 
 
 def _event_id(event: dict[str, Any]) -> str:
@@ -492,6 +504,7 @@ def execute_reference_branch(event: dict[str, Any], recovery_actor_seed: int, re
 
 
 __all__ = [
-    "OPERATORS", "REFERENCE_OPERATORS", "RuntimeBlocked", "execution_contract",
+    "OPERATORS", "REFERENCE_OPERATORS", "RuntimeBlocked", "PrefixOutsideTaskHorizon",
+    "execution_contract",
     "execute_branch", "execute_reference_branch",
 ]
