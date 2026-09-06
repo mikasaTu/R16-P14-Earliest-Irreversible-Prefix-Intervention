@@ -6,7 +6,7 @@ Phase0A、600条Phase0B clean rollout、全部19440条Phase1可用请求已执�
 
 K1不通过：cream的calibration/evaluation合格事件为19/23，bowl为11/13，均低于每侧25。K2九档无共同工作区：bowl最高oracle-best为22.6667%，对应最大gap为13.3333pp，低于25%和15pp门槛；原计划每任务20个calibration事件的样本要求也未满足。
 
-按用户正文“不能因为一个gate不到就停止验证其他实验”继续独立诊断Phase2。正式selection receipt保留BLOCKED/null；在部分calibration数据之后封存的DIAGNOSTIC_ATLAS_CONTINUATION.md规定，仅按原calibration排序选择独立诊断预算，发布并验证真实Git提交后才打开evaluation。该补充不是事前预注册，不能冒充正式K1/K2通过。当前evaluation仍未打开，K3尚未测；不启动S2。
+按用户正文“不能因为一个gate不到就停止验证其他实验”继续独立诊断Phase2。正式selection receipt保留BLOCKED/null；在部分calibration数据之后封存的DIAGNOSTIC_ATLAS_CONTINUATION.md规定，仅按原calibration排序选择独立诊断预算，发布并验证真实Git提交后才打开evaluation。该补充不是事前预注册，不能冒充正式K1/K2通过。独立选择与真实Git证明已发布并验证，evaluation已解封，Phase2正在执行；K3尚无完整结果，不启动S2。
 
 ## 冻结设计与运行身份
 
@@ -83,7 +83,7 @@ bowl一个事件anchor316/320使部分prefix超出horizon，产生324 core+54 re
 
 代码确定的变化是：hold增加一步六维零位移并保留夹爪；物体与接触动力学继续推进，并非冻结状态。rollback把cached prefix最后一动作old[k-1]的前六维取负并保留夹爪，这不是物理状态的逆操作。两者前导动作都占action budget，所以32步预算下只剩31步policy动作。fresh_h4/h16改变重规划间隔，实际执行间隔为min(命名horizon,configured tail)；tail4下1305对动作流与safe_success均一致，名称差异本身没有产生额外能力。
 
-已核验hold、rollback与fresh_h16/fresh_h4三类双向六个案例。固定anchor/seed/chunk下，首动作或首次重新规划后轨迹分化；一个fresh_h4分支曾在control27的物理子步7–16短暂满足任务条件，但控制步末失去，而fresh_h16在control26子步10持续到步末，故实际branch得分不同。详见MECHANISM_PHASE1_CASES.md。完整trace支持状态、接触和成功时序的解释，但没有记录force/impulse，不推断未经测量的具体力学中介原因。所选预算的净升降案例另行补入最终报告。
+已核验hold、rollback与fresh_h16/fresh_h4三类双向六个案例。固定anchor/seed/chunk下，首动作或首次重新规划后轨迹分化；一个fresh_h4分支曾在control27的物理子步7–16短暂满足任务条件，但控制步末失去，而fresh_h16在control26子步10持续到步末，故实际branch得分不同。详见MECHANISM_PHASE1_CASES.md。完整trace支持状态、接触和成功时序的解释，但没有记录force/impulse，不推断未经测量的具体力学中介原因。所选预算的净升降案例见下一节。
 
 ### 选定诊断预算下的净效应配对轨迹核验
 
@@ -97,11 +97,11 @@ bowl一个事件anchor316/320使部分prefix超出horizon，产生324 core+54 re
 
 六条release_based_violation均为false，成败差异来自task_success。这些cream成功记录在gripper闭合时就满足环境谓词，不等于已经完成真实释放后稳定放置。hold/rollback的prelude计入新动作预算；六条任务剩余horizon均未裁剪，故这些配对不能归因于隐藏的任务horizon截断。第一分叉动作后的即时contact set仍相同，不能用“接触拓扑立刻改变”解释；差异体现为随后的状态、动作历史、release时点与接触演化。以上是选定匹配案例，不能据此确定摩擦、冲量、滑移等未测量中介，也不能外推为全部事件的普遍规律。
 
-## Phase2：待独立selection授权后执行
+## Phase2：诊断选择已封存，正在执行
 
-当前尚未读取或运行evaluation，不能报告K3数值、两族成功率或crossing结论。
+选择提交为6ae128f20e68bcd83b6a6da5c8e2841b70551a58，真实Git证明提交为4bc5f5a840d1fcafa76b4a6db8343230ab8ff184。canonical与实际CPFS运行目录的诊断准入都已PASS（UTC 2026-09-06 23:03:49），之后才读取evaluation。诊断预算固定tail16/action32/cap8，fallback_used=true，原K2数值FAIL。两个atlas作业已提交并进入Running，尚无完整K3数值、两族成功率或crossing结论。
 
-计划使用全部66个可用calibration+evaluation事件，四算子、八prefix、三恢复seed、四参考臂，共7128请求，其中2160个同配置calibration请求可复用Phase1原始证据，预计4968新请求。真实horizon越界继续单独保存。主统计split为evaluation；calibration仅描述性并列。U_A、U_B、U_full、max-k且None不补值、全部seed split-half划分、10000次(task,init) cluster bootstrap均保持冻结定义。
+本轮使用全部66个可用calibration+evaluation事件，四算子、八prefix、三恢复seed、四参考臂，共7128请求，其中2160个同配置calibration请求可复用Phase1原始证据，预计4968新请求。真实horizon越界继续单独保存。主统计split为evaluation；calibration仅描述性并列。U_A、U_B、U_full、max-k且None不补值、全部seed split-half划分、10000次(task,init) cluster bootstrap均保持冻结定义。
 
 ## 工程故障、资源与证据
 
@@ -117,6 +117,8 @@ bowl一个事件anchor316/320使部分prefix超出horizon，产生324 core+54 re
 | dlc4vt6h6pcw6jzk | bowl grid r1 | Stopped，3133 COMPLETE、378结构越界、1超时、22取消 |
 | dlcgtvdvu94wlto1 | cream grid r2 | Succeeded，12312/12312 |
 | dlc1n05o22ewi5dx | bowl grid r2 | Succeeded，7128/7128 |
+| dlc1hrmbyia4bc9p | cream诊断atlas r2 | Running，待完整落盘验收 |
+| dlc1ill43ufm4eny | bowl诊断atlas r2 | Running，待完整落盘验收 |
 
 r1父进程先join再Queue.get，较大结果导致feeder阻塞；2MiB CPU反例复现，修复为先drain再join。46个失败/取消尝试和存在的11条trace在两job终态后逐SHA归档，7029 COMPLETE及378结构行保留，只重试相同请求。原超时请求重跑成功，结果pickle342396字节，新旧trace解压后15225576字节逐字节一致。只有IPC顺序改变，runtime/measurement/actor/seed/预算不变；兼容许可绑定唯一旧/新dispatch SHA。
 
@@ -129,3 +131,7 @@ r1父进程先join再Queue.get，较大结果导致feeder阻塞；2MiB CPU反例
 ## 本阶段没有测的东西
 
 没有训练actor，没有VLA、世界模型、RGB策略、扰动注入或真实机器人评测；不再主张性能优于baseline，不重新打开已冻结的universal hypothesis，不生成新idea，不启动S2。K1/K2失败、结构性不可执行行与低样本诊断结果均明确保留；不能把未满足原计划前提的测量包装为确认性结论。
+
+## GitHub发布检查点
+
+[main代码与证据](https://github.com/mikasaTu/R16-P14-Earliest-Irreversible-Prefix-Intervention/tree/main/experiments/r16_p14_stage2f)；Phase1全量发布6ae128f2，证明发布4bc5f5a8，调度模板兼容修正dfb543a5。Phase1完整性验证40350文件PASS，CPU157项PASS。完整Phase2原始分支、统计与最终报告将在验收后继续提交main。
