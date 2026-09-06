@@ -4,7 +4,7 @@
 
 ## 当前结论
 
-Phase0A 已完成：补入 immediate_fresh_h16 后，G0-1 为 INCONCLUSIVE。S1 的 200 个固定初始状态已生成并验证；一条 infrastructure clean episode 已完成，包含 360 个控制步、9000 个物理步和完整接触拓扑。正式采集先后4个作业均确认UseOversoldResource=true，因CPFS读取ESTALE和CUDA运行时不兼容先后停止，尚无正式episode。兼容环境修复与控制器I/O加固中；K1、K2、K3均未判决。
+Phase0A 已完成，G0-1 为 INCONCLUSIVE。S1正式采集已经开始，截至2026-09-06T19:33:14.240367+00:00已落盘84/600个episode。新作业dlc1hzmadm185c68和dlc1rz7o5mf1vajn均确认UseOversoldResource=true；实际A800节点driver550.54.15下运行torch2.6.0+cu124。首个episode的source commit、JobId、runtime receipt和trace SHA已核验。K1、K2、K3仍未判决。
 
 原冻结 Stage2D 执行入口存在隐式注入路径，其历史 BLOCKED 事实保留。按照用户后续明确授权，在 Stage2F 新增零注入后端；没有改写 Stage2A–E，没有调用注入函数。新的独立分支后端已完成ROOT-first同源LIBERO的真实基础设施检查：4core+4reference+重复分支，anchor重建误差0，D1每控制步25个物理步，测量有无的终态/历史hash一致，预算与pid/env/chunk校验全部通过。首轮资源路径失败原样保留；这些是工程验证，不能计作科学成功。
 
@@ -58,3 +58,7 @@ CPFS修复后的dlcwm6bd6bomjggq和dlc1qayvbetb16ji也已Stopped，均为真实�
 兼容GPU实测总计70.27秒（0.01952 GPU小时）：cream init0 actor7完整360控制步、9000物理步、9360条trace，anchor在294步；fresh_h4、k2、seed17独立分支250物理步，anchor误差0，恢复动作8/预算8，policy calls3/上限8。两条原始trace哈希由主线程验证。smoke汇总脚本误将空missing_fields列表作为布尔检查导致初始BLOCKED；原summary保留，原始数据已独立验收。旧torch2.12的anchor293与新torch2.6的294不做等价断言，不混用事件。
 
 控制器CPFS修复已部署并重新启动：有界重读，持续失败拒绝新提交并停止last-known活跃作业，Stop失败下一轮继续尝试；48项CPU检查通过（原42+控制器6）。新控制器SHA14e86f8746941cebaea9e442484f833ab5f9ec2378987784e4953892e1c28b4a。
+
+## 当前正式采集运行身份
+
+运行源码已发布到GitHub main：[6b788a0764904e11e022c4330a74fa3e009c9a33](https://github.com/mikasaTu/R16-P14-Earliest-Irreversible-Prefix-Intervention/commit/6b788a0764904e11e022c4330a74fa3e009c9a33)，tree为f13e12a2b006632e48e5aa64ac2c53e30928de51。两个新job每个2×A800/24CPU/200Gi，24个独立spawn worker。所有episode及恢复分片记录兼容runtime receipt SHA，复用要求后端模块哈希和runtime receipt一致。首个已验收episode为cream init2 actor17，87步完成，正式计数只以持久化qualification分片为准。

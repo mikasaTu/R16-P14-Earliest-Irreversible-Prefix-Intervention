@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import errno
 import fcntl
 import json
 import os
@@ -41,6 +42,9 @@ UNCERTAIN_STATES = {
 JOB_ID_RE = re.compile(r"dlc[a-z0-9]{8,}")
 RUN_ID_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{2,63}")
 BEIJING = ZoneInfo("Asia/Shanghai")
+TRANSIENT_READ_ERRNOS = {errno.ENOENT, errno.ESTALE}
+READ_ATTEMPTS = 8
+READ_DELAY = 0.25
 
 
 def write(path: Path, value: Any) -> None:
@@ -80,8 +84,22 @@ def blackout(value: dt.datetime | None = None) -> bool:
     return 565 <= minute < 580 or 1165 <= minute < 1180
 
 
-def _load(path: Path) -> Any:
-    return json.loads(path.read_text(encoding="utf-8"))
+def _load(path: Path, *, attempts: int = READ_ATTEMPTS, delay: float = READ_DELAY) -> Any:
+    """Reopen CPFS JSON after bounded inode replacement or partial-write races."""
+    path = Path(path)
+    if attempts < 1:
+        raise ValueError("attempts must be positive")
+    for attempt in range(attempts):
+        try:
+            return json.loads(path.read_text(encoding="utf-8"))
+        except OSError as exc:
+            if exc.errno not in TRANSIENT_READ_ERRNOS or attempt == attempts - 1:
+                raise
+        except json.JSONDecodeError:
+            if attempt == attempts - 1:
+                raise
+        time.sleep(delay)
+    raise RuntimeError("unreachable JSON read retry")
 
 
 def _job_id(value: Any) -> str | None:

@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+import errno
 import json
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from types import SimpleNamespace
+from unittest.mock import patch
 
 import pytest
 
@@ -43,6 +45,25 @@ def _setup(tmp_path, monkeypatch, *, jobs=None, claims=None):
     _write(heartbeat, {"time": (at - timedelta(seconds=30)).isoformat(), "resume_allowed": True})
     monkeypatch.setattr(resume, "REG", registry)
     return manifest, heartbeat, at
+
+
+def test_load_reopens_cpfs_json_after_estale_and_partial_json(tmp_path):
+    target = tmp_path / "jobs.json"
+    with patch.object(
+        Path,
+        "read_text",
+        side_effect=[OSError(errno.ESTALE, "stale"), "{", '{"jobs": []}'],
+    ) as read:
+        assert resume._load(target, attempts=3, delay=0) == {"jobs": []}
+    assert read.call_count == 3
+
+
+def test_load_persistent_estale_is_not_success(tmp_path):
+    target = tmp_path / "jobs.json"
+    with patch.object(Path, "read_text", side_effect=OSError(errno.ESTALE, "stale")) as read:
+        with pytest.raises(OSError):
+            resume._load(target, attempts=3, delay=0)
+    assert read.call_count == 3
 
 
 def test_blackout_and_stale_heartbeat_deny_without_commands(tmp_path, monkeypatch):
