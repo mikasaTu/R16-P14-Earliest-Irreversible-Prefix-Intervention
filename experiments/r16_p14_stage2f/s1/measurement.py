@@ -231,11 +231,16 @@ def record_step(
     baseline_contacts: Any = None,
     step_kind: str = "action_step",
     physics_step_index: int | None = None,
+    control_step: int | None = None,
+    substep: int | None = None,
 ) -> dict[str, Any]:
     """Capture one JSON-safe post-action record with complete D1 fields."""
     if task not in TASK_SPECS:
         raise KeyError(task)
     action_array = np.asarray(action, dtype=np.float32).reshape(-1)
+    control_step = int(step if control_step is None else control_step)
+    if substep is None and str(step_kind) == "action_step":
+        substep = 0
     contacts = _contact_snapshot(env)
     names = _geometry_names(env, task)
     spec = TASK_SPECS[task]
@@ -284,6 +289,8 @@ def record_step(
             "operator": str(operator),
             "actor_seed": int(actor_seed),
             "step": int(step),
+            "control_step": control_step,
+            "substep": substep,
             "step_kind": str(step_kind),
             "physics_step_index": physics_step_index,
             "action": action_array.tolist(),
@@ -567,6 +574,7 @@ class SimulationStepRecorder:
         self.physics_probe_error: str | None = None
         self.trace_sha256: str | None = None
         self._pending: dict[str, Any] | None = None
+        self._local_substep = 0
         self._closed = False
         self._patches: list[tuple[Any, str, Any]] = []
         self._install_physics_probe()
@@ -588,6 +596,7 @@ class SimulationStepRecorder:
                 result = _original(*args, **kwargs)
                 if self._pending is not None:
                     self.physics_step_count += 1
+                    self._local_substep += 1
                     pending = self._pending
                     row = record_step(
                         self.env,
@@ -604,6 +613,8 @@ class SimulationStepRecorder:
                         baseline_contacts=self.baseline_contacts,
                         step_kind="physics_step",
                         physics_step_index=self.physics_step_count,
+                        control_step=int(pending["step"]),
+                        substep=int(self._local_substep),
                     )
                     self.physics_records.append(row)
                     self.records.append(row)
@@ -617,6 +628,7 @@ class SimulationStepRecorder:
                 self.physics_probe_error = f"{type(exc).__name__}: {exc}"
 
     def set_action(self, step: int, action: Any, previous_gripper: float, ever_lifted: bool) -> None:
+        self._local_substep = 0
         self._pending = {
             "step": int(step),
             "action": np.asarray(action, dtype=np.float32).copy(),
@@ -641,6 +653,8 @@ class SimulationStepRecorder:
             initial_object_z=self.initial_object_z,
             ever_lifted=bool(pending["ever_lifted"]),
             baseline_contacts=self.baseline_contacts,
+            control_step=int(pending["step"]),
+            substep=0,
         )
         row["physics_steps_before_action_record"] = int(
             sum(1 for item in self.physics_records if item["step"] == int(pending["step"]))
