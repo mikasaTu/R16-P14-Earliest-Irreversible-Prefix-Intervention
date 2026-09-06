@@ -1,0 +1,495 @@
+{
+  "analysis": "phase0b_natural_event_production_mechanism",
+  "calibration": {
+    "denominator_per_task": 120,
+    "denominator_total": 240,
+    "overall_categories": {
+      "clean_failure_no_structural_anchor": 106,
+      "clean_success": 104,
+      "failure_with_structural_anchor_not_qualified": 0,
+      "qualified_natural_failure": 30,
+      "unknown": 0
+    },
+    "tasks": {
+      "put_the_bowl_on_the_plate": {
+        "by_actor_seed": {
+          "17": {
+            "categories": {
+              "clean_failure_no_structural_anchor": 24,
+              "clean_success": 12,
+              "failure_with_structural_anchor_not_qualified": 0,
+              "qualified_natural_failure": 4,
+              "unknown": 0
+            },
+            "n": 40,
+            "qualified_rate_over_actor_rows": 0.1
+          },
+          "29": {
+            "categories": {
+              "clean_failure_no_structural_anchor": 16,
+              "clean_success": 19,
+              "failure_with_structural_anchor_not_qualified": 0,
+              "qualified_natural_failure": 5,
+              "unknown": 0
+            },
+            "n": 40,
+            "qualified_rate_over_actor_rows": 0.125
+          },
+          "7": {
+            "categories": {
+              "clean_failure_no_structural_anchor": 18,
+              "clean_success": 20,
+              "failure_with_structural_anchor_not_qualified": 0,
+              "qualified_natural_failure": 2,
+              "unknown": 0
+            },
+            "n": 40,
+            "qualified_rate_over_actor_rows": 0.05
+          }
+        },
+        "categories": {
+          "clean_failure_no_structural_anchor": 58,
+          "clean_success": 51,
+          "failure_with_structural_anchor_not_qualified": 0,
+          "qualified_natural_failure": 11,
+          "unknown": 0
+        },
+        "clean_failure_no_anchor_at_task_horizon": 58,
+        "clean_failure_no_anchor_steps": {
+          "320": 58
+        },
+        "n": 120,
+        "qualified_natural_failure_both_labels": 2,
+        "qualified_natural_failure_release_violation": 3,
+        "qualified_natural_failure_topology_candidate": 6
+      },
+      "put_the_cream_cheese_in_the_bowl": {
+        "by_actor_seed": {
+          "17": {
+            "categories": {
+              "clean_failure_no_structural_anchor": 10,
+              "clean_success": 27,
+              "failure_with_structural_anchor_not_qualified": 0,
+              "qualified_natural_failure": 3,
+              "unknown": 0
+            },
+            "n": 40,
+            "qualified_rate_over_actor_rows": 0.075
+          },
+          "29": {
+            "categories": {
+              "clean_failure_no_structural_anchor": 8,
+              "clean_success": 21,
+              "failure_with_structural_anchor_not_qualified": 0,
+              "qualified_natural_failure": 11,
+              "unknown": 0
+            },
+            "n": 40,
+            "qualified_rate_over_actor_rows": 0.275
+          },
+          "7": {
+            "categories": {
+              "clean_failure_no_structural_anchor": 30,
+              "clean_success": 5,
+              "failure_with_structural_anchor_not_qualified": 0,
+              "qualified_natural_failure": 5,
+              "unknown": 0
+            },
+            "n": 40,
+            "qualified_rate_over_actor_rows": 0.125
+          }
+        },
+        "categories": {
+          "clean_failure_no_structural_anchor": 48,
+          "clean_success": 53,
+          "failure_with_structural_anchor_not_qualified": 0,
+          "qualified_natural_failure": 19,
+          "unknown": 0
+        },
+        "clean_failure_no_anchor_at_task_horizon": 48,
+        "clean_failure_no_anchor_steps": {
+          "360": 48
+        },
+        "n": 120,
+        "qualified_natural_failure_both_labels": 0,
+        "qualified_natural_failure_release_violation": 5,
+        "qualified_natural_failure_topology_candidate": 1
+      }
+    }
+  },
+  "evaluation_trace_or_outcome_read": false,
+  "formal_gate_claim_allowed": false,
+  "input_scope": {
+    "episode_detail_splits": [
+      "calibration",
+      "infrastructure"
+    ],
+    "qualification_count_splits": [
+      "infrastructure",
+      "calibration",
+      "evaluation",
+      "reserve"
+    ],
+    "source_files": [
+      "collector",
+      "runtime",
+      "task_spec"
+    ]
+  },
+  "k1": {
+    "calibration_deficit_to_25": {
+      "put_the_bowl_on_the_plate": 14,
+      "put_the_cream_cheese_in_the_bowl": 6
+    },
+    "calibration_qualified": {
+      "put_the_bowl_on_the_plate": 11,
+      "put_the_cream_cheese_in_the_bowl": 19
+    },
+    "evaluation_deficit_to_25": {
+      "put_the_bowl_on_the_plate": 12,
+      "put_the_cream_cheese_in_the_bowl": 2
+    },
+    "evaluation_qualified": {
+      "put_the_bowl_on_the_plate": 13,
+      "put_the_cream_cheese_in_the_bowl": 23
+    },
+    "pass_by_task": {
+      "put_the_bowl_on_the_plate": false,
+      "put_the_cream_cheese_in_the_bowl": false
+    },
+    "threshold_per_split": 25
+  },
+  "mechanism": {
+    "code_guarantees": [
+      {
+        "claim": "Event anchor is created only after grasp, two stable lifted observations, previous gripper positive, and current task not successful.",
+        "source": "collector.py:50-57"
+      },
+      {
+        "claim": "Natural qualification is exactly event is not None and not clean success.",
+        "source": "collector.py:83-85"
+      },
+      {
+        "claim": "Clean success stops the loop immediately and is recorded separately.",
+        "source": "collector.py:82-84,94-97"
+      },
+      {
+        "claim": "K1 requires both calibration and evaluation counts to reach 25 per task.",
+        "source": "collector.py:155-159"
+      },
+      {
+        "claim": "Recovery runtime consumes an event and is downstream of collection; it does not create Phase0B natural events.",
+        "source": "runtime.py:484-503"
+      }
+    ],
+    "observed_filter_decomposition": [
+      "Calibration qualification counts are 19/120 for cream and 11/120 for bowl.",
+      "The dominant observed rejected failure category is no structural anchor by the fixed horizon: 48 cream and 58 bowl; all are exactly at their task horizon.",
+      "Clean successes are 53 cream and 51 bowl and are excluded by the not-success qualification predicate.",
+      "No calibration row in either task was a failure with structural anchor that remained non-qualified; this is observed in this finite sample, not a code guarantee.",
+      "Release-outside-target and prerelease topology labels are diagnostics after collection, not the collector qualification predicate."
+    ],
+    "unknowns": [
+      "For no-anchor failures, the episode row has no event anchor; these inputs do not identify whether grasp, two-step lift stability, prior gripper positivity, or another condition was the missing condition.",
+      "Actor-seed differences are descriptive counts under fixed lineage; they are not a causal actor comparison."
+    ]
+  },
+  "method": "code_first_ideation_evidence_pass_without_new_idea_or_gpu",
+  "provenance": {
+    "actor_run_ids": [
+      "stage2a_shared_multitask_seed_17",
+      "stage2a_shared_multitask_seed_29",
+      "stage2a_shared_multitask_seed_7"
+    ],
+    "checkpoint_constant_by_actor_seed_across_tasks": true,
+    "checkpoint_sha256_by_actor_seed": {
+      "17": [
+        "83ee61e31ffdae6f2ef57203a2c0085df41e284039cd81c6ecf1210694521604"
+      ],
+      "29": [
+        "0cf34a3e535525345306a2b322aae3b1bd6ebd6cd71dc653e2a91393e2b79d1a"
+      ],
+      "7": [
+        "821177a82cc470e108082fd3c0f6913983236a2fdf142de2fe51fc37c44240ca"
+      ]
+    },
+    "init_pool_file_sha256_by_task": {
+      "put_the_bowl_on_the_plate": [
+        "bc30ad0916e950b3fed126a03d36f552484761f4ef8d1f9269c1ed21fe177e2b"
+      ],
+      "put_the_cream_cheese_in_the_bowl": [
+        "a41be3638b78409a15646ebd2f81c818a7773937c93951baebd25c6621d66b69"
+      ]
+    },
+    "interpretation": "Calibration rows carry one source commit and one runtime receipt; qualified events reuse one checkpoint per actor seed across both tasks. This supports fixed-lineage attribution and does not demonstrate actor retraining.",
+    "runtime_receipt_constant": true,
+    "source_commit_constant": true
+  },
+  "qualification_all_splits": {
+    "put_the_bowl_on_the_plate": {
+      "calibration": {
+        "n": 120,
+        "qualified_by_actor_seed": {
+          "17": 4,
+          "29": 5,
+          "7": 2
+        },
+        "qualified_natural_failure": 11
+      },
+      "evaluation": {
+        "n": 120,
+        "qualified_by_actor_seed": {
+          "17": 6,
+          "29": 3,
+          "7": 4
+        },
+        "qualified_natural_failure": 13
+      },
+      "infrastructure": {
+        "n": 30,
+        "qualified_by_actor_seed": {
+          "17": 1,
+          "29": 1,
+          "7": 2
+        },
+        "qualified_natural_failure": 4
+      },
+      "reserve": {
+        "n": 30,
+        "qualified_by_actor_seed": {
+          "17": 0,
+          "29": 0,
+          "7": 2
+        },
+        "qualified_natural_failure": 2
+      }
+    },
+    "put_the_cream_cheese_in_the_bowl": {
+      "calibration": {
+        "n": 120,
+        "qualified_by_actor_seed": {
+          "17": 3,
+          "29": 11,
+          "7": 5
+        },
+        "qualified_natural_failure": 19
+      },
+      "evaluation": {
+        "n": 120,
+        "qualified_by_actor_seed": {
+          "17": 4,
+          "29": 12,
+          "7": 7
+        },
+        "qualified_natural_failure": 23
+      },
+      "infrastructure": {
+        "n": 30,
+        "qualified_by_actor_seed": {
+          "17": 0,
+          "29": 3,
+          "7": 2
+        },
+        "qualified_natural_failure": 5
+      },
+      "reserve": {
+        "n": 30,
+        "qualified_by_actor_seed": {
+          "17": 0,
+          "29": 2,
+          "7": 0
+        },
+        "qualified_natural_failure": 2
+      }
+    }
+  },
+  "samples": [
+    {
+      "actor_seed": 7,
+      "anchor_global_step": 131,
+      "category": "qualified_natural_failure",
+      "clean_success": false,
+      "episode_file": "/mnt/cpfs/zbl-cpfs-new/share/leon/codex-archives/Explore-claude-local-worktrees/R16-P14-stage2f-step8-20260907/artifacts/stage2f/phase0b/episodes/put_the_cream_cheese_in_the_bowl/init023__actor7.json",
+      "event_provenance": {
+        "actor_run_id": "stage2a_shared_multitask_seed_7",
+        "anchor_state_hash": "e582fe16eaf4b290baef2d821771eb5c0ef1b6a957423317cc444fa538643c9e",
+        "checkpoint_sha256": "821177a82cc470e108082fd3c0f6913983236a2fdf142de2fe51fc37c44240ca",
+        "init_pool_file_sha256": "a41be3638b78409a15646ebd2f81c818a7773937c93951baebd25c6621d66b69",
+        "init_state_hash": "bd141f60d0f58925f4e1e55b1b15e817cd5051f24e6193d4aa0ceeefe9e8e662",
+        "source_is_actor_generated_chunk": true,
+        "source_is_demonstration_chunk": false
+      },
+      "init_state_id": 23,
+      "qualified_natural_failure": true,
+      "release_label": {
+        "first_release_index": null,
+        "first_violation_index": null,
+        "ignored_pre_lift_release_indices": [],
+        "violation": false
+      },
+      "runtime_receipt_sha256": "3d7b252885b4047fb93140c305a3ef4a1d3ec9aa450d90341befd2b7e26a5e44",
+      "source_commit": "6b788a0764904e11e022c4330a74fa3e009c9a33",
+      "split": "calibration",
+      "steps": 360,
+      "structural_anchor_found": true,
+      "task": "put_the_cream_cheese_in_the_bowl",
+      "topology_candidate": {
+        "candidate": true,
+        "candidate_count": 1100,
+        "first_index": 1714,
+        "ordering": "candidate_without_release"
+      },
+      "trace_bytes": 1985552,
+      "trace_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/contact_topology/put_the_cream_cheese_in_the_bowl/put_the_cream_cheese_in_the_bowl__init023__actor7.jsonl.gz",
+      "trace_record_count": 5954,
+      "trace_sha256_recorded": "0a5bab413b6688458df854bbeb3988f5958982b309bf18e68f3722ac5274af5e",
+      "trace_sha256_verified": "0a5bab413b6688458df854bbeb3988f5958982b309bf18e68f3722ac5274af5e"
+    },
+    {
+      "actor_seed": 17,
+      "anchor_global_step": null,
+      "category": "clean_success",
+      "clean_success": true,
+      "episode_file": "/mnt/cpfs/zbl-cpfs-new/share/leon/codex-archives/Explore-claude-local-worktrees/R16-P14-stage2f-step8-20260907/artifacts/stage2f/phase0b/episodes/put_the_cream_cheese_in_the_bowl/init031__actor17.json",
+      "event_provenance": null,
+      "init_state_id": 31,
+      "qualified_natural_failure": false,
+      "release_label": {
+        "first_release_index": null,
+        "first_violation_index": null,
+        "ignored_pre_lift_release_indices": [],
+        "violation": false
+      },
+      "runtime_receipt_sha256": "3d7b252885b4047fb93140c305a3ef4a1d3ec9aa450d90341befd2b7e26a5e44",
+      "source_commit": "6b788a0764904e11e022c4330a74fa3e009c9a33",
+      "split": "calibration",
+      "steps": 89,
+      "structural_anchor_found": true,
+      "task": "put_the_cream_cheese_in_the_bowl",
+      "topology_candidate": {
+        "candidate": false,
+        "candidate_count": 0,
+        "first_index": null,
+        "ordering": "none"
+      },
+      "trace_bytes": 414542,
+      "trace_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/contact_topology/put_the_cream_cheese_in_the_bowl/put_the_cream_cheese_in_the_bowl__init031__actor17.jsonl.gz",
+      "trace_record_count": 650,
+      "trace_sha256_recorded": "d36620094041e9977042aa758edb9f64e447dc56a8bf7cf358e014bd11ae0aa0",
+      "trace_sha256_verified": "d36620094041e9977042aa758edb9f64e447dc56a8bf7cf358e014bd11ae0aa0"
+    },
+    {
+      "actor_seed": 7,
+      "anchor_global_step": null,
+      "category": "clean_failure_no_structural_anchor",
+      "clean_success": false,
+      "episode_file": "/mnt/cpfs/zbl-cpfs-new/share/leon/codex-archives/Explore-claude-local-worktrees/R16-P14-stage2f-step8-20260907/artifacts/stage2f/phase0b/episodes/put_the_cream_cheese_in_the_bowl/init011__actor7.json",
+      "event_provenance": null,
+      "init_state_id": 11,
+      "qualified_natural_failure": false,
+      "release_label": {
+        "first_release_index": null,
+        "first_violation_index": null,
+        "ignored_pre_lift_release_indices": [
+          1975
+        ],
+        "violation": false
+      },
+      "runtime_receipt_sha256": "3d7b252885b4047fb93140c305a3ef4a1d3ec9aa450d90341befd2b7e26a5e44",
+      "source_commit": "6b788a0764904e11e022c4330a74fa3e009c9a33",
+      "split": "calibration",
+      "steps": 360,
+      "structural_anchor_found": false,
+      "task": "put_the_cream_cheese_in_the_bowl",
+      "topology_candidate": {
+        "candidate": false,
+        "candidate_count": 0,
+        "first_index": null,
+        "ordering": "none"
+      },
+      "trace_bytes": 1510998,
+      "trace_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/contact_topology/put_the_cream_cheese_in_the_bowl/put_the_cream_cheese_in_the_bowl__init011__actor7.jsonl.gz",
+      "trace_record_count": 9360,
+      "trace_sha256_recorded": "474618350b1a6eda082fb982dfded7941aa4d57c41bf2ce30b6c176961ab3b60",
+      "trace_sha256_verified": "474618350b1a6eda082fb982dfded7941aa4d57c41bf2ce30b6c176961ab3b60"
+    },
+    {
+      "actor_seed": 29,
+      "anchor_global_step": 146,
+      "category": "qualified_natural_failure",
+      "clean_success": false,
+      "episode_file": "/mnt/cpfs/zbl-cpfs-new/share/leon/codex-archives/Explore-claude-local-worktrees/R16-P14-stage2f-step8-20260907/artifacts/stage2f/phase0b/episodes/put_the_bowl_on_the_plate/init017__actor29.json",
+      "event_provenance": {
+        "actor_run_id": "stage2a_shared_multitask_seed_29",
+        "anchor_state_hash": "ef1b343931d792b050653a756c5e5b63bdc774ce63ac3ebc4d131c3ea42642e5",
+        "checkpoint_sha256": "0cf34a3e535525345306a2b322aae3b1bd6ebd6cd71dc653e2a91393e2b79d1a",
+        "init_pool_file_sha256": "bc30ad0916e950b3fed126a03d36f552484761f4ef8d1f9269c1ed21fe177e2b",
+        "init_state_hash": "deac07ec613e070bf70500528854d3f91494908c88acec6df8146db0a5ca80e6",
+        "source_is_actor_generated_chunk": true,
+        "source_is_demonstration_chunk": false
+      },
+      "init_state_id": 17,
+      "qualified_natural_failure": true,
+      "release_label": {
+        "first_release_index": 2105,
+        "first_violation_index": 2105,
+        "ignored_pre_lift_release_indices": [],
+        "violation": true
+      },
+      "runtime_receipt_sha256": "3d7b252885b4047fb93140c305a3ef4a1d3ec9aa450d90341befd2b7e26a5e44",
+      "source_commit": "6b788a0764904e11e022c4330a74fa3e009c9a33",
+      "split": "calibration",
+      "steps": 320,
+      "structural_anchor_found": true,
+      "task": "put_the_bowl_on_the_plate",
+      "topology_candidate": {
+        "candidate": true,
+        "candidate_count": 20,
+        "first_index": 939,
+        "ordering": "candidate_before_release"
+      },
+      "trace_bytes": 1604777,
+      "trace_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/contact_topology/put_the_bowl_on_the_plate/put_the_bowl_on_the_plate__init017__actor29.jsonl.gz",
+      "trace_record_count": 4524,
+      "trace_sha256_recorded": "3a387fb3afa1efb5ab099ff2897d7b0a13bb7680b3cd91850e995938b3fffa51",
+      "trace_sha256_verified": "3a387fb3afa1efb5ab099ff2897d7b0a13bb7680b3cd91850e995938b3fffa51"
+    }
+  ],
+  "schema_version": 1,
+  "sealed_evaluation_read": false,
+  "source": {
+    "episode_source_commits": [
+      "6b788a0764904e11e022c4330a74fa3e009c9a33"
+    ],
+    "input_hashes": {
+      "calibration_episode_file_count": 240,
+      "calibration_episode_manifest_sha256": "24a5aea0d08a17997d3fabdc4884f14d6901fecc99357c5dd39e44bfb6223710",
+      "infrastructure_episode_file_count": 60,
+      "infrastructure_episode_manifest_sha256": "c8e007748ba120638c56e4d98f953b4efd48aa3c3a5ea445436fd9309a9d8e66",
+      "qualification_file_count": 600,
+      "qualification_manifest_sha256": "4c8729a759dfaad7a9179884f7174fef37585220a708d04bf461b90d0b99e64f"
+    },
+    "main_head_at_analysis": "a0888d751117cbf7c5a73080d1ee1f421689e8bf",
+    "main_root": "/mnt/cpfs/zbl-cpfs-new/share/leon/codex-archives/Explore-claude-local-worktrees/R16-P14-stage2f-step8-20260907",
+    "runtime_receipt_sha256": [
+      "3d7b252885b4047fb93140c305a3ef4a1d3ec9aa450d90341befd2b7e26a5e44"
+    ],
+    "source_hashes": {
+      "collector": {
+        "bytes": 11438,
+        "path": "/mnt/cpfs/zbl-cpfs-new/share/leon/codex-archives/Explore-claude-local-worktrees/R16-P14-stage2f-step8-20260907/experiments/r16_p14_stage2f/s1/collector.py",
+        "sha256": "1926761145e9cc8fa1d059d850092acc0424070c4055961ec5c2616f9322305a"
+      },
+      "runtime": {
+        "bytes": 25881,
+        "path": "/mnt/cpfs/zbl-cpfs-new/share/leon/codex-archives/Explore-claude-local-worktrees/R16-P14-stage2f-step8-20260907/experiments/r16_p14_stage2f/s1/runtime.py",
+        "sha256": "3203db2452eef4bf6fe8b304eae2b14b1dc7ae80630479317c4610f063cf4417"
+      },
+      "task_spec": {
+        "bytes": 6183,
+        "path": "/mnt/cpfs/zbl-cpfs-new/share/leon/codex-archives/Explore-claude-local-worktrees/R16-P14-stage2f-step8-20260907/experiments/r16_p14_stage2a/r16_p14_stage2a/settings.py",
+        "sha256": "06b73b0581327fad66a64d73d7a0c7c985d0c060c461ac5c40a244d2a5ffdab5"
+      }
+    }
+  }
+}
