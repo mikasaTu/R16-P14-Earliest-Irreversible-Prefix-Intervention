@@ -126,6 +126,7 @@ def test_k2_candidate_has_priority_over_higher_ranked_numeric_failure():
     assert receipt["k2_numeric_status"] == "PASS"
     assert receipt["fallback_used"] is False
     assert receipt["formal_selection_status"] == "BLOCKED"
+    assert receipt["selection_source"] == "calibration_only"
     assert receipt["evaluation_read"] is False
     assert receipt["diagnostic_only"] is True
     assert receipt["input_sha256"] == receipt["input_summary_sha256"]
@@ -157,6 +158,7 @@ def test_no_k2_candidate_uses_ranked_fallback():
         (lambda summary: summary["grid"].pop(), "exactly 9"),
         (lambda summary: summary.update({"excluded_error_row_count": 1}), "excluded_error_row_count"),
         (lambda summary: summary.update({"split": "evaluation"}), "split"),
+        (lambda summary: summary.update({"selection_source": "calibration_only_diagnostic"}), "selection_source"),
     ],
 )
 def test_missing_or_error_or_wrong_split_blocks(mutate, needle):
@@ -183,3 +185,25 @@ def test_short_sample_and_structural_exclusion_are_diagnostic_only(tmp_path):
     assert saved["input_summary_sha256"] == hashlib.sha256(path.read_bytes()).hexdigest()
     assert saved["evaluation_authorized"] is False
     assert saved["proof_written"] is False
+
+@pytest.mark.parametrize("bad_status", [
+    "BLOCKED_BY_RUNTIME_ERROR",
+    "FAILED_WITH_OUTPUT",
+    "RUNNING",
+])
+def test_runtime_error_and_nonterminal_statuses_fail_closed(bad_status):
+    summary = _summary()
+    summary["grid"][0]["status"] = bad_status
+    receipt = build_diagnostic_selection_receipt(summary, input_summary_sha256=_sha(summary))
+    assert receipt["status"] == "BLOCKED"
+    assert receipt["selected_budget"] is None
+    assert any("status" in item for item in receipt["prerequisite_failures"])
+
+def test_complete_flag_cannot_mask_runtime_error_status():
+    summary = _summary()
+    summary["grid"][0]["by_task"][TASKS[0]]["status"] = "FAILED_WITH_OUTPUT"
+    summary["grid"][0]["by_task"][TASKS[0]]["completeness"]["status"] = "BLOCKED_BY_RUNTIME_ERROR"
+    receipt = build_diagnostic_selection_receipt(summary, input_summary_sha256=_sha(summary))
+    assert receipt["status"] == "BLOCKED"
+    assert receipt["selected_budget"] is None
+    assert any("status" in item for item in receipt["prerequisite_failures"])

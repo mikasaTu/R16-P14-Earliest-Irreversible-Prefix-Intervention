@@ -98,8 +98,15 @@ def _nonempty(value: Any) -> bool:
 
 
 def _error_status(value: Any) -> bool:
+    if value is None:
+        return False
     text = str(value).strip().lower()
-    return text in _ERROR_STATUSES or text.startswith("error:")
+    if text in _ERROR_STATUSES:
+        return True
+    return text.startswith((
+        "error", "failed", "failure", "blocked", "exception",
+        "timeout", "timed_out", "invalid", "crash",
+    ))
 
 
 def _records(summary: Mapping[str, Any]) -> list[Any]:
@@ -122,8 +129,8 @@ def _summary_failures(summary: Mapping[str, Any]) -> list[str]:
         failures.append(f"summary.analysis must be grid: {summary.get('analysis')!r}")
     if summary.get("split") != "calibration":
         failures.append(f"summary.split must be calibration: {summary.get('split')!r}")
-    if summary.get("selection_source") not in (None, "calibration_only"):
-        failures.append("summary.selection_source must be calibration_only")
+    if summary.get("selection_source") != "calibration_only":
+        failures.append("summary.selection_source must be exactly calibration_only")
     tasks = summary.get("tasks")
     if tasks is not None and (set(tasks) != set(TASKS) or len(tasks) != 2):
         failures.append("summary.tasks do not match the frozen two-task schema")
@@ -234,11 +241,20 @@ def _metric(
         for field in ("unknown_errors", "errors", "missing_shards", "missing_fragments", "blocking_reasons"):
             if _nonempty(value.get(field)):
                 failures.append(f"{owner}.{field} is non-empty")
-        if _error_status(value.get("status")):
-            failures.append(f"{owner}.status is an error")
+        if "status" in value:
+            raw_status = value.get("status")
+            if str(raw_status).strip() != "COMPLETE":
+                failures.append(f"{owner}.status must be explicit COMPLETE: {raw_status!r}")
+            elif _error_status(raw_status):
+                failures.append(f"{owner}.status is an error")
     completeness = raw.get("completeness")
     if not _map(completeness) or completeness.get("complete") is not True:
         failures.append(f"{task} completeness is not COMPLETE")
+    elif "status" in completeness and completeness.get("status") != "COMPLETE":
+        failures.append(
+            f"{task}.completeness.status must be explicit COMPLETE: "
+            f"{completeness.get('status')!r}"
+        )
     try:
         event_count = _int(raw.get("event_count"), f"{task}.event_count")
         if event_count <= 0:
@@ -398,7 +414,7 @@ def _base_receipt(
         "evaluation_read": False,
         "evaluation_authorized": False,
         "proof_written": False,
-        "selection_source": "calibration_only_diagnostic",
+        "selection_source": "calibration_only",
         "input_summary_path": str(summary_path) if summary_path is not None else None,
         "input_summary_sha256": summary_sha256,
         "input_sha256": summary_sha256,
