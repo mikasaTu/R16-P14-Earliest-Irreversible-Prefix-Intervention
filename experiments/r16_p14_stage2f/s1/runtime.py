@@ -192,22 +192,9 @@ def _validate_event_shape(event: dict[str, Any]) -> None:
 
 
 def _configure_local_libero_assets() -> None:
-    """Point the installed LIBERO loader at the frozen local asset bundle.
-
-    Newer LIBERO releases prefer a package-local assets directory and may try
-    the network when it is absent.  The live backend is offline and receives
-    an explicit ``LIBERO_ASSETS_PATH`` from its launcher; setting the package
-    cache here keeps frozen Stage-2A/D environment code unchanged.
-    """
-    assets_path = os.environ.get("LIBERO_ASSETS_PATH")
-    if not assets_path or not os.path.isdir(assets_path):
-        return
-    try:
-        import libero.libero as libero_package
-        if hasattr(libero_package, "_assets_path_cache"):
-            libero_package._assets_path_cache = str(assets_path)
-    except (ImportError, AttributeError, RuntimeError):
-        return
+    """Require the same repository LIBERO and asset bundle as collection."""
+    from .assets import configure_assets
+    configure_assets()
 
 
 def _environment_hash(env: Any, task: str) -> str:

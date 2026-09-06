@@ -18,13 +18,14 @@ def conservative_hours(jobs,t=None):
         end=dt.datetime.fromisoformat(j["terminal_at_utc"].replace("Z","+00:00")) if j.get("terminal_at_utc") else t
         total+=max(0,(end-start).total_seconds())*int(j["gpus"])/3600
     return total
-def decision(jobs,t=None):
+def decision(jobs,t=None,extra_gpu_hours=0.5):
     active=[j for j in jobs if j.get("status") not in TERMINAL]
-    reason="BLACKOUT" if blackout(t) else "GPU_BUDGET" if conservative_hours(jobs,t)>=19.8 else None
+    total_upper=conservative_hours(jobs,t)+extra_gpu_hours
+    reason="BLACKOUT" if blackout(t) else "GPU_BUDGET" if total_upper>=19.8 else None
     if len(active)>2 or any(j["gpus"]>2 for j in active):reason="RESOURCE_CAP"
     return {"stop_job_ids":[j["job_id"] for j in active] if reason else [],"reason":reason,
-            "resume_allowed":not blackout(t) and conservative_hours(jobs,t)<19.8,
-            "conservative_gpu_hours":conservative_hours(jobs,t)}
+            "resume_allowed":not blackout(t) and total_upper<19.8,
+            "conservative_gpu_hours":total_upper,"dev14_gpu_hours_reserved_upper_bound":extra_gpu_hours}
 def atomic(path,obj):
     path=Path(path);p=path.with_name(path.name+".tmp");p.write_text(json.dumps(obj,indent=2)+"\n");os.replace(p,path)
 def cli(args):
@@ -65,17 +66,26 @@ def run(manifest,interval=15,once=False):
             if job.get("status") in TERMINAL:continue
             try:readback=get_job(job["job_id"])
             except Exception as exc:
-                job["control_readback_error"]=type(exc).__name__;job["placement_rejected"]=True
+                job["control_readback_error"]=type(exc).__name__
+                job["readback_error_streak"]=job.get("readback_error_streak",0)+1
+                if job["readback_error_streak"]>=3:job["placement_rejected"]=True
                 continue
-            job["status"]=readback["Status"];job["readback"]=readback
+            job["status"]=readback["Status"];job["readback"]=readback;job["readback_error_streak"]=0
             if job["status"] in TERMINAL:job["terminal_at_utc"]=readback.get("GmtFinishTime") or now_utc().isoformat()
+            fatal=Path(job.get("artifact_dir","/nonexistent"))/"pai_state/FATAL_ERROR.json"
+            if fatal.is_file() and job["status"] not in TERMINAL:
+                job["placement_rejected"]=True;job["application_fatal_error"]=True
             if job["status"]=="Running" and readback.get("UseOversoldResource") is not True:
                 job["placement_rejected"]=True
-        d=decision(jobs)
+        d=decision(jobs,extra_gpu_hours=float(state.get("dev14_gpu_hours_upper_bound",0.5)))
         d["stop_job_ids"]+= [j["job_id"] for j in jobs if j.get("placement_rejected") and j.get("status") not in TERMINAL]
         if d["stop_job_ids"]:
             (base/"STOP").write_text(d["reason"] or "PLACEMENT_REJECTED")
             for jid in set(d["stop_job_ids"]):
+                for job in jobs:
+                    if job["job_id"]==jid:
+                        job["stop_reason"]=d["reason"] or ("APPLICATION_ERROR" if job.get("application_fatal_error") else "PLACEMENT_REJECTED")
+                        job["stop_requested_utc"]=now_utc().isoformat()
                 try:cli(["stop","job",jid,"--force","--quiet"])
                 except Exception as exc:
                     with (base/"control_errors.jsonl").open("a") as f:f.write(json.dumps({"time":now_utc().isoformat(),"job_id":jid,"error":type(exc).__name__})+"\n")
@@ -84,7 +94,16 @@ def run(manifest,interval=15,once=False):
                     f.write(json.dumps({"time":now_utc().isoformat(),"action":"StopJob","job_id":jid,"reason":d["reason"] or "PLACEMENT_REJECTED"})+"\n")
         elif d["resume_allowed"] and not any(j.get("placement_rejected") for j in jobs):
             (base/"STOP").unlink(missing_ok=True)
-        atomic(manifest,state)
+        import fcntl
+        with manifest.with_suffix(".lock").open("a") as lock:
+            fcntl.flock(lock,fcntl.LOCK_EX)
+            latest=json.loads(manifest.read_text());updates={j["job_id"]:j for j in jobs}
+            for j in latest["jobs"]:
+                if j["job_id"] in updates:
+                    update=updates[j["job_id"]]
+                    for key in ("status","readback","terminal_at_utc","placement_rejected","application_fatal_error","stop_reason","stop_requested_utc","control_readback_error","readback_error_streak"):
+                        if key in update:j[key]=update[key]
+            state=latest;atomic(manifest,state)
         atomic(base/"heartbeat.json",{"time":now_utc().isoformat(),"pid":os.getpid(),**d,"jobs":[{"job_id":j["job_id"],"status":j.get("status")} for j in jobs]})
         # New submissions are performed by the parent only after checking this receipt.
         if once:return

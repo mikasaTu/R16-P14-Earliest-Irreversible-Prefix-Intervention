@@ -448,8 +448,9 @@ def _bootstrap_spearman(rows: Sequence[Mapping[str, Any]], replicates: int, seed
     if not selected:
         return {"estimate": None, "ci95": [None, None], "undefined_draw_count": replicates, "replicates": replicates, "seed": seed}
     estimate = _spearman([row["boundary_A"] for row in selected], [row["boundary_B"] for row in selected])
-    grouped: dict[str, list[Mapping[str, Any]]] = defaultdict(list)
-    for row in selected: grouped[_text(row["init_state_id"])].append(row)
+    grouped: dict[tuple[str, str], list[Mapping[str, Any]]] = defaultdict(list)
+    for row in selected:
+        grouped[(_text(row["task"]), _text(row["init_state_id"]))].append(row)
     clusters = list(grouped.values())
     rng = np.random.default_rng(seed)
     draws = []

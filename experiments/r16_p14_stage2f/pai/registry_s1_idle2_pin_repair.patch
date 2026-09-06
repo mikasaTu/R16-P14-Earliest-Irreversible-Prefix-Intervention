@@ -1,0 +1,53 @@
+--- a/bin/record-openapi-idle-source
++++ b/bin/record-openapi-idle-source
+@@ -691,6 +691,8 @@
+         return False
+     evidence = resolved.get("evidence", {})
+     fault = resolved.get("fault_tolerance", {})
++    if alias == "exp-robot-oversold-r16p14-stage2f-2gpu" and (fault.get("pai_automatic_fault_tolerance") is not True or fault.get("aimaster_args") != '--job-execution-mode=Sync --enable-job-restart=True --max-num-of-job-restart=50 --fault-tolerant-policy=OnFailure'):
++        return False
+     submission = resolved.get("submission", {})
+     expected_override = {
+         "authorized": True,
+--- a/bin/delete-openapi-job
++++ b/bin/delete-openapi-job
+@@ -36,7 +36,7 @@
+ DELETE_ACTION = "DeleteJob"
+ LIST_ACTION = "ListJobs"
+ EXPECTED_COMMON_SHA256 = (
+-    "efd3bd2c4819bb2f6691040560bbf8c154d8d1c9dff70eb2b261795fc4016bae"
++    "02163e30d8977a2c6977b2b1ff943061a2897a7d612aae0ccfc737bba3aa29d2"
+ )
+ JOB_PATH_TEMPLATE = "/api/v1/jobs/{JobId}"
+ LIST_PATH = "/api/v1/jobs"
+--- a/bin/pai-job
++++ b/bin/pai-job
+@@ -6550,7 +6550,7 @@
+     ):
+         raise Refused(
+             "stock-check bypass is restricted to a validated formal "
+-            "4- or 8-GPU idle workload with a registered resource contract"
++            "2-, 4- or 8-GPU idle workload with a registered resource contract"
+         )
+     return True
+ 
+--- a/config/toolchain.json
++++ b/config/toolchain.json
+@@ -88,7 +88,7 @@
+     "action": "ListJobs",
+     "api_path": "/api/v1/jobs",
+     "file": "bin/record-openapi-idle-source",
+-    "sha256": "0adf9f97666d335dcc1da1e0c49b5e385f9a9d8ead4f43d11c3613490a016465",
++    "sha256": "02163e30d8977a2c6977b2b1ff943061a2897a7d612aae0ccfc737bba3aa29d2",
+     "source": "pai_openapi_listjobs_exact_job_readback",
+     "version": "2020-12-03"
+   },
+@@ -96,7 +96,7 @@
+     "action": "DeleteJob",
+     "api_path_template": "/api/v1/jobs/{JobId}",
+     "file": "bin/delete-openapi-job",
+-    "sha256": "5d09dc3e25f5c5902ce33fceb9196e85723b7ffed79143c40fc009981836b49d",
++    "sha256": "42e9bc92bc07e54283a612a7927126614b88cf8d427b4be1608803723334d6b1",
+     "version": "2020-12-03"
+   },
+   "qpilots_panel_a_ordinal0_launcher": {

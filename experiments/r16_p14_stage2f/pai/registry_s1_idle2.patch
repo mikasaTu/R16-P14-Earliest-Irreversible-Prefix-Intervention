@@ -1,0 +1,212 @@
+--- a/bin/pai-job
++++ b/bin/pai-job
+@@ -1734,7 +1734,10 @@
+     "generic_formal_efficiency_idle_8gpu_v1"
+ )
+ GENERIC_FORMAL_QUOTA_IDLE_8GPU_CONTRACT = "generic_formal_quota_idle_8gpu_v1"
++R16P14_S1_IDLE2_ALIAS = 'exp-robot-oversold-r16p14-stage2f-2gpu'
++GENERIC_FORMAL_QUOTA_IDLE_2GPU_CONTRACT = 'generic_formal_quota_idle_2gpu_v1'
+ EXPLICIT_QUOTA_IDLE_CONTRACTS = frozenset({
++    GENERIC_FORMAL_QUOTA_IDLE_2GPU_CONTRACT,
+     GENERIC_FORMAL_EFFICIENCY_IDLE_8GPU_CONTRACT,
+     GENERIC_FORMAL_QUOTA_IDLE_8GPU_CONTRACT,
+ })
+@@ -1776,7 +1779,7 @@
+     return (
+         isinstance(value, str)
+         and value not in ROBOT_OVERSOLD_8GPU_ALIASES
+-        and EFFICIENCY_IDLE_8GPU_ALIAS_RE.fullmatch(value) is not None
++        and (EFFICIENCY_IDLE_8GPU_ALIAS_RE.fullmatch(value) is not None or value == R16P14_S1_IDLE2_ALIAS)
+     )
+ 
+ 
+@@ -1875,6 +1878,8 @@
+     resource = resolved.get("resource")
+     evidence = resolved.get("evidence")
+     if not isinstance(resource, dict) or not isinstance(evidence, dict):
++        return False
++    if (resolved.get("resource_alias") == R16P14_S1_IDLE2_ALIAS) != (evidence.get("idle_8gpu_contract") == GENERIC_FORMAL_QUOTA_IDLE_2GPU_CONTRACT):
+         return False
+     pool = resource.get("display_name")
+     if pool not in EXPLICIT_A800_IDLE_POOL_IDS:
+@@ -1918,7 +1923,7 @@
+         "target_oversold_type": resource["oversold_type"],
+     }
+     return (
+-        (evidence.get("idle_8gpu_contract") == GENERIC_FORMAL_QUOTA_IDLE_8GPU_CONTRACT
++        (evidence.get("idle_8gpu_contract") in {GENERIC_FORMAL_QUOTA_IDLE_8GPU_CONTRACT, GENERIC_FORMAL_QUOTA_IDLE_2GPU_CONTRACT}
+          and evidence.get("quota_idle_override") == expected_override)
+         or (pool == "exp-efficiency"
+             and evidence.get("idle_8gpu_contract") == GENERIC_FORMAL_EFFICIENCY_IDLE_8GPU_CONTRACT
+@@ -6482,8 +6487,12 @@
+         and resolved.get("resource_alias") == R146_FP15_IWP_IDLE_4GPU_ALIAS
+     )
+     formal_4gpu = generic_formal_4gpu or r146_formal_4gpu
+-    expected_gpu = 4 if formal_4gpu else 8
+-    if formal_4gpu:
++    s1_idle2 = resolved.get("resource_alias") == R16P14_S1_IDLE2_ALIAS
++    expected_gpu = 2 if s1_idle2 else 4 if formal_4gpu else 8
++    if s1_idle2:
++        expected_cpu = 24
++        expected_memory = "200Gi"
++    elif formal_4gpu:
+         expected_cpu = 46
+         expected_memory = "800Gi"
+     elif generic_formal_efficiency_idle_8gpu:
+@@ -6500,7 +6509,7 @@
+         # workloads obey the current universal per-node ceiling.
+         expected_cpu = 92
+         expected_memory = "1600Gi"
+-    expected_hardware = "4xa800-idle" if formal_4gpu else "8xa800-idle"
++    expected_hardware = "2xa800-idle" if s1_idle2 else "4xa800-idle" if formal_4gpu else "8xa800-idle"
+     efficiency_idle = is_efficiency_idle_native3_alias(
+         resolved.get("resource_alias")
+     )
+@@ -6595,6 +6604,7 @@
+         GENERIC_FORMAL_EFFICIENCY_2GPU_CONTRACT,
+         GENERIC_FORMAL_EFFICIENCY_IDLE_8GPU_CONTRACT,
+         GENERIC_FORMAL_QUOTA_IDLE_8GPU_CONTRACT,
++        GENERIC_FORMAL_QUOTA_IDLE_2GPU_CONTRACT,
+         ROBOT_OVERSOLD_8GPU_CONTRACT,
+     }:
+         raise Refused("generic formal idle contract version drifted")
+@@ -21302,6 +21312,8 @@
+                 "memory": "800Gi",
+                 "shared_memory": "800Gi",
+             }
++        elif alias == R16P14_S1_IDLE2_ALIAS:
++            expected = {"count": 1, "gpu": 2, "cpu": 24, "memory": "200Gi", "shared_memory": "200Gi"}
+         elif generic_idle_8gpu_maxmem:
+             expected = {
+                 "count": 1,
+--- a/bin/record-openapi-idle-source
++++ b/bin/record-openapi-idle-source
+@@ -620,7 +620,7 @@
+ ) -> bool:
+     """Accept only the registered, user-authorized efficiency idle override."""
+     alias = resolved.get("resource_alias")
+-    if not isinstance(alias, str) or EFFICIENCY_IDLE_8GPU_ALIAS_RE.fullmatch(alias) is None:
++    if not isinstance(alias, str) or (EFFICIENCY_IDLE_8GPU_ALIAS_RE.fullmatch(alias) is None and alias != 'exp-robot-oversold-r16p14-stage2f-2gpu'):
+         return False
+     resource = resolved.get("resource")
+     registered = resources.get(alias)
+@@ -682,10 +682,10 @@
+         worker.get(key) == value
+         for key, value in {
+             "count": 1,
+-            "gpu": 8,
+-            "cpu": 88,
+-            "memory": "1525Gi",
+-            "shared_memory": "1525Gi",
++            "gpu": 2 if alias == 'exp-robot-oversold-r16p14-stage2f-2gpu' else 8,
++            "cpu": 24 if alias == 'exp-robot-oversold-r16p14-stage2f-2gpu' else 88,
++            "memory": "200Gi" if alias == 'exp-robot-oversold-r16p14-stage2f-2gpu' else "1525Gi",
++            "shared_memory": "200Gi" if alias == 'exp-robot-oversold-r16p14-stage2f-2gpu' else "1525Gi",
+         }.items()
+     ):
+         return False
+@@ -701,7 +701,7 @@
+         "target_oversold_type": resource["oversold_type"],
+     }
+     return (
+-        ((evidence.get("idle_8gpu_contract") == "generic_formal_quota_idle_8gpu_v1"
++        ((evidence.get("idle_8gpu_contract") == ('generic_formal_quota_idle_2gpu_v1' if alias == 'exp-robot-oversold-r16p14-stage2f-2gpu' else "generic_formal_quota_idle_8gpu_v1")
+           and evidence.get("quota_idle_override") == expected_override)
+          or (pool == "exp-efficiency"
+              and evidence.get("idle_8gpu_contract") == "generic_formal_efficiency_idle_8gpu_v1"
+--- a/config/resources.json
++++ b/config/resources.json
+@@ -4130,6 +4130,82 @@
+           "options": ""
+         }
+       ]
++    },
++    "exp-robot-oversold-r16p14-stage2f-2gpu": {
++      "display_name": "exp-robot",
++      "resource_id": "quota1ssrabud0bh",
++      "resource_source": "resource_quota_split_live_carriers",
++      "contract_source_job_id": "dlcfp1szuc2cgqfp",
++      "source_job_id": "dlc1k4y4965q71yw",
++      "source_contract": {
++        "require_status": "Succeeded",
++        "aimaster_enabled": false,
++        "aimaster_args": ""
++      },
++      "source_worker_contracts": {
++        "contract": {
++          "count": 1,
++          "image": "dsw-registry-vpc.cn-wulanchabu.cr.aliyuncs.com/pai/modelscope:1.29.0-pytorch2.3.1tensorflow2.16.1-gpu-py311-cu121-ubuntu22.04",
++          "cpu": 92,
++          "gpu": 8,
++          "memory": "1600Gi",
++          "shared_memory": "1600Gi"
++        },
++        "resource": {
++          "count": 1,
++          "image": "dsw-registry-vpc.cn-wulanchabu.cr.aliyuncs.com/pai/modelscope:1.29.0-pytorch2.3.1tensorflow2.16.1-gpu-py311-cu121-ubuntu22.04",
++          "cpu": 92,
++          "gpu": 8,
++          "memory": "1600Gi",
++          "shared_memory": "1600Gi"
++        }
++      },
++      "target_worker_contract": {
++        "count": 1,
++        "image": "dsw-registry-vpc.cn-wulanchabu.cr.aliyuncs.com/pai/modelscope:1.29.0-pytorch2.3.1tensorflow2.16.1-gpu-py311-cu121-ubuntu22.04",
++        "cpu": 24,
++        "gpu": 2,
++        "memory": "200Gi",
++        "shared_memory": "200Gi"
++      },
++      "oversold_type": "AcceptQuotaOverSold",
++      "verification_state": "registered_pending_new_job_actual_idle_readback",
++      "verified_at": "2026-09-06T17:45:00Z",
++      "evidence": "Stage2F user explicitly requests robot-under-idle with at most 2 A800 per job. Preserve independently verified split source carriers and native five mounts; require live precreate source rechecks and exact ListJobs UseOversoldResource=true. Fresh S1 zero-injection workload only.",
++      "authorized_data_sources": [
++        {
++          "id": "d-mkixtohdn75dp8x9tb",
++          "version": "v1",
++          "mount_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon",
++          "options": ""
++        },
++        {
++          "id": "d-lg9t2b6xajpukeqqeb",
++          "version": "v1",
++          "mount_path": "/mnt/cpfs/zbl-cpfs-new/SHARE/leon",
++          "options": ""
++        },
++        {
++          "id": "d-36p023eg0f2vuqny8y",
++          "version": "v1",
++          "mount_path": "/mnt/cpfs/zbl-cpfs-new/CKPT/leon",
++          "options": ""
++        },
++        {
++          "id": "d-ejgj2ej7io1t2t32uc",
++          "version": "v1",
++          "mount_path": "/mnt/cpfs/zbl-cpfs-new/dataset/leon",
++          "options": ""
++        },
++        {
++          "id": "d-7fi8hehav247qi6x5o",
++          "version": "v1",
++          "mount_path": "/mnt/cpfs/zbl-cpfs-new/Models/",
++          "options": ""
++        }
++      ],
++      "source_oversold_type": "ForbiddenQuotaOverSold",
++      "contract_data_sources_mode": "exact"
+     }
+   }
+ }
+--- a/config/toolchain.json
++++ b/config/toolchain.json
+@@ -88,7 +88,7 @@
+     "action": "ListJobs",
+     "api_path": "/api/v1/jobs",
+     "file": "bin/record-openapi-idle-source",
+-    "sha256": "efd3bd2c4819bb2f6691040560bbf8c154d8d1c9dff70eb2b261795fc4016bae",
++    "sha256": "0adf9f97666d335dcc1da1e0c49b5e385f9a9d8ead4f43d11c3613490a016465",
+     "source": "pai_openapi_listjobs_exact_job_readback",
+     "version": "2020-12-03"
+   },

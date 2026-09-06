@@ -1,6 +1,6 @@
 """S1 durable I/O and outcome-blind execution boundaries."""
 from __future__ import annotations
-import hashlib, json, multiprocessing as mp, os, queue, sys, traceback
+import hashlib, json, multiprocessing as mp, os, queue, sys, traceback, time
 from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -35,24 +35,43 @@ def guard_execution(now=None):
     # Stop admitting branches five minutes before each user blackout.
     if 565<=minute<580 or 1165<=minute<1180:
         raise RuntimeError("BLACKOUT: refuse new work 09:25-09:40 / 19:25-19:40 Beijing")
+    heartbeat=os.environ.get("S1_CONTROL_HEARTBEAT")
+    if heartbeat:
+        from datetime import timezone
+        p=Path(heartbeat)
+        if not p.exists():raise RuntimeError("external controller heartbeat missing")
+        h=json.loads(p.read_text());age=(datetime.now(timezone.utc)-datetime.fromisoformat(h["time"])).total_seconds()
+        if age>90:raise RuntimeError("external controller heartbeat stale")
     marker=os.environ.get("S1_STOP_FILE")
-    if marker and Path(marker).exists():raise RuntimeError("external S1 stop marker")
+    if marker and Path(marker).exists():raise RuntimeError("external S1 stop marker: "+Path(marker).read_text()[:200])
 def _spawn_entry(q,module,function,kwargs):
     try:
         import importlib
+        from .assets import configure_assets
+        configure_assets()
         out=getattr(importlib.import_module(module),function)(**kwargs)
         q.put({"ok":True,"result":out})
     except BaseException:
         q.put({"ok":False,"error":traceback.format_exc()})
-def spawn_call(module,function,kwargs,timeout=1800):
+def spawn_call(module,function,kwargs,timeout=1800,cancel_event=None):
     guard_execution()
     ctx=mp.get_context("spawn");q=ctx.Queue()
     p=ctx.Process(target=_spawn_entry,args=(q,module,function,kwargs))
     p.start()
-    try:result=q.get(timeout=timeout)
-    except queue.Empty:
-        p.terminate();p.join(10)
-        raise TimeoutError(f"spawn exceeded {timeout}s: {module}.{function}")
+    deadline=time.monotonic()+timeout
+    try:
+        while True:
+            guard_execution()
+            if cancel_event is not None and cancel_event.is_set():raise RuntimeError("cancelled active child")
+            if time.monotonic()>deadline:raise TimeoutError(f"spawn exceeded {timeout}s")
+            try:result=q.get(timeout=1);break
+            except queue.Empty:
+                if not p.is_alive():raise RuntimeError(f"child exited before result: {p.exitcode}")
+    except BaseException:
+        if p.is_alive():p.terminate()
+        p.join(10)
+        if p.is_alive():p.kill();p.join(10)
+        raise
     p.join(30)
     if p.is_alive():p.terminate();p.join();raise RuntimeError("child did not exit")
     if not result["ok"]:raise RuntimeError(result["error"])

@@ -1,0 +1,53 @@
+--- a/bin/pai-job
++++ b/bin/pai-job
+@@ -24083,6 +24083,42 @@
+         return evidence
+ 
+ 
++def stage2f_external_admission(resolved):
++    """Lineage-specific pre-CreateJob admission; uncertain claims stay sealed."""
++    if resolved.get("resource_alias") != "exp-robot-oversold-r16p14-stage2f-2gpu":
++        return
++    import datetime as _dt
++    from zoneinfo import ZoneInfo as _ZoneInfo
++    expected = Path("/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/control/heartbeat.json")
++    if resolved.get("evidence", {}).get("external_controller") != str(expected):
++        raise Refused("Stage2F requires exact external controller")
++    current = _dt.datetime.now(_dt.timezone.utc)
++    local = current.astimezone(_ZoneInfo("Asia/Shanghai"))
++    minute = local.hour * 60 + local.minute
++    if 565 <= minute < 580 or 1165 <= minute < 1180:
++        raise Refused("Stage2F blackout admission closed")
++    heartbeat = load_json(expected)
++    age = (current - _dt.datetime.fromisoformat(heartbeat["time"])).total_seconds()
++    if not 0 <= age <= 60 or heartbeat.get("resume_allowed") is not True:
++        raise Refused("Stage2F controller stale or admission closed")
++    manifest = expected.with_name("jobs.json")
++    with manifest.with_suffix(".lock").open("a") as handle:
++        fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
++        state = load_json(manifest)
++        terminal = {"Succeeded", "Failed", "Stopped", "Deleted"}
++        active = [j for j in state["jobs"] if j.get("status") not in terminal]
++        claims = state.setdefault("submission_claims", {})
++        other = [rid for rid, claim in claims.items()
++                 if rid != resolved["run_id"] and not claim.get("job_id")]
++        if len(active) + len(other) >= 2:
++            raise Refused("Stage2F two-job cap including pending submissions")
++        if any(j.get("run_id") == resolved["run_id"] for j in state["jobs"]):
++            raise Refused("Stage2F duplicate run registration")
++        claims[resolved["run_id"]] = {"claimed_at_utc": current.isoformat(),
++                                     "state": "precreate", "gpus": 2}
++        atomic_json(manifest, state)
++
++
+ def submit_resolved(
+     resolved: Dict[str, Any],
+     config_path: Path,
+@@ -24153,6 +24189,7 @@
+                 },
+             )
+             verify_and_record_wandb_precreate(target_dir, secret_env)
++            stage2f_external_admission(resolved)
+         except BaseException as exc:
+             state = load_json(target_dir / "submission-state.json")
+             state.update(

@@ -1,11 +1,18 @@
 {
   "phase": "phase0b",
-  "execution_status": "NOT_RUN",
+  "execution_status": "INFRASTRUCTURE_SMOKE_ONLY",
   "blocker": "BLOCKED_BY_FROZEN_SPAWN_ZERO_INJECTION_CONTRACT",
   "gate": "K1",
   "gate_status": "NOT_EVALUATED",
   "all_planned_experiments_completed": false,
-  "observations": null,
+  "observations": {
+    "fixed_reset_states": 200,
+    "clean_infrastructure_episodes": 1,
+    "control_steps": 360,
+    "physics_steps": 9000,
+    "calibration_actor_episodes": 0,
+    "evaluation_actor_episodes": 0
+  },
   "rollouts": 0,
   "gpu_hours": 0.0,
   "reason": "Static preflight found forbidden injection in the mandated frozen branch dispatcher before any Phase-0B data collection. Scientific gate continuation does not override the zero-injection stop rule."

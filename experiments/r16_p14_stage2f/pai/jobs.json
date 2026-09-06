@@ -3,7 +3,7 @@
   "jobs": [],
   "submission_attempts": 0,
   "total_gpu_hours": 0.0,
-  "resource_intent": "A800 idle capacity under robot pool; exact alias and live placement not yet validated",
+  "resource_intent": "exp-robot-oversold-r16p14-stage2f-2gpu; exact idle placement required before each job works",
   "max_concurrent_jobs": 2,
   "max_gpu_per_job": 2,
   "gpu_hours_limit": 20,
@@ -14,7 +14,7 @@
     "09:30-09:40",
     "19:30-19:40"
   ],
-  "blackout_enforcement_status": "NOT_INSTALLED_NO_JOBS_SUBMITTED",
+  "blackout_enforcement_status": "STOP_CONTROLLER_RUNNING; PRECREATE_ADMISSION_5_TESTS_PASS; RESUMER_VALIDATION_PENDING",
   "blackout_current_compliance": "NO_WORKFLOW_JOBS_EXIST",
   "resubmission_policy": "Before any future submission, require tested exact-JobId stop controller and resume only after blackout end.",
   "superseded_cleanup": {
@@ -22,5 +22,7 @@
     "count": 0,
     "status": "ZERO_TARGET_NO_SUBMISSION"
   },
-  "browser_not_used": "fifo_not_applicable"
+  "browser_not_used": "fifo_not_applicable",
+  "external_controller_pid": 3879940,
+  "dev14_gpu_hours_reserved_upper_bound": 0.5
 }

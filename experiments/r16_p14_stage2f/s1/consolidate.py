@@ -461,6 +461,44 @@ def _event_inventory(rows: Sequence[Mapping[str, Any]], phase: str, reasons: lis
     return identities
 
 
+def _phase1_reference_events(input_root: Path) -> tuple[list[tuple[Any, ...]], list[str]]:
+    """Use the sealed calibration export to reject a residual/substituted grid."""
+    path = input_root / "phase0b" / "calibration_events.jsonl"
+    if not path.is_file():
+        return [], []
+    material: list[dict[str, Any]] = []
+    reasons: list[str] = []
+    try:
+        for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+            if line.strip():
+                value = json.loads(line)
+                if not isinstance(value, Mapping):
+                    raise ValueError(f"line {line_number} is not an object")
+                material.append(dict(value))
+    except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
+        return [], [f"cannot read calibration event export: {exc}"]
+    expected: list[tuple[Any, ...]] = []
+    for task in TASKS:
+        task_events = [row for row in material if _text(row.get("task")) == task and row.get("split") == "calibration"]
+        task_events.sort(key=lambda row: (int(row["init_state_id"]), int(row.get("actor_seed", row.get("generator_actor_seed", 0))), _text(row["event_instance_id"])))
+        if len(task_events) < 20:
+            reasons.append(f"calibration event export has fewer than 20 events for {task}")
+            continue
+        expected.extend(
+            (
+                task,
+                _text(row["event_instance_id"]),
+                _text(row["init_state_id"]),
+                "calibration",
+                _int(row.get("actor_seed", row.get("generator_actor_seed")), "generator_actor_seed"),
+            )
+            for row in task_events[:20]
+        )
+    if len(expected) != len(set(expected)):
+        reasons.append("calibration event export contains duplicate Phase-1 identities")
+    return sorted(expected), reasons
+
+
 def _expected_grid_keys(events: Sequence[tuple[Any, ...]]) -> tuple[set[tuple[Any, ...]], set[tuple[Any, ...]]]:
     core: set[tuple[Any, ...]] = set()
     reference: set[tuple[Any, ...]] = set()
@@ -554,6 +592,10 @@ def consolidate_phase1(input_root: str | Path, output_root: str | Path) -> dict[
     input_root, output_root = Path(input_root), Path(output_root)
     rows, reasons = _normalize_shards(input_root, "phase1")
     events = _event_inventory(rows, "phase1", reasons)
+    reference_events, reference_reasons = _phase1_reference_events(input_root)
+    reasons.extend(reference_reasons)
+    if reference_events and set(events) != set(reference_events):
+        reasons.append("Phase-1 shard event identities do not match the first 20 exported calibration events")
     core, reference, matrix_reasons = _validate_matrix_rows(rows, events, "phase1")
     reasons.extend(matrix_reasons)
     if reasons:

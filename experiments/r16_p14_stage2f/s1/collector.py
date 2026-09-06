@@ -25,6 +25,7 @@ def collect_episode(task,init_state_id,actor_seed,pool_path,output_root,device="
     from r16_p14_stage2b.runtime import ActorBundle,ActorHistory,chunk_hash
     from r16_p14_stage2d.io_utils import sha256_array
     from .measurement import SimulationStepRecorder,label_trace
+    started=time.monotonic()
     torch.set_num_threads(1);np.random.seed(0);torch.manual_seed(0)
     pool_path=Path(pool_path);pool=json.loads(pool_path.read_text())
     if pool["task"]!=task:raise RuntimeError("pool task mismatch")
@@ -60,7 +61,7 @@ def collect_episode(task,init_state_id,actor_seed,pool_path,output_root,device="
                       split=init["split"],actor_seed=actor_seed,generator_actor_seed=actor_seed,
                       checkpoint=str(bundle.checkpoint.relative_to(ROOT)),checkpoint_sha256=bundle.checkpoint_sha256,
                       actor_run_id=f"stage2a_shared_multitask_seed_{actor_seed}",init_state_id=init_state_id,
-                      init_pool_file_sha256=file_sha(pool_path),init_state=init["state"],init_state_hash=init["state_hash"],
+                      init_pool_file_sha256=file_sha(pool_path),init_state=init["state"],init_state_hash=sha256_array(init["state"],np.float64),pool_state_raw_hash=init["state_hash"],
                       pre_anchor_actions=pre.tolist(),pre_anchor_actions_hash=sha256_array(pre,np.float32),
                       anchor_global_step=step,anchor_state=state.tolist(),anchor_state_hash=state_sha256(state),
                       state_history=states.tolist(),state_history_hash=sha256_array(states,np.float32),
@@ -73,6 +74,7 @@ def collect_episode(task,init_state_id,actor_seed,pool_path,output_root,device="
                                       gripper_closed=True,task_success=False,ever_stably_lifted=True),
                       source_is_actor_generated_chunk=True,source_is_demonstration_chunk=False,
                       global_step_fallback_used=False)
+                if event is not None:recorder.baseline_contacts=event["anchor_contacts"]
                 action=chunk[0].copy()
                 recorder.set_action(step=step,action=action,previous_gripper=previous,ever_lifted=ever)
                 obs,_,_,_=env.step(action)
@@ -81,12 +83,15 @@ def collect_episode(task,init_state_id,actor_seed,pool_path,output_root,device="
                 success=bool(env.check_success())
                 if success:break
         qualified=event is not None and not success
-        labels=label_trace(recorder.records,task)
+        if not recorder.physics_instrumented or recorder.physics_step_count<len(actions):
+            raise RuntimeError("D1 physics-step instrumentation unavailable")
+        cause_records=recorder.records if event is None else [row for row in recorder.records if row["step"]>=event["anchor_global_step"]]
+        labels=label_trace(cause_records,task)
         env_hash=digest({"task":task,"reset_seed":0,"init_hash":init["state_hash"],
                          "camera":False,"fresh_environment":True})
-        result=dict(schema_version=1,event_instance_id=eid,task=task,init_state_id=init_state_id,
+        result=dict(schema_version=1,elapsed_seconds=time.monotonic()-started,source_commit=os.environ.get("S1_SOURCE_COMMIT"),pai_run_id=os.environ.get("PAI_CANARY_RUN_ID"),job_id=os.environ.get("S1_JOB_ID"),event_instance_id=eid,task=task,init_state_id=init_state_id,
           actor_seed=actor_seed,split=init["split"],pid=os.getpid(),env_hash=env_hash,
-          chunk_hash=None if event is None else event["original_chunk_hash"],clean_success=success,
+          chunk_hash=chunk_hash(chunk) if event is None else event["original_chunk_hash"],clean_success=success,
           steps=len(actions),structural_anchor_found=event is not None,qualified_natural_failure=qualified,
           event=event if qualified else None,labels=labels,trace_path=str(trace_path),
           trace_sha256=file_sha(trace_path),status="COMPLETE",zero_injection=True)
@@ -114,20 +119,39 @@ def run_task(task,output_root,device="cpu",workers=1,infra_only=False):
     from concurrent.futures import ThreadPoolExecutor,as_completed
     out=Path(output_root);pool=init_pool(task,out)
     cases=[(seed,i) for i in (range(1) if infra_only else range(100)) for seed in (SEEDS[:1] if infra_only else SEEDS)]
+    import threading
+    cancelled=threading.Event()
     def run(case):
+        if cancelled.is_set():return
         seed,i=case;split=split_for(i)
         target=out/("sealed_evaluation" if split=="evaluation" else "episodes")/task/f"init{i:03d}__actor{seed}.json"
         if target.exists():return
         row=spawn_call("experiments.r16_p14_stage2f.s1.collector","collect_episode",dict(task=task,init_state_id=i,actor_seed=seed,
-              pool_path=str(pool),output_root=str(out),device=device))
+              pool_path=str(pool),output_root=str(out),device=(f"cuda:{(i*3+SEEDS.index(seed))%2}" if device=="cuda" else device)),cancel_event=cancelled)
         atomic_json(target,row)
         if split=="evaluation":target.chmod(0o600)
         # Expose only qualification metadata before the selection receipt.
         atomic_json(out/"qualification"/task/f"init{i:03d}__actor{seed}.json",
             {k:row[k] for k in ("event_instance_id","task","init_state_id","actor_seed","split","qualified_natural_failure","status")})
+        state_dir=os.environ.get("PAI_CANARY_RUN_DIR")
+        if state_dir:
+            first=Path(state_dir)/"pai_state/FIRST_REAL_WORK.json"
+            import fcntl
+            first.parent.mkdir(parents=True,exist_ok=True)
+            with first.with_suffix(".lock").open("a") as lock:
+                fcntl.flock(lock,fcntl.LOCK_EX)
+                if not first.exists():atomic_json(first,dict(uid=os.getuid(),gid=os.getgid(),shard=str(target),sha256=file_sha(target),task=task))
         print(f"persisted episode task={task} init={i} seed={seed}",flush=True)
     with ThreadPoolExecutor(max_workers=workers) as ex:
-        for f in as_completed([ex.submit(run,c) for c in cases]):f.result()
+        futures=[ex.submit(run,c) for c in cases]
+        try:
+            for f in as_completed(futures):f.result()
+        except BaseException:
+            cancelled.set()
+            for f in futures:f.cancel()
+            marker=os.environ.get("S1_STOP_FILE")
+            if marker:Path(marker).write_text("S1_COLLECTION_FAILURE")
+            raise
     counts={s:0 for s in ("infrastructure","calibration","evaluation","reserve")}
     for p in (out/"qualification"/task).glob("*.json"):
         row=json.loads(p.read_text());counts[row["split"]]+=int(row["qualified_natural_failure"])
