@@ -202,7 +202,7 @@ def _canonical_row(row: Mapping[str, Any], phase: str) -> tuple[dict[str, Any] |
     raw_status = _value(row, "status", *containers)
     raw_error = _value(row, "error_type", *containers)
     structural_exclusion = (
-        str(raw_status).strip().upper() == "BLOCKED"
+        str(raw_status).strip().upper().startswith("BLOCKED")
         and str(raw_error).strip() == "PrefixOutsideTaskHorizon"
         and phase == "phase1"
     )
