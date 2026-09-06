@@ -1034,6 +1034,13 @@ def consolidate_diagnostic_phase2(
             output_path, stats_reasons or ["statistics unavailable"],
             evaluation_read=True, extra=extra,
         )
+    # Keep complete split-specific statistics as immutable machine-readable
+    # artifacts; crossing.json/null_distribution.json are compact views.
+    _write_json(output_path / "phase2" / "statistics_evaluation.json", evaluation_stats)
+    _write_json(
+        output_path / "phase2" / "statistics_calibration_descriptive.json",
+        calibration_stats,
+    )
     boundary_rows: list[dict[str, Any]] = []
     for split, result in (("evaluation", evaluation_stats), ("calibration", calibration_stats)):
         for row in result.get("boundaries", ()):
