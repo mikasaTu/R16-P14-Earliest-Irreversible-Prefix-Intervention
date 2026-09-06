@@ -69,3 +69,83 @@ restricted support 只有 12 个 cluster、21 个事件，事件并非每个 clu
 不能推出的是：模型发生了 38.1% 到 19.4% 的真实退化；kLR 对 immediate 或 fixed-delay 的因果优越性；fallback 支持扩张对所有新事件的无偏效果；以及对 S1 calibration/evaluation、机器人运行或 PAI 任务的外推。`G0_1=INCONCLUSIVE`、`formal_positive_evidence_allowed=false`、`performance_advantage_claimed=false` 和 `planned_pai_jobs=0` 是本阶段的最终边界。
 
 本报告没有提出新 idea 或新增实验，只按 code-first 机制反解已完成 Phase0A 的实际代码、分母和估计量。
+
+## 增补：A1 原始计数与 Phase0A 表格的逐行对账
+
+父验收发现，A1 的冻结 evaluation 原始计数是 `immediate_fresh_h16=23/144`、`fixed_delay_8=16/144`，而 Phase0A `table.csv` 的 full-support 行是 `24/144`、`17/144`。这不是四舍五入，也不是 fallback 或 cluster 重加权造成的 +1；两处读取的是同一个 `c_baseline` artifact 的不同 split。
+
+代码路径可以逐行定位这个分叉。`experiments/r16_p14_stage2f/phase0a.py:33-37` 只读并校验四个冻结输入：`c_recovery`、`c_boundaries`、`c_invalid`、`c_baseline`。随后 `phase0a.py:46` 明确构造 `calibration = c_baseline[split == "calibration"]`，并在 `phase0a.py:52-55` 用这批 calibration rows 调用 `_method_summary`；因此它写入的 `table.csv` 是 calibration support。冻结 `scripts/run_r16p14_stage2e_s0.py:638-645` 则明确构造 `eval_baseline = baseline[split == "evaluation"]`，A1 对该集合计数。故两者的分母都为 48 events × 3 heldout actors = 144 rows，但事件集合不是同一批：该 artifact 中 calibration 行的 `init_state_id` 为 30–37，evaluation 行为 40–48；没有同一 `event_instance_id` 的 calibration/evaluation 配对。
+
+| method | `table.csv` 使用的 split | table raw true rows | A1 使用的 split | A1 raw true rows | 净差 |
+|---|---|---:|---|---:|---:|
+| `fixed_delay_8` | calibration | 17/144 = 11.8055556% | evaluation | 16/144 = 11.1111111% | +1 row |
+| `immediate_fresh_h16` | calibration | 24/144 = 16.6666667% | evaluation | 23/144 = 15.9722222% | +1 row |
+
+这些数值可由 `artifacts/stage2f/phase0a/a1_published_evaluation.csv`、`artifacts/stage2f/phase0a/table.csv` 直接回读，并由 `c_baseline` 的逐行过滤复核。校验后的四个输入行数和 SHA256 仍为：`c_recovery=17280/21bd70d4dd258dd4e4b52a453ca137b2552800a40654bb03db0bbdb344e47efa`，`c_boundaries=96/d2c93d6027419a850220b1c1fc644579d4f1387633099c34129a9643305c7ff9`，`c_invalid=33/eae0ce6f2804a3628c46bdd55d1f5abcae6b16dab35f8e194914f9fd9ec02f13`，`c_baseline=2289/2d212f4a7f0a4062866feed39482f67a9622cd2b8aaaabff332874552d3a7626`。四者均只读，未重新运行 rollout。
+
+以下是 `c_baseline` 中所有 `safe_success=true` 的受影响原始行。每项格式为 `event_instance_id : heldout_actor_seed`；同一 method/split 下未列出的行均为 `safe_success=false`。这给出逐 actor 行证据，而非仅给出聚合比例。
+
+### `fixed_delay_8`
+
+- calibration（17 rows，11 events；task 分解：stove 9、cream-cheese 8）：
+  - `put_the_bowl_on_the_stove__seed07__init31__future_06_lateral_040mm:7`
+  - `put_the_bowl_on_the_stove__seed07__init36__future_14_lateral_020mm:17`
+  - `put_the_bowl_on_the_stove__seed17__init33__future_14_lateral_020mm:17,29`
+  - `put_the_bowl_on_the_stove__seed17__init37__future_14_lateral_020mm:29`
+  - `put_the_bowl_on_the_stove__seed29__init34__future_14_lateral_020mm:7,17,29`
+  - `put_the_bowl_on_the_stove__seed29__init36__future_14_lateral_020mm:17`
+  - `put_the_cream_cheese_in_the_bowl__seed17__init31__shift_040mm:7`
+  - `put_the_cream_cheese_in_the_bowl__seed17__init35__shift_040mm:7,17,29`
+  - `put_the_cream_cheese_in_the_bowl__seed17__init36__shift_060mm:29`
+  - `put_the_cream_cheese_in_the_bowl__seed17__init37__shift_040mm:7`
+  - `put_the_cream_cheese_in_the_bowl__seed29__init34__shift_040mm:17,29`
+- evaluation（16 rows，11 events；task 分解：stove 12、cream-cheese 4）：
+  - `put_the_bowl_on_the_stove__seed07__init42__future_14_lateral_020mm:17`
+  - `put_the_bowl_on_the_stove__seed07__init44__future_14_lateral_020mm:7,29`
+  - `put_the_bowl_on_the_stove__seed07__init47__future_06_lateral_040mm:29`
+  - `put_the_bowl_on_the_stove__seed17__init42__future_06_lateral_040mm:29`
+  - `put_the_bowl_on_the_stove__seed17__init46__future_06_lateral_040mm:7,17`
+  - `put_the_bowl_on_the_stove__seed29__init40__future_14_lateral_020mm:7,29`
+  - `put_the_bowl_on_the_stove__seed29__init41__future_06_lateral_040mm:17`
+  - `put_the_bowl_on_the_stove__seed29__init42__future_14_lateral_020mm:7,17`
+  - `put_the_cream_cheese_in_the_bowl__seed17__init45__shift_040mm:7`
+  - `put_the_cream_cheese_in_the_bowl__seed29__init42__shift_040mm:29`
+  - `put_the_cream_cheese_in_the_bowl__seed29__init45__shift_060mm:17,29`
+
+### `immediate_fresh_h16`
+
+- calibration（24 rows，15 events；task 分解：stove 15、cream-cheese 9）：
+  - `put_the_bowl_on_the_stove__seed07__init34__future_14_lateral_020mm:7`
+  - `put_the_bowl_on_the_stove__seed07__init35__future_06_lateral_040mm:7`
+  - `put_the_bowl_on_the_stove__seed17__init33__future_14_lateral_020mm:7,29`
+  - `put_the_bowl_on_the_stove__seed17__init34__future_06_lateral_040mm:17,29`
+  - `put_the_bowl_on_the_stove__seed17__init35__future_14_lateral_020mm:7`
+  - `put_the_bowl_on_the_stove__seed17__init36__future_06_lateral_040mm:7`
+  - `put_the_bowl_on_the_stove__seed17__init37__future_14_lateral_020mm:7,17`
+  - `put_the_bowl_on_the_stove__seed29__init32__future_14_lateral_020mm:7,29`
+  - `put_the_bowl_on_the_stove__seed29__init34__future_14_lateral_020mm:7,17,29`
+  - `put_the_cream_cheese_in_the_bowl__seed17__init31__shift_040mm:17`
+  - `put_the_cream_cheese_in_the_bowl__seed17__init35__shift_040mm:29`
+  - `put_the_cream_cheese_in_the_bowl__seed17__init36__shift_060mm:7,29`
+  - `put_the_cream_cheese_in_the_bowl__seed17__init37__shift_040mm:7,17,29`
+  - `put_the_cream_cheese_in_the_bowl__seed29__init34__shift_040mm:17`
+  - `put_the_cream_cheese_in_the_bowl__seed29__init36__shift_040mm:7`
+- evaluation（23 rows，14 events；task 分解：stove 20、cream-cheese 3）：
+  - `put_the_bowl_on_the_stove__seed07__init41__future_06_lateral_040mm:7`
+  - `put_the_bowl_on_the_stove__seed07__init42__future_14_lateral_020mm:7,17,29`
+  - `put_the_bowl_on_the_stove__seed07__init44__future_14_lateral_020mm:7,29`
+  - `put_the_bowl_on_the_stove__seed07__init45__future_06_lateral_040mm:7,17`
+  - `put_the_bowl_on_the_stove__seed07__init47__future_06_lateral_040mm:7`
+  - `put_the_bowl_on_the_stove__seed17__init42__future_06_lateral_040mm:7,17,29`
+  - `put_the_bowl_on_the_stove__seed17__init44__future_06_lateral_040mm:29`
+  - `put_the_bowl_on_the_stove__seed17__init46__future_06_lateral_040mm:7,17,29`
+  - `put_the_bowl_on_the_stove__seed29__init41__future_06_lateral_040mm:7,17`
+  - `put_the_bowl_on_the_stove__seed29__init42__future_14_lateral_020mm:29`
+  - `put_the_bowl_on_the_stove__seed29__init44__future_14_lateral_020mm:7`
+  - `put_the_cream_cheese_in_the_bowl__seed07__init40__shift_040mm:29`
+  - `put_the_cream_cheese_in_the_bowl__seed17__init45__shift_040mm:17`
+  - `put_the_cream_cheese_in_the_bowl__seed29__init45__shift_060mm:7`
+
+For these two methods the frozen `_event_method_rows` path is direct baseline lookup (`run_r16p14_stage2e_s0.py:518-523`, `536-549`): `c_recovery` fallback is only reachable for `k_last_observed_safe` / `k_last_recoverable`, so it cannot account for either +1. Both methods have all 48 calibration events defined and `fallback_event_count=0`; restricted and full table rows therefore coincide. The table statistic remains event mean after three-actor mean, which here equals the 144-row true count divided by 144 because every event has exactly three actors. No reweighting can turn 23 into 24 or 16 into 17; the +1 is solely the calibration-versus-evaluation split switch.
+
+The affected counts are therefore a split-support bookkeeping discrepancy, not a model change and not a claim about fallback behavior. The earlier report's substantive mechanism conclusion remains unchanged: it must keep A1's evaluation numbers (`23/144`, `16/144`) separate from calibration table numbers (`24/144`, `17/144`), and neither pair supports a causal performance claim.
