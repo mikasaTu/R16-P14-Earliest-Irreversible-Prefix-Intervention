@@ -40,6 +40,22 @@ def selected_budget(root):
         values=candidates[0].get(field,{})
         if set(values)!=set(TASKS) or not all(check(float(x)) for x in values.values()):raise RuntimeError("K2 two-task qualification missing")
     return data["selected_budget"]
+def compatible_runtime_row(row,module_hashes):
+    previous=row.get("runtime_module_hashes")
+    if previous==module_hashes:
+        return True
+    receipt=json.loads((Path(__file__).parent/"dispatch_compatibility.json").read_text())
+    if row.get("source_commit") not in receipt["allowed_existing_source_commits"]:
+        return False
+    if module_hashes.get("dispatch.py")!=receipt["new_dispatch_sha256"]:
+        return False
+    if not isinstance(previous,dict) or set(previous)!=set(module_hashes):
+        return False
+    for name,expected in receipt["other_module_sha256"].items():
+        if previous.get(name)!=expected or module_hashes.get(name)!=expected:
+            return False
+    return previous.get("dispatch.py")==receipt["old_dispatch_sha256"]
+
 def record_first_work(row_path):
     state_dir=os.environ.get("PAI_CANARY_RUN_DIR")
     if not state_dir:return
@@ -78,7 +94,7 @@ def run_task(phase,task,output_root,workers=12,device="cuda"):
         path=phase_dir/"shards"/task/f"{key}.json"
         if path.exists():
             row=json.loads(path.read_text())
-            if row.get("runtime_module_hashes")!=module_hashes or row.get("runtime_receipt_sha256")!=os.environ.get("S1_RUNTIME_RECEIPT_SHA256"):
+            if not compatible_runtime_row(row,module_hashes) or row.get("runtime_receipt_sha256")!=os.environ.get("S1_RUNTIME_RECEIPT_SHA256"):
                 raise RuntimeError(f"existing shard runtime binding changed: {path}")
             if row.get("status")!="COMPLETE" and row.get("error_type")!="PrefixOutsideTaskHorizon":
                 raise RuntimeError(f"immutable failed shard {path}")
@@ -89,7 +105,7 @@ def run_task(phase,task,output_root,workers=12,device="cuda"):
             row=json.loads(prior.read_text())
             if row.get("status")!="COMPLETE" and row.get("error_type")!="PrefixOutsideTaskHorizon":
                 raise RuntimeError("cannot reuse failed calibration")
-            if row.get("runtime_module_hashes")!=module_hashes or row.get("runtime_receipt_sha256")!=os.environ.get("S1_RUNTIME_RECEIPT_SHA256"):raise RuntimeError("calibration runtime changed before atlas")
+            if not compatible_runtime_row(row,module_hashes) or row.get("runtime_receipt_sha256")!=os.environ.get("S1_RUNTIME_RECEIPT_SHA256"):raise RuntimeError("calibration runtime changed before atlas")
             row={**row,"reused_calibration_shard":str(prior),"reused_calibration_sha256":file_sha(prior)}
         else:
             trace=phase_dir/"contact_topology"/task/f"{key}.jsonl.gz"

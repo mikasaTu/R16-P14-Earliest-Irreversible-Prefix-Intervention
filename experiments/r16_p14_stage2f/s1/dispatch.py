@@ -183,6 +183,7 @@ def run_spawned_branch(
     process.start()
     deadline = time.monotonic() + float(timeout_s)
     cancel_reason = None
+    received_row = None
     while process.is_alive():
         remaining = deadline - time.monotonic()
         if remaining <= 0:
@@ -199,7 +200,14 @@ def run_spawned_branch(
         if any(os.environ.get(name) for name in ("R16_P14_STOP", "R16_P14_BLACKOUT", "R16_P14_STAGE2F_STOP")):
             cancel_reason = "stop_or_blackout_requested"
             break
-        process.join(min(1.0, remaining))
+        # A child Queue feeder may be waiting for the parent to drain a
+        # result larger than the OS pipe.  Joining first deadlocks that child.
+        if received_row is None:
+            try:
+                received_row = result_queue.get(timeout=min(0.25, remaining))
+            except Empty:
+                pass
+        process.join(min(0.25, max(0.0, deadline - time.monotonic())))
     if process.is_alive():
         process.terminate()
         process.join(30.0)
@@ -219,7 +227,7 @@ def run_spawned_branch(
         result_queue.join_thread()
         return row
     try:
-        row = result_queue.get(timeout=5.0)
+        row = received_row if received_row is not None else result_queue.get(timeout=5.0)
     except Empty:
         row = _blocked_row(
             event, int(recovery_actor_seed), operator,

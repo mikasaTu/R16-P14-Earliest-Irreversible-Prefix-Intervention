@@ -54,7 +54,7 @@ calibration 的120条固定rollout可完整分解：cream为53条clean success�
 
 bowl的一个calibration事件anchor位于316/320步，k8/12/16及对应部分参考请求超出任务horizon。这产生324个core与54个reference请求的结构性BLOCKED。完整事件支持集的描述性指标排除该事件，实际支持为cream19、bowl10，但仍保留原始30事件、19440请求和全部排除理由。这些组合记录BLOCKED并继续其余请求；不截短缓存前缀以伪造计划执行，也不把BLOCKED的占位False当阴性观测。每档oracle、weakest、gap及有效支持集将在实际分片完成后报告。
 
-两个Phase1作业dlc14obea2cugtbf与dlc4vt6h6pcw6jzk已提交；两个任务的实际分支源提交、runtime receipt、预算、重建误差0和trace SHA已通过主线程验收，完整网格仍在运行。北京时间2026-09-07 04:23的快照为cream3156/12312、bowl2846/7128，两个作业均无FATAL_ERROR。目前没有可报告的最终Phase1恢复成功率。K2需两任务在同一档位同时满足oracle∈[0.25,0.85]且gap≥0.15，并满足完整证据要求；计划样本不足使有效selection不可成立。Phase2所需两族safe success、k*、minority crossing、Spearman、10000次cluster bootstrap以及族内split-half噪声地板目前均未测。按用户“不因gate停止其他实验”的正文，接下来将走单独诊断性路径：全部现有Phase1请求验收后，在calibration上按原K2数值合格档与原排序选预算；若无数值合格档，则保留失败并按同排序取首档，仅供后续测量。单独receipt提交推送并验真后才读evaluation。原正式BLOCKED receipt及严格atlas入口保留。这是看过部分calibration数据后的执行补充，不是事前预注册，不能冒充前提齐全的确认性检验。具体见DIAGNOSTIC_ATLAS_CONTINUATION.md。
+两个Phase1作业dlc14obea2cugtbf与dlc4vt6h6pcw6jzk已提交；两个任务的实际分支源提交、runtime receipt、预算、重建误差0和trace SHA已通过主线程验收，完整网格尚未完成。北京时间2026-09-07 04:23的快照为cream3156/12312、bowl2846/7128，两个作业均无FATAL_ERROR。目前没有可报告的最终Phase1恢复成功率。K2需两任务在同一档位同时满足oracle∈[0.25,0.85]且gap≥0.15，并满足完整证据要求；计划样本不足使有效selection不可成立。Phase2所需两族safe success、k*、minority crossing、Spearman、10000次cluster bootstrap以及族内split-half噪声地板目前均未测。按用户“不因gate停止其他实验”的正文，接下来将走单独诊断性路径：全部现有Phase1请求验收后，在calibration上按原K2数值合格档与原排序选预算；若无数值合格档，则保留失败并按同排序取首档，仅供后续测量。单独receipt提交推送并验真后才读evaluation。原正式BLOCKED receipt及严格atlas入口保留。这是看过部分calibration数据后的执行补充，不是事前预注册，不能冒充前提齐全的确认性检验。具体见DIAGNOSTIC_ATLAS_CONTINUATION.md。
 
 ## PAI记录与工程修复
 
@@ -66,8 +66,8 @@ bowl的一个calibration事件anchor位于316/320步，k8/12/16及对应部分�
 | dlc1qayvbetb16ji | 旧bowl采集 | Stopped；同轮环境修复停机，0正式episode |
 | dlc1hzmadm185c68 | CUDA12.4 cream采集 | Succeeded；300/300持久化 |
 | dlc1rz7o5mf1vajn | CUDA12.4 bowl采集 | Succeeded；300/300持久化 |
-| dlc14obea2cugtbf | cream现有样本网格 | Running；已有真实分支 |
-| dlc4vt6h6pcw6jzk | bowl现有样本网格 | Running；已有真实分支 |
+| dlc14obea2cugtbf | cream现有样本网格r1 | Stopped；3896 COMPLETE、23连带取消，待精确恢复 |
+| dlc4vt6h6pcw6jzk | bowl现有样本网格r1 | Stopped；3133 COMPLETE、378结构越界、1超时和22取消，待精确恢复 |
 
 全部已提交作业均逐JobId核验UseOversoldResource=true。失败日志、实际环境、最终状态和源tree原样保留。正式任务最多2个、每个2×A800/24CPU/200Gi；总体20GPU小时上限，控制器19.8小时提前停止。600条采集完成时累计保守上界约1.30814 GPU小时（包含失败启动、排队及dev14检查预留）。
 
@@ -82,3 +82,9 @@ bowl的一个calibration事件anchor位于316/320步，k8/12/16及对应部分�
 ## 本阶段没有测的东西
 
 没有训练actor，没有VLA、世界模型、RGB策略、扰动注入或真实机器人评测；不再测性能赢面，不重新验证冻结的universal hypothesis，不提出新idea，不启动S2。K1失败不能代替K3判决；现有样本下的网格结果也不能冒充原计划样本完整的确认性结论。
+
+## 网格r1通信故障与精确恢复
+
+北京时间04:32，两作业因一条600秒超时和全局取消Stopped。该超时分支的1144条完整trace在04:22:28已经落盘。代码发现父进程先join子进程再Queue.get；2MiB结果的CPU反例可复现超时，改为先drain队列再join后通过。全套72项测试通过，另有2项队列/精确SHA兼容检查通过（其中1项与全套重合，不重复累加）。这仅修改IPC传输次序，actor、seed、动作、预算、仿真和measurement代码均不变。
+
+1条超时与45条取消及存在的11条trace已在两个JobId terminal Stopped后逐文件SHA核验归档。7029条COMPLETE与378条真horizon BLOCKED保留原地。恢复仅重试未完成/取消/超时的同一请求、同一seed，保留旧失败尝试；不会按success筛选重跑。dispatch_compatibility.json将复用许可绑定到旧a088源、唯一旧/新dispatch SHA和其余五个模块完全相同的SHA。
