@@ -300,3 +300,32 @@ def test_low_support_k3_does_not_claim_monotone():
     assert result["status"] == "INSUFFICIENT_SUPPORT"
     assert result["decision"] == "NOT_ESTABLISHED_LOW_SUPPORT"
     assert result["raw_k3"] == raw
+
+
+def test_full_split_artifacts_disambiguate_low_support_from_protocol_label():
+    raw = {
+        "status": "FAIL",
+        "decision": "MONOTONE_RESCALING_ONLY",
+        "by_task": {
+            TASK_CREAM: {
+                "checks": {"both_defined_at_least_30": False},
+                "both_defined": 12,
+            },
+            TASK_BOWL: {
+                "checks": {"both_defined_at_least_30": True},
+                "both_defined": 31,
+            },
+        },
+    }
+    for split in ("evaluation", "calibration"):
+        artifact = diagnostic._diagnostic_statistics_artifact(
+            {"analysis": "crossing", "split": split, "k3": raw}
+        )
+        assert artifact["protocol_k3"] == raw
+        assert artifact["k3"]["status"] == "INSUFFICIENT_SUPPORT"
+        assert artifact["k3"]["decision"] == "NOT_ESTABLISHED_LOW_SUPPORT"
+        assert artifact["diagnostic_k3"] == artifact["k3"]
+        assert artifact["k3"]["decision"] != "MONOTONE_RESCALING_ONLY"
+        assert artifact["k3_semantics"]["protocol_k3"] == (
+            "raw_preregistered_protocol_result"
+        )

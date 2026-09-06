@@ -957,6 +957,24 @@ def _diagnostic_k3(result: Mapping[str, Any]) -> dict[str, Any]:
     return dict(raw)
 
 
+def _diagnostic_statistics_artifact(result: Mapping[str, Any]) -> dict[str, Any]:
+    # Keep the pure protocol result available while making the persisted
+    # diagnostic-facing k3 field safe for low-support reports.
+    raw = result.get("k3")
+    interpreted = _diagnostic_k3(result)
+    artifact = dict(result)
+    artifact["protocol_k3"] = dict(raw) if isinstance(raw, Mapping) else raw
+    artifact["k3"] = dict(interpreted)
+    artifact["diagnostic_k3"] = dict(interpreted)
+    artifact["k3_semantics"] = {
+        "k3": "diagnostic_interpretation",
+        "diagnostic_k3": "diagnostic_interpretation",
+        "protocol_k3": "raw_preregistered_protocol_result",
+        "low_support_decision": "NOT_ESTABLISHED_LOW_SUPPORT",
+    }
+    return artifact
+
+
 def _write_blocked(
     output_root: Path,
     reasons: Sequence[str],
@@ -1047,10 +1065,12 @@ def consolidate_diagnostic_phase2(
         )
     # Keep complete split-specific statistics as immutable machine-readable
     # artifacts; crossing.json/null_distribution.json are compact views.
-    _write_json(output_path / "phase2" / "statistics_evaluation.json", evaluation_stats)
+    evaluation_artifact = _diagnostic_statistics_artifact(evaluation_stats)
+    calibration_artifact = _diagnostic_statistics_artifact(calibration_stats)
+    _write_json(output_path / "phase2" / "statistics_evaluation.json", evaluation_artifact)
     _write_json(
         output_path / "phase2" / "statistics_calibration_descriptive.json",
-        calibration_stats,
+        calibration_artifact,
     )
     boundary_rows: list[dict[str, Any]] = []
     for split, result in (("evaluation", evaluation_stats), ("calibration", calibration_stats)):
