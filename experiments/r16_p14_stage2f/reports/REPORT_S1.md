@@ -54,7 +54,7 @@ calibration 的120条固定rollout可完整分解：cream为53条clean success�
 
 bowl的一个calibration事件anchor位于316/320步，k8/12/16及对应部分参考请求超出任务horizon。这产生324个core与54个reference请求的结构性BLOCKED。完整事件支持集的描述性指标排除该事件，实际支持为cream19、bowl10，但仍保留原始30事件、19440请求和全部排除理由。这些组合记录BLOCKED并继续其余请求；不截短缓存前缀以伪造计划执行，也不把BLOCKED的占位False当阴性观测。每档oracle、weakest、gap及有效支持集将在实际分片完成后报告。
 
-两个Phase1作业dlc14obea2cugtbf与dlc4vt6h6pcw6jzk已提交；两个任务的实际分支源提交、runtime receipt、预算、重建误差0和trace SHA已通过主线程验收，完整网格尚未完成。北京时间2026-09-07 04:23的快照为cream3156/12312、bowl2846/7128，两个作业均无FATAL_ERROR。目前没有可报告的最终Phase1恢复成功率。K2需两任务在同一档位同时满足oracle∈[0.25,0.85]且gap≥0.15，并满足完整证据要求；计划样本不足使有效selection不可成立。Phase2所需两族safe success、k*、minority crossing、Spearman、10000次cluster bootstrap以及族内split-half噪声地板目前均未测。按用户“不因gate停止其他实验”的正文，接下来将走单独诊断性路径：全部现有Phase1请求验收后，在calibration上按原K2数值合格档与原排序选预算；若无数值合格档，则保留失败并按同排序取首档，仅供后续测量。单独receipt提交推送并验真后才读evaluation。原正式BLOCKED receipt及严格atlas入口保留。这是看过部分calibration数据后的执行补充，不是事前预注册，不能冒充前提齐全的确认性检验。具体见DIAGNOSTIC_ATLAS_CONTINUATION.md。
+Phase1 r1 两作业因IPC结果队列超时停止，失败尝试已完整归档并在相同请求上精确恢复。r2 使用源码93872b41，cream作业dlcgtvdvu94wlto1继续运行；bowl作业dlc1n05o22ewi5dx已Succeeded，7128/7128请求持久化，包含378个真实horizon越界，COMPLETED及归属2254:2254已核验。北京时间2026-09-07 05:44 cream为8763/12312。完整网格验收后才报告每档最终成功率并生成校准预算选择。K2正式receipt保留BLOCKED；单独诊断receipt依照DIAGNOSTIC_ATLAS_CONTINUATION.md选择预算、提交并验真后才读evaluation。该执行补充是在部分calibration数据之后封存的，不能冒充事前预注册。
 
 ## PAI记录与工程修复
 
@@ -66,8 +66,10 @@ bowl的一个calibration事件anchor位于316/320步，k8/12/16及对应部分�
 | dlc1qayvbetb16ji | 旧bowl采集 | Stopped；同轮环境修复停机，0正式episode |
 | dlc1hzmadm185c68 | CUDA12.4 cream采集 | Succeeded；300/300持久化 |
 | dlc1rz7o5mf1vajn | CUDA12.4 bowl采集 | Succeeded；300/300持久化 |
-| dlc14obea2cugtbf | cream现有样本网格r1 | Stopped；3896 COMPLETE、23连带取消，待精确恢复 |
-| dlc4vt6h6pcw6jzk | bowl现有样本网格r1 | Stopped；3133 COMPLETE、378结构越界、1超时和22取消，待精确恢复 |
+| dlc14obea2cugtbf | cream现有样本网格r1 | Stopped；3896 COMPLETE、23连带取消，失败尝试已归档并精确恢复 |
+| dlc4vt6h6pcw6jzk | bowl现有样本网格r1 | Stopped；3133 COMPLETE、378结构越界、1超时和22取消，失败尝试已归档并精确恢复 |
+| dlcgtvdvu94wlto1 | cream网格r2 | Running；精确请求恢复 |
+| dlc1n05o22ewi5dx | bowl网格r2 | Succeeded；7128/7128持久化，378真horizon BLOCKED |
 
 全部已提交作业均逐JobId核验UseOversoldResource=true。失败日志、实际环境、最终状态和源tree原样保留。正式任务最多2个、每个2×A800/24CPU/200Gi；总体20GPU小时上限，控制器19.8小时提前停止。600条采集完成时累计保守上界约1.30814 GPU小时（包含失败启动、排队及dev14检查预留）。
 
@@ -91,7 +93,7 @@ bowl的一个calibration事件anchor位于316/320步，k8/12/16及对应部分�
 
 ## 已恢复进度与六对机理证据
 
-Phase1 r2源码为93872b41ad48d24e1c6cb46d8c46690dae359b62，tree9f25ad3ec3e98d7ce378a46fd163dfbe383d6c3d；cream作业dlcgtvdvu94wlto1、bowl作业dlc1n05o22ewi5dx均已Running并产生真实新COMPLETE，实际UseOversoldResource=true。原超时请求恢复后返回结果pickle大小342396字节；新旧trace解压后均15225576字节，逐字节完全一致。该证据支持IPC传输故障修复未改变此分支动作与物理轨迹。04:55北京保守GPU小时上界约4.68。
+Phase1 r2源码为93872b41ad48d24e1c6cb46d8c46690dae359b62，tree9f25ad3ec3e98d7ce378a46fd163dfbe383d6c3d；cream作业dlcgtvdvu94wlto1仍在Running，bowl作业dlc1n05o22ewi5dx已Succeeded；二者均已产生真实新COMPLETE，实际UseOversoldResource=true。原超时请求恢复后返回结果pickle大小342396字节；新旧trace解压后均15225576字节，逐字节完全一致。该证据支持IPC传输故障修复未改变此分支动作与物理轨迹。04:55北京保守GPU小时上界约4.68。
 
 已完成hold、rollback与fresh_h16/fresh_h4三个比较的双向六个个案，12条trace由主线程独立核验并发布。共同anchor、生成/恢复checkpoint、chunk与env一致，独立PID不同；三类比较都能观察到成功与失败方向，不能据此代替最终总体统计。
 
