@@ -144,9 +144,12 @@ def test_structural_branch_excludes_the_entire_event_from_support():
     }
     structural = {**common, "structurally_excluded": True}
     complete_sibling = {**common, "prefix_k": 2}
+    reference_sibling = {
+        **common, "operator": "immediate_fresh", "prefix_k": 2, "is_reference": True,
+    }
     reasons: list[str] = []
     _core, _reference, support, excluded = diagnostic._check_grid(
-        [structural, complete_sibling],
+        [structural, complete_sibling, reference_sibling],
         {source_key: {"task": TASK_BOWL, "anchor_global_step": 316}},
         BUDGET,
         {source_key},
@@ -154,6 +157,19 @@ def test_structural_branch_excludes_the_entire_event_from_support():
     )
     assert support == []
     assert excluded and excluded[0]["event_instance_id"] == "event-316"
+
+    # A separate complete event keeps its reference row for analyze_crossing's
+    # independent reference summary.
+    other_key = (TASK_BOWL, "event-317", "317", "evaluation", 7)
+    other_source = {
+        **{source_key: {"task": TASK_BOWL, "anchor_global_step": 316}},
+        other_key: {"task": TASK_BOWL, "anchor_global_step": 300},
+    }
+    other = {**reference_sibling, "event_instance_id": "event-317", "init_state_id": "317"}
+    _core, _reference, support, _excluded = diagnostic._check_grid(
+        [other], other_source, BUDGET, set(), [],
+    )
+    assert len(support) == 1 and support[0]["is_reference"] is True
 
 
 def test_evaluation_source_skips_nonqualified_episode_without_event(tmp_path):

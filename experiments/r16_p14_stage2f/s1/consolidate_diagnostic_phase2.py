@@ -797,13 +797,12 @@ def _check_grid(
     # actor seed.  Keep that exact key so one structural branch excludes the
     # entire event cluster from support without accidentally retaining siblings.
     excluded_keys = set(structural_events)
+    # Keep complete reference rows in the support collection: analyze_crossing
+    # filters the four core operators for crossing and independently summarizes
+    # references, so dropping them here would lose the required reference stats.
     support = [
         dict(row) for row in rows
-        if (
-            not row.get("structurally_excluded")
-            and not bool(row.get("is_reference"))
-            and _event_key(row) not in excluded_keys
-        )
+        if not row.get("structurally_excluded") and _event_key(row) not in excluded_keys
     ]
     core = [dict(row) for row in rows if not bool(row.get("is_reference"))]
     reference = [dict(row) for row in rows if bool(row.get("is_reference"))]
