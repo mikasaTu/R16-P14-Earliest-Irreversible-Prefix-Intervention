@@ -1,0 +1,962 @@
+{
+  "action_budget": 32,
+  "action_budget_respected": true,
+  "actor_inference_side_effect_free": true,
+  "actual_global_step": 99,
+  "actual_new_recovery_actions": 10,
+  "actual_policy_calls": 3,
+  "actual_prefix_actions": 6,
+  "actual_total_action_steps": 16,
+  "anchor_global_step": 83,
+  "behavior_operator": "hold_1+fresh_h4",
+  "blocked": false,
+  "chunk_hash": "fa12c40a66d8a6ad28e00fb579ad5afec0154c12c2ad040e66b4de0129e4c2f7",
+  "configured_action_budget": 32,
+  "configured_budget": {
+    "action_budget": 32,
+    "policy_call_cap": 8,
+    "tail_horizon": 16
+  },
+  "configured_operator_horizon": 4,
+  "configured_policy_call_cap": 8,
+  "configured_prefix_actions": 6,
+  "configured_tail_horizon": 16,
+  "d4_signatures": {
+    "detection": {
+      "cause_tracker": {
+        "contact_event_indices": [],
+        "ever_stably_lifted": true,
+        "first_violation_offset": null,
+        "gripper_transition_indices": [],
+        "immediate_violation": false,
+        "initial_object_z": 0.97,
+        "injected": false,
+        "injection_contact": false,
+        "post_detection_steps": 0,
+        "previous_gripper": 1.0,
+        "shifted_target_qpos": null,
+        "task": "put_the_bowl_on_the_plate",
+        "violation": false,
+        "violation_type": null
+      },
+      "cause_tracker_hash": "be29dd79abde57c918d6604fc53c70f23061df790200e2df5d4e1b25070e52da",
+      "complete_signature_hash": "52609422259fc0cf086bc2f4f7b6a81e32c965370359feb448108b31779666ff",
+      "contact_pairs": [
+        [
+          "akita_black_bowl_1_g32",
+          "gripper0_finger1_pad_collision"
+        ],
+        [
+          "akita_black_bowl_1_g32",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "akita_black_bowl_1_g32",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "akita_black_bowl_1_g33",
+          "gripper0_finger1_pad_collision"
+        ],
+        [
+          "akita_black_bowl_1_g33",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "akita_black_bowl_1_g33",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "plate_1_g10",
+          "table_collision"
+        ],
+        [
+          "plate_1_g2",
+          "table_collision"
+        ],
+        [
+          "plate_1_g3",
+          "table_collision"
+        ],
+        [
+          "plate_1_g4",
+          "table_collision"
+        ],
+        [
+          "plate_1_g5",
+          "table_collision"
+        ],
+        [
+          "plate_1_g6",
+          "table_collision"
+        ],
+        [
+          "plate_1_g7",
+          "table_collision"
+        ],
+        [
+          "plate_1_g8",
+          "table_collision"
+        ],
+        [
+          "plate_1_g9",
+          "table_collision"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ]
+      ],
+      "contact_pairs_hash": "5cf7dc2c37a79bb070e178a3a361f98166eb55ee0a50f5c67b094e12d61b891b",
+      "executed_prefix_action_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "executed_prefix_length": 0,
+      "four_state_history_hash": "d0e48409fe8fddefb9f053b83b3f8b1904cfe6d9c981c358024ad890134f4f3d",
+      "gripper_state": 1.0,
+      "manipulated_qpos_hash": "edf8d8c9194b01abce6019a2121cb20af51a666dd932a80484b6a7c8c8aef846",
+      "observation_feature_hash": "88a25d8d1e1b14114ba73650f2498e72165f60b4cb7fefd4f17bba1e057dcdee",
+      "obstacle_qpos_hash": null,
+      "robot_qpos_hash": "5e421de2838b5b333ee945b687c91451c04feb433b8b7c7002c11d3c8ea54ef0",
+      "robot_qvel_hash": "8eef18652db25dd7a305936b9fbb9d98d6c4c37352c06a831a3686837c174a9f",
+      "simulator_state_hash": "9d6c7d309f7d2c96cdd9820c414735c2ee304204ff57adda1c43dfa19a0e1e9a",
+      "target_qpos_hash": "c06cd7418fe27a97eb5d3d426947006cb97c4e2184ef6cacec0ac00a7c965607",
+      "task_phase": {
+        "ever_stably_lifted": true,
+        "gripper_closed": true,
+        "object_height_delta_m": 0.033056648864817406,
+        "post_detection_steps": 0,
+        "task_success": false
+      },
+      "task_phase_hash": "23147d5fa50da1a76e29e4be95fb5f95d36d404c5f9bae4465a0a0087983b8f7",
+      "three_action_history_hash": "b44c104bf1cd19cafafb860795948c3d0b1b6934e291aa2791cdc831e58be374"
+    },
+    "final": {
+      "cause_tracker": {
+        "contact_event_indices": [],
+        "ever_stably_lifted": true,
+        "first_violation_offset": null,
+        "gripper_transition_indices": [
+          2,
+          8
+        ],
+        "immediate_violation": false,
+        "initial_object_z": 0.97,
+        "injected": false,
+        "injection_contact": false,
+        "post_detection_steps": 10,
+        "previous_gripper": -1.0,
+        "shifted_target_qpos": null,
+        "task": "put_the_bowl_on_the_plate",
+        "violation": false,
+        "violation_type": null
+      },
+      "cause_tracker_hash": "aa66e2e37d7963ddac12d1032316a9f77c11536eb7913dc46fa844073089137e",
+      "complete_signature_hash": "c92868e127b1f44da218f50bb6584953ae7558d8e8019a5587b90c55d706b7dd",
+      "contact_pairs": [
+        [
+          "akita_black_bowl_1_g40",
+          "plate_1_g1"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "plate_1_g10",
+          "table_collision"
+        ],
+        [
+          "plate_1_g2",
+          "table_collision"
+        ],
+        [
+          "plate_1_g3",
+          "table_collision"
+        ],
+        [
+          "plate_1_g4",
+          "table_collision"
+        ],
+        [
+          "plate_1_g5",
+          "table_collision"
+        ],
+        [
+          "plate_1_g6",
+          "table_collision"
+        ],
+        [
+          "plate_1_g7",
+          "table_collision"
+        ],
+        [
+          "plate_1_g8",
+          "table_collision"
+        ],
+        [
+          "plate_1_g9",
+          "table_collision"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ]
+      ],
+      "contact_pairs_hash": "287c7f0ab2e32ff6349d272a69b81cb14bcf50bb51ce86d2776e52fe234d4b0b",
+      "executed_prefix_action_hash": "5b504902b5191c4850b9d98d6560798f16df65fe24c93c6f96df87df76e46d55",
+      "executed_prefix_length": 6,
+      "four_state_history_hash": "490ae7ab732e7d36565f0c22a4eef23c2a1b4bb41a16f74f16efad72bf0155d2",
+      "gripper_state": -1.0,
+      "manipulated_qpos_hash": "c45bc43539ca1a1c66f14602b4e9434340c5ad4fafb5819c3162a47dae5876e1",
+      "observation_feature_hash": "0bff83344854e2d7f179c712c1011827cc2ac9cdba5a62f9d824ff862c6b3375",
+      "obstacle_qpos_hash": null,
+      "robot_qpos_hash": "fa471fe7612b40754880edfbc52a0575fc16f8e33a004023520ea68e4f2922c4",
+      "robot_qvel_hash": "a1a0575377c22f2b5f56cc4f2eaa1250078c7d369f0aaad6e6fe09f4279d3702",
+      "simulator_state_hash": "3c675364690e6c107bda5b57b31c17aba9f84dbaaa8400c72fc2ddb4bb65aa5a",
+      "target_qpos_hash": "aa455931cf269d380ff613bd89e411e268e72719bdcb3ce0296d1b97a4541056",
+      "task_phase": {
+        "ever_stably_lifted": true,
+        "gripper_closed": false,
+        "object_height_delta_m": -0.05873132061308084,
+        "post_detection_steps": 10,
+        "task_success": true
+      },
+      "task_phase_hash": "7fb109cdcb295f79ea142bcba200548d584f508b7b8d8ed54b1e21e0a6fc6b30",
+      "three_action_history_hash": "e73c6d80178575d9df652cacf13ca196d76f70ee8b29c6aea7e37571005aa006"
+    },
+    "pre_tail": {
+      "cause_tracker": {
+        "contact_event_indices": [],
+        "ever_stably_lifted": true,
+        "first_violation_offset": null,
+        "gripper_transition_indices": [
+          2
+        ],
+        "immediate_violation": false,
+        "initial_object_z": 0.97,
+        "injected": false,
+        "injection_contact": false,
+        "post_detection_steps": 0,
+        "previous_gripper": 1.0,
+        "shifted_target_qpos": null,
+        "task": "put_the_bowl_on_the_plate",
+        "violation": false,
+        "violation_type": null
+      },
+      "cause_tracker_hash": "1e2bc90fb3a939cca00843eac1f04f10174640b698451afb9dab714db05018ad",
+      "complete_signature_hash": "e356fb16d7e3da0df07457c166a94431937feb58681d53527268b6a16ba4b8cc",
+      "contact_pairs": [
+        [
+          "akita_black_bowl_1_g23",
+          "wooden_cabinet_1_g29"
+        ],
+        [
+          "akita_black_bowl_1_g32",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "akita_black_bowl_1_g33",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "akita_black_bowl_1_g33",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "plate_1_g10",
+          "table_collision"
+        ],
+        [
+          "plate_1_g2",
+          "table_collision"
+        ],
+        [
+          "plate_1_g3",
+          "table_collision"
+        ],
+        [
+          "plate_1_g4",
+          "table_collision"
+        ],
+        [
+          "plate_1_g5",
+          "table_collision"
+        ],
+        [
+          "plate_1_g6",
+          "table_collision"
+        ],
+        [
+          "plate_1_g7",
+          "table_collision"
+        ],
+        [
+          "plate_1_g8",
+          "table_collision"
+        ],
+        [
+          "plate_1_g9",
+          "table_collision"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "wooden_cabinet_1_g22",
+          "wooden_cabinet_1_g8"
+        ],
+        [
+          "wooden_cabinet_1_g22",
+          "wooden_cabinet_1_g8"
+        ]
+      ],
+      "contact_pairs_hash": "98306ea69f9ed32e9d7a4fd1d65df536c76a3720698ab4663de91d2fab466111",
+      "executed_prefix_action_hash": "5b504902b5191c4850b9d98d6560798f16df65fe24c93c6f96df87df76e46d55",
+      "executed_prefix_length": 6,
+      "four_state_history_hash": "097b134321548d79cf6d45628d9298efe767d4dc41de4f739a23782d319fd4f0",
+      "gripper_state": 1.0,
+      "manipulated_qpos_hash": "2878a961a769515dd064602fe7691a23ad4a7df3ce6e50ab764cabb55a901f38",
+      "observation_feature_hash": "fb0cb3f552706723db865692c158a0952dcc9a3224b083100e0cdb0addc4d721",
+      "obstacle_qpos_hash": null,
+      "robot_qpos_hash": "0273cc792dc1f163e3e89fbd2dc5fde6bce5c4d02f888b24b0166b702d99df84",
+      "robot_qvel_hash": "44966a6c48acc07c9591b97a5090d3d6af9b0bc3c8ede7807c13166788dab8d9",
+      "simulator_state_hash": "856f746471ea9ba9e76e640b57a0da0ac9d885b9ab615a65268badc0562173bb",
+      "target_qpos_hash": "725fb0a7af9b65a8d8ce704d987b5903e35cc459b8459f60deea41e7765422d9",
+      "task_phase": {
+        "ever_stably_lifted": true,
+        "gripper_closed": true,
+        "object_height_delta_m": 0.03069706130808414,
+        "post_detection_steps": 0,
+        "task_success": false
+      },
+      "task_phase_hash": "6411fc6a158c9c33744642b6425bfb73af2dba9b7def51e144eb3f38455ab218",
+      "three_action_history_hash": "3e09e7815098b1502082cd7f9db7b56a8f1ed58110332347d2989b9098e2a797"
+    }
+  },
+  "diagnostic_continuation": true,
+  "diagnostic_only": true,
+  "diagnostic_selection_binding": {
+    "input_sha256": "c6eb6484cb6711b6df02716d6ca8c8613bdaee27583ec37184f54b719c8f851d",
+    "original_rank": 1,
+    "protocol_sha256": "2d14427c2391422dd372b0528d6d784d1066d8d059e1405597cfb1954f260c6a"
+  },
+  "diagnostic_selection_receipt_path": "phase1/diagnostic_selection_receipt.json",
+  "diagnostic_selection_receipt_sha256": "5382f401a40a5f0e8f9069cb8c76d577b82fadb6fa6e8f94496f35ca3760e262",
+  "dispatch_process_start_method": "spawn",
+  "dispatch_repeat": 0,
+  "dispatch_seed": 1341171671,
+  "dispatcher_child_exitcode": 0,
+  "dispatcher_pid": 1,
+  "dispatcher_process_start_method": "spawn",
+  "effective_execution_horizon": 4,
+  "effective_new_action_budget": 32,
+  "env_hash": "1215bb8a20bf8d929d115b1d5acd6a18daffd0a0dfa1975b33c5446b45fe0556",
+  "error": null,
+  "event_id": "put_the_bowl_on_the_plate__init084__actor17",
+  "event_instance_id": "put_the_bowl_on_the_plate__init084__actor17",
+  "formal_positive_evidence_allowed": false,
+  "fresh_environment_created": true,
+  "generator_actor_calls": 1,
+  "generator_actor_seed": 17,
+  "generator_checkpoint_sha256": "83ee61e31ffdae6f2ef57203a2c0085df41e284039cd81c6ecf1210694521604",
+  "generator_chunk_hash": "fa12c40a66d8a6ad28e00fb579ad5afec0154c12c2ad040e66b4de0129e4c2f7",
+  "init_state_id": 84,
+  "injection_calls": 0,
+  "is_reference": false,
+  "job_id": "dlc1ill43ufm4eny",
+  "labels": {
+    "candidate_precedes_release": null,
+    "first_candidate_index": null,
+    "first_release_index": 77,
+    "ignored_pre_lift_release_indices": [],
+    "label_complete": true,
+    "missing": [],
+    "prerelease_topology_candidate": {
+      "candidate": false,
+      "candidate_indices": [],
+      "first_index": null,
+      "ignored_pre_anchor_indices": [],
+      "label": "prerelease_object_contact_topology_candidate",
+      "lifted_closed_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207
+      ],
+      "missing": [],
+      "new_pairs": [],
+      "time_order": {
+        "candidate_before_release": null,
+        "complete": true,
+        "first_candidate_index": null,
+        "first_release_index": 77,
+        "ordering": "none"
+      }
+    },
+    "record_count": 416,
+    "release_based": {
+      "first_index": null,
+      "ignored_pre_lift_release_indices": [],
+      "label": "release_outside_original_target",
+      "missing": [],
+      "placement_xy_tolerance_m": 0.08,
+      "release_indices": [
+        77,
+        233
+      ],
+      "release_violation_indices": [],
+      "time_order": {
+        "complete": true,
+        "first_release_index": 77,
+        "first_violation_index": null,
+        "ignored_pre_lift_release_indices": [],
+        "lift_before_release_required": true
+      },
+      "violation": false,
+      "violation_type": null
+    },
+    "schema_version": 1,
+    "task": "put_the_bowl_on_the_plate",
+    "time_order": "none"
+  },
+  "missing_provenance": [],
+  "new_idea_generated": false,
+  "operator": "hold_1+fresh_h4",
+  "pai_run_id": "r16p14-s1-atlas-t1-20260907-r2",
+  "parent_pid": 1,
+  "physics_instrumented": true,
+  "physics_probe_error": null,
+  "physics_step_count": 400,
+  "pid": 46449,
+  "policy_call_cap": 8,
+  "policy_call_cap_respected": true,
+  "prefix_budget_separate": true,
+  "prefix_k": 6,
+  "process_start_method": "spawn",
+  "reconstruction": {
+    "action_history_exact": true,
+    "actor_inference_side_effect_free": true,
+    "anchor_state_exact": true,
+    "event_chunk_exact": true,
+    "max_anchor_state_error": 0.0,
+    "state_history_exact": true
+  },
+  "recovery_action_hashes": [
+    "5b9b333da9aef69a1da1e68744424578726c887215c97076e3529c2a6bc0b019",
+    "71202142d07fc3a61d42bc5b1d344277cf64d998a8902d6ec63d1ca6660a1e25",
+    "7fa0a7a070dec5e2d11029ac1b994c52dbbf634ac8e563516d3f337207619d2d",
+    "fa412689a9d8fdda6baa8f534fda9c35b60f0c463a35e1f7162365bebe56442b",
+    "15c4e6c84f7271b23fc928ccf7737acc7bd041c18122f0e3da80eb4683db2f15",
+    "82724539c7040547bab3988c3d00c8915f0ed83d9ac89706b9efbcab55ab5b01",
+    "fea5d7eead1604b458412d0094ab3dcc546c38ed88174dbb4f49145f2ee55c45",
+    "7f7c5f4ced415049b65533a0db74046c33f06940b80fb34648d750ec3f1ad073",
+    "2bb51e4ee4f5383a6b1648fde9f2abeaf673e268d901640d8eb78d8967b4a4b3",
+    "9d1a7587f92ec38d43e511caf0650e917bdfb61112e27726a0112fdf4621137d"
+  ],
+  "recovery_actor_seed": 17,
+  "recovery_checkpoint_sha256": "83ee61e31ffdae6f2ef57203a2c0085df41e284039cd81c6ecf1210694521604",
+  "recovery_chunk_hashes": [
+    "ede69695cdf9a67baf5a81bc153976add02ff2a8c69cd8187177c4f5174698c1",
+    "743e35f86787eb4171ae656526158f5576832e4ab61dbb5ba56a5899f8874804",
+    "f15a9d0f8d5654fa5670498831ff660a1d673bf277e009f98db644fd414e00f0"
+  ],
+  "recovery_policy_calls": 3,
+  "release_based_violation": false,
+  "repeat": 0,
+  "returned_configuration": {
+    "action_budget": null,
+    "operator": "hold_1+fresh_h4",
+    "policy_call_cap": null,
+    "prefix_k": 6,
+    "recovery_actor_seed": 17,
+    "tail_horizon": null
+  },
+  "runtime_module_hashes": {
+    "assets.py": "8af027b6a775848bc400de22490f4cd82637e6de5861f3b368cbb79db3b7afca",
+    "common.py": "d9a0a292d55100ccbde0c2474bc445529b65108852d4411ffb1ea77b412fa4df",
+    "dispatch.py": "66fbe6a035c5a0039dd5d1515f5eb316394adcfca45459c4c8b5914cc26e1134",
+    "measurement.py": "b31dc34270905c6d76ea342c6a1deef8739c53e8bc9813e38d127ee48aab8c62",
+    "runtime.py": "3203db2452eef4bf6fe8b304eae2b14b1dc7ae80630479317c4610f063cf4417",
+    "runtime_identity.py": "fb7c195cbb4649e26ffd3264a0603067174ed659055b70c79837884642821c56"
+  },
+  "runtime_receipt_sha256": "3d7b252885b4047fb93140c305a3ef4a1d3ec9aa450d90341befd2b7e26a5e44",
+  "runtime_status": "OK",
+  "safe_success": true,
+  "safe_success_unblocked_observation": true,
+  "schema_version": 2,
+  "source_commit": "4bc5f5a840d1fcafa76b4a6db8343230ab8ff184",
+  "split": "evaluation",
+  "status": "COMPLETE",
+  "tail_horizon": 16,
+  "task": "put_the_bowl_on_the_plate",
+  "task_horizon": 320,
+  "task_horizon_budget_clipped": false,
+  "task_horizon_remaining_after_prefix": 231,
+  "task_success": true,
+  "topology_candidate": {
+    "candidate": false,
+    "candidate_indices": [],
+    "first_index": null,
+    "ignored_pre_anchor_indices": [],
+    "label": "prerelease_object_contact_topology_candidate",
+    "lifted_closed_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160,
+      161,
+      162,
+      163,
+      164,
+      165,
+      166,
+      167,
+      168,
+      169,
+      170,
+      171,
+      172,
+      173,
+      174,
+      175,
+      176,
+      177,
+      178,
+      179,
+      180,
+      181,
+      182,
+      183,
+      184,
+      185,
+      186,
+      187,
+      188,
+      189,
+      190,
+      191,
+      192,
+      193,
+      194,
+      195,
+      196,
+      197,
+      198,
+      199,
+      200,
+      201,
+      202,
+      203,
+      204,
+      205,
+      206,
+      207
+    ],
+    "missing": [],
+    "new_pairs": [],
+    "time_order": {
+      "candidate_before_release": null,
+      "complete": true,
+      "first_candidate_index": null,
+      "first_release_index": 77,
+      "ordering": "none"
+    }
+  },
+  "total_branch_wall_time_s": 8.233818961999987,
+  "total_policy_calls": 4,
+  "trace_content_sha256": "55171f2270147c8f94bc511105a8c3201cfe0a551f7bc3ba84692b4463da5b7e",
+  "trace_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase2/contact_topology/put_the_bowl_on_the_plate/a52eef5ba4029da5480d6365362213843d25bae7ebb3e4b2955c376c90bfa767.jsonl.gz",
+  "trace_records": 416,
+  "trace_sha256": "63dab6350b9f3c1af1fcd4c298b0c0de2081ec6cd762347c78106d3ce04d34af",
+  "validation_policy_calls": 1,
+  "zero_injection": true
+}

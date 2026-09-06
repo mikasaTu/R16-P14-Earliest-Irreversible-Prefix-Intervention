@@ -1,0 +1,2923 @@
+{
+  "action_budget": 32,
+  "action_budget_respected": true,
+  "actor_inference_side_effect_free": true,
+  "actual_global_step": 124,
+  "actual_new_recovery_actions": 32,
+  "actual_policy_calls": 2,
+  "actual_prefix_actions": 12,
+  "actual_total_action_steps": 44,
+  "anchor_global_step": 80,
+  "behavior_operator": "fresh_h16",
+  "blocked": false,
+  "chunk_hash": "a2def2c2eebcdd64caa4504b4530655c6ee9779061836d408372454d50a1f661",
+  "configured_action_budget": 32,
+  "configured_budget": {
+    "action_budget": 32,
+    "policy_call_cap": 8,
+    "tail_horizon": 16
+  },
+  "configured_operator_horizon": 16,
+  "configured_policy_call_cap": 8,
+  "configured_prefix_actions": 12,
+  "configured_tail_horizon": 16,
+  "d4_signatures": {
+    "detection": {
+      "cause_tracker": {
+        "contact_event_indices": [],
+        "ever_stably_lifted": true,
+        "first_violation_offset": null,
+        "gripper_transition_indices": [],
+        "immediate_violation": false,
+        "initial_object_z": 0.97,
+        "injected": false,
+        "injection_contact": false,
+        "post_detection_steps": 0,
+        "previous_gripper": 1.0,
+        "shifted_target_qpos": null,
+        "task": "put_the_bowl_on_the_plate",
+        "violation": false,
+        "violation_type": null
+      },
+      "cause_tracker_hash": "be29dd79abde57c918d6604fc53c70f23061df790200e2df5d4e1b25070e52da",
+      "complete_signature_hash": "e64aff6bdda8e668d23fce3a9be3b640831c713a123d016da2febb0a20ae0a01",
+      "contact_pairs": [
+        [
+          "akita_black_bowl_1_g30",
+          "gripper0_finger1_collision"
+        ],
+        [
+          "akita_black_bowl_1_g30",
+          "gripper0_finger1_pad_collision"
+        ],
+        [
+          "akita_black_bowl_1_g30",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "akita_black_bowl_1_g30",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "akita_black_bowl_1_g31",
+          "gripper0_finger1_collision"
+        ],
+        [
+          "akita_black_bowl_1_g31",
+          "gripper0_finger1_pad_collision"
+        ],
+        [
+          "akita_black_bowl_1_g31",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "akita_black_bowl_1_g31",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "akita_black_bowl_1_g32",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "akita_black_bowl_1_g33",
+          "gripper0_finger1_collision"
+        ],
+        [
+          "akita_black_bowl_1_g33",
+          "gripper0_finger1_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "plate_1_g10",
+          "table_collision"
+        ],
+        [
+          "plate_1_g2",
+          "table_collision"
+        ],
+        [
+          "plate_1_g3",
+          "table_collision"
+        ],
+        [
+          "plate_1_g4",
+          "table_collision"
+        ],
+        [
+          "plate_1_g5",
+          "table_collision"
+        ],
+        [
+          "plate_1_g6",
+          "table_collision"
+        ],
+        [
+          "plate_1_g7",
+          "table_collision"
+        ],
+        [
+          "plate_1_g8",
+          "table_collision"
+        ],
+        [
+          "plate_1_g9",
+          "table_collision"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ]
+      ],
+      "contact_pairs_hash": "faf10c7150d1b6742f48bb962a30b070d96a221d79258fdd4886bb7ec143d1fd",
+      "executed_prefix_action_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "executed_prefix_length": 0,
+      "four_state_history_hash": "b2544c9a39fad184a408f9c1fcfed1758af68d0a744bbfb16b294c6df55f1f39",
+      "gripper_state": 1.0,
+      "manipulated_qpos_hash": "49a75616bdee2a342454195087dd34971b55b0cd8ab19977b1f113cc50cc4c09",
+      "observation_feature_hash": "23f585ce78e3d3ae66f6c498f5a5eee26187da86e888530d009856880520c80c",
+      "obstacle_qpos_hash": null,
+      "robot_qpos_hash": "f33a5ed56f6bce5280fbb01326987b1ff028b11b73d04a801c80ecfa41e3194e",
+      "robot_qvel_hash": "cc439c6e0ee05ca879964d19034057e2ddbf483d6a6902fa4cda7b233b6580bd",
+      "simulator_state_hash": "d1076f5b5ed40cd5b1ad6ff778e709250451861dc6f1c915da566e0085b8b042",
+      "target_qpos_hash": "9bc9196baf56923da2ff4a70f83f0256fb3a0ed91473c82129488f467793c9bd",
+      "task_phase": {
+        "ever_stably_lifted": true,
+        "gripper_closed": true,
+        "object_height_delta_m": 0.036732793165584754,
+        "post_detection_steps": 0,
+        "task_success": false
+      },
+      "task_phase_hash": "e40ac79a2df4a6920a32234ccdb8c1a552f46f159af3e121b73c272c23021a89",
+      "three_action_history_hash": "f90b8f522d1764a99074460dbe648b94bfd704328ffc0e6bac2f486812e0f522"
+    },
+    "final": {
+      "cause_tracker": {
+        "contact_event_indices": [],
+        "ever_stably_lifted": true,
+        "first_violation_offset": null,
+        "gripper_transition_indices": [
+          16
+        ],
+        "immediate_violation": false,
+        "initial_object_z": 0.97,
+        "injected": false,
+        "injection_contact": false,
+        "post_detection_steps": 32,
+        "previous_gripper": -1.0,
+        "shifted_target_qpos": null,
+        "task": "put_the_bowl_on_the_plate",
+        "violation": false,
+        "violation_type": null
+      },
+      "cause_tracker_hash": "9b7ab5d361bdcc5d5bf1afb973ea50bac01ff57c9db7945c920b9a6857f575d8",
+      "complete_signature_hash": "53a2a7006dfbabca9cf015f87a34fe0249bee805a468b29ca1c968635900a0b7",
+      "contact_pairs": [
+        [
+          "akita_black_bowl_1_g37",
+          "plate_1_g8"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "plate_1_g9"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "plate_1_g9"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "plate_1_g10",
+          "table_collision"
+        ],
+        [
+          "plate_1_g2",
+          "table_collision"
+        ],
+        [
+          "plate_1_g3",
+          "table_collision"
+        ],
+        [
+          "plate_1_g4",
+          "table_collision"
+        ],
+        [
+          "plate_1_g5",
+          "table_collision"
+        ],
+        [
+          "plate_1_g6",
+          "table_collision"
+        ],
+        [
+          "plate_1_g7",
+          "table_collision"
+        ],
+        [
+          "plate_1_g8",
+          "table_collision"
+        ],
+        [
+          "plate_1_g9",
+          "table_collision"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ]
+      ],
+      "contact_pairs_hash": "b932503dc3ccf815a3732e24e8a8a2766c5d15f35fa17984c5c5d4cd8b7f4d5c",
+      "executed_prefix_action_hash": "465f77aa85e4fde01116dd97f96dc2070bb98d26d81e0625acb7ccaa77e94282",
+      "executed_prefix_length": 12,
+      "four_state_history_hash": "614a89de1ada94a7756c52bb299a93904364d8b550e48bf31099ab8ef814cfc9",
+      "gripper_state": -1.0,
+      "manipulated_qpos_hash": "8522a7a6dfaf8b83d4c1c489ab23fe6f73ed0314c4e8bdcd918f71f6803b0112",
+      "observation_feature_hash": "0de76188ead2ffd3f5f70e544fbc8f4a842068aa89be3db8fab9f2339ff9ffef",
+      "obstacle_qpos_hash": null,
+      "robot_qpos_hash": "23d5ad52e4a0dd0a73c506a63717d5d07344563eb1d65ad1d41152e95330b6f8",
+      "robot_qvel_hash": "596170eaeb02b78864669344990653d0add2cb32c9a6dd70199b9696f393bd65",
+      "simulator_state_hash": "8b92f9d3cc2feb03c5cf8cc35b97773a24911354d7921c2e51133bccb786de49",
+      "target_qpos_hash": "96adb9a899a65a1517419087b11d2b1286658ff8334b22b2d280ecdbea662d5f",
+      "task_phase": {
+        "ever_stably_lifted": true,
+        "gripper_closed": false,
+        "object_height_delta_m": -0.055756027361084315,
+        "post_detection_steps": 32,
+        "task_success": false
+      },
+      "task_phase_hash": "cab08173770af77a76935e79106c379c6ec6f190a088e75f4b7499165e3b2cb3",
+      "three_action_history_hash": "e43684c075ecda13f163466ed75391efd975775d6512771752f3a4a7b37b6a46"
+    },
+    "pre_tail": {
+      "cause_tracker": {
+        "contact_event_indices": [],
+        "ever_stably_lifted": true,
+        "first_violation_offset": null,
+        "gripper_transition_indices": [],
+        "immediate_violation": false,
+        "initial_object_z": 0.97,
+        "injected": false,
+        "injection_contact": false,
+        "post_detection_steps": 0,
+        "previous_gripper": 1.0,
+        "shifted_target_qpos": null,
+        "task": "put_the_bowl_on_the_plate",
+        "violation": false,
+        "violation_type": null
+      },
+      "cause_tracker_hash": "be29dd79abde57c918d6604fc53c70f23061df790200e2df5d4e1b25070e52da",
+      "complete_signature_hash": "9de4c6f074dd705c7e4a31a695da3fc3610c2097577c7219f106a06702a4c931",
+      "contact_pairs": [
+        [
+          "akita_black_bowl_1_g30",
+          "gripper0_finger2_collision"
+        ],
+        [
+          "akita_black_bowl_1_g31",
+          "gripper0_finger2_collision"
+        ],
+        [
+          "akita_black_bowl_1_g32",
+          "gripper0_finger1_collision"
+        ],
+        [
+          "akita_black_bowl_1_g32",
+          "gripper0_finger1_pad_collision"
+        ],
+        [
+          "akita_black_bowl_1_g32",
+          "gripper0_finger2_collision"
+        ],
+        [
+          "akita_black_bowl_1_g32",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "akita_black_bowl_1_g33",
+          "gripper0_finger1_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "plate_1_g10",
+          "table_collision"
+        ],
+        [
+          "plate_1_g2",
+          "table_collision"
+        ],
+        [
+          "plate_1_g3",
+          "table_collision"
+        ],
+        [
+          "plate_1_g4",
+          "table_collision"
+        ],
+        [
+          "plate_1_g5",
+          "table_collision"
+        ],
+        [
+          "plate_1_g6",
+          "table_collision"
+        ],
+        [
+          "plate_1_g7",
+          "table_collision"
+        ],
+        [
+          "plate_1_g8",
+          "table_collision"
+        ],
+        [
+          "plate_1_g9",
+          "table_collision"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ]
+      ],
+      "contact_pairs_hash": "596ff5fd835e5404ed26785c95a6054194f9feb949baa8f466a9af2ad073538d",
+      "executed_prefix_action_hash": "465f77aa85e4fde01116dd97f96dc2070bb98d26d81e0625acb7ccaa77e94282",
+      "executed_prefix_length": 12,
+      "four_state_history_hash": "93b618b589c27fb2242d3d1e1b5207a1cdc254bb60abe6b6b94c22e51ae7084a",
+      "gripper_state": 1.0,
+      "manipulated_qpos_hash": "e734fc0b58e7e128a55adcf9e84d6df8c4a77c9900ade114e1fe0021e9d15c80",
+      "observation_feature_hash": "bddda37b6aee2b06f40e4478edc58185d3130d39bb43d323a94d8c090070ef86",
+      "obstacle_qpos_hash": null,
+      "robot_qpos_hash": "72a16a3417230cd908a12b43a5f1b46cab4a8c75961f8b28b1bfb1fecbc786d9",
+      "robot_qvel_hash": "35983c9a63384252a0cd1a7f7ec5b07145ee85e8f6415812a8dd68410503e9d1",
+      "simulator_state_hash": "a16957aaab89c061ebb5b74010487feb68f364990df0e7ae004ea7b98e84aa4b",
+      "target_qpos_hash": "6ff1602e3b6f1cbb34f532198c087e997df2dc5eaf32b20adb8c97d01a0e8e6a",
+      "task_phase": {
+        "ever_stably_lifted": true,
+        "gripper_closed": true,
+        "object_height_delta_m": -0.022012412933366532,
+        "post_detection_steps": 0,
+        "task_success": false
+      },
+      "task_phase_hash": "c658b2dec845863c8f7567ca4c87cb9ba500bebefe1f9b1a150455fca0e1f009",
+      "three_action_history_hash": "fee8082c030567952980eb0628766da219662fb44c6d30c71834d41e27cddcb8"
+    }
+  },
+  "diagnostic_continuation": true,
+  "diagnostic_only": true,
+  "diagnostic_selection_binding": {
+    "input_sha256": "c6eb6484cb6711b6df02716d6ca8c8613bdaee27583ec37184f54b719c8f851d",
+    "original_rank": 1,
+    "protocol_sha256": "2d14427c2391422dd372b0528d6d784d1066d8d059e1405597cfb1954f260c6a"
+  },
+  "diagnostic_selection_receipt_path": "phase1/diagnostic_selection_receipt.json",
+  "diagnostic_selection_receipt_sha256": "5382f401a40a5f0e8f9069cb8c76d577b82fadb6fa6e8f94496f35ca3760e262",
+  "dispatch_process_start_method": "spawn",
+  "dispatch_repeat": 0,
+  "dispatch_seed": 3444725257,
+  "dispatcher_child_exitcode": 0,
+  "dispatcher_pid": 1,
+  "dispatcher_process_start_method": "spawn",
+  "effective_execution_horizon": 16,
+  "effective_new_action_budget": 32,
+  "env_hash": "1215bb8a20bf8d929d115b1d5acd6a18daffd0a0dfa1975b33c5446b45fe0556",
+  "error": null,
+  "event_id": "put_the_bowl_on_the_plate__init072__actor17",
+  "event_instance_id": "put_the_bowl_on_the_plate__init072__actor17",
+  "formal_positive_evidence_allowed": false,
+  "fresh_environment_created": true,
+  "generator_actor_calls": 1,
+  "generator_actor_seed": 17,
+  "generator_checkpoint_sha256": "83ee61e31ffdae6f2ef57203a2c0085df41e284039cd81c6ecf1210694521604",
+  "generator_chunk_hash": "a2def2c2eebcdd64caa4504b4530655c6ee9779061836d408372454d50a1f661",
+  "init_state_id": 72,
+  "injection_calls": 0,
+  "is_reference": false,
+  "job_id": "dlc1ill43ufm4eny",
+  "labels": {
+    "candidate_precedes_release": true,
+    "first_candidate_index": 116,
+    "first_release_index": 441,
+    "ignored_pre_lift_release_indices": [],
+    "label_complete": true,
+    "missing": [],
+    "prerelease_topology_candidate": {
+      "candidate": true,
+      "candidate_indices": [
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        184,
+        186,
+        189,
+        193,
+        196,
+        200,
+        203,
+        208,
+        211,
+        215,
+        220,
+        225,
+        230,
+        237,
+        242,
+        248
+      ],
+      "first_index": 116,
+      "ignored_pre_anchor_indices": [],
+      "label": "prerelease_object_contact_topology_candidate",
+      "lifted_closed_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223,
+        224,
+        225,
+        226,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236,
+        237,
+        238,
+        239,
+        240,
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        255,
+        256,
+        257,
+        258,
+        259,
+        260,
+        261,
+        262,
+        263,
+        264,
+        265,
+        266,
+        267,
+        268,
+        269,
+        270,
+        271,
+        272,
+        273,
+        274,
+        275,
+        276,
+        277,
+        278,
+        279,
+        280,
+        281,
+        282,
+        283,
+        284,
+        285,
+        286,
+        287,
+        288,
+        289,
+        290,
+        291,
+        292,
+        293,
+        294,
+        295,
+        296,
+        297,
+        298,
+        299,
+        300,
+        301,
+        302,
+        303,
+        304,
+        305,
+        306,
+        307,
+        308,
+        309,
+        310,
+        311,
+        312,
+        313,
+        314,
+        315,
+        316,
+        317,
+        318,
+        319,
+        320,
+        321,
+        322,
+        323,
+        324,
+        325,
+        326,
+        327,
+        328,
+        329,
+        330,
+        331,
+        332,
+        333,
+        334,
+        335,
+        336,
+        337,
+        338,
+        339,
+        340,
+        341,
+        342,
+        343,
+        344,
+        345,
+        346,
+        347,
+        348,
+        349,
+        350,
+        351,
+        352,
+        353,
+        354,
+        355,
+        356,
+        357,
+        358,
+        359,
+        360,
+        361,
+        362,
+        363,
+        364,
+        365,
+        366,
+        367,
+        368,
+        369,
+        370,
+        371,
+        372,
+        373,
+        374,
+        375,
+        376,
+        377,
+        378,
+        379,
+        380,
+        381,
+        382,
+        383,
+        384,
+        385,
+        386,
+        387,
+        388,
+        389,
+        390,
+        391,
+        392,
+        393,
+        394,
+        395,
+        396,
+        397,
+        398,
+        399,
+        400,
+        401,
+        402,
+        403,
+        404,
+        405,
+        406,
+        407,
+        408,
+        409,
+        410,
+        411,
+        412,
+        413,
+        414,
+        415
+      ],
+      "missing": [],
+      "new_pairs": [
+        {
+          "index": 116,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 117,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 118,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 119,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 120,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 121,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 122,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 123,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 124,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 125,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 126,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 127,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 128,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 129,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 130,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 131,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 132,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 133,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 134,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 135,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 136,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 137,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 138,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 139,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 140,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 141,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 142,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 143,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 144,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 145,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 146,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 147,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 148,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 149,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 150,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 151,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 152,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 153,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 154,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 155,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 156,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 157,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 158,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 159,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 160,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 161,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 162,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 163,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 164,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 165,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 166,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 167,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 168,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 169,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 170,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 171,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 172,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 173,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 174,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 175,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 176,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 177,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 178,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 179,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 180,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 181,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 182,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 184,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 186,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 189,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 193,
+          "pair": [
+            "akita_black_bowl_1_g21",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 193,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 196,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 200,
+          "pair": [
+            "akita_black_bowl_1_g21",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 200,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 203,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 208,
+          "pair": [
+            "akita_black_bowl_1_g21",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 208,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 211,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 215,
+          "pair": [
+            "akita_black_bowl_1_g21",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 215,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 220,
+          "pair": [
+            "akita_black_bowl_1_g21",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 220,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 225,
+          "pair": [
+            "akita_black_bowl_1_g21",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 225,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 230,
+          "pair": [
+            "akita_black_bowl_1_g21",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 230,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 237,
+          "pair": [
+            "akita_black_bowl_1_g21",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 237,
+          "pair": [
+            "akita_black_bowl_1_g22",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 242,
+          "pair": [
+            "akita_black_bowl_1_g21",
+            "wooden_cabinet_1_g29"
+          ]
+        },
+        {
+          "index": 248,
+          "pair": [
+            "akita_black_bowl_1_g21",
+            "wooden_cabinet_1_g29"
+          ]
+        }
+      ],
+      "time_order": {
+        "candidate_before_release": true,
+        "complete": true,
+        "first_candidate_index": 116,
+        "first_release_index": 441,
+        "ordering": "candidate_before_release"
+      }
+    },
+    "record_count": 1144,
+    "release_based": {
+      "first_index": null,
+      "ignored_pre_lift_release_indices": [],
+      "label": "release_outside_original_target",
+      "missing": [],
+      "placement_xy_tolerance_m": 0.08,
+      "release_indices": [
+        441
+      ],
+      "release_violation_indices": [],
+      "time_order": {
+        "complete": true,
+        "first_release_index": 441,
+        "first_violation_index": null,
+        "ignored_pre_lift_release_indices": [],
+        "lift_before_release_required": true
+      },
+      "violation": false,
+      "violation_type": null
+    },
+    "schema_version": 1,
+    "task": "put_the_bowl_on_the_plate",
+    "time_order": "candidate_before_release"
+  },
+  "missing_provenance": [],
+  "new_idea_generated": false,
+  "operator": "fresh_h16",
+  "pai_run_id": "r16p14-s1-atlas-t1-20260907-r2",
+  "parent_pid": 1,
+  "physics_instrumented": true,
+  "physics_probe_error": null,
+  "physics_step_count": 1100,
+  "pid": 29558,
+  "policy_call_cap": 8,
+  "policy_call_cap_respected": true,
+  "prefix_budget_separate": true,
+  "prefix_k": 12,
+  "process_start_method": "spawn",
+  "reconstruction": {
+    "action_history_exact": true,
+    "actor_inference_side_effect_free": true,
+    "anchor_state_exact": true,
+    "event_chunk_exact": true,
+    "max_anchor_state_error": 0.0,
+    "state_history_exact": true
+  },
+  "recovery_action_hashes": [
+    "9ed39fb3e70fe7b4013cf79507c175720f22ee47f39fcfbd25b15e43c11c7eed",
+    "a4159424c8d252c7cc0eb3efcc995cfb456ecc228bd0a0aef650bf6cad60c9e4",
+    "37b374ac01a45fd5f31295410c96af36725d2bbdaf55cf7364f41744dbfda4f6",
+    "a1206240b2bfb11e12caac9c1021f1396a0ab5f33ddbd2e44748d8b39fb12072",
+    "11ede0823e59bb58c4b6e44a379d13db6d2ca932fc4ae37ed851b8030ee93333",
+    "2e48f13fe626c0eec8af25d8a7dd82d8fea424e45d36616708ad578f029291f1",
+    "17eb5a03d474c9701ef73dd683e3ec8d78c1286081c8615b208cc5d608a3b338",
+    "2795c46c54698d43b6b6116dde513c0b3b857b98c1e2fe3ef1ffaf8340f6067a",
+    "a16fb2046965ca5d5782656766adcc4c2a67d3625cdd08fac5b6d37fdda2e1e4",
+    "d80a67d2ec0d119716fcb25e94b428f9b32f56f98d2c45dc0d83bc647e75b6d5",
+    "a2d583a935786ebe68da9c304e23d219726468e9ce4cff6097c0217206eb9dcd",
+    "614c3e01fd12b6f56fb872ecaabdfdce8223f2cc68150b8f33f30a8413d0567d",
+    "2101deca7b845d3de2efd9cb81510997b393924887eca755db45b3867f1134e4",
+    "322226079a99adede594b76f654128d1135770b4e057d9b7a5899eebfe121854",
+    "f054ab32ad7f23c24ae50b84847e53d71ed312027b2bead7898017504c292987",
+    "ef2a590de7edfa45a770ed46e99e59319f68cf809ad6434425d6def35f0cdf84",
+    "375b161d0be06aa5ab36b9f8b850d8730302474f8b7c5f8f7027859cb829dae3",
+    "aaeb9fb874945f815c20f869b13f4382757084a6c2022feffd22d2763898e9c3",
+    "3745e614ff1d22ce0ab8975dd4daaa20377892883105746113d8e3347de759d2",
+    "692659b162b717fd13cbcd11901539fe61e8aeae10c816efd568e51c2f58a8a8",
+    "6df7eea5a495513cd85fdd3f5ff16a3ca9704bb8d7ca0c203c5e3ef31f36e65c",
+    "ee7486949fdd5b761df591bf424271183d6d6adaec0805af350868dda80d567d",
+    "8c79c5bf139b6126826a170b21d6f072114cad8319291510354a9367d4aff774",
+    "c09773309ab492af0b7c0e1f0144e11b11691b7949824d38b98599356fd46d2e",
+    "30a7e4f01c8f06a4d302e468cf393438cec2a468bb491a65490d38a7306f10e9",
+    "35d7c9e4bdd81f0257be19e69b1129fd8fff476d529d4730d3d213de82c5c198",
+    "f89fcc90ed505336b491b0cadc63f2f25abb29ea92b8300b02d8586a03845dea",
+    "bcd22df7aab79282602c40a408f8e9dc3224c644b37bc5411516146b8778fa4b",
+    "e2289d8c0184ee2ae188ea70d84377cb72acf672dc54fbe126cf656c47937603",
+    "eed9c5334bd991de3628577b6c42fbf6512a5c7a1a548f376209119316317aff",
+    "4fcb46ff5edf3b75b482e241ea830360044b88cc66dd89c8660f633503392dc1",
+    "1bc1386e16b0ac0b51ec816cf1f86f7d594277cf6ca810d9121ffd6c268aba70"
+  ],
+  "recovery_actor_seed": 7,
+  "recovery_checkpoint_sha256": "821177a82cc470e108082fd3c0f6913983236a2fdf142de2fe51fc37c44240ca",
+  "recovery_chunk_hashes": [
+    "c9addf7ac2406e233dd100d41ac4462bf99d621a440002f667e1cd779e1b29ad",
+    "a10f1c7905ced7eea79f5cb3130daa3bceb3ef0aaa6525acc8914ad9aa4f863c"
+  ],
+  "recovery_policy_calls": 2,
+  "release_based_violation": false,
+  "repeat": 0,
+  "returned_configuration": {
+    "action_budget": null,
+    "operator": "fresh_h16",
+    "policy_call_cap": null,
+    "prefix_k": 12,
+    "recovery_actor_seed": 7,
+    "tail_horizon": null
+  },
+  "runtime_module_hashes": {
+    "assets.py": "8af027b6a775848bc400de22490f4cd82637e6de5861f3b368cbb79db3b7afca",
+    "common.py": "d9a0a292d55100ccbde0c2474bc445529b65108852d4411ffb1ea77b412fa4df",
+    "dispatch.py": "66fbe6a035c5a0039dd5d1515f5eb316394adcfca45459c4c8b5914cc26e1134",
+    "measurement.py": "b31dc34270905c6d76ea342c6a1deef8739c53e8bc9813e38d127ee48aab8c62",
+    "runtime.py": "3203db2452eef4bf6fe8b304eae2b14b1dc7ae80630479317c4610f063cf4417",
+    "runtime_identity.py": "fb7c195cbb4649e26ffd3264a0603067174ed659055b70c79837884642821c56"
+  },
+  "runtime_receipt_sha256": "3d7b252885b4047fb93140c305a3ef4a1d3ec9aa450d90341befd2b7e26a5e44",
+  "runtime_status": "OK",
+  "safe_success": false,
+  "safe_success_unblocked_observation": false,
+  "schema_version": 2,
+  "source_commit": "4bc5f5a840d1fcafa76b4a6db8343230ab8ff184",
+  "split": "evaluation",
+  "status": "COMPLETE",
+  "tail_horizon": 16,
+  "task": "put_the_bowl_on_the_plate",
+  "task_horizon": 320,
+  "task_horizon_budget_clipped": false,
+  "task_horizon_remaining_after_prefix": 228,
+  "task_success": false,
+  "topology_candidate": {
+    "candidate": true,
+    "candidate_indices": [
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160,
+      161,
+      162,
+      163,
+      164,
+      165,
+      166,
+      167,
+      168,
+      169,
+      170,
+      171,
+      172,
+      173,
+      174,
+      175,
+      176,
+      177,
+      178,
+      179,
+      180,
+      181,
+      182,
+      184,
+      186,
+      189,
+      193,
+      196,
+      200,
+      203,
+      208,
+      211,
+      215,
+      220,
+      225,
+      230,
+      237,
+      242,
+      248
+    ],
+    "first_index": 116,
+    "ignored_pre_anchor_indices": [],
+    "label": "prerelease_object_contact_topology_candidate",
+    "lifted_closed_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160,
+      161,
+      162,
+      163,
+      164,
+      165,
+      166,
+      167,
+      168,
+      169,
+      170,
+      171,
+      172,
+      173,
+      174,
+      175,
+      176,
+      177,
+      178,
+      179,
+      180,
+      181,
+      182,
+      183,
+      184,
+      185,
+      186,
+      187,
+      188,
+      189,
+      190,
+      191,
+      192,
+      193,
+      194,
+      195,
+      196,
+      197,
+      198,
+      199,
+      200,
+      201,
+      202,
+      203,
+      204,
+      205,
+      206,
+      207,
+      208,
+      209,
+      210,
+      211,
+      212,
+      213,
+      214,
+      215,
+      216,
+      217,
+      218,
+      219,
+      220,
+      221,
+      222,
+      223,
+      224,
+      225,
+      226,
+      227,
+      228,
+      229,
+      230,
+      231,
+      232,
+      233,
+      234,
+      235,
+      236,
+      237,
+      238,
+      239,
+      240,
+      241,
+      242,
+      243,
+      244,
+      245,
+      246,
+      247,
+      248,
+      249,
+      250,
+      251,
+      252,
+      253,
+      254,
+      255,
+      256,
+      257,
+      258,
+      259,
+      260,
+      261,
+      262,
+      263,
+      264,
+      265,
+      266,
+      267,
+      268,
+      269,
+      270,
+      271,
+      272,
+      273,
+      274,
+      275,
+      276,
+      277,
+      278,
+      279,
+      280,
+      281,
+      282,
+      283,
+      284,
+      285,
+      286,
+      287,
+      288,
+      289,
+      290,
+      291,
+      292,
+      293,
+      294,
+      295,
+      296,
+      297,
+      298,
+      299,
+      300,
+      301,
+      302,
+      303,
+      304,
+      305,
+      306,
+      307,
+      308,
+      309,
+      310,
+      311,
+      312,
+      313,
+      314,
+      315,
+      316,
+      317,
+      318,
+      319,
+      320,
+      321,
+      322,
+      323,
+      324,
+      325,
+      326,
+      327,
+      328,
+      329,
+      330,
+      331,
+      332,
+      333,
+      334,
+      335,
+      336,
+      337,
+      338,
+      339,
+      340,
+      341,
+      342,
+      343,
+      344,
+      345,
+      346,
+      347,
+      348,
+      349,
+      350,
+      351,
+      352,
+      353,
+      354,
+      355,
+      356,
+      357,
+      358,
+      359,
+      360,
+      361,
+      362,
+      363,
+      364,
+      365,
+      366,
+      367,
+      368,
+      369,
+      370,
+      371,
+      372,
+      373,
+      374,
+      375,
+      376,
+      377,
+      378,
+      379,
+      380,
+      381,
+      382,
+      383,
+      384,
+      385,
+      386,
+      387,
+      388,
+      389,
+      390,
+      391,
+      392,
+      393,
+      394,
+      395,
+      396,
+      397,
+      398,
+      399,
+      400,
+      401,
+      402,
+      403,
+      404,
+      405,
+      406,
+      407,
+      408,
+      409,
+      410,
+      411,
+      412,
+      413,
+      414,
+      415
+    ],
+    "missing": [],
+    "new_pairs": [
+      {
+        "index": 116,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 117,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 118,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 119,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 120,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 121,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 122,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 123,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 124,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 125,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 126,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 127,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 128,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 129,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 130,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 131,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 132,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 133,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 134,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 135,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 136,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 137,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 138,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 139,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 140,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 141,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 142,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 143,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 144,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 145,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 146,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 147,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 148,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 149,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 150,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 151,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 152,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 153,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 154,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 155,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 156,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 157,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 158,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 159,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 160,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 161,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 162,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 163,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 164,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 165,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 166,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 167,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 168,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 169,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 170,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 171,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 172,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 173,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 174,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 175,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 176,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 177,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 178,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 179,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 180,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 181,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 182,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 184,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 186,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 189,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 193,
+        "pair": [
+          "akita_black_bowl_1_g21",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 193,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 196,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 200,
+        "pair": [
+          "akita_black_bowl_1_g21",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 200,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 203,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 208,
+        "pair": [
+          "akita_black_bowl_1_g21",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 208,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 211,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 215,
+        "pair": [
+          "akita_black_bowl_1_g21",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 215,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 220,
+        "pair": [
+          "akita_black_bowl_1_g21",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 220,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 225,
+        "pair": [
+          "akita_black_bowl_1_g21",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 225,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 230,
+        "pair": [
+          "akita_black_bowl_1_g21",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 230,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 237,
+        "pair": [
+          "akita_black_bowl_1_g21",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 237,
+        "pair": [
+          "akita_black_bowl_1_g22",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 242,
+        "pair": [
+          "akita_black_bowl_1_g21",
+          "wooden_cabinet_1_g29"
+        ]
+      },
+      {
+        "index": 248,
+        "pair": [
+          "akita_black_bowl_1_g21",
+          "wooden_cabinet_1_g29"
+        ]
+      }
+    ],
+    "time_order": {
+      "candidate_before_release": true,
+      "complete": true,
+      "first_candidate_index": 116,
+      "first_release_index": 441,
+      "ordering": "candidate_before_release"
+    }
+  },
+  "total_branch_wall_time_s": 9.17953516099999,
+  "total_policy_calls": 3,
+  "trace_content_sha256": "16905416fdc41a1fe621574626a92eb9b2151fe9d5b4591c80e5c623aafb8512",
+  "trace_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase2/contact_topology/put_the_bowl_on_the_plate/d79cf266899885c2e98cde7f2cef50fd736dcf0e75e4aca55b81fbeefdef4502.jsonl.gz",
+  "trace_records": 1144,
+  "trace_sha256": "c61ce94230eca9af4da78ff489dcaa0fb50544860690277e47eb3459184df2f4",
+  "validation_policy_calls": 1,
+  "zero_injection": true
+}

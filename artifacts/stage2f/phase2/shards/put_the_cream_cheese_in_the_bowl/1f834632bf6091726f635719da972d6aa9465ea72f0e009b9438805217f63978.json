@@ -1,0 +1,6139 @@
+{
+  "action_budget": 32,
+  "action_budget_respected": true,
+  "actor_inference_side_effect_free": true,
+  "actual_global_step": 127,
+  "actual_new_recovery_actions": 32,
+  "actual_policy_calls": 2,
+  "actual_prefix_actions": 14,
+  "actual_total_action_steps": 46,
+  "anchor_global_step": 81,
+  "behavior_operator": "rollback_1+fresh_h16",
+  "blocked": false,
+  "chunk_hash": "045cbd884b2ad7aaacc2c060e7672d28af1f1b3a802f2bced94336daa83716ec",
+  "configured_action_budget": 32,
+  "configured_budget": {
+    "action_budget": 32,
+    "policy_call_cap": 8,
+    "tail_horizon": 16
+  },
+  "configured_operator_horizon": 16,
+  "configured_policy_call_cap": 8,
+  "configured_prefix_actions": 14,
+  "configured_tail_horizon": 16,
+  "d4_signatures": {
+    "detection": {
+      "cause_tracker": {
+        "contact_event_indices": [],
+        "ever_stably_lifted": true,
+        "first_violation_offset": null,
+        "gripper_transition_indices": [],
+        "immediate_violation": false,
+        "initial_object_z": 0.935,
+        "injected": false,
+        "injection_contact": false,
+        "post_detection_steps": 0,
+        "previous_gripper": 1.0,
+        "shifted_target_qpos": null,
+        "task": "put_the_cream_cheese_in_the_bowl",
+        "violation": false,
+        "violation_type": null
+      },
+      "cause_tracker_hash": "9b376439718d015739f9ae1f0b41035ec9e96f635452a76f40825a47b96315ce",
+      "complete_signature_hash": "44e2100aa0332c7e87e7ade47fcb51e70f3124c8b45b58d066686bf2320cbb64",
+      "contact_pairs": [
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger1_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger1_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger1_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_hand_collision"
+        ],
+        [
+          "plate_1_g10",
+          "table_collision"
+        ],
+        [
+          "plate_1_g2",
+          "table_collision"
+        ],
+        [
+          "plate_1_g3",
+          "table_collision"
+        ],
+        [
+          "plate_1_g4",
+          "table_collision"
+        ],
+        [
+          "plate_1_g5",
+          "table_collision"
+        ],
+        [
+          "plate_1_g6",
+          "table_collision"
+        ],
+        [
+          "plate_1_g7",
+          "table_collision"
+        ],
+        [
+          "plate_1_g8",
+          "table_collision"
+        ],
+        [
+          "plate_1_g9",
+          "table_collision"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ]
+      ],
+      "contact_pairs_hash": "bf2aea7d0d98e8762bde6993e67e754c9a3f037b3930baf5c2947702a02c485d",
+      "executed_prefix_action_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "executed_prefix_length": 0,
+      "four_state_history_hash": "31610c075bb0b4589b6a4a8c646994b69a9b15aadc8561c7b8d69bdf8c1d5aaa",
+      "gripper_state": 1.0,
+      "manipulated_qpos_hash": "e0ea5b1ef0d095acb5e2a2f3e7f6f06c139e9edf0a5c50d24e16166b07dc8cea",
+      "observation_feature_hash": "1f44f3fe5327654e5f10d2bf60992279b6b2c1842e6d49893a7e20b4bc3db041",
+      "obstacle_qpos_hash": null,
+      "robot_qpos_hash": "22d83c79942023e6ae2d761f0529cc7b2625794d5d0d32eba8bcb48d8dca24bf",
+      "robot_qvel_hash": "8db3cf1c7ebc39a1ab6b0ae5f3ac224526af857d913d8b0872cf9caac1540763",
+      "simulator_state_hash": "0e1acdb6a801397bf06fcc2e0612825601aefaa59e9904a99643b3ce07b32d0c",
+      "target_qpos_hash": "778dfa5614ddf9b89f987d969934eeddbbf267c909c2e577b6634fea9213a18d",
+      "task_phase": {
+        "ever_stably_lifted": true,
+        "gripper_closed": true,
+        "object_height_delta_m": 0.0394107054952586,
+        "post_detection_steps": 0,
+        "task_success": false
+      },
+      "task_phase_hash": "cd3851a9358cf3d0dc33e07da754b83d8514c0a6b8723ac288dc4df112305cad",
+      "three_action_history_hash": "9dc68ff0b8acf90030864d582a89e9d0aa28de9a1b6b74c25f168cca64e04e20"
+    },
+    "final": {
+      "cause_tracker": {
+        "contact_event_indices": [],
+        "ever_stably_lifted": true,
+        "first_violation_offset": null,
+        "gripper_transition_indices": [],
+        "immediate_violation": false,
+        "initial_object_z": 0.935,
+        "injected": false,
+        "injection_contact": false,
+        "post_detection_steps": 32,
+        "previous_gripper": 1.0,
+        "shifted_target_qpos": null,
+        "task": "put_the_cream_cheese_in_the_bowl",
+        "violation": false,
+        "violation_type": null
+      },
+      "cause_tracker_hash": "86cb99f3ba916152b4ed22f51f6de9a92ab9af617fb60d868aadcb419f244930",
+      "complete_signature_hash": "af689e0343d45b642935af70d762d0b146630e10878b65652daa3d4d086505e2",
+      "contact_pairs": [
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger1_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger1_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger1_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_hand_collision"
+        ],
+        [
+          "plate_1_g10",
+          "table_collision"
+        ],
+        [
+          "plate_1_g2",
+          "table_collision"
+        ],
+        [
+          "plate_1_g3",
+          "table_collision"
+        ],
+        [
+          "plate_1_g4",
+          "table_collision"
+        ],
+        [
+          "plate_1_g5",
+          "table_collision"
+        ],
+        [
+          "plate_1_g6",
+          "table_collision"
+        ],
+        [
+          "plate_1_g7",
+          "table_collision"
+        ],
+        [
+          "plate_1_g8",
+          "table_collision"
+        ],
+        [
+          "plate_1_g9",
+          "table_collision"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ]
+      ],
+      "contact_pairs_hash": "f82b2ed46583704dfed0190e75f81418fd303f259a4b19b9f6c39f2fa6caa1dc",
+      "executed_prefix_action_hash": "4d54d3d2ee8f2754b65e1a96cf216696a3f50c244610e880317994f04561f2dc",
+      "executed_prefix_length": 14,
+      "four_state_history_hash": "c383c96fccb9fdd855f73d40aae50cfa92295241aac5c1b00a0f149e5715af75",
+      "gripper_state": 1.0,
+      "manipulated_qpos_hash": "b4a040ed620cb7e1d3032d4b1c773348046d9e0bcd059d7b5fd2e171602a4fd1",
+      "observation_feature_hash": "bea72831a980be2d12f29fcc4fe8a2878cec08e347208840256514294611d9df",
+      "obstacle_qpos_hash": null,
+      "robot_qpos_hash": "27af17e235c305ddd7a6c058062244d088c4f7b36344f83509cacf8adfc7cc24",
+      "robot_qvel_hash": "7ab3ca14f0174dae50a0b19a3bb3048c08d6c3963230e596b7842cf02abf3026",
+      "simulator_state_hash": "e6ce7a90c996c091b0fad3ef56bc1143beafd64fc08847d7383f3661acda3642",
+      "target_qpos_hash": "c9b3e3e98f43960f6418ee40c60a0b50d475e5aaf5fa432a98e7a98742944ed5",
+      "task_phase": {
+        "ever_stably_lifted": true,
+        "gripper_closed": true,
+        "object_height_delta_m": 0.015970455704891418,
+        "post_detection_steps": 32,
+        "task_success": false
+      },
+      "task_phase_hash": "9811c5adf5c54007124a89d8de509227bc030d5ba7cf9e6201308a0ed759053b",
+      "three_action_history_hash": "fe0d343de35536cdd689b4d090a5d162f0035bfac8325e74244b322715c91959"
+    },
+    "pre_tail": {
+      "cause_tracker": {
+        "contact_event_indices": [],
+        "ever_stably_lifted": true,
+        "first_violation_offset": null,
+        "gripper_transition_indices": [],
+        "immediate_violation": false,
+        "initial_object_z": 0.935,
+        "injected": false,
+        "injection_contact": false,
+        "post_detection_steps": 0,
+        "previous_gripper": 1.0,
+        "shifted_target_qpos": null,
+        "task": "put_the_cream_cheese_in_the_bowl",
+        "violation": false,
+        "violation_type": null
+      },
+      "cause_tracker_hash": "9b376439718d015739f9ae1f0b41035ec9e96f635452a76f40825a47b96315ce",
+      "complete_signature_hash": "7b3efa2814a48f7caacf566e5162d6d6f0c32e690c18758044d429f326b59791",
+      "contact_pairs": [
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger1_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger1_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger1_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger1_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_hand_collision"
+        ],
+        [
+          "plate_1_g10",
+          "table_collision"
+        ],
+        [
+          "plate_1_g2",
+          "table_collision"
+        ],
+        [
+          "plate_1_g3",
+          "table_collision"
+        ],
+        [
+          "plate_1_g4",
+          "table_collision"
+        ],
+        [
+          "plate_1_g5",
+          "table_collision"
+        ],
+        [
+          "plate_1_g6",
+          "table_collision"
+        ],
+        [
+          "plate_1_g7",
+          "table_collision"
+        ],
+        [
+          "plate_1_g8",
+          "table_collision"
+        ],
+        [
+          "plate_1_g9",
+          "table_collision"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ]
+      ],
+      "contact_pairs_hash": "0978a6da086d3514c50b92b7553be5949a184b2987813f5841050123a8985120",
+      "executed_prefix_action_hash": "4d54d3d2ee8f2754b65e1a96cf216696a3f50c244610e880317994f04561f2dc",
+      "executed_prefix_length": 14,
+      "four_state_history_hash": "c1bd2093b5b8673cadd4222441e372ccf744ddef0bcde8bc57b6bb33f505c08b",
+      "gripper_state": 1.0,
+      "manipulated_qpos_hash": "0b2a9561f278d3e9c825fc0c8aee202b629e9e45bc3c0713a987e27f0336da21",
+      "observation_feature_hash": "ef8b2f0f8e5c642c24265be2ddbe3b1a046a25aa4477e4979d2822d7daaf42ac",
+      "obstacle_qpos_hash": null,
+      "robot_qpos_hash": "c09067c8c34612517cd07a72f304fe85bdf8e410d99d6e04fecfcf80803f7c82",
+      "robot_qvel_hash": "2b6e3880600dd7b4508531f4b28740a4c6957d9a7b8711d7b7003cc8d26d974b",
+      "simulator_state_hash": "9e3e925c34cc5c814c98495045f22b327f5717dfa49e15dd1d6f5c0d64f36551",
+      "target_qpos_hash": "a2493eee71688af305face4217896894f0463329c8a65030bb66101078dae3fa",
+      "task_phase": {
+        "ever_stably_lifted": true,
+        "gripper_closed": true,
+        "object_height_delta_m": 0.1401250609279825,
+        "post_detection_steps": 0,
+        "task_success": false
+      },
+      "task_phase_hash": "5f47a0d0b73dd5e387f0a0e6cb54901811a02e12642684b75552eb99008dced1",
+      "three_action_history_hash": "52d9c57186a4b699fd43f133c066f00a6829162cead2316318bbd306b5091c6c"
+    }
+  },
+  "diagnostic_continuation": true,
+  "diagnostic_only": true,
+  "diagnostic_selection_binding": {
+    "input_sha256": "c6eb6484cb6711b6df02716d6ca8c8613bdaee27583ec37184f54b719c8f851d",
+    "original_rank": 1,
+    "protocol_sha256": "2d14427c2391422dd372b0528d6d784d1066d8d059e1405597cfb1954f260c6a"
+  },
+  "diagnostic_selection_receipt_path": "phase1/diagnostic_selection_receipt.json",
+  "diagnostic_selection_receipt_sha256": "5382f401a40a5f0e8f9069cb8c76d577b82fadb6fa6e8f94496f35ca3760e262",
+  "dispatch_process_start_method": "spawn",
+  "dispatch_repeat": 0,
+  "dispatch_seed": 852240530,
+  "dispatcher_child_exitcode": 0,
+  "dispatcher_pid": 1,
+  "dispatcher_process_start_method": "spawn",
+  "effective_execution_horizon": 16,
+  "effective_new_action_budget": 32,
+  "env_hash": "453239538d25eb10f50b1fa73aff0c5f8f2031cb2519f44b94ed4592a53ec6fa",
+  "error": null,
+  "event_id": "put_the_cream_cheese_in_the_bowl__init057__actor17",
+  "event_instance_id": "put_the_cream_cheese_in_the_bowl__init057__actor17",
+  "formal_positive_evidence_allowed": false,
+  "fresh_environment_created": true,
+  "generator_actor_calls": 1,
+  "generator_actor_seed": 17,
+  "generator_checkpoint_sha256": "83ee61e31ffdae6f2ef57203a2c0085df41e284039cd81c6ecf1210694521604",
+  "generator_chunk_hash": "045cbd884b2ad7aaacc2c060e7672d28af1f1b3a802f2bced94336daa83716ec",
+  "init_state_id": 57,
+  "injection_calls": 0,
+  "is_reference": false,
+  "job_id": "dlc1hrmbyia4bc9p",
+  "labels": {
+    "candidate_precedes_release": null,
+    "first_candidate_index": 1099,
+    "first_release_index": null,
+    "ignored_pre_lift_release_indices": [],
+    "label_complete": true,
+    "missing": [],
+    "prerelease_topology_candidate": {
+      "candidate": true,
+      "candidate_indices": [
+        1099,
+        1100,
+        1101,
+        1102,
+        1103,
+        1104,
+        1105,
+        1106,
+        1107,
+        1108,
+        1109,
+        1110,
+        1111,
+        1112,
+        1113,
+        1114,
+        1115,
+        1116,
+        1117,
+        1118,
+        1119,
+        1120,
+        1121,
+        1122,
+        1123,
+        1124,
+        1125,
+        1126,
+        1127,
+        1128,
+        1129,
+        1130,
+        1131,
+        1132,
+        1133,
+        1134,
+        1135,
+        1136,
+        1137,
+        1138,
+        1139,
+        1140,
+        1141,
+        1142,
+        1143,
+        1144,
+        1145,
+        1146,
+        1147,
+        1148,
+        1149,
+        1150,
+        1151,
+        1152,
+        1153,
+        1154,
+        1155,
+        1156,
+        1157,
+        1158,
+        1159,
+        1160,
+        1161,
+        1162,
+        1163,
+        1164,
+        1165,
+        1166,
+        1167,
+        1168,
+        1169,
+        1170,
+        1171,
+        1172,
+        1173,
+        1174,
+        1175,
+        1176,
+        1177,
+        1178,
+        1179,
+        1180,
+        1181,
+        1182,
+        1183,
+        1184,
+        1185,
+        1186,
+        1187,
+        1188,
+        1189,
+        1190,
+        1191,
+        1192,
+        1193,
+        1194,
+        1195
+      ],
+      "first_index": 1099,
+      "ignored_pre_anchor_indices": [],
+      "label": "prerelease_object_contact_topology_candidate",
+      "lifted_closed_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223,
+        224,
+        225,
+        226,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236,
+        237,
+        238,
+        239,
+        240,
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        255,
+        256,
+        257,
+        258,
+        259,
+        260,
+        261,
+        262,
+        263,
+        264,
+        265,
+        266,
+        267,
+        268,
+        269,
+        270,
+        271,
+        272,
+        273,
+        274,
+        275,
+        276,
+        277,
+        278,
+        279,
+        280,
+        281,
+        282,
+        283,
+        284,
+        285,
+        286,
+        287,
+        288,
+        289,
+        290,
+        291,
+        292,
+        293,
+        294,
+        295,
+        296,
+        297,
+        298,
+        299,
+        300,
+        301,
+        302,
+        303,
+        304,
+        305,
+        306,
+        307,
+        308,
+        309,
+        310,
+        311,
+        312,
+        313,
+        314,
+        315,
+        316,
+        317,
+        318,
+        319,
+        320,
+        321,
+        322,
+        323,
+        324,
+        325,
+        326,
+        327,
+        328,
+        329,
+        330,
+        331,
+        332,
+        333,
+        334,
+        335,
+        336,
+        337,
+        338,
+        339,
+        340,
+        341,
+        342,
+        343,
+        344,
+        345,
+        346,
+        347,
+        348,
+        349,
+        350,
+        351,
+        352,
+        353,
+        354,
+        355,
+        356,
+        357,
+        358,
+        359,
+        360,
+        361,
+        362,
+        363,
+        364,
+        365,
+        366,
+        367,
+        368,
+        369,
+        370,
+        371,
+        372,
+        373,
+        374,
+        375,
+        376,
+        377,
+        378,
+        379,
+        380,
+        381,
+        382,
+        383,
+        384,
+        385,
+        386,
+        387,
+        388,
+        389,
+        390,
+        391,
+        392,
+        393,
+        394,
+        395,
+        396,
+        397,
+        398,
+        399,
+        400,
+        401,
+        402,
+        403,
+        404,
+        405,
+        406,
+        407,
+        408,
+        409,
+        410,
+        411,
+        412,
+        413,
+        414,
+        415,
+        416,
+        417,
+        418,
+        419,
+        420,
+        421,
+        422,
+        423,
+        424,
+        425,
+        426,
+        427,
+        428,
+        429,
+        430,
+        431,
+        432,
+        433,
+        434,
+        435,
+        436,
+        437,
+        438,
+        439,
+        440,
+        441,
+        442,
+        443,
+        444,
+        445,
+        446,
+        447,
+        448,
+        449,
+        450,
+        451,
+        452,
+        453,
+        454,
+        455,
+        456,
+        457,
+        458,
+        459,
+        460,
+        461,
+        462,
+        463,
+        464,
+        465,
+        466,
+        467,
+        468,
+        469,
+        470,
+        471,
+        472,
+        473,
+        474,
+        475,
+        476,
+        477,
+        478,
+        479,
+        480,
+        481,
+        482,
+        483,
+        484,
+        485,
+        486,
+        487,
+        488,
+        489,
+        490,
+        491,
+        492,
+        493,
+        494,
+        495,
+        496,
+        497,
+        498,
+        499,
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549,
+        550,
+        551,
+        552,
+        553,
+        554,
+        555,
+        556,
+        557,
+        558,
+        559,
+        560,
+        561,
+        562,
+        563,
+        564,
+        565,
+        566,
+        567,
+        568,
+        569,
+        570,
+        571,
+        572,
+        573,
+        574,
+        575,
+        576,
+        577,
+        578,
+        579,
+        580,
+        581,
+        582,
+        583,
+        584,
+        585,
+        586,
+        587,
+        588,
+        589,
+        590,
+        591,
+        592,
+        593,
+        594,
+        595,
+        596,
+        597,
+        598,
+        599,
+        600,
+        601,
+        602,
+        603,
+        604,
+        605,
+        606,
+        607,
+        608,
+        609,
+        610,
+        611,
+        612,
+        613,
+        614,
+        615,
+        616,
+        617,
+        618,
+        619,
+        620,
+        621,
+        622,
+        623,
+        624,
+        625,
+        626,
+        627,
+        628,
+        629,
+        630,
+        631,
+        632,
+        633,
+        634,
+        635,
+        636,
+        637,
+        638,
+        639,
+        640,
+        641,
+        642,
+        643,
+        644,
+        645,
+        646,
+        647,
+        648,
+        649,
+        650,
+        651,
+        652,
+        653,
+        654,
+        655,
+        656,
+        657,
+        658,
+        659,
+        660,
+        661,
+        662,
+        663,
+        664,
+        665,
+        666,
+        667,
+        668,
+        669,
+        670,
+        671,
+        672,
+        673,
+        674,
+        675,
+        676,
+        677,
+        678,
+        679,
+        680,
+        681,
+        682,
+        683,
+        684,
+        685,
+        686,
+        687,
+        688,
+        689,
+        690,
+        691,
+        692,
+        693,
+        694,
+        695,
+        696,
+        697,
+        698,
+        699,
+        700,
+        701,
+        702,
+        703,
+        704,
+        705,
+        706,
+        707,
+        708,
+        709,
+        710,
+        711,
+        712,
+        713,
+        714,
+        715,
+        716,
+        717,
+        718,
+        719,
+        720,
+        721,
+        722,
+        723,
+        724,
+        725,
+        726,
+        727,
+        728,
+        729,
+        730,
+        731,
+        732,
+        733,
+        734,
+        735,
+        736,
+        737,
+        738,
+        739,
+        740,
+        741,
+        742,
+        743,
+        744,
+        745,
+        746,
+        747,
+        748,
+        749,
+        750,
+        751,
+        752,
+        753,
+        754,
+        755,
+        756,
+        757,
+        758,
+        759,
+        760,
+        761,
+        762,
+        763,
+        764,
+        765,
+        766,
+        767,
+        768,
+        769,
+        770,
+        771,
+        772,
+        773,
+        774,
+        775,
+        776,
+        777,
+        778,
+        779,
+        780,
+        781,
+        782,
+        783,
+        784,
+        785,
+        786,
+        787,
+        788,
+        789,
+        790,
+        791,
+        792,
+        793,
+        794,
+        795,
+        796,
+        797,
+        798,
+        799,
+        800,
+        801,
+        802,
+        803,
+        804,
+        805,
+        806,
+        807,
+        808,
+        809,
+        810,
+        811,
+        812,
+        813,
+        814,
+        815,
+        816,
+        817,
+        818,
+        819,
+        820,
+        821,
+        822,
+        823,
+        824,
+        825,
+        826,
+        827,
+        828,
+        829,
+        830,
+        831,
+        832,
+        833,
+        834,
+        835,
+        836,
+        837,
+        838,
+        839,
+        840,
+        841,
+        842,
+        843,
+        844,
+        845,
+        846,
+        847,
+        848,
+        849,
+        850,
+        851,
+        852,
+        853,
+        854,
+        855,
+        856,
+        857,
+        858,
+        859,
+        860,
+        861,
+        862,
+        863,
+        864,
+        865,
+        866,
+        867,
+        868,
+        869,
+        870,
+        871,
+        872,
+        873,
+        874,
+        875,
+        876,
+        877,
+        878,
+        879,
+        880,
+        881,
+        882,
+        883,
+        884,
+        885,
+        886,
+        887,
+        888,
+        889,
+        890,
+        891,
+        892,
+        893,
+        894,
+        895,
+        896,
+        897,
+        898,
+        899,
+        900,
+        901,
+        902,
+        903,
+        904,
+        905,
+        906,
+        907,
+        908,
+        909,
+        910,
+        911,
+        912,
+        913,
+        914,
+        915,
+        916,
+        917,
+        918,
+        919,
+        920,
+        921,
+        922,
+        923,
+        924,
+        925,
+        926,
+        927,
+        928,
+        929,
+        930,
+        931,
+        932,
+        933,
+        934,
+        935,
+        936,
+        937,
+        938,
+        939,
+        940,
+        941,
+        942,
+        943,
+        944,
+        945,
+        946,
+        947,
+        948,
+        949,
+        950,
+        951,
+        952,
+        953,
+        954,
+        955,
+        956,
+        957,
+        958,
+        959,
+        960,
+        961,
+        962,
+        963,
+        964,
+        965,
+        966,
+        967,
+        968,
+        969,
+        970,
+        971,
+        972,
+        973,
+        974,
+        975,
+        976,
+        977,
+        978,
+        979,
+        980,
+        981,
+        982,
+        983,
+        984,
+        985,
+        986,
+        987,
+        988,
+        989,
+        990,
+        991,
+        992,
+        993,
+        994,
+        995,
+        996,
+        997,
+        998,
+        999,
+        1000,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1010,
+        1011,
+        1012,
+        1013,
+        1014,
+        1015,
+        1016,
+        1017,
+        1018,
+        1019,
+        1020,
+        1021,
+        1022,
+        1023,
+        1024,
+        1025,
+        1026,
+        1027,
+        1028,
+        1029,
+        1030,
+        1031,
+        1032,
+        1033,
+        1034,
+        1035,
+        1036,
+        1037,
+        1038,
+        1039,
+        1040,
+        1041,
+        1042,
+        1043,
+        1044,
+        1045,
+        1046,
+        1047,
+        1048,
+        1049,
+        1050,
+        1051,
+        1052,
+        1053,
+        1054,
+        1055,
+        1056,
+        1057,
+        1058,
+        1059,
+        1060,
+        1061,
+        1062,
+        1063,
+        1064,
+        1065,
+        1066,
+        1067,
+        1068,
+        1069,
+        1070,
+        1071,
+        1072,
+        1073,
+        1074,
+        1075,
+        1076,
+        1077,
+        1078,
+        1079,
+        1080,
+        1081,
+        1082,
+        1083,
+        1084,
+        1085,
+        1086,
+        1087,
+        1088,
+        1089,
+        1090,
+        1091,
+        1092,
+        1093,
+        1094,
+        1095,
+        1096,
+        1097,
+        1098,
+        1099,
+        1100,
+        1101,
+        1102,
+        1103,
+        1104,
+        1105,
+        1106,
+        1107,
+        1108,
+        1109,
+        1110,
+        1111,
+        1112,
+        1113,
+        1114,
+        1115,
+        1116,
+        1117,
+        1118,
+        1119,
+        1120,
+        1121,
+        1122,
+        1123,
+        1124,
+        1125,
+        1126,
+        1127,
+        1128,
+        1129,
+        1130,
+        1131,
+        1132,
+        1133,
+        1134,
+        1135,
+        1136,
+        1137,
+        1138,
+        1139,
+        1140,
+        1141,
+        1142,
+        1143,
+        1144,
+        1145,
+        1146,
+        1147,
+        1148,
+        1149,
+        1150,
+        1151,
+        1152,
+        1153,
+        1154,
+        1155,
+        1156,
+        1157,
+        1158,
+        1159,
+        1160,
+        1161,
+        1162,
+        1163,
+        1164,
+        1165,
+        1166,
+        1167,
+        1168,
+        1169,
+        1170,
+        1171,
+        1172,
+        1173,
+        1174,
+        1175,
+        1176,
+        1177,
+        1178,
+        1179,
+        1180,
+        1181,
+        1182,
+        1183,
+        1184,
+        1185,
+        1186,
+        1187,
+        1188,
+        1189,
+        1190,
+        1191,
+        1192,
+        1193,
+        1194,
+        1195
+      ],
+      "missing": [],
+      "new_pairs": [
+        {
+          "index": 1099,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1100,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1101,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1102,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1103,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1104,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1105,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1106,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1107,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1108,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1109,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1110,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1111,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1112,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1113,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1114,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1115,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1116,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1117,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1118,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1119,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1120,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1121,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1122,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1123,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1124,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1124,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1124,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1125,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1125,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1125,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1126,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1126,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1126,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1127,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1127,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1127,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1128,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1128,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1128,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1129,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1129,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1129,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1130,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1130,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1130,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1131,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1131,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1131,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1132,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1132,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1132,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1133,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1133,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1133,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1134,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1134,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1134,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1135,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1135,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1135,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1136,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1136,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1136,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1137,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1137,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1137,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1138,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1138,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1138,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1139,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1139,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1139,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1140,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1140,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1140,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1141,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1141,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1141,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1142,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1142,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1142,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1143,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1143,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1143,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1144,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1144,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1144,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1145,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1145,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1145,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1146,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1146,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1146,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1147,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1147,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1147,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1148,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1148,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1148,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1149,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1149,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1149,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1150,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1150,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1150,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1151,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1151,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1151,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1152,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1152,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1152,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1153,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1153,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1153,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1154,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1154,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1154,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1155,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1155,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1155,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1156,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1156,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1156,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1157,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1157,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1157,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1158,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1158,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1158,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1159,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1159,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1159,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1160,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1160,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1160,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1161,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1161,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1161,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1162,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1162,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1162,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1163,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1163,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1163,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1164,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1164,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1164,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1165,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1165,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1165,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1166,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1166,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1166,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1167,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1167,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1167,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1168,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1168,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1168,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1169,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1169,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1169,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1170,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1170,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1170,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1171,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base"
+          ]
+        },
+        {
+          "index": 1171,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_base_vis"
+          ]
+        },
+        {
+          "index": 1171,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1172,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1173,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1174,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1175,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1176,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1177,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1178,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1179,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1180,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1181,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1182,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1183,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1184,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1185,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1186,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1187,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1188,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1189,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1190,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1191,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1192,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1193,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1194,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        },
+        {
+          "index": 1195,
+          "pair": [
+            "cream_cheese_1_g1",
+            "flat_stove_1_collision_burner"
+          ]
+        }
+      ],
+      "time_order": {
+        "candidate_before_release": null,
+        "complete": true,
+        "first_candidate_index": 1099,
+        "first_release_index": null,
+        "ordering": "candidate_without_release"
+      }
+    },
+    "record_count": 1196,
+    "release_based": {
+      "first_index": null,
+      "ignored_pre_lift_release_indices": [],
+      "label": "release_outside_original_target",
+      "missing": [],
+      "placement_xy_tolerance_m": 0.06,
+      "release_indices": [],
+      "release_violation_indices": [],
+      "time_order": {
+        "complete": true,
+        "first_release_index": null,
+        "first_violation_index": null,
+        "ignored_pre_lift_release_indices": [],
+        "lift_before_release_required": true
+      },
+      "violation": false,
+      "violation_type": null
+    },
+    "schema_version": 1,
+    "task": "put_the_cream_cheese_in_the_bowl",
+    "time_order": "candidate_without_release"
+  },
+  "missing_provenance": [],
+  "new_idea_generated": false,
+  "operator": "rollback_1+fresh_h16",
+  "pai_run_id": "r16p14-s1-atlas-t0-20260907-r2",
+  "parent_pid": 1,
+  "physics_instrumented": true,
+  "physics_probe_error": null,
+  "physics_step_count": 1150,
+  "pid": 29865,
+  "policy_call_cap": 8,
+  "policy_call_cap_respected": true,
+  "prefix_budget_separate": true,
+  "prefix_k": 14,
+  "process_start_method": "spawn",
+  "reconstruction": {
+    "action_history_exact": true,
+    "actor_inference_side_effect_free": true,
+    "anchor_state_exact": true,
+    "event_chunk_exact": true,
+    "max_anchor_state_error": 0.0,
+    "state_history_exact": true
+  },
+  "recovery_action_hashes": [
+    "cb9486182ee3f937374c45270db36f7d901c03c9c91c3640d61f8c7f4a483e48",
+    "c33c744f9070a914eb9f5ed30152e7a76b631ae09ec05227098c9d159deca563",
+    "d0b38517cc7640a62a02eda63ce630d6730fb43502d9e9a274d736e852902fd9",
+    "8f5e7ab3fe76e7a94a7493106f69f3bede12a3d2a467497be3cf29c07d907da5",
+    "ef2c2d3992097cd6d43a427f72983938bd68e70d0f83fea167b502cb0e2d980c",
+    "4b9a857a5c3e4acb8631c3a24229f2868c3e8380e61b06880cc072cfefa0770b",
+    "b6c4b85cd6b24f5b2519b1c56e8473996af9bcb93935cdc19a46e1c35ebe819f",
+    "3397968b8973fc450a98905b3bec64ec4ec950a02ca42eba58a6079a1c4deae5",
+    "2c8c98738c8dd50350c2cfaf649b7610241ebd45d51b7392a8ff9cf0a89926a7",
+    "5177ee6df991e1f70f09820e1f682cba5f9d5997d8ca217dce7cf053805c8ae0",
+    "cf05e54af0ff643d2a0dd2b0c7a5fd1e8d4b9a338c7f8b8dc0b014f83f97e2ba",
+    "d4bb3e8586a3a7406b55dcede42e6af80bd15a2defa7c0419bec27e26a5aaa9a",
+    "65beb478efd9b07c4b57424d76cfa12d3eeb3181b46f20f4a5eb11d20a49879a",
+    "0c799da483a590238e0073afe9727a4d6e109869d520b830ae97284b02ec8e8b",
+    "9aedb5d5e11505ccc0bc037c7961ca0f1bc03dccb6f9a2c425d7ce83c88afcfa",
+    "13147bad6ec770f539585430371f8caed11aff07b600422d6c0b1704d37349c0",
+    "ab714c7638beb9d51914c3e5fbdadf4ba814533092aea1170deb3bfcbebc8329",
+    "c132406879192ac19ebeddb99c1acca927420df9bedee26355f77523b707f49f",
+    "eb04de6287006bc97868f57d54bca26021678d0fc9f9a089b27c365ac008a930",
+    "7b2061d219139a22f54d5e3bd95ef2331305e22ba560d41fd061bdccdb0b0be4",
+    "470c9326274fb9e2d24d56515e53724800ecf5a0f83fc98aa6aa67d1ee9cf613",
+    "5cc7d5cca66a66f4ce8c64cfce7d7c43db0568c44db86c27ff30b118cd4df9b3",
+    "8d9641dea440572c329f929573a91019dd383f77e838997a04343d1b53a68e93",
+    "d7e50009991d71eb6a6d86e39e4aff5125ade68f3cbecdeef87d1772d8c59d37",
+    "1a449639db4ffffb6cea14a04e82a8706c9dcc40c59d7d2f025a077270cdca8b",
+    "1f21744e787999444ff32df6b6c71678174e7622ac7788a3d17e073833ed3591",
+    "fb6cd81d4979bb303bb0a117c5004e72c0475f184d5a19e9e9ea1b038a53ae53",
+    "cea8cc7cba88e6d2e1e6e0b741ad498847e845b20c9ebd74f6d491563dc422af",
+    "e2f04a2b26e9f636902e5b05d6fdc84d47d798b925ba653c8cfd87d9d2b0cdb0",
+    "331007398c635b52df27e911ff2efd0a77ca1a12a1027bb579331f4fbc459f9e",
+    "343d64ac83d2578b1773343ab12e8d3300cb741d3788e327d43fef64fe02414e",
+    "892e63f39480bba2dd7ced9b9ffe452ccdc45703d45ad2823ef5e2153509ac7b"
+  ],
+  "recovery_actor_seed": 7,
+  "recovery_checkpoint_sha256": "821177a82cc470e108082fd3c0f6913983236a2fdf142de2fe51fc37c44240ca",
+  "recovery_chunk_hashes": [
+    "30bfd40d9c0afcb689c717cb3f5ec3b5da399383aa3cb8a0fc9c468ea5f6168f",
+    "2bfecbc7cfcb4ad91bf91ce0cd5c2690d5ac3e0785b67abd447ff068eb455ea4"
+  ],
+  "recovery_policy_calls": 2,
+  "release_based_violation": false,
+  "repeat": 0,
+  "returned_configuration": {
+    "action_budget": null,
+    "operator": "rollback_1+fresh_h16",
+    "policy_call_cap": null,
+    "prefix_k": 14,
+    "recovery_actor_seed": 7,
+    "tail_horizon": null
+  },
+  "runtime_module_hashes": {
+    "assets.py": "8af027b6a775848bc400de22490f4cd82637e6de5861f3b368cbb79db3b7afca",
+    "common.py": "d9a0a292d55100ccbde0c2474bc445529b65108852d4411ffb1ea77b412fa4df",
+    "dispatch.py": "66fbe6a035c5a0039dd5d1515f5eb316394adcfca45459c4c8b5914cc26e1134",
+    "measurement.py": "b31dc34270905c6d76ea342c6a1deef8739c53e8bc9813e38d127ee48aab8c62",
+    "runtime.py": "3203db2452eef4bf6fe8b304eae2b14b1dc7ae80630479317c4610f063cf4417",
+    "runtime_identity.py": "fb7c195cbb4649e26ffd3264a0603067174ed659055b70c79837884642821c56"
+  },
+  "runtime_receipt_sha256": "3d7b252885b4047fb93140c305a3ef4a1d3ec9aa450d90341befd2b7e26a5e44",
+  "runtime_status": "OK",
+  "safe_success": false,
+  "safe_success_unblocked_observation": false,
+  "schema_version": 2,
+  "source_commit": "4bc5f5a840d1fcafa76b4a6db8343230ab8ff184",
+  "split": "evaluation",
+  "status": "COMPLETE",
+  "tail_horizon": 16,
+  "task": "put_the_cream_cheese_in_the_bowl",
+  "task_horizon": 360,
+  "task_horizon_budget_clipped": false,
+  "task_horizon_remaining_after_prefix": 265,
+  "task_success": false,
+  "topology_candidate": {
+    "candidate": true,
+    "candidate_indices": [
+      1099,
+      1100,
+      1101,
+      1102,
+      1103,
+      1104,
+      1105,
+      1106,
+      1107,
+      1108,
+      1109,
+      1110,
+      1111,
+      1112,
+      1113,
+      1114,
+      1115,
+      1116,
+      1117,
+      1118,
+      1119,
+      1120,
+      1121,
+      1122,
+      1123,
+      1124,
+      1125,
+      1126,
+      1127,
+      1128,
+      1129,
+      1130,
+      1131,
+      1132,
+      1133,
+      1134,
+      1135,
+      1136,
+      1137,
+      1138,
+      1139,
+      1140,
+      1141,
+      1142,
+      1143,
+      1144,
+      1145,
+      1146,
+      1147,
+      1148,
+      1149,
+      1150,
+      1151,
+      1152,
+      1153,
+      1154,
+      1155,
+      1156,
+      1157,
+      1158,
+      1159,
+      1160,
+      1161,
+      1162,
+      1163,
+      1164,
+      1165,
+      1166,
+      1167,
+      1168,
+      1169,
+      1170,
+      1171,
+      1172,
+      1173,
+      1174,
+      1175,
+      1176,
+      1177,
+      1178,
+      1179,
+      1180,
+      1181,
+      1182,
+      1183,
+      1184,
+      1185,
+      1186,
+      1187,
+      1188,
+      1189,
+      1190,
+      1191,
+      1192,
+      1193,
+      1194,
+      1195
+    ],
+    "first_index": 1099,
+    "ignored_pre_anchor_indices": [],
+    "label": "prerelease_object_contact_topology_candidate",
+    "lifted_closed_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160,
+      161,
+      162,
+      163,
+      164,
+      165,
+      166,
+      167,
+      168,
+      169,
+      170,
+      171,
+      172,
+      173,
+      174,
+      175,
+      176,
+      177,
+      178,
+      179,
+      180,
+      181,
+      182,
+      183,
+      184,
+      185,
+      186,
+      187,
+      188,
+      189,
+      190,
+      191,
+      192,
+      193,
+      194,
+      195,
+      196,
+      197,
+      198,
+      199,
+      200,
+      201,
+      202,
+      203,
+      204,
+      205,
+      206,
+      207,
+      208,
+      209,
+      210,
+      211,
+      212,
+      213,
+      214,
+      215,
+      216,
+      217,
+      218,
+      219,
+      220,
+      221,
+      222,
+      223,
+      224,
+      225,
+      226,
+      227,
+      228,
+      229,
+      230,
+      231,
+      232,
+      233,
+      234,
+      235,
+      236,
+      237,
+      238,
+      239,
+      240,
+      241,
+      242,
+      243,
+      244,
+      245,
+      246,
+      247,
+      248,
+      249,
+      250,
+      251,
+      252,
+      253,
+      254,
+      255,
+      256,
+      257,
+      258,
+      259,
+      260,
+      261,
+      262,
+      263,
+      264,
+      265,
+      266,
+      267,
+      268,
+      269,
+      270,
+      271,
+      272,
+      273,
+      274,
+      275,
+      276,
+      277,
+      278,
+      279,
+      280,
+      281,
+      282,
+      283,
+      284,
+      285,
+      286,
+      287,
+      288,
+      289,
+      290,
+      291,
+      292,
+      293,
+      294,
+      295,
+      296,
+      297,
+      298,
+      299,
+      300,
+      301,
+      302,
+      303,
+      304,
+      305,
+      306,
+      307,
+      308,
+      309,
+      310,
+      311,
+      312,
+      313,
+      314,
+      315,
+      316,
+      317,
+      318,
+      319,
+      320,
+      321,
+      322,
+      323,
+      324,
+      325,
+      326,
+      327,
+      328,
+      329,
+      330,
+      331,
+      332,
+      333,
+      334,
+      335,
+      336,
+      337,
+      338,
+      339,
+      340,
+      341,
+      342,
+      343,
+      344,
+      345,
+      346,
+      347,
+      348,
+      349,
+      350,
+      351,
+      352,
+      353,
+      354,
+      355,
+      356,
+      357,
+      358,
+      359,
+      360,
+      361,
+      362,
+      363,
+      364,
+      365,
+      366,
+      367,
+      368,
+      369,
+      370,
+      371,
+      372,
+      373,
+      374,
+      375,
+      376,
+      377,
+      378,
+      379,
+      380,
+      381,
+      382,
+      383,
+      384,
+      385,
+      386,
+      387,
+      388,
+      389,
+      390,
+      391,
+      392,
+      393,
+      394,
+      395,
+      396,
+      397,
+      398,
+      399,
+      400,
+      401,
+      402,
+      403,
+      404,
+      405,
+      406,
+      407,
+      408,
+      409,
+      410,
+      411,
+      412,
+      413,
+      414,
+      415,
+      416,
+      417,
+      418,
+      419,
+      420,
+      421,
+      422,
+      423,
+      424,
+      425,
+      426,
+      427,
+      428,
+      429,
+      430,
+      431,
+      432,
+      433,
+      434,
+      435,
+      436,
+      437,
+      438,
+      439,
+      440,
+      441,
+      442,
+      443,
+      444,
+      445,
+      446,
+      447,
+      448,
+      449,
+      450,
+      451,
+      452,
+      453,
+      454,
+      455,
+      456,
+      457,
+      458,
+      459,
+      460,
+      461,
+      462,
+      463,
+      464,
+      465,
+      466,
+      467,
+      468,
+      469,
+      470,
+      471,
+      472,
+      473,
+      474,
+      475,
+      476,
+      477,
+      478,
+      479,
+      480,
+      481,
+      482,
+      483,
+      484,
+      485,
+      486,
+      487,
+      488,
+      489,
+      490,
+      491,
+      492,
+      493,
+      494,
+      495,
+      496,
+      497,
+      498,
+      499,
+      500,
+      501,
+      502,
+      503,
+      504,
+      505,
+      506,
+      507,
+      508,
+      509,
+      510,
+      511,
+      512,
+      513,
+      514,
+      515,
+      516,
+      517,
+      518,
+      519,
+      520,
+      521,
+      522,
+      523,
+      524,
+      525,
+      526,
+      527,
+      528,
+      529,
+      530,
+      531,
+      532,
+      533,
+      534,
+      535,
+      536,
+      537,
+      538,
+      539,
+      540,
+      541,
+      542,
+      543,
+      544,
+      545,
+      546,
+      547,
+      548,
+      549,
+      550,
+      551,
+      552,
+      553,
+      554,
+      555,
+      556,
+      557,
+      558,
+      559,
+      560,
+      561,
+      562,
+      563,
+      564,
+      565,
+      566,
+      567,
+      568,
+      569,
+      570,
+      571,
+      572,
+      573,
+      574,
+      575,
+      576,
+      577,
+      578,
+      579,
+      580,
+      581,
+      582,
+      583,
+      584,
+      585,
+      586,
+      587,
+      588,
+      589,
+      590,
+      591,
+      592,
+      593,
+      594,
+      595,
+      596,
+      597,
+      598,
+      599,
+      600,
+      601,
+      602,
+      603,
+      604,
+      605,
+      606,
+      607,
+      608,
+      609,
+      610,
+      611,
+      612,
+      613,
+      614,
+      615,
+      616,
+      617,
+      618,
+      619,
+      620,
+      621,
+      622,
+      623,
+      624,
+      625,
+      626,
+      627,
+      628,
+      629,
+      630,
+      631,
+      632,
+      633,
+      634,
+      635,
+      636,
+      637,
+      638,
+      639,
+      640,
+      641,
+      642,
+      643,
+      644,
+      645,
+      646,
+      647,
+      648,
+      649,
+      650,
+      651,
+      652,
+      653,
+      654,
+      655,
+      656,
+      657,
+      658,
+      659,
+      660,
+      661,
+      662,
+      663,
+      664,
+      665,
+      666,
+      667,
+      668,
+      669,
+      670,
+      671,
+      672,
+      673,
+      674,
+      675,
+      676,
+      677,
+      678,
+      679,
+      680,
+      681,
+      682,
+      683,
+      684,
+      685,
+      686,
+      687,
+      688,
+      689,
+      690,
+      691,
+      692,
+      693,
+      694,
+      695,
+      696,
+      697,
+      698,
+      699,
+      700,
+      701,
+      702,
+      703,
+      704,
+      705,
+      706,
+      707,
+      708,
+      709,
+      710,
+      711,
+      712,
+      713,
+      714,
+      715,
+      716,
+      717,
+      718,
+      719,
+      720,
+      721,
+      722,
+      723,
+      724,
+      725,
+      726,
+      727,
+      728,
+      729,
+      730,
+      731,
+      732,
+      733,
+      734,
+      735,
+      736,
+      737,
+      738,
+      739,
+      740,
+      741,
+      742,
+      743,
+      744,
+      745,
+      746,
+      747,
+      748,
+      749,
+      750,
+      751,
+      752,
+      753,
+      754,
+      755,
+      756,
+      757,
+      758,
+      759,
+      760,
+      761,
+      762,
+      763,
+      764,
+      765,
+      766,
+      767,
+      768,
+      769,
+      770,
+      771,
+      772,
+      773,
+      774,
+      775,
+      776,
+      777,
+      778,
+      779,
+      780,
+      781,
+      782,
+      783,
+      784,
+      785,
+      786,
+      787,
+      788,
+      789,
+      790,
+      791,
+      792,
+      793,
+      794,
+      795,
+      796,
+      797,
+      798,
+      799,
+      800,
+      801,
+      802,
+      803,
+      804,
+      805,
+      806,
+      807,
+      808,
+      809,
+      810,
+      811,
+      812,
+      813,
+      814,
+      815,
+      816,
+      817,
+      818,
+      819,
+      820,
+      821,
+      822,
+      823,
+      824,
+      825,
+      826,
+      827,
+      828,
+      829,
+      830,
+      831,
+      832,
+      833,
+      834,
+      835,
+      836,
+      837,
+      838,
+      839,
+      840,
+      841,
+      842,
+      843,
+      844,
+      845,
+      846,
+      847,
+      848,
+      849,
+      850,
+      851,
+      852,
+      853,
+      854,
+      855,
+      856,
+      857,
+      858,
+      859,
+      860,
+      861,
+      862,
+      863,
+      864,
+      865,
+      866,
+      867,
+      868,
+      869,
+      870,
+      871,
+      872,
+      873,
+      874,
+      875,
+      876,
+      877,
+      878,
+      879,
+      880,
+      881,
+      882,
+      883,
+      884,
+      885,
+      886,
+      887,
+      888,
+      889,
+      890,
+      891,
+      892,
+      893,
+      894,
+      895,
+      896,
+      897,
+      898,
+      899,
+      900,
+      901,
+      902,
+      903,
+      904,
+      905,
+      906,
+      907,
+      908,
+      909,
+      910,
+      911,
+      912,
+      913,
+      914,
+      915,
+      916,
+      917,
+      918,
+      919,
+      920,
+      921,
+      922,
+      923,
+      924,
+      925,
+      926,
+      927,
+      928,
+      929,
+      930,
+      931,
+      932,
+      933,
+      934,
+      935,
+      936,
+      937,
+      938,
+      939,
+      940,
+      941,
+      942,
+      943,
+      944,
+      945,
+      946,
+      947,
+      948,
+      949,
+      950,
+      951,
+      952,
+      953,
+      954,
+      955,
+      956,
+      957,
+      958,
+      959,
+      960,
+      961,
+      962,
+      963,
+      964,
+      965,
+      966,
+      967,
+      968,
+      969,
+      970,
+      971,
+      972,
+      973,
+      974,
+      975,
+      976,
+      977,
+      978,
+      979,
+      980,
+      981,
+      982,
+      983,
+      984,
+      985,
+      986,
+      987,
+      988,
+      989,
+      990,
+      991,
+      992,
+      993,
+      994,
+      995,
+      996,
+      997,
+      998,
+      999,
+      1000,
+      1001,
+      1002,
+      1003,
+      1004,
+      1005,
+      1006,
+      1007,
+      1008,
+      1009,
+      1010,
+      1011,
+      1012,
+      1013,
+      1014,
+      1015,
+      1016,
+      1017,
+      1018,
+      1019,
+      1020,
+      1021,
+      1022,
+      1023,
+      1024,
+      1025,
+      1026,
+      1027,
+      1028,
+      1029,
+      1030,
+      1031,
+      1032,
+      1033,
+      1034,
+      1035,
+      1036,
+      1037,
+      1038,
+      1039,
+      1040,
+      1041,
+      1042,
+      1043,
+      1044,
+      1045,
+      1046,
+      1047,
+      1048,
+      1049,
+      1050,
+      1051,
+      1052,
+      1053,
+      1054,
+      1055,
+      1056,
+      1057,
+      1058,
+      1059,
+      1060,
+      1061,
+      1062,
+      1063,
+      1064,
+      1065,
+      1066,
+      1067,
+      1068,
+      1069,
+      1070,
+      1071,
+      1072,
+      1073,
+      1074,
+      1075,
+      1076,
+      1077,
+      1078,
+      1079,
+      1080,
+      1081,
+      1082,
+      1083,
+      1084,
+      1085,
+      1086,
+      1087,
+      1088,
+      1089,
+      1090,
+      1091,
+      1092,
+      1093,
+      1094,
+      1095,
+      1096,
+      1097,
+      1098,
+      1099,
+      1100,
+      1101,
+      1102,
+      1103,
+      1104,
+      1105,
+      1106,
+      1107,
+      1108,
+      1109,
+      1110,
+      1111,
+      1112,
+      1113,
+      1114,
+      1115,
+      1116,
+      1117,
+      1118,
+      1119,
+      1120,
+      1121,
+      1122,
+      1123,
+      1124,
+      1125,
+      1126,
+      1127,
+      1128,
+      1129,
+      1130,
+      1131,
+      1132,
+      1133,
+      1134,
+      1135,
+      1136,
+      1137,
+      1138,
+      1139,
+      1140,
+      1141,
+      1142,
+      1143,
+      1144,
+      1145,
+      1146,
+      1147,
+      1148,
+      1149,
+      1150,
+      1151,
+      1152,
+      1153,
+      1154,
+      1155,
+      1156,
+      1157,
+      1158,
+      1159,
+      1160,
+      1161,
+      1162,
+      1163,
+      1164,
+      1165,
+      1166,
+      1167,
+      1168,
+      1169,
+      1170,
+      1171,
+      1172,
+      1173,
+      1174,
+      1175,
+      1176,
+      1177,
+      1178,
+      1179,
+      1180,
+      1181,
+      1182,
+      1183,
+      1184,
+      1185,
+      1186,
+      1187,
+      1188,
+      1189,
+      1190,
+      1191,
+      1192,
+      1193,
+      1194,
+      1195
+    ],
+    "missing": [],
+    "new_pairs": [
+      {
+        "index": 1099,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1100,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1101,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1102,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1103,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1104,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1105,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1106,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1107,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1108,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1109,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1110,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1111,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1112,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1113,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1114,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1115,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1116,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1117,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1118,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1119,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1120,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1121,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1122,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1123,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1124,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1124,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1124,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1125,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1125,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1125,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1126,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1126,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1126,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1127,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1127,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1127,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1128,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1128,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1128,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1129,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1129,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1129,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1130,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1130,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1130,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1131,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1131,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1131,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1132,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1132,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1132,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1133,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1133,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1133,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1134,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1134,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1134,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1135,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1135,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1135,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1136,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1136,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1136,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1137,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1137,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1137,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1138,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1138,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1138,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1139,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1139,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1139,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1140,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1140,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1140,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1141,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1141,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1141,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1142,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1142,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1142,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1143,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1143,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1143,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1144,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1144,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1144,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1145,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1145,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1145,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1146,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1146,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1146,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1147,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1147,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1147,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1148,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1148,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1148,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1149,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1149,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1149,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1150,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1150,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1150,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1151,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1151,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1151,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1152,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1152,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1152,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1153,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1153,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1153,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1154,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1154,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1154,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1155,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1155,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1155,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1156,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1156,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1156,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1157,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1157,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1157,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1158,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1158,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1158,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1159,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1159,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1159,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1160,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1160,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1160,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1161,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1161,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1161,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1162,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1162,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1162,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1163,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1163,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1163,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1164,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1164,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1164,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1165,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1165,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1165,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1166,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1166,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1166,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1167,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1167,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1167,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1168,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1168,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1168,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1169,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1169,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1169,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1170,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1170,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1170,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1171,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base"
+        ]
+      },
+      {
+        "index": 1171,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_base_vis"
+        ]
+      },
+      {
+        "index": 1171,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1172,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1173,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1174,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1175,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1176,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1177,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1178,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1179,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1180,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1181,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1182,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1183,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1184,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1185,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1186,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1187,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1188,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1189,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1190,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1191,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1192,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1193,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1194,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      },
+      {
+        "index": 1195,
+        "pair": [
+          "cream_cheese_1_g1",
+          "flat_stove_1_collision_burner"
+        ]
+      }
+    ],
+    "time_order": {
+      "candidate_before_release": null,
+      "complete": true,
+      "first_candidate_index": 1099,
+      "first_release_index": null,
+      "ordering": "candidate_without_release"
+    }
+  },
+  "total_branch_wall_time_s": 13.305073768000057,
+  "total_policy_calls": 3,
+  "trace_content_sha256": "b1e345a660d52e4ddafd6ab095c3d274591bdc4ee335f0888aa1af25915e2877",
+  "trace_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase2/contact_topology/put_the_cream_cheese_in_the_bowl/1f834632bf6091726f635719da972d6aa9465ea72f0e009b9438805217f63978.jsonl.gz",
+  "trace_records": 1196,
+  "trace_sha256": "738eeda3c19bd1216167f27bcf17b5d8d405a40307fed5e6f4a5013942fa2338",
+  "validation_policy_calls": 1,
+  "zero_injection": true
+}

@@ -1,0 +1,3385 @@
+{
+  "action_budget": 32,
+  "action_budget_respected": true,
+  "actor_inference_side_effect_free": true,
+  "actual_global_step": 189,
+  "actual_new_recovery_actions": 32,
+  "actual_policy_calls": 2,
+  "actual_prefix_actions": 4,
+  "actual_total_action_steps": 36,
+  "anchor_global_step": 153,
+  "behavior_operator": "rollback_1+fresh_h16",
+  "blocked": false,
+  "chunk_hash": "684ccce138d80707e69c18ead818ea75d5b9f474704ac8a3859bde5582afac3a",
+  "configured_action_budget": 32,
+  "configured_budget": {
+    "action_budget": 32,
+    "policy_call_cap": 8,
+    "tail_horizon": 16
+  },
+  "configured_operator_horizon": 16,
+  "configured_policy_call_cap": 8,
+  "configured_prefix_actions": 4,
+  "configured_tail_horizon": 16,
+  "d4_signatures": {
+    "detection": {
+      "cause_tracker": {
+        "contact_event_indices": [],
+        "ever_stably_lifted": true,
+        "first_violation_offset": null,
+        "gripper_transition_indices": [],
+        "immediate_violation": false,
+        "initial_object_z": 0.97,
+        "injected": false,
+        "injection_contact": false,
+        "post_detection_steps": 0,
+        "previous_gripper": 1.0,
+        "shifted_target_qpos": null,
+        "task": "put_the_bowl_on_the_plate",
+        "violation": false,
+        "violation_type": null
+      },
+      "cause_tracker_hash": "be29dd79abde57c918d6604fc53c70f23061df790200e2df5d4e1b25070e52da",
+      "complete_signature_hash": "cba3ca7aace7e0a0e60b39b11559ba71f70eacd1f3842e5529d3cfc7366bd159",
+      "contact_pairs": [
+        [
+          "akita_black_bowl_1_g23",
+          "gripper0_hand_collision"
+        ],
+        [
+          "akita_black_bowl_1_g24",
+          "gripper0_finger1_collision"
+        ],
+        [
+          "akita_black_bowl_1_g24",
+          "gripper0_finger1_pad_collision"
+        ],
+        [
+          "akita_black_bowl_1_g24",
+          "gripper0_hand_collision"
+        ],
+        [
+          "akita_black_bowl_1_g25",
+          "gripper0_finger2_collision"
+        ],
+        [
+          "akita_black_bowl_1_g25",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "akita_black_bowl_1_g8",
+          "gripper0_finger2_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "plate_1_g10",
+          "table_collision"
+        ],
+        [
+          "plate_1_g2",
+          "table_collision"
+        ],
+        [
+          "plate_1_g3",
+          "table_collision"
+        ],
+        [
+          "plate_1_g4",
+          "table_collision"
+        ],
+        [
+          "plate_1_g5",
+          "table_collision"
+        ],
+        [
+          "plate_1_g6",
+          "table_collision"
+        ],
+        [
+          "plate_1_g7",
+          "table_collision"
+        ],
+        [
+          "plate_1_g8",
+          "table_collision"
+        ],
+        [
+          "plate_1_g9",
+          "table_collision"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ]
+      ],
+      "contact_pairs_hash": "cae0bcc733daf6ecbc908eb12ba8f406f94c5b2b062942b40dbbb1c96fc0e70a",
+      "executed_prefix_action_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "executed_prefix_length": 0,
+      "four_state_history_hash": "8da8d8f38f76442a107bc8ddbad898a6086fe7624e9a2969cbce9e70a1b31778",
+      "gripper_state": 1.0,
+      "manipulated_qpos_hash": "b452491d8bc0062b6eb6a876e3af53b2bbe711f1e306cdac2ba8abe12fbe324a",
+      "observation_feature_hash": "d6bf4c9898d2dafb96a20864e2e90777d1d0a2580136febadcc31e7cd084e554",
+      "obstacle_qpos_hash": null,
+      "robot_qpos_hash": "1efc3226a1f1b2b4362e8aaa957900a9fa84c4f776b6d4887c26c814c2e580f8",
+      "robot_qvel_hash": "6668012c8fd24a5ae897c50d27e79acba9bbde855d92660a2e5f889cde28c743",
+      "simulator_state_hash": "9b2a758c764f84f56b772bf08d373f744c00dbe316ab18133d4cb6dc07447381",
+      "target_qpos_hash": "aaef714dcba0962c83e1d582836e8ec7f0062d18cd6e1b3588cc5fb616cf9cf5",
+      "task_phase": {
+        "ever_stably_lifted": true,
+        "gripper_closed": true,
+        "object_height_delta_m": 0.04100652221710166,
+        "post_detection_steps": 0,
+        "task_success": false
+      },
+      "task_phase_hash": "5e1db51bd278eaa65d1e436de7e3ca6eacb1c58040b1970d503b7522abc0e45a",
+      "three_action_history_hash": "8e2a81d80dd7271a76b1439c2051a210e0b7b6dc0e1cc508125c569527d7f2d3"
+    },
+    "final": {
+      "cause_tracker": {
+        "contact_event_indices": [],
+        "ever_stably_lifted": true,
+        "first_violation_offset": null,
+        "gripper_transition_indices": [
+          24
+        ],
+        "immediate_violation": false,
+        "initial_object_z": 0.97,
+        "injected": false,
+        "injection_contact": false,
+        "post_detection_steps": 32,
+        "previous_gripper": -1.0,
+        "shifted_target_qpos": null,
+        "task": "put_the_bowl_on_the_plate",
+        "violation": false,
+        "violation_type": null
+      },
+      "cause_tracker_hash": "815911f31a423ecd53104f1b36c2899494e66da453453c4d56d1ff7787fcadf2",
+      "complete_signature_hash": "d098f21e1e0cf23c75cc9d8fa889c914817e224a0c7e127899ac68b9731c1bd0",
+      "contact_pairs": [
+        [
+          "akita_black_bowl_1_g2",
+          "cream_cheese_1_g1"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g7",
+          "plate_1_g5"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "plate_1_g10",
+          "table_collision"
+        ],
+        [
+          "plate_1_g2",
+          "table_collision"
+        ],
+        [
+          "plate_1_g3",
+          "table_collision"
+        ],
+        [
+          "plate_1_g4",
+          "table_collision"
+        ],
+        [
+          "plate_1_g5",
+          "table_collision"
+        ],
+        [
+          "plate_1_g6",
+          "table_collision"
+        ],
+        [
+          "plate_1_g7",
+          "table_collision"
+        ],
+        [
+          "plate_1_g8",
+          "table_collision"
+        ],
+        [
+          "plate_1_g9",
+          "table_collision"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ]
+      ],
+      "contact_pairs_hash": "184b8aa7a645ca5964c139d9f80d7f70f8af8d291994d58d189df7eeef908681",
+      "executed_prefix_action_hash": "1df5e0e9aceca7e38693a40c7e2300906c85b27860c3bdbeb9948cc69020e68e",
+      "executed_prefix_length": 4,
+      "four_state_history_hash": "28d97016b5447173c89ee721ecc881be034c0abc7269e683d3454fffe2bef31a",
+      "gripper_state": -1.0,
+      "manipulated_qpos_hash": "b398b4d8add9adfd38f0d8b8c44539222430dcbc15a4bf6c81348dabfb48669c",
+      "observation_feature_hash": "f0fe7b98ac9938ce2d10d9aab7239d90c8760a81c3d02d9576ccd54807065d73",
+      "obstacle_qpos_hash": null,
+      "robot_qpos_hash": "00437e197792ac12c556e5d89509c85aeba779287cfe9aee010f8d8e9da582ad",
+      "robot_qvel_hash": "5b7cb65cdc0e4fe3c5bf53caeec9b95ce00278f19aa5ad5ebcfe92f92d00228f",
+      "simulator_state_hash": "506ecf1e1d1503d4ce3ed94b3b4bd2411ce3b4855ae439cc57b37b34308ecdb3",
+      "target_qpos_hash": "dda2a2739fbfff258119151234d1904ef16e91230718e542ca707976e96279db",
+      "task_phase": {
+        "ever_stably_lifted": true,
+        "gripper_closed": false,
+        "object_height_delta_m": -0.06568256266056627,
+        "post_detection_steps": 32,
+        "task_success": false
+      },
+      "task_phase_hash": "56af9fd3608feb8c407271c253d889bc339662764d1c82b1c41fe6fe98811825",
+      "three_action_history_hash": "30d453584be243aa3dcc8e54e70e09fa7c65dce0e1edd1db1e0be3d923b2771b"
+    },
+    "pre_tail": {
+      "cause_tracker": {
+        "contact_event_indices": [],
+        "ever_stably_lifted": true,
+        "first_violation_offset": null,
+        "gripper_transition_indices": [],
+        "immediate_violation": false,
+        "initial_object_z": 0.97,
+        "injected": false,
+        "injection_contact": false,
+        "post_detection_steps": 0,
+        "previous_gripper": 1.0,
+        "shifted_target_qpos": null,
+        "task": "put_the_bowl_on_the_plate",
+        "violation": false,
+        "violation_type": null
+      },
+      "cause_tracker_hash": "be29dd79abde57c918d6604fc53c70f23061df790200e2df5d4e1b25070e52da",
+      "complete_signature_hash": "e689762bc335cbe0499aab03cd07015ba2ed12d223699e2074f5664b9159e74b",
+      "contact_pairs": [
+        [
+          "akita_black_bowl_1_g23",
+          "gripper0_hand_collision"
+        ],
+        [
+          "akita_black_bowl_1_g24",
+          "gripper0_finger1_collision"
+        ],
+        [
+          "akita_black_bowl_1_g24",
+          "gripper0_finger1_pad_collision"
+        ],
+        [
+          "akita_black_bowl_1_g24",
+          "gripper0_hand_collision"
+        ],
+        [
+          "akita_black_bowl_1_g25",
+          "gripper0_finger2_collision"
+        ],
+        [
+          "akita_black_bowl_1_g25",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "akita_black_bowl_1_g8",
+          "gripper0_finger2_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "plate_1_g10",
+          "table_collision"
+        ],
+        [
+          "plate_1_g2",
+          "table_collision"
+        ],
+        [
+          "plate_1_g3",
+          "table_collision"
+        ],
+        [
+          "plate_1_g4",
+          "table_collision"
+        ],
+        [
+          "plate_1_g5",
+          "table_collision"
+        ],
+        [
+          "plate_1_g6",
+          "table_collision"
+        ],
+        [
+          "plate_1_g7",
+          "table_collision"
+        ],
+        [
+          "plate_1_g8",
+          "table_collision"
+        ],
+        [
+          "plate_1_g9",
+          "table_collision"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ]
+      ],
+      "contact_pairs_hash": "cae0bcc733daf6ecbc908eb12ba8f406f94c5b2b062942b40dbbb1c96fc0e70a",
+      "executed_prefix_action_hash": "1df5e0e9aceca7e38693a40c7e2300906c85b27860c3bdbeb9948cc69020e68e",
+      "executed_prefix_length": 4,
+      "four_state_history_hash": "6309263f332669dfaa7efa0b1a8f44e7deb727a5addf07847c15ce83d869edc8",
+      "gripper_state": 1.0,
+      "manipulated_qpos_hash": "437903f06d571e16194c3077334788a75878fa8a14b3d70212fc003bdc8daef7",
+      "observation_feature_hash": "7797d02d4d217e6721503bef3d0b997d28f97343a799a86ba11552514eb761de",
+      "obstacle_qpos_hash": null,
+      "robot_qpos_hash": "4ec3b5f0bbda1b258dd76e0630b44fa60488c089bcc36c4b7673d91fe5284637",
+      "robot_qvel_hash": "67f093ed4c19dd996c5768deaaef5a29c419b67c3a24c9af186981af6c8b222a",
+      "simulator_state_hash": "1ab126336f4a81f270303c9b4885f5c74c437e8132f45396621520c4763c0cf9",
+      "target_qpos_hash": "13859f327dd952e6af93ccedab9048b6cab9aa0fd96871d585450786974f67fd",
+      "task_phase": {
+        "ever_stably_lifted": true,
+        "gripper_closed": true,
+        "object_height_delta_m": 0.060822656268335384,
+        "post_detection_steps": 0,
+        "task_success": false
+      },
+      "task_phase_hash": "b67fd7d55945468dec505f6850543145635ff7c31bdd1f0e4a9dd4d209881b02",
+      "three_action_history_hash": "9671d6ae08b37b32746d31fb0cdf90f3feaeaabafc7e49ab9888a77219f1b7f7"
+    }
+  },
+  "diagnostic_continuation": true,
+  "diagnostic_only": true,
+  "diagnostic_selection_binding": {
+    "input_sha256": "c6eb6484cb6711b6df02716d6ca8c8613bdaee27583ec37184f54b719c8f851d",
+    "original_rank": 1,
+    "protocol_sha256": "2d14427c2391422dd372b0528d6d784d1066d8d059e1405597cfb1954f260c6a"
+  },
+  "diagnostic_selection_receipt_path": "phase1/diagnostic_selection_receipt.json",
+  "diagnostic_selection_receipt_sha256": "5382f401a40a5f0e8f9069cb8c76d577b82fadb6fa6e8f94496f35ca3760e262",
+  "dispatch_process_start_method": "spawn",
+  "dispatch_repeat": 0,
+  "dispatch_seed": 2444440910,
+  "dispatcher_child_exitcode": 0,
+  "dispatcher_pid": 1,
+  "dispatcher_process_start_method": "spawn",
+  "effective_execution_horizon": 16,
+  "effective_new_action_budget": 32,
+  "env_hash": "1215bb8a20bf8d929d115b1d5acd6a18daffd0a0dfa1975b33c5446b45fe0556",
+  "error": null,
+  "event_id": "put_the_bowl_on_the_plate__init082__actor17",
+  "event_instance_id": "put_the_bowl_on_the_plate__init082__actor17",
+  "formal_positive_evidence_allowed": false,
+  "fresh_environment_created": true,
+  "generator_actor_calls": 1,
+  "generator_actor_seed": 17,
+  "generator_checkpoint_sha256": "83ee61e31ffdae6f2ef57203a2c0085df41e284039cd81c6ecf1210694521604",
+  "generator_chunk_hash": "684ccce138d80707e69c18ead818ea75d5b9f474704ac8a3859bde5582afac3a",
+  "init_state_id": 82,
+  "injection_calls": 0,
+  "is_reference": false,
+  "job_id": "dlc1ill43ufm4eny",
+  "labels": {
+    "candidate_precedes_release": true,
+    "first_candidate_index": 532,
+    "first_release_index": 649,
+    "ignored_pre_lift_release_indices": [],
+    "label_complete": true,
+    "missing": [],
+    "prerelease_topology_candidate": {
+      "candidate": true,
+      "candidate_indices": [
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549,
+        550,
+        551,
+        552,
+        553,
+        554,
+        555,
+        556,
+        557,
+        558,
+        559,
+        560,
+        561,
+        562,
+        563,
+        564,
+        565,
+        566,
+        567,
+        568,
+        569,
+        570,
+        571,
+        572,
+        573,
+        574,
+        575,
+        576,
+        577,
+        578,
+        579,
+        580,
+        581,
+        582,
+        583,
+        584,
+        585,
+        586,
+        587,
+        588,
+        589,
+        590,
+        591,
+        592,
+        593,
+        594,
+        595,
+        596,
+        597,
+        598,
+        599,
+        600,
+        601,
+        602,
+        603,
+        604,
+        605,
+        606,
+        607,
+        608,
+        609,
+        610,
+        611,
+        612,
+        613,
+        614,
+        615,
+        616,
+        617,
+        618,
+        619,
+        620,
+        621,
+        622,
+        623
+      ],
+      "first_index": 532,
+      "ignored_pre_anchor_indices": [],
+      "label": "prerelease_object_contact_topology_candidate",
+      "lifted_closed_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223,
+        224,
+        225,
+        226,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236,
+        237,
+        238,
+        239,
+        240,
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        255,
+        256,
+        257,
+        258,
+        259,
+        260,
+        261,
+        262,
+        263,
+        264,
+        265,
+        266,
+        267,
+        268,
+        269,
+        270,
+        271,
+        272,
+        273,
+        274,
+        275,
+        276,
+        277,
+        278,
+        279,
+        280,
+        281,
+        282,
+        283,
+        284,
+        285,
+        286,
+        287,
+        288,
+        289,
+        290,
+        291,
+        292,
+        293,
+        294,
+        295,
+        296,
+        297,
+        298,
+        299,
+        300,
+        301,
+        302,
+        303,
+        304,
+        305,
+        306,
+        307,
+        308,
+        309,
+        310,
+        311,
+        312,
+        313,
+        314,
+        315,
+        316,
+        317,
+        318,
+        319,
+        320,
+        321,
+        322,
+        323,
+        324,
+        325,
+        326,
+        327,
+        328,
+        329,
+        330,
+        331,
+        332,
+        333,
+        334,
+        335,
+        336,
+        337,
+        338,
+        339,
+        340,
+        341,
+        342,
+        343,
+        344,
+        345,
+        346,
+        347,
+        348,
+        349,
+        350,
+        351,
+        352,
+        353,
+        354,
+        355,
+        356,
+        357,
+        358,
+        359,
+        360,
+        361,
+        362,
+        363,
+        364,
+        365,
+        366,
+        367,
+        368,
+        369,
+        370,
+        371,
+        372,
+        373,
+        374,
+        375,
+        376,
+        377,
+        378,
+        379,
+        380,
+        381,
+        382,
+        383,
+        384,
+        385,
+        386,
+        387,
+        388,
+        389,
+        390,
+        391,
+        392,
+        393,
+        394,
+        395,
+        396,
+        397,
+        398,
+        399,
+        400,
+        401,
+        402,
+        403,
+        404,
+        405,
+        406,
+        407,
+        408,
+        409,
+        410,
+        411,
+        412,
+        413,
+        414,
+        415,
+        416,
+        417,
+        418,
+        419,
+        420,
+        421,
+        422,
+        423,
+        424,
+        425,
+        426,
+        427,
+        428,
+        429,
+        430,
+        431,
+        432,
+        433,
+        434,
+        435,
+        436,
+        437,
+        438,
+        439,
+        440,
+        441,
+        442,
+        443,
+        444,
+        445,
+        446,
+        447,
+        448,
+        449,
+        450,
+        451,
+        452,
+        453,
+        454,
+        455,
+        456,
+        457,
+        458,
+        459,
+        460,
+        461,
+        462,
+        463,
+        464,
+        465,
+        466,
+        467,
+        468,
+        469,
+        470,
+        471,
+        472,
+        473,
+        474,
+        475,
+        476,
+        477,
+        478,
+        479,
+        480,
+        481,
+        482,
+        483,
+        484,
+        485,
+        486,
+        487,
+        488,
+        489,
+        490,
+        491,
+        492,
+        493,
+        494,
+        495,
+        496,
+        497,
+        498,
+        499,
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549,
+        550,
+        551,
+        552,
+        553,
+        554,
+        555,
+        556,
+        557,
+        558,
+        559,
+        560,
+        561,
+        562,
+        563,
+        564,
+        565,
+        566,
+        567,
+        568,
+        569,
+        570,
+        571,
+        572,
+        573,
+        574,
+        575,
+        576,
+        577,
+        578,
+        579,
+        580,
+        581,
+        582,
+        583,
+        584,
+        585,
+        586,
+        587,
+        588,
+        589,
+        590,
+        591,
+        592,
+        593,
+        594,
+        595,
+        596,
+        597,
+        598,
+        599,
+        600,
+        601,
+        602,
+        603,
+        604,
+        605,
+        606,
+        607,
+        608,
+        609,
+        610,
+        611,
+        612,
+        613,
+        614,
+        615,
+        616,
+        617,
+        618,
+        619,
+        620,
+        621,
+        622,
+        623
+      ],
+      "missing": [],
+      "new_pairs": [
+        {
+          "index": 532,
+          "pair": [
+            "akita_black_bowl_1_g2",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 532,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 533,
+          "pair": [
+            "akita_black_bowl_1_g2",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 533,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 534,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 535,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 536,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 537,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 538,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 539,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 540,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 541,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 542,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 543,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 544,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 545,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 546,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 547,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 548,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 549,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 550,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 551,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 552,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 553,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 554,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 555,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 556,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 557,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 558,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 559,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 560,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 561,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 562,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 563,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 564,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 565,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 566,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 567,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 568,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 569,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 570,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 571,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 572,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 573,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 574,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 575,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 576,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 577,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 578,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 579,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 580,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 581,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 582,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 583,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 584,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 585,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 586,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 587,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 588,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 589,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 590,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 591,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 592,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 593,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 594,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 595,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 596,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 597,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 598,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 599,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 600,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 601,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 602,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 603,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 604,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 605,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 606,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 607,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 608,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 609,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 610,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 611,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 612,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 613,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 614,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 615,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 616,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 617,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 618,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 619,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 620,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 621,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 622,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        },
+        {
+          "index": 623,
+          "pair": [
+            "akita_black_bowl_1_g40",
+            "cream_cheese_1_g1"
+          ]
+        }
+      ],
+      "time_order": {
+        "candidate_before_release": true,
+        "complete": true,
+        "first_candidate_index": 532,
+        "first_release_index": 649,
+        "ordering": "candidate_before_release"
+      }
+    },
+    "record_count": 936,
+    "release_based": {
+      "first_index": 649,
+      "ignored_pre_lift_release_indices": [],
+      "label": "release_outside_original_target",
+      "missing": [],
+      "placement_xy_tolerance_m": 0.08,
+      "release_indices": [
+        649
+      ],
+      "release_violation_indices": [
+        649
+      ],
+      "time_order": {
+        "complete": true,
+        "first_release_index": 649,
+        "first_violation_index": 649,
+        "ignored_pre_lift_release_indices": [],
+        "lift_before_release_required": true
+      },
+      "violation": true,
+      "violation_type": "release_outside_original_target"
+    },
+    "schema_version": 1,
+    "task": "put_the_bowl_on_the_plate",
+    "time_order": "candidate_before_release"
+  },
+  "missing_provenance": [],
+  "new_idea_generated": false,
+  "operator": "rollback_1+fresh_h16",
+  "pai_run_id": "r16p14-s1-atlas-t1-20260907-r2",
+  "parent_pid": 1,
+  "physics_instrumented": true,
+  "physics_probe_error": null,
+  "physics_step_count": 900,
+  "pid": 43480,
+  "policy_call_cap": 8,
+  "policy_call_cap_respected": true,
+  "prefix_budget_separate": true,
+  "prefix_k": 4,
+  "process_start_method": "spawn",
+  "reconstruction": {
+    "action_history_exact": true,
+    "actor_inference_side_effect_free": true,
+    "anchor_state_exact": true,
+    "event_chunk_exact": true,
+    "max_anchor_state_error": 0.0,
+    "state_history_exact": true
+  },
+  "recovery_action_hashes": [
+    "44804c3b99a55fd34044885e5ddf5d6fac0d27a0977677347260de71700d47ed",
+    "f09c6d99df87a8f606792fc2f5d9c0b4be6805b22c3787224940beb1df940092",
+    "2532f852436e6557a29395433bd11c9c8a18ba898b0790bd57b8941bc9ed7344",
+    "9074b78d286a18d99697f050ba12988fd9e55c995ef61728bc2809586725de62",
+    "8c66afaf94f0c8f547d1bb3edc75b8cb2a4637df5be0f8f87c4470d4d9cab3f5",
+    "8e74d569618472fe72682af3b64b47ffb8f51f4826162644c8e147dc8e53b069",
+    "941425cbf8a915cc968df5f3aeb7b8c8658e75e709fcb7318369405e79956497",
+    "218d78410967dcb7608fd99f31377bcf58465e7fc7a8d3e25c73ce87d7bfe265",
+    "9a90c774c311b7720dcdad963f228b139470bcaaceb0a117e8b1e672194c5a75",
+    "580f47474fc564d6ea85d132b60f5a7d7268fa8970b72bb59674e3bb2b0fa1c2",
+    "ef7a93342b0227d9c6552180d1c65b25f9066b5f1f570323e8f1042b61a2f53c",
+    "0149c0c022bc2ca8c767bb00565eb3d8c9070dc57944e0e4d461dfd2ceef1f54",
+    "20f66d50b66fa9f6d4be879edb506e1481999d13efcc8012574d645f92cd0175",
+    "7d1a05b6f7f291962db08919e198c72a74f1b7c029d4abe6e1dd532d12bf9b03",
+    "e572cf9f6c7f8d3285ee0a241f89740283642a6236b507d916308ead3d9c281c",
+    "c1f64351ce775fc61f406aa6cd3dd7ad1cd67efadbd7cf4fcfe9a992975bcaa6",
+    "26d600ee4cec5b99a5765947a1e733bbf526260c72804d17dd71974f493c6f1e",
+    "23e35415be31cf6f9818ae60726817d1c37896c4ee1e17093c85587af197faa7",
+    "db1cf0812e7e479e077731e6b6ba471b7f40d836edd739577a4dfe8ffd46d2c6",
+    "3556fa6092ebcbd1d1b4695af09cfb1fd14a9586420a726adc74552a82069329",
+    "f98991c79df06a0d75ce8e9bcd685ee0ab22e7d1e9f4dddd8de1ebe0551152b9",
+    "0e9c603eff88a236514ac14149a4682dd4cdfa62d7acd6204e12456a0dac8507",
+    "9b39d7e3de7b1c83eec367e3d2642c580dfa090c32b5bbf5b24b9b5c4aabf709",
+    "12af80afe0a5351b369aa714aa08fc0f99c62f04d2f0e433dc7e7da35af94ab8",
+    "f2df18ef25b40c7d44a2d60a23795ef73e0cb51c90608bf509a10b2d0e87ae32",
+    "7d1ed2567a311e10fe1681040aab9c8408ff75806723ab69a24e7db049eb9928",
+    "65165837cee10540570b955c2ac1b7bba500d6659eb4998318bd74e80538da03",
+    "f6142b97343447292c4b59cda0ca9f1f3729cbc80add2a6c14afd979b5278486",
+    "55e765b47ec98f8fc809d67ea704164c15879c7813f9330101ce0fbf55db5055",
+    "f84b967b37e6870c18c34b9804a5bbad7230caa6159d23766470f22e11f742c4",
+    "024909287ac0fb07498d53fed96e343c16b4c49b57e8a23cfd2493cf6e30213f",
+    "061ebef03ad627de79a0525255aabcd3a08ab9b2d1432262da38779546131f65"
+  ],
+  "recovery_actor_seed": 17,
+  "recovery_checkpoint_sha256": "83ee61e31ffdae6f2ef57203a2c0085df41e284039cd81c6ecf1210694521604",
+  "recovery_chunk_hashes": [
+    "16098da984413d53ba6433ad3b6c6607a5360e31d12efa06d9da517fe922322f",
+    "03ab4bc8d95a385cf936f1f966cc184b5e6724d598ccc1093d2f2d3dade5e581"
+  ],
+  "recovery_policy_calls": 2,
+  "release_based_violation": true,
+  "repeat": 0,
+  "returned_configuration": {
+    "action_budget": null,
+    "operator": "rollback_1+fresh_h16",
+    "policy_call_cap": null,
+    "prefix_k": 4,
+    "recovery_actor_seed": 17,
+    "tail_horizon": null
+  },
+  "runtime_module_hashes": {
+    "assets.py": "8af027b6a775848bc400de22490f4cd82637e6de5861f3b368cbb79db3b7afca",
+    "common.py": "d9a0a292d55100ccbde0c2474bc445529b65108852d4411ffb1ea77b412fa4df",
+    "dispatch.py": "66fbe6a035c5a0039dd5d1515f5eb316394adcfca45459c4c8b5914cc26e1134",
+    "measurement.py": "b31dc34270905c6d76ea342c6a1deef8739c53e8bc9813e38d127ee48aab8c62",
+    "runtime.py": "3203db2452eef4bf6fe8b304eae2b14b1dc7ae80630479317c4610f063cf4417",
+    "runtime_identity.py": "fb7c195cbb4649e26ffd3264a0603067174ed659055b70c79837884642821c56"
+  },
+  "runtime_receipt_sha256": "3d7b252885b4047fb93140c305a3ef4a1d3ec9aa450d90341befd2b7e26a5e44",
+  "runtime_status": "OK",
+  "safe_success": false,
+  "safe_success_unblocked_observation": false,
+  "schema_version": 2,
+  "source_commit": "4bc5f5a840d1fcafa76b4a6db8343230ab8ff184",
+  "split": "evaluation",
+  "status": "COMPLETE",
+  "tail_horizon": 16,
+  "task": "put_the_bowl_on_the_plate",
+  "task_horizon": 320,
+  "task_horizon_budget_clipped": false,
+  "task_horizon_remaining_after_prefix": 163,
+  "task_success": false,
+  "topology_candidate": {
+    "candidate": true,
+    "candidate_indices": [
+      532,
+      533,
+      534,
+      535,
+      536,
+      537,
+      538,
+      539,
+      540,
+      541,
+      542,
+      543,
+      544,
+      545,
+      546,
+      547,
+      548,
+      549,
+      550,
+      551,
+      552,
+      553,
+      554,
+      555,
+      556,
+      557,
+      558,
+      559,
+      560,
+      561,
+      562,
+      563,
+      564,
+      565,
+      566,
+      567,
+      568,
+      569,
+      570,
+      571,
+      572,
+      573,
+      574,
+      575,
+      576,
+      577,
+      578,
+      579,
+      580,
+      581,
+      582,
+      583,
+      584,
+      585,
+      586,
+      587,
+      588,
+      589,
+      590,
+      591,
+      592,
+      593,
+      594,
+      595,
+      596,
+      597,
+      598,
+      599,
+      600,
+      601,
+      602,
+      603,
+      604,
+      605,
+      606,
+      607,
+      608,
+      609,
+      610,
+      611,
+      612,
+      613,
+      614,
+      615,
+      616,
+      617,
+      618,
+      619,
+      620,
+      621,
+      622,
+      623
+    ],
+    "first_index": 532,
+    "ignored_pre_anchor_indices": [],
+    "label": "prerelease_object_contact_topology_candidate",
+    "lifted_closed_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160,
+      161,
+      162,
+      163,
+      164,
+      165,
+      166,
+      167,
+      168,
+      169,
+      170,
+      171,
+      172,
+      173,
+      174,
+      175,
+      176,
+      177,
+      178,
+      179,
+      180,
+      181,
+      182,
+      183,
+      184,
+      185,
+      186,
+      187,
+      188,
+      189,
+      190,
+      191,
+      192,
+      193,
+      194,
+      195,
+      196,
+      197,
+      198,
+      199,
+      200,
+      201,
+      202,
+      203,
+      204,
+      205,
+      206,
+      207,
+      208,
+      209,
+      210,
+      211,
+      212,
+      213,
+      214,
+      215,
+      216,
+      217,
+      218,
+      219,
+      220,
+      221,
+      222,
+      223,
+      224,
+      225,
+      226,
+      227,
+      228,
+      229,
+      230,
+      231,
+      232,
+      233,
+      234,
+      235,
+      236,
+      237,
+      238,
+      239,
+      240,
+      241,
+      242,
+      243,
+      244,
+      245,
+      246,
+      247,
+      248,
+      249,
+      250,
+      251,
+      252,
+      253,
+      254,
+      255,
+      256,
+      257,
+      258,
+      259,
+      260,
+      261,
+      262,
+      263,
+      264,
+      265,
+      266,
+      267,
+      268,
+      269,
+      270,
+      271,
+      272,
+      273,
+      274,
+      275,
+      276,
+      277,
+      278,
+      279,
+      280,
+      281,
+      282,
+      283,
+      284,
+      285,
+      286,
+      287,
+      288,
+      289,
+      290,
+      291,
+      292,
+      293,
+      294,
+      295,
+      296,
+      297,
+      298,
+      299,
+      300,
+      301,
+      302,
+      303,
+      304,
+      305,
+      306,
+      307,
+      308,
+      309,
+      310,
+      311,
+      312,
+      313,
+      314,
+      315,
+      316,
+      317,
+      318,
+      319,
+      320,
+      321,
+      322,
+      323,
+      324,
+      325,
+      326,
+      327,
+      328,
+      329,
+      330,
+      331,
+      332,
+      333,
+      334,
+      335,
+      336,
+      337,
+      338,
+      339,
+      340,
+      341,
+      342,
+      343,
+      344,
+      345,
+      346,
+      347,
+      348,
+      349,
+      350,
+      351,
+      352,
+      353,
+      354,
+      355,
+      356,
+      357,
+      358,
+      359,
+      360,
+      361,
+      362,
+      363,
+      364,
+      365,
+      366,
+      367,
+      368,
+      369,
+      370,
+      371,
+      372,
+      373,
+      374,
+      375,
+      376,
+      377,
+      378,
+      379,
+      380,
+      381,
+      382,
+      383,
+      384,
+      385,
+      386,
+      387,
+      388,
+      389,
+      390,
+      391,
+      392,
+      393,
+      394,
+      395,
+      396,
+      397,
+      398,
+      399,
+      400,
+      401,
+      402,
+      403,
+      404,
+      405,
+      406,
+      407,
+      408,
+      409,
+      410,
+      411,
+      412,
+      413,
+      414,
+      415,
+      416,
+      417,
+      418,
+      419,
+      420,
+      421,
+      422,
+      423,
+      424,
+      425,
+      426,
+      427,
+      428,
+      429,
+      430,
+      431,
+      432,
+      433,
+      434,
+      435,
+      436,
+      437,
+      438,
+      439,
+      440,
+      441,
+      442,
+      443,
+      444,
+      445,
+      446,
+      447,
+      448,
+      449,
+      450,
+      451,
+      452,
+      453,
+      454,
+      455,
+      456,
+      457,
+      458,
+      459,
+      460,
+      461,
+      462,
+      463,
+      464,
+      465,
+      466,
+      467,
+      468,
+      469,
+      470,
+      471,
+      472,
+      473,
+      474,
+      475,
+      476,
+      477,
+      478,
+      479,
+      480,
+      481,
+      482,
+      483,
+      484,
+      485,
+      486,
+      487,
+      488,
+      489,
+      490,
+      491,
+      492,
+      493,
+      494,
+      495,
+      496,
+      497,
+      498,
+      499,
+      500,
+      501,
+      502,
+      503,
+      504,
+      505,
+      506,
+      507,
+      508,
+      509,
+      510,
+      511,
+      512,
+      513,
+      514,
+      515,
+      516,
+      517,
+      518,
+      519,
+      520,
+      521,
+      522,
+      523,
+      524,
+      525,
+      526,
+      527,
+      528,
+      529,
+      530,
+      531,
+      532,
+      533,
+      534,
+      535,
+      536,
+      537,
+      538,
+      539,
+      540,
+      541,
+      542,
+      543,
+      544,
+      545,
+      546,
+      547,
+      548,
+      549,
+      550,
+      551,
+      552,
+      553,
+      554,
+      555,
+      556,
+      557,
+      558,
+      559,
+      560,
+      561,
+      562,
+      563,
+      564,
+      565,
+      566,
+      567,
+      568,
+      569,
+      570,
+      571,
+      572,
+      573,
+      574,
+      575,
+      576,
+      577,
+      578,
+      579,
+      580,
+      581,
+      582,
+      583,
+      584,
+      585,
+      586,
+      587,
+      588,
+      589,
+      590,
+      591,
+      592,
+      593,
+      594,
+      595,
+      596,
+      597,
+      598,
+      599,
+      600,
+      601,
+      602,
+      603,
+      604,
+      605,
+      606,
+      607,
+      608,
+      609,
+      610,
+      611,
+      612,
+      613,
+      614,
+      615,
+      616,
+      617,
+      618,
+      619,
+      620,
+      621,
+      622,
+      623
+    ],
+    "missing": [],
+    "new_pairs": [
+      {
+        "index": 532,
+        "pair": [
+          "akita_black_bowl_1_g2",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 532,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 533,
+        "pair": [
+          "akita_black_bowl_1_g2",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 533,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 534,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 535,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 536,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 537,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 538,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 539,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 540,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 541,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 542,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 543,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 544,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 545,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 546,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 547,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 548,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 549,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 550,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 551,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 552,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 553,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 554,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 555,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 556,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 557,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 558,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 559,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 560,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 561,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 562,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 563,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 564,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 565,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 566,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 567,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 568,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 569,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 570,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 571,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 572,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 573,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 574,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 575,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 576,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 577,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 578,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 579,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 580,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 581,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 582,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 583,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 584,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 585,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 586,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 587,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 588,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 589,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 590,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 591,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 592,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 593,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 594,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 595,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 596,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 597,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 598,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 599,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 600,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 601,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 602,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 603,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 604,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 605,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 606,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 607,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 608,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 609,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 610,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 611,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 612,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 613,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 614,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 615,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 616,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 617,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 618,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 619,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 620,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 621,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 622,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      },
+      {
+        "index": 623,
+        "pair": [
+          "akita_black_bowl_1_g40",
+          "cream_cheese_1_g1"
+        ]
+      }
+    ],
+    "time_order": {
+      "candidate_before_release": true,
+      "complete": true,
+      "first_candidate_index": 532,
+      "first_release_index": 649,
+      "ordering": "candidate_before_release"
+    }
+  },
+  "total_branch_wall_time_s": 12.234844304000035,
+  "total_policy_calls": 3,
+  "trace_content_sha256": "d90896d6b808a6f6b5e7d7bf6e2ce797337f74e2201b86d9ffbfd6e35aa48ab0",
+  "trace_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase2/contact_topology/put_the_bowl_on_the_plate/a1d56647e042379942fb76e921eb2aad3e7ab5b634f7e69753fc26a8c6d20504.jsonl.gz",
+  "trace_records": 936,
+  "trace_sha256": "7da9d6ad43e9b81db580a77d22765961c879309af5c616043eccb24232b4946b",
+  "validation_policy_calls": 1,
+  "zero_injection": true
+}
