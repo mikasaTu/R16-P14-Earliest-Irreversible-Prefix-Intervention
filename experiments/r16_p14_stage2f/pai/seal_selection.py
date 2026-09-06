@@ -27,9 +27,10 @@ def seal(commit,receipt,diagnostic_atlas=False):
         if found is None:raise RuntimeError("receipt absent from tree")
         tree=found
     result={"git_commit":commit,"selection_receipt_sha256":hashlib.sha256(raw).hexdigest(),
-      "selection_path":rel,"diagnostic_atlas":bool(diagnostic_atlas),
       "commit_object_base64":base64.b64encode(obj).decode(),"tree_path_proof":proof,
       "verified_origin_main":git("rev-parse","origin/main").decode().strip()}
+    if diagnostic_atlas:
+        result.update(selection_path=rel,diagnostic_atlas=True)
     out=receipt.with_name("diagnostic_selection_authorization.json" if diagnostic_atlas else "selection_authorization.json")
     text=json.dumps(result,indent=2)+"\n"
     if out.exists() and out.read_text()!=text:raise RuntimeError("selection authorization immutable")
