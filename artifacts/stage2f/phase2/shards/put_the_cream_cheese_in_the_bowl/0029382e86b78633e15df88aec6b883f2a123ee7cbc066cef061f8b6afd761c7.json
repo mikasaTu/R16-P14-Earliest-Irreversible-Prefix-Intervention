@@ -1,0 +1,3583 @@
+{
+  "action_budget": 32,
+  "action_budget_respected": true,
+  "actor_inference_side_effect_free": true,
+  "actual_global_step": 160,
+  "actual_new_recovery_actions": 32,
+  "actual_policy_calls": 8,
+  "actual_prefix_actions": 6,
+  "actual_total_action_steps": 38,
+  "anchor_global_step": 122,
+  "behavior_operator": "hold_1+fresh_h4",
+  "blocked": false,
+  "chunk_hash": "a3e8b614049c20bc97a5acaf1e33810276966cfa33514ae7b0055393bf4e68ca",
+  "configured_action_budget": 32,
+  "configured_budget": {
+    "action_budget": 32,
+    "policy_call_cap": 8,
+    "tail_horizon": 16
+  },
+  "configured_operator_horizon": 4,
+  "configured_policy_call_cap": 8,
+  "configured_prefix_actions": 6,
+  "configured_tail_horizon": 16,
+  "d4_signatures": {
+    "detection": {
+      "cause_tracker": {
+        "contact_event_indices": [],
+        "ever_stably_lifted": true,
+        "first_violation_offset": null,
+        "gripper_transition_indices": [],
+        "immediate_violation": false,
+        "initial_object_z": 0.935,
+        "injected": false,
+        "injection_contact": false,
+        "post_detection_steps": 0,
+        "previous_gripper": 1.0,
+        "shifted_target_qpos": null,
+        "task": "put_the_cream_cheese_in_the_bowl",
+        "violation": false,
+        "violation_type": null
+      },
+      "cause_tracker_hash": "9b376439718d015739f9ae1f0b41035ec9e96f635452a76f40825a47b96315ce",
+      "complete_signature_hash": "8802816088a39ae3eb728636be8a8e601003fa9b2805dcf328b55834d5dcfd8b",
+      "contact_pairs": [
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger1_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger1_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger1_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "plate_1_g10",
+          "table_collision"
+        ],
+        [
+          "plate_1_g2",
+          "table_collision"
+        ],
+        [
+          "plate_1_g3",
+          "table_collision"
+        ],
+        [
+          "plate_1_g4",
+          "table_collision"
+        ],
+        [
+          "plate_1_g5",
+          "table_collision"
+        ],
+        [
+          "plate_1_g6",
+          "table_collision"
+        ],
+        [
+          "plate_1_g7",
+          "table_collision"
+        ],
+        [
+          "plate_1_g8",
+          "table_collision"
+        ],
+        [
+          "plate_1_g9",
+          "table_collision"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ]
+      ],
+      "contact_pairs_hash": "90aaa258f346512fcb857e2b1ec42238d0844074f407c78ef463076c0611a68f",
+      "executed_prefix_action_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "executed_prefix_length": 0,
+      "four_state_history_hash": "10f39d64693bc3112d6910ca27572da644d9cbf5f96abe4cb3a457d2e2270bb8",
+      "gripper_state": 1.0,
+      "manipulated_qpos_hash": "d8bf53a679980c0e2084e6862cc6330283ace51234bf8ec487b08804317f0dd7",
+      "observation_feature_hash": "361e753f7f726c2b105fd8418adfea255f088b1349132ac7b2f43be5fd98b732",
+      "obstacle_qpos_hash": null,
+      "robot_qpos_hash": "4f7f0f9520aca2ab8cd97f311c5915f5035fd7ce5dff952119086352cd5ff7c3",
+      "robot_qvel_hash": "9c1a56a2c9e0858f8eba4c7822f1fe8f0c048520f2bbb61cc52d4cc36bf8f690",
+      "simulator_state_hash": "4b9a1e3ff7030a28c8914d49c0b305ca5c5b6a593e3147993b33c2467dee18d2",
+      "target_qpos_hash": "8eaa4cbaa340732d8d5d4018a475566d921a57d4881eacb90237c32712d68f19",
+      "task_phase": {
+        "ever_stably_lifted": true,
+        "gripper_closed": true,
+        "object_height_delta_m": 0.043875110924397664,
+        "post_detection_steps": 0,
+        "task_success": false
+      },
+      "task_phase_hash": "6466b646ae34ad5584d05192a1b572818f7e3aae6d2d1665ec1ba2e6aed2519c",
+      "three_action_history_hash": "9b56a62f7591f5c2517019afa8f09cc86f7754dd19ecae34db599326baa2eac3"
+    },
+    "final": {
+      "cause_tracker": {
+        "contact_event_indices": [],
+        "ever_stably_lifted": true,
+        "first_violation_offset": null,
+        "gripper_transition_indices": [
+          30
+        ],
+        "immediate_violation": false,
+        "initial_object_z": 0.935,
+        "injected": false,
+        "injection_contact": false,
+        "post_detection_steps": 32,
+        "previous_gripper": -1.0,
+        "shifted_target_qpos": null,
+        "task": "put_the_cream_cheese_in_the_bowl",
+        "violation": false,
+        "violation_type": null
+      },
+      "cause_tracker_hash": "b694e6b187d9aeae573ec616010bc05620d7b5fd8ba425a53d6148531543e2cc",
+      "complete_signature_hash": "fd4ad885a55c737d26de56454740809967fcf66a0261c83e231f40df03bcffaa",
+      "contact_pairs": [
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "plate_1_g10",
+          "table_collision"
+        ],
+        [
+          "plate_1_g2",
+          "table_collision"
+        ],
+        [
+          "plate_1_g3",
+          "table_collision"
+        ],
+        [
+          "plate_1_g4",
+          "table_collision"
+        ],
+        [
+          "plate_1_g5",
+          "table_collision"
+        ],
+        [
+          "plate_1_g6",
+          "table_collision"
+        ],
+        [
+          "plate_1_g7",
+          "table_collision"
+        ],
+        [
+          "plate_1_g8",
+          "table_collision"
+        ],
+        [
+          "plate_1_g9",
+          "table_collision"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ]
+      ],
+      "contact_pairs_hash": "2d5f8ae967915bc1b44da42bf28019bb21634af8693baa766187c5c138bc050d",
+      "executed_prefix_action_hash": "40178bb49d639e7629e1c97ad2d176445f9613955bb011ad1abd8662b854d654",
+      "executed_prefix_length": 6,
+      "four_state_history_hash": "029553699ca216b3309ca612ed5f427d4109e18beb6c7af0261838ae949f0614",
+      "gripper_state": -1.0,
+      "manipulated_qpos_hash": "5440413409b4e57c18e644daa5392e39d2b79e330f829670b369b8691123d77f",
+      "observation_feature_hash": "d146fa17d9c92e4548bae987ca27d93f6e470c09e2c7cd828f43ef6cb793627f",
+      "obstacle_qpos_hash": null,
+      "robot_qpos_hash": "5b57c5b2c9aa12d979569e93b4a53349484aa9dc00ed0245be2e087fde99e8c0",
+      "robot_qvel_hash": "b3963479f1493e383e44f7ba21d3c998fe75bc7d3b1a07cb4bab18cc3089a702",
+      "simulator_state_hash": "6037d67b7f44bd1008da50e56cf16a66a5ca9d801e40112ead5247c89601de28",
+      "target_qpos_hash": "8bc66126a83fe6f92685868660bcbf48576d98dafc45bf43af6fefc1c0a65f8e",
+      "task_phase": {
+        "ever_stably_lifted": true,
+        "gripper_closed": false,
+        "object_height_delta_m": -0.026078522581610808,
+        "post_detection_steps": 32,
+        "task_success": false
+      },
+      "task_phase_hash": "d34cbaae03b0b1323f426ec9799c3655cef8f89f6d72059f28aad6a01da5429d",
+      "three_action_history_hash": "47c3890e40dd75c1ca36ab415a51252db8ab08b7d3cba5d485864551bf8674da"
+    },
+    "pre_tail": {
+      "cause_tracker": {
+        "contact_event_indices": [],
+        "ever_stably_lifted": true,
+        "first_violation_offset": null,
+        "gripper_transition_indices": [],
+        "immediate_violation": false,
+        "initial_object_z": 0.935,
+        "injected": false,
+        "injection_contact": false,
+        "post_detection_steps": 0,
+        "previous_gripper": 1.0,
+        "shifted_target_qpos": null,
+        "task": "put_the_cream_cheese_in_the_bowl",
+        "violation": false,
+        "violation_type": null
+      },
+      "cause_tracker_hash": "9b376439718d015739f9ae1f0b41035ec9e96f635452a76f40825a47b96315ce",
+      "complete_signature_hash": "b9cae088bd2c0286d2382b3a8c0a0b9474c56bcf02d09a4d1348d9364af02320",
+      "contact_pairs": [
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger1_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger1_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger1_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger1_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger1_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "plate_1_g10",
+          "table_collision"
+        ],
+        [
+          "plate_1_g2",
+          "table_collision"
+        ],
+        [
+          "plate_1_g3",
+          "table_collision"
+        ],
+        [
+          "plate_1_g4",
+          "table_collision"
+        ],
+        [
+          "plate_1_g5",
+          "table_collision"
+        ],
+        [
+          "plate_1_g6",
+          "table_collision"
+        ],
+        [
+          "plate_1_g7",
+          "table_collision"
+        ],
+        [
+          "plate_1_g8",
+          "table_collision"
+        ],
+        [
+          "plate_1_g9",
+          "table_collision"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ]
+      ],
+      "contact_pairs_hash": "2e2784bfdf5cdf9d6541a4b31513ef9aea5cd274e5148db51b9cce0dfef7fe89",
+      "executed_prefix_action_hash": "40178bb49d639e7629e1c97ad2d176445f9613955bb011ad1abd8662b854d654",
+      "executed_prefix_length": 6,
+      "four_state_history_hash": "3c029ed86369048c08485b0ebfc37d794c89318a7e80e7f755e2ac122aa87e62",
+      "gripper_state": 1.0,
+      "manipulated_qpos_hash": "4169325af23a91f5c140fe19ceab4cfa346bdcde4edc9b72706f79edd5a6faa6",
+      "observation_feature_hash": "eb2cf984c6e41d8d9e2e104a287c84a7ddc194d961d470ecd532e4409839a720",
+      "obstacle_qpos_hash": null,
+      "robot_qpos_hash": "7e93dfa07d31b2a187307e7811b5ba513af6990ed129c1f33b63148d659af24a",
+      "robot_qvel_hash": "8097ec3477f42c039fb5447d44e01fa21b11f2c825bcc51b6494e28a76c515e5",
+      "simulator_state_hash": "9f92f29d138fdd9db5662fcf65d9c73e06cd4076f8c11b8ec89a2ecc19cc5e7a",
+      "target_qpos_hash": "7747c1384d40db906a7c0504a70a9aa19949c39e8c409b5dbde538fcd99df532",
+      "task_phase": {
+        "ever_stably_lifted": true,
+        "gripper_closed": true,
+        "object_height_delta_m": 0.11136297306986376,
+        "post_detection_steps": 0,
+        "task_success": false
+      },
+      "task_phase_hash": "638cf22c90c6c7ee7f1c099cedea6462bead1f87ecb5c1af242de9f5876f3fd7",
+      "three_action_history_hash": "f7b55be62be96b55175c5bcf76a979d2a6bf135339d029851dbfbaf08d59ccd4"
+    }
+  },
+  "diagnostic_continuation": true,
+  "diagnostic_only": true,
+  "diagnostic_selection_binding": {
+    "input_sha256": "c6eb6484cb6711b6df02716d6ca8c8613bdaee27583ec37184f54b719c8f851d",
+    "original_rank": 1,
+    "protocol_sha256": "2d14427c2391422dd372b0528d6d784d1066d8d059e1405597cfb1954f260c6a"
+  },
+  "diagnostic_selection_receipt_path": "phase1/diagnostic_selection_receipt.json",
+  "diagnostic_selection_receipt_sha256": "5382f401a40a5f0e8f9069cb8c76d577b82fadb6fa6e8f94496f35ca3760e262",
+  "dispatch_process_start_method": "spawn",
+  "dispatch_repeat": 0,
+  "dispatch_seed": 3377464539,
+  "dispatcher_child_exitcode": 0,
+  "dispatcher_pid": 1,
+  "dispatcher_process_start_method": "spawn",
+  "effective_execution_horizon": 4,
+  "effective_new_action_budget": 32,
+  "env_hash": "453239538d25eb10f50b1fa73aff0c5f8f2031cb2519f44b94ed4592a53ec6fa",
+  "error": null,
+  "event_id": "put_the_cream_cheese_in_the_bowl__init074__actor17",
+  "event_instance_id": "put_the_cream_cheese_in_the_bowl__init074__actor17",
+  "formal_positive_evidence_allowed": false,
+  "fresh_environment_created": true,
+  "generator_actor_calls": 1,
+  "generator_actor_seed": 17,
+  "generator_checkpoint_sha256": "83ee61e31ffdae6f2ef57203a2c0085df41e284039cd81c6ecf1210694521604",
+  "generator_chunk_hash": "a3e8b614049c20bc97a5acaf1e33810276966cfa33514ae7b0055393bf4e68ca",
+  "init_state_id": 74,
+  "injection_calls": 0,
+  "is_reference": false,
+  "job_id": "dlc1hrmbyia4bc9p",
+  "labels": {
+    "candidate_precedes_release": true,
+    "first_candidate_index": 707,
+    "first_release_index": 805,
+    "ignored_pre_lift_release_indices": [],
+    "label_complete": true,
+    "missing": [],
+    "prerelease_topology_candidate": {
+      "candidate": true,
+      "candidate_indices": [
+        707,
+        708,
+        709,
+        710,
+        711,
+        712,
+        713,
+        714,
+        715,
+        716,
+        717,
+        718,
+        719,
+        720,
+        721,
+        722,
+        723,
+        724,
+        725,
+        726,
+        727,
+        728,
+        729,
+        730,
+        731,
+        732,
+        733,
+        734,
+        735,
+        736,
+        737,
+        738,
+        739,
+        740,
+        741,
+        742,
+        743,
+        744,
+        745,
+        746,
+        747,
+        748,
+        749,
+        750,
+        751,
+        752,
+        753,
+        754,
+        755,
+        756,
+        757,
+        758,
+        759,
+        760,
+        761,
+        762,
+        763,
+        764,
+        765,
+        766,
+        767,
+        768,
+        769,
+        770,
+        771,
+        772,
+        773,
+        774,
+        775,
+        776,
+        777,
+        778,
+        779
+      ],
+      "first_index": 707,
+      "ignored_pre_anchor_indices": [],
+      "label": "prerelease_object_contact_topology_candidate",
+      "lifted_closed_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223,
+        224,
+        225,
+        226,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236,
+        237,
+        238,
+        239,
+        240,
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        255,
+        256,
+        257,
+        258,
+        259,
+        260,
+        261,
+        262,
+        263,
+        264,
+        265,
+        266,
+        267,
+        268,
+        269,
+        270,
+        271,
+        272,
+        273,
+        274,
+        275,
+        276,
+        277,
+        278,
+        279,
+        280,
+        281,
+        282,
+        283,
+        284,
+        285,
+        286,
+        287,
+        288,
+        289,
+        290,
+        291,
+        292,
+        293,
+        294,
+        295,
+        296,
+        297,
+        298,
+        299,
+        300,
+        301,
+        302,
+        303,
+        304,
+        305,
+        306,
+        307,
+        308,
+        309,
+        310,
+        311,
+        312,
+        313,
+        314,
+        315,
+        316,
+        317,
+        318,
+        319,
+        320,
+        321,
+        322,
+        323,
+        324,
+        325,
+        326,
+        327,
+        328,
+        329,
+        330,
+        331,
+        332,
+        333,
+        334,
+        335,
+        336,
+        337,
+        338,
+        339,
+        340,
+        341,
+        342,
+        343,
+        344,
+        345,
+        346,
+        347,
+        348,
+        349,
+        350,
+        351,
+        352,
+        353,
+        354,
+        355,
+        356,
+        357,
+        358,
+        359,
+        360,
+        361,
+        362,
+        363,
+        364,
+        365,
+        366,
+        367,
+        368,
+        369,
+        370,
+        371,
+        372,
+        373,
+        374,
+        375,
+        376,
+        377,
+        378,
+        379,
+        380,
+        381,
+        382,
+        383,
+        384,
+        385,
+        386,
+        387,
+        388,
+        389,
+        390,
+        391,
+        392,
+        393,
+        394,
+        395,
+        396,
+        397,
+        398,
+        399,
+        400,
+        401,
+        402,
+        403,
+        404,
+        405,
+        406,
+        407,
+        408,
+        409,
+        410,
+        411,
+        412,
+        413,
+        414,
+        415,
+        416,
+        417,
+        418,
+        419,
+        420,
+        421,
+        422,
+        423,
+        424,
+        425,
+        426,
+        427,
+        428,
+        429,
+        430,
+        431,
+        432,
+        433,
+        434,
+        435,
+        436,
+        437,
+        438,
+        439,
+        440,
+        441,
+        442,
+        443,
+        444,
+        445,
+        446,
+        447,
+        448,
+        449,
+        450,
+        451,
+        452,
+        453,
+        454,
+        455,
+        456,
+        457,
+        458,
+        459,
+        460,
+        461,
+        462,
+        463,
+        464,
+        465,
+        466,
+        467,
+        468,
+        469,
+        470,
+        471,
+        472,
+        473,
+        474,
+        475,
+        476,
+        477,
+        478,
+        479,
+        480,
+        481,
+        482,
+        483,
+        484,
+        485,
+        486,
+        487,
+        488,
+        489,
+        490,
+        491,
+        492,
+        493,
+        494,
+        495,
+        496,
+        497,
+        498,
+        499,
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543,
+        544,
+        545,
+        546,
+        547,
+        548,
+        549,
+        550,
+        551,
+        552,
+        553,
+        554,
+        555,
+        556,
+        557,
+        558,
+        559,
+        560,
+        561,
+        562,
+        563,
+        564,
+        565,
+        566,
+        567,
+        568,
+        569,
+        570,
+        571,
+        572,
+        573,
+        574,
+        575,
+        576,
+        577,
+        578,
+        579,
+        580,
+        581,
+        582,
+        583,
+        584,
+        585,
+        586,
+        587,
+        588,
+        589,
+        590,
+        591,
+        592,
+        593,
+        594,
+        595,
+        596,
+        597,
+        598,
+        599,
+        600,
+        601,
+        602,
+        603,
+        604,
+        605,
+        606,
+        607,
+        608,
+        609,
+        610,
+        611,
+        612,
+        613,
+        614,
+        615,
+        616,
+        617,
+        618,
+        619,
+        620,
+        621,
+        622,
+        623,
+        624,
+        625,
+        626,
+        627,
+        628,
+        629,
+        630,
+        631,
+        632,
+        633,
+        634,
+        635,
+        636,
+        637,
+        638,
+        639,
+        640,
+        641,
+        642,
+        643,
+        644,
+        645,
+        646,
+        647,
+        648,
+        649,
+        650,
+        651,
+        652,
+        653,
+        654,
+        655,
+        656,
+        657,
+        658,
+        659,
+        660,
+        661,
+        662,
+        663,
+        664,
+        665,
+        666,
+        667,
+        668,
+        669,
+        670,
+        671,
+        672,
+        673,
+        674,
+        675,
+        676,
+        677,
+        678,
+        679,
+        680,
+        681,
+        682,
+        683,
+        684,
+        685,
+        686,
+        687,
+        688,
+        689,
+        690,
+        691,
+        692,
+        693,
+        694,
+        695,
+        696,
+        697,
+        698,
+        699,
+        700,
+        701,
+        702,
+        703,
+        704,
+        705,
+        706,
+        707,
+        708,
+        709,
+        710,
+        711,
+        712,
+        713,
+        714,
+        715,
+        716,
+        717,
+        718,
+        719,
+        720,
+        721,
+        722,
+        723,
+        724,
+        725,
+        726,
+        727,
+        728,
+        729,
+        730,
+        731,
+        732,
+        733,
+        734,
+        735,
+        736,
+        737,
+        738,
+        739,
+        740,
+        741,
+        742,
+        743,
+        744,
+        745,
+        746,
+        747,
+        748,
+        749,
+        750,
+        751,
+        752,
+        753,
+        754,
+        755,
+        756,
+        757,
+        758,
+        759,
+        760,
+        761,
+        762,
+        763,
+        764,
+        765,
+        766,
+        767,
+        768,
+        769,
+        770,
+        771,
+        772,
+        773,
+        774,
+        775,
+        776,
+        777,
+        778,
+        779
+      ],
+      "missing": [],
+      "new_pairs": [
+        {
+          "index": 707,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 708,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 709,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 710,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 711,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 712,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 713,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 714,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 715,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 716,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 717,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 718,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 719,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 720,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 721,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 722,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 723,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 724,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 725,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 726,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 727,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 728,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 729,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 730,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 731,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 732,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 733,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 734,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 735,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 736,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 737,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 738,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 739,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 740,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 741,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 742,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 743,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 744,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 745,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 746,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 747,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 748,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 749,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 750,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 751,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 752,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 753,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 754,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 755,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 756,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 757,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 758,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 759,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 760,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 761,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 762,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 763,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 764,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 765,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 766,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 767,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 768,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 769,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 770,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 771,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 772,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 773,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 774,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 775,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 776,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 777,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 778,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 779,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        }
+      ],
+      "time_order": {
+        "candidate_before_release": true,
+        "complete": true,
+        "first_candidate_index": 707,
+        "first_release_index": 805,
+        "ordering": "candidate_before_release"
+      }
+    },
+    "record_count": 988,
+    "release_based": {
+      "first_index": 805,
+      "ignored_pre_lift_release_indices": [],
+      "label": "release_outside_original_target",
+      "missing": [],
+      "placement_xy_tolerance_m": 0.06,
+      "release_indices": [
+        805
+      ],
+      "release_violation_indices": [
+        805
+      ],
+      "time_order": {
+        "complete": true,
+        "first_release_index": 805,
+        "first_violation_index": 805,
+        "ignored_pre_lift_release_indices": [],
+        "lift_before_release_required": true
+      },
+      "violation": true,
+      "violation_type": "release_outside_original_target"
+    },
+    "schema_version": 1,
+    "task": "put_the_cream_cheese_in_the_bowl",
+    "time_order": "candidate_before_release"
+  },
+  "missing_provenance": [],
+  "new_idea_generated": false,
+  "operator": "hold_1+fresh_h4",
+  "pai_run_id": "r16p14-s1-atlas-t0-20260907-r2",
+  "parent_pid": 1,
+  "physics_instrumented": true,
+  "physics_probe_error": null,
+  "physics_step_count": 950,
+  "pid": 62994,
+  "policy_call_cap": 8,
+  "policy_call_cap_respected": true,
+  "prefix_budget_separate": true,
+  "prefix_k": 6,
+  "process_start_method": "spawn",
+  "reconstruction": {
+    "action_history_exact": true,
+    "actor_inference_side_effect_free": true,
+    "anchor_state_exact": true,
+    "event_chunk_exact": true,
+    "max_anchor_state_error": 0.0,
+    "state_history_exact": true
+  },
+  "recovery_action_hashes": [
+    "5b9b333da9aef69a1da1e68744424578726c887215c97076e3529c2a6bc0b019",
+    "d408dad405d98899444468f8c775fe3e65d1bbe3779bc724c1cbb29cbcf8e37c",
+    "64cc1c1e2c464223df34452712025e71a01d6f9b67c429c4b1fea39b4736f46a",
+    "7aa40a837e9ff5b4cdc789f5f0c0ead032e4647e3f9a1fea3453744dd78ab1cc",
+    "1aaef63e688897a2b5165af311ac68226b9078aeff460809bb61b0b9f2f314aa",
+    "5c9153f44fd8b1f8379eb381f8640cbca8f750fa42d918af049c4c8957f7e7fe",
+    "c5f222ee99756f6b933bd7af3eae5988336da15c8b70c1aab6edb7e8a4cd4312",
+    "3767ab90becf839211db811d33b3375afd67aa6afa5f95d42177b4ee1284fece",
+    "9f8c5146806e56bd640d5fef358aa58794ae0c00b2ad06c1826dfd3fa498d7a1",
+    "9726d504ce5084e4553b32faafb5611250343730e856ea328c1efbdf8b7cdbc8",
+    "8016eb797dd884f7d220c224260d8c2839f18ba6887184b44209b5467ea6b46d",
+    "52f5cc32cb124427d608abc3fdf69a08731dd10b35a29f10303681ae2cd7ad81",
+    "ca3242b1c4fe51fb09d1e96348e38e119fadd739f9fc3ebfe50865072c1a485c",
+    "4cd59401447de67841e8611ba0121a897a0a8a0a886fd55a997cd61a926087f3",
+    "4b38563284d0575c15274ce762f9b9378621f3e88d701dc427bce40efb2a1ede",
+    "9c11209be8d94d11fe876688160586c0f033c574091857d665dc1b2f549f9d8e",
+    "c57b614cfcbe390d4fbde6f4be4b63bb01e6ca0198673162f752cc5619bedc38",
+    "f8efacfc5b5d1e5e59b5d32526bcdacfcd8a0242071196734617a260d2026e23",
+    "b1084e07b1cd9efd5106ef6b2755336370d68a9f502ece36a357f9f683973ac9",
+    "ac5927ff71977a124f0fe3e475959b50bb24105614055c388940ee35e1ead5c8",
+    "08a3e128ca53450152f63f8fe3a6c1c322f210124e09d8a0d509e859e756905b",
+    "56b7b779476f717da99300f9a153af30934b79ca17663fbfb4d0cd94b4775572",
+    "3b011b5a4dae7bd1f92da1cbed4cc3e312505e366e6499da7693f894e3c01c42",
+    "6496efacf1f82022cd776f26196e8d40deabf7bdc2449720d24407ab35df4a95",
+    "6c5dcb28bfb3d666d95acbcac311cef3af5f7bbe97e1bea3ba535f45ad1a5676",
+    "6da7ffbce12688e507fad977f256377479a73cfd012367e7523b31424226cbef",
+    "d0dc854b15053c8473c1f8d19547c8685f9c5a8f0d3cae81d17fd6b5395e6c7d",
+    "70a612549e6e4b16ec488cbce5e814221427bde2755a8fc1f9539c3e785cc85c",
+    "204c584079c28a75c570b6eec090674df9222abc01f0af73a972cf48aedb7e99",
+    "2f877df0f467d3004bcccaa85297eca35aaa702b271a130d4bf82ae9df21b40d",
+    "ac514e69ca0e6a81bcce3770996b29a8572094f25e739ce46f65dd500ff38d28",
+    "485a25b90af5d0bf1196ca42f87911a425c7774fecbb7d033fc58b76ab82e725"
+  ],
+  "recovery_actor_seed": 29,
+  "recovery_checkpoint_sha256": "0cf34a3e535525345306a2b322aae3b1bd6ebd6cd71dc653e2a91393e2b79d1a",
+  "recovery_chunk_hashes": [
+    "3c4bfc473dc686e6ce1aa8b863df0a07bb3ee933933def086944919a2a986d4e",
+    "4f205da34edb4d5192d5a16de187dddad1f79c61b29d04a206f5608059a6bff0",
+    "3f0f34959feb0a3f447235c3aacde15bd3714db77a61187e7202294d0ffe590c",
+    "2338b68f959c524badec4d30b3334d52fe469bf727f4ea46c1a65843df5e9e72",
+    "bf92b8a0348bd8f673832e292b2487a8ea9ecf7770ececa2e6ce5330f3d83405",
+    "d25e23c96d7215c91b88af3a0a79faedddc89659877fdda322996e1d639d66ed",
+    "fc90e6ec1422dca808a2653934a5eb44163b802323ac64b5dada66e1e2a820d8",
+    "cf91bed9cb8c4c5c414cd780dc06c8f2603ba3903dcf2d0c54f96d38fe2a98e7"
+  ],
+  "recovery_policy_calls": 8,
+  "release_based_violation": true,
+  "repeat": 0,
+  "returned_configuration": {
+    "action_budget": null,
+    "operator": "hold_1+fresh_h4",
+    "policy_call_cap": null,
+    "prefix_k": 6,
+    "recovery_actor_seed": 29,
+    "tail_horizon": null
+  },
+  "runtime_module_hashes": {
+    "assets.py": "8af027b6a775848bc400de22490f4cd82637e6de5861f3b368cbb79db3b7afca",
+    "common.py": "d9a0a292d55100ccbde0c2474bc445529b65108852d4411ffb1ea77b412fa4df",
+    "dispatch.py": "66fbe6a035c5a0039dd5d1515f5eb316394adcfca45459c4c8b5914cc26e1134",
+    "measurement.py": "b31dc34270905c6d76ea342c6a1deef8739c53e8bc9813e38d127ee48aab8c62",
+    "runtime.py": "3203db2452eef4bf6fe8b304eae2b14b1dc7ae80630479317c4610f063cf4417",
+    "runtime_identity.py": "fb7c195cbb4649e26ffd3264a0603067174ed659055b70c79837884642821c56"
+  },
+  "runtime_receipt_sha256": "3d7b252885b4047fb93140c305a3ef4a1d3ec9aa450d90341befd2b7e26a5e44",
+  "runtime_status": "OK",
+  "safe_success": false,
+  "safe_success_unblocked_observation": false,
+  "schema_version": 2,
+  "source_commit": "4bc5f5a840d1fcafa76b4a6db8343230ab8ff184",
+  "split": "evaluation",
+  "status": "COMPLETE",
+  "tail_horizon": 16,
+  "task": "put_the_cream_cheese_in_the_bowl",
+  "task_horizon": 360,
+  "task_horizon_budget_clipped": false,
+  "task_horizon_remaining_after_prefix": 232,
+  "task_success": false,
+  "topology_candidate": {
+    "candidate": true,
+    "candidate_indices": [
+      707,
+      708,
+      709,
+      710,
+      711,
+      712,
+      713,
+      714,
+      715,
+      716,
+      717,
+      718,
+      719,
+      720,
+      721,
+      722,
+      723,
+      724,
+      725,
+      726,
+      727,
+      728,
+      729,
+      730,
+      731,
+      732,
+      733,
+      734,
+      735,
+      736,
+      737,
+      738,
+      739,
+      740,
+      741,
+      742,
+      743,
+      744,
+      745,
+      746,
+      747,
+      748,
+      749,
+      750,
+      751,
+      752,
+      753,
+      754,
+      755,
+      756,
+      757,
+      758,
+      759,
+      760,
+      761,
+      762,
+      763,
+      764,
+      765,
+      766,
+      767,
+      768,
+      769,
+      770,
+      771,
+      772,
+      773,
+      774,
+      775,
+      776,
+      777,
+      778,
+      779
+    ],
+    "first_index": 707,
+    "ignored_pre_anchor_indices": [],
+    "label": "prerelease_object_contact_topology_candidate",
+    "lifted_closed_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160,
+      161,
+      162,
+      163,
+      164,
+      165,
+      166,
+      167,
+      168,
+      169,
+      170,
+      171,
+      172,
+      173,
+      174,
+      175,
+      176,
+      177,
+      178,
+      179,
+      180,
+      181,
+      182,
+      183,
+      184,
+      185,
+      186,
+      187,
+      188,
+      189,
+      190,
+      191,
+      192,
+      193,
+      194,
+      195,
+      196,
+      197,
+      198,
+      199,
+      200,
+      201,
+      202,
+      203,
+      204,
+      205,
+      206,
+      207,
+      208,
+      209,
+      210,
+      211,
+      212,
+      213,
+      214,
+      215,
+      216,
+      217,
+      218,
+      219,
+      220,
+      221,
+      222,
+      223,
+      224,
+      225,
+      226,
+      227,
+      228,
+      229,
+      230,
+      231,
+      232,
+      233,
+      234,
+      235,
+      236,
+      237,
+      238,
+      239,
+      240,
+      241,
+      242,
+      243,
+      244,
+      245,
+      246,
+      247,
+      248,
+      249,
+      250,
+      251,
+      252,
+      253,
+      254,
+      255,
+      256,
+      257,
+      258,
+      259,
+      260,
+      261,
+      262,
+      263,
+      264,
+      265,
+      266,
+      267,
+      268,
+      269,
+      270,
+      271,
+      272,
+      273,
+      274,
+      275,
+      276,
+      277,
+      278,
+      279,
+      280,
+      281,
+      282,
+      283,
+      284,
+      285,
+      286,
+      287,
+      288,
+      289,
+      290,
+      291,
+      292,
+      293,
+      294,
+      295,
+      296,
+      297,
+      298,
+      299,
+      300,
+      301,
+      302,
+      303,
+      304,
+      305,
+      306,
+      307,
+      308,
+      309,
+      310,
+      311,
+      312,
+      313,
+      314,
+      315,
+      316,
+      317,
+      318,
+      319,
+      320,
+      321,
+      322,
+      323,
+      324,
+      325,
+      326,
+      327,
+      328,
+      329,
+      330,
+      331,
+      332,
+      333,
+      334,
+      335,
+      336,
+      337,
+      338,
+      339,
+      340,
+      341,
+      342,
+      343,
+      344,
+      345,
+      346,
+      347,
+      348,
+      349,
+      350,
+      351,
+      352,
+      353,
+      354,
+      355,
+      356,
+      357,
+      358,
+      359,
+      360,
+      361,
+      362,
+      363,
+      364,
+      365,
+      366,
+      367,
+      368,
+      369,
+      370,
+      371,
+      372,
+      373,
+      374,
+      375,
+      376,
+      377,
+      378,
+      379,
+      380,
+      381,
+      382,
+      383,
+      384,
+      385,
+      386,
+      387,
+      388,
+      389,
+      390,
+      391,
+      392,
+      393,
+      394,
+      395,
+      396,
+      397,
+      398,
+      399,
+      400,
+      401,
+      402,
+      403,
+      404,
+      405,
+      406,
+      407,
+      408,
+      409,
+      410,
+      411,
+      412,
+      413,
+      414,
+      415,
+      416,
+      417,
+      418,
+      419,
+      420,
+      421,
+      422,
+      423,
+      424,
+      425,
+      426,
+      427,
+      428,
+      429,
+      430,
+      431,
+      432,
+      433,
+      434,
+      435,
+      436,
+      437,
+      438,
+      439,
+      440,
+      441,
+      442,
+      443,
+      444,
+      445,
+      446,
+      447,
+      448,
+      449,
+      450,
+      451,
+      452,
+      453,
+      454,
+      455,
+      456,
+      457,
+      458,
+      459,
+      460,
+      461,
+      462,
+      463,
+      464,
+      465,
+      466,
+      467,
+      468,
+      469,
+      470,
+      471,
+      472,
+      473,
+      474,
+      475,
+      476,
+      477,
+      478,
+      479,
+      480,
+      481,
+      482,
+      483,
+      484,
+      485,
+      486,
+      487,
+      488,
+      489,
+      490,
+      491,
+      492,
+      493,
+      494,
+      495,
+      496,
+      497,
+      498,
+      499,
+      500,
+      501,
+      502,
+      503,
+      504,
+      505,
+      506,
+      507,
+      508,
+      509,
+      510,
+      511,
+      512,
+      513,
+      514,
+      515,
+      516,
+      517,
+      518,
+      519,
+      520,
+      521,
+      522,
+      523,
+      524,
+      525,
+      526,
+      527,
+      528,
+      529,
+      530,
+      531,
+      532,
+      533,
+      534,
+      535,
+      536,
+      537,
+      538,
+      539,
+      540,
+      541,
+      542,
+      543,
+      544,
+      545,
+      546,
+      547,
+      548,
+      549,
+      550,
+      551,
+      552,
+      553,
+      554,
+      555,
+      556,
+      557,
+      558,
+      559,
+      560,
+      561,
+      562,
+      563,
+      564,
+      565,
+      566,
+      567,
+      568,
+      569,
+      570,
+      571,
+      572,
+      573,
+      574,
+      575,
+      576,
+      577,
+      578,
+      579,
+      580,
+      581,
+      582,
+      583,
+      584,
+      585,
+      586,
+      587,
+      588,
+      589,
+      590,
+      591,
+      592,
+      593,
+      594,
+      595,
+      596,
+      597,
+      598,
+      599,
+      600,
+      601,
+      602,
+      603,
+      604,
+      605,
+      606,
+      607,
+      608,
+      609,
+      610,
+      611,
+      612,
+      613,
+      614,
+      615,
+      616,
+      617,
+      618,
+      619,
+      620,
+      621,
+      622,
+      623,
+      624,
+      625,
+      626,
+      627,
+      628,
+      629,
+      630,
+      631,
+      632,
+      633,
+      634,
+      635,
+      636,
+      637,
+      638,
+      639,
+      640,
+      641,
+      642,
+      643,
+      644,
+      645,
+      646,
+      647,
+      648,
+      649,
+      650,
+      651,
+      652,
+      653,
+      654,
+      655,
+      656,
+      657,
+      658,
+      659,
+      660,
+      661,
+      662,
+      663,
+      664,
+      665,
+      666,
+      667,
+      668,
+      669,
+      670,
+      671,
+      672,
+      673,
+      674,
+      675,
+      676,
+      677,
+      678,
+      679,
+      680,
+      681,
+      682,
+      683,
+      684,
+      685,
+      686,
+      687,
+      688,
+      689,
+      690,
+      691,
+      692,
+      693,
+      694,
+      695,
+      696,
+      697,
+      698,
+      699,
+      700,
+      701,
+      702,
+      703,
+      704,
+      705,
+      706,
+      707,
+      708,
+      709,
+      710,
+      711,
+      712,
+      713,
+      714,
+      715,
+      716,
+      717,
+      718,
+      719,
+      720,
+      721,
+      722,
+      723,
+      724,
+      725,
+      726,
+      727,
+      728,
+      729,
+      730,
+      731,
+      732,
+      733,
+      734,
+      735,
+      736,
+      737,
+      738,
+      739,
+      740,
+      741,
+      742,
+      743,
+      744,
+      745,
+      746,
+      747,
+      748,
+      749,
+      750,
+      751,
+      752,
+      753,
+      754,
+      755,
+      756,
+      757,
+      758,
+      759,
+      760,
+      761,
+      762,
+      763,
+      764,
+      765,
+      766,
+      767,
+      768,
+      769,
+      770,
+      771,
+      772,
+      773,
+      774,
+      775,
+      776,
+      777,
+      778,
+      779
+    ],
+    "missing": [],
+    "new_pairs": [
+      {
+        "index": 707,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 708,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 709,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 710,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 711,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 712,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 713,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 714,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 715,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 716,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 717,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 718,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 719,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 720,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 721,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 722,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 723,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 724,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 725,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 726,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 727,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 728,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 729,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 730,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 731,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 732,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 733,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 734,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 735,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 736,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 737,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 738,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 739,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 740,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 741,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 742,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 743,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 744,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 745,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 746,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 747,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 748,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 749,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 750,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 751,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 752,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 753,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 754,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 755,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 756,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 757,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 758,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 759,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 760,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 761,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 762,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 763,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 764,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 765,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 766,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 767,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 768,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 769,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 770,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 771,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 772,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 773,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 774,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 775,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 776,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 777,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 778,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 779,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      }
+    ],
+    "time_order": {
+      "candidate_before_release": true,
+      "complete": true,
+      "first_candidate_index": 707,
+      "first_release_index": 805,
+      "ordering": "candidate_before_release"
+    }
+  },
+  "total_branch_wall_time_s": 12.210383266000008,
+  "total_policy_calls": 9,
+  "trace_content_sha256": "1ee743b5dbb2a26276e91a754783c8c8239a981bf0c87e270393c27530b72206",
+  "trace_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase2/contact_topology/put_the_cream_cheese_in_the_bowl/0029382e86b78633e15df88aec6b883f2a123ee7cbc066cef061f8b6afd761c7.jsonl.gz",
+  "trace_records": 988,
+  "trace_sha256": "5b4c0d99472de09026ab247f52109cb53cbb581abc2d6bd83ab41060d35940fd",
+  "validation_policy_calls": 1,
+  "zero_injection": true
+}

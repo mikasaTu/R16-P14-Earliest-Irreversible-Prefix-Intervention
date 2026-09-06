@@ -1,0 +1,4293 @@
+{
+  "action_budget": 32,
+  "action_budget_respected": true,
+  "actor_inference_side_effect_free": true,
+  "actual_global_step": 106,
+  "actual_new_recovery_actions": 32,
+  "actual_policy_calls": 2,
+  "actual_prefix_actions": 8,
+  "actual_total_action_steps": 40,
+  "anchor_global_step": 66,
+  "behavior_operator": "rollback_1+fresh_h16",
+  "blocked": false,
+  "chunk_hash": "c9b410bb966757b3468578f1256e61bb1754fbe0162097ac490927ecc9ffe072",
+  "configured_action_budget": 32,
+  "configured_budget": {
+    "action_budget": 32,
+    "policy_call_cap": 8,
+    "tail_horizon": 16
+  },
+  "configured_operator_horizon": 16,
+  "configured_policy_call_cap": 8,
+  "configured_prefix_actions": 8,
+  "configured_tail_horizon": 16,
+  "d4_signatures": {
+    "detection": {
+      "cause_tracker": {
+        "contact_event_indices": [],
+        "ever_stably_lifted": true,
+        "first_violation_offset": null,
+        "gripper_transition_indices": [],
+        "immediate_violation": false,
+        "initial_object_z": 0.935,
+        "injected": false,
+        "injection_contact": false,
+        "post_detection_steps": 0,
+        "previous_gripper": 1.0,
+        "shifted_target_qpos": null,
+        "task": "put_the_cream_cheese_in_the_bowl",
+        "violation": false,
+        "violation_type": null
+      },
+      "cause_tracker_hash": "9b376439718d015739f9ae1f0b41035ec9e96f635452a76f40825a47b96315ce",
+      "complete_signature_hash": "255cf537491f4a3b09c3391452a71c16c00aeb2c58fdecc79ad5de434e022337",
+      "contact_pairs": [
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger1_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger1_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "gripper0_finger2_pad_collision"
+        ],
+        [
+          "plate_1_g10",
+          "table_collision"
+        ],
+        [
+          "plate_1_g2",
+          "table_collision"
+        ],
+        [
+          "plate_1_g3",
+          "table_collision"
+        ],
+        [
+          "plate_1_g4",
+          "table_collision"
+        ],
+        [
+          "plate_1_g5",
+          "table_collision"
+        ],
+        [
+          "plate_1_g6",
+          "table_collision"
+        ],
+        [
+          "plate_1_g7",
+          "table_collision"
+        ],
+        [
+          "plate_1_g8",
+          "table_collision"
+        ],
+        [
+          "plate_1_g9",
+          "table_collision"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ]
+      ],
+      "contact_pairs_hash": "62569a04cb7fde19079f6045cc641671ab1e953e7a2fde30d103ac0cee40733f",
+      "executed_prefix_action_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "executed_prefix_length": 0,
+      "four_state_history_hash": "1a958aef48c5c5cd1bae4ce9cc4c446f6cfa8fa8c8088654e95168d4b51cd058",
+      "gripper_state": 1.0,
+      "manipulated_qpos_hash": "1b7a9cc4ef3210faafb343ea52a914c00407aa4e798db90284078ca925806987",
+      "observation_feature_hash": "5c74cba27d9a07e79bc9ad03f7237a6e96f127277fb5db53290e2fbfac08702a",
+      "obstacle_qpos_hash": null,
+      "robot_qpos_hash": "2e0dd9c412af9ec7eb5478d8c98961800fc99204b433c7c3a42af033cf1b7b07",
+      "robot_qvel_hash": "734a42ff8462f3c5897f5a584e06f14e26e2481997dad66df2b24ef8b69e43bc",
+      "simulator_state_hash": "8fb034d75b94d244df7f4cc14d3422aaa04fef6645bb2f5a3c4ec3fbe57f1486",
+      "target_qpos_hash": "674c331331cd6e13d18cb9b45b743a8360c851009b41ba0239c607fe0f2e8138",
+      "task_phase": {
+        "ever_stably_lifted": true,
+        "gripper_closed": true,
+        "object_height_delta_m": 0.03738706330482988,
+        "post_detection_steps": 0,
+        "task_success": false
+      },
+      "task_phase_hash": "5df33c9ab0cfb9d34b1432233e21d43eb25dfe587fd1a3dcae6ccf08098903a4",
+      "three_action_history_hash": "4fa9ab392b05e35a4ac609640b295cdbf06592bb371f7d41d62c6c45618c59b6"
+    },
+    "final": {
+      "cause_tracker": {
+        "contact_event_indices": [],
+        "ever_stably_lifted": true,
+        "first_violation_offset": null,
+        "gripper_transition_indices": [
+          12
+        ],
+        "immediate_violation": false,
+        "initial_object_z": 0.935,
+        "injected": false,
+        "injection_contact": false,
+        "post_detection_steps": 32,
+        "previous_gripper": 1.0,
+        "shifted_target_qpos": null,
+        "task": "put_the_cream_cheese_in_the_bowl",
+        "violation": false,
+        "violation_type": null
+      },
+      "cause_tracker_hash": "a53f5b58d56d6985aad08107918d2a85d51905466a6586347f931e4456d8012f",
+      "complete_signature_hash": "e17108b74ab7ab981cfd56a83ae4c2815211b81ef9f4cab5cff263ba2982c569",
+      "contact_pairs": [
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "plate_1_g10",
+          "table_collision"
+        ],
+        [
+          "plate_1_g2",
+          "table_collision"
+        ],
+        [
+          "plate_1_g3",
+          "table_collision"
+        ],
+        [
+          "plate_1_g4",
+          "table_collision"
+        ],
+        [
+          "plate_1_g5",
+          "table_collision"
+        ],
+        [
+          "plate_1_g6",
+          "table_collision"
+        ],
+        [
+          "plate_1_g7",
+          "table_collision"
+        ],
+        [
+          "plate_1_g8",
+          "table_collision"
+        ],
+        [
+          "plate_1_g9",
+          "table_collision"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ]
+      ],
+      "contact_pairs_hash": "2d5f8ae967915bc1b44da42bf28019bb21634af8693baa766187c5c138bc050d",
+      "executed_prefix_action_hash": "68bbe7644b91e1874102ee1b33a93aa3a92a6748d44396aaa8e5c0f5a2fc1173",
+      "executed_prefix_length": 8,
+      "four_state_history_hash": "eea1349f94f57711f31d9a9aa7763a8acb58b66ad2a58d7ce335147e3498d84c",
+      "gripper_state": 1.0,
+      "manipulated_qpos_hash": "c64dd83baf021fa94fc174aca77dd38c12b096b432beab1dfbf6b485003b36e5",
+      "observation_feature_hash": "8e42264222c7bead9f9534566b52c75848b8243be251758bb39396ae7e1127af",
+      "obstacle_qpos_hash": null,
+      "robot_qpos_hash": "d2d02cdb5ee162ec5d80f09766c85b7d3a904e8f5744111a7d5e81f45d413cb3",
+      "robot_qvel_hash": "79a520c6aaabba2c8cdb5ae93ff0aa3d8c5dcedc327ec26bc5487913a63b3c4e",
+      "simulator_state_hash": "e20a4402d0656487bca6da6d351f1f38a4267052e0380a8d64a872569c400a21",
+      "target_qpos_hash": "6067e8f3caf5ca9cdb91d9f0e2db6dc455e699f30fb67675ca511b775cf31a5a",
+      "task_phase": {
+        "ever_stably_lifted": true,
+        "gripper_closed": true,
+        "object_height_delta_m": -0.026078552996390947,
+        "post_detection_steps": 32,
+        "task_success": false
+      },
+      "task_phase_hash": "026729b11b4e6dee94eeb6c056f0d0542acd67a6696e61977f14d9f1a5672b91",
+      "three_action_history_hash": "8a90bebb5669dfb0b26d670d48a48f8104bc3738960c940c4923218160f27f1b"
+    },
+    "pre_tail": {
+      "cause_tracker": {
+        "contact_event_indices": [],
+        "ever_stably_lifted": true,
+        "first_violation_offset": null,
+        "gripper_transition_indices": [],
+        "immediate_violation": false,
+        "initial_object_z": 0.935,
+        "injected": false,
+        "injection_contact": false,
+        "post_detection_steps": 0,
+        "previous_gripper": 1.0,
+        "shifted_target_qpos": null,
+        "task": "put_the_cream_cheese_in_the_bowl",
+        "violation": false,
+        "violation_type": null
+      },
+      "cause_tracker_hash": "9b376439718d015739f9ae1f0b41035ec9e96f635452a76f40825a47b96315ce",
+      "complete_signature_hash": "321e276ee3719a6a7872649947659f31ca6cb3742dea844c9c2f2cc8e24b04b0",
+      "contact_pairs": [
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g36",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g37",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g38",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g39",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "akita_black_bowl_1_g40",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ],
+        [
+          "plate_1_g10",
+          "table_collision"
+        ],
+        [
+          "plate_1_g2",
+          "table_collision"
+        ],
+        [
+          "plate_1_g3",
+          "table_collision"
+        ],
+        [
+          "plate_1_g4",
+          "table_collision"
+        ],
+        [
+          "plate_1_g5",
+          "table_collision"
+        ],
+        [
+          "plate_1_g6",
+          "table_collision"
+        ],
+        [
+          "plate_1_g7",
+          "table_collision"
+        ],
+        [
+          "plate_1_g8",
+          "table_collision"
+        ],
+        [
+          "plate_1_g9",
+          "table_collision"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ],
+        [
+          "table_collision",
+          "wine_bottle_1_g3"
+        ]
+      ],
+      "contact_pairs_hash": "c6e2db0cce35a138d9be4191cb57b616b5e1c89ed758875c1561573907e3e03d",
+      "executed_prefix_action_hash": "68bbe7644b91e1874102ee1b33a93aa3a92a6748d44396aaa8e5c0f5a2fc1173",
+      "executed_prefix_length": 8,
+      "four_state_history_hash": "64afb1f0b4e2d319de7d68f28295509052eba158f5c2c0141f86ebec068b78f7",
+      "gripper_state": 1.0,
+      "manipulated_qpos_hash": "bb6456585688ea5f46ff6fe907a8ff527d2607e3d0a66f8c6c004b1ef3cdff86",
+      "observation_feature_hash": "e385288a6752507905365c8b51e962f6830fc8990f3f9e81ff57da3ee37799f0",
+      "obstacle_qpos_hash": null,
+      "robot_qpos_hash": "cd41e4f0fef3d29dcb5d34247efee6b7973a219d9043b89cddf222f81a0d7e00",
+      "robot_qvel_hash": "50e94c3a899f912db79c520be09501c7ee1a1defcc17ad58f3349266f40a24a8",
+      "simulator_state_hash": "53a86d8411504db6a4d9a87c5471e5d2ead459d4b705d50439c83767ffeab568",
+      "target_qpos_hash": "5cc7196abd8a3b1ffab6019ee972ca98e03be88d86d813d9a47d7cb16abc56ae",
+      "task_phase": {
+        "ever_stably_lifted": true,
+        "gripper_closed": true,
+        "object_height_delta_m": -0.013445854523724599,
+        "post_detection_steps": 0,
+        "task_success": false
+      },
+      "task_phase_hash": "69d34f26696df449fd9fe338a711ca02a5a242f9f934b37c9499352f5719cfde",
+      "three_action_history_hash": "2280387b3943d85add424b69eca3d0c917cf81799458b3544667d420d5a62eed"
+    }
+  },
+  "diagnostic_continuation": true,
+  "diagnostic_only": true,
+  "diagnostic_selection_binding": {
+    "input_sha256": "c6eb6484cb6711b6df02716d6ca8c8613bdaee27583ec37184f54b719c8f851d",
+    "original_rank": 1,
+    "protocol_sha256": "2d14427c2391422dd372b0528d6d784d1066d8d059e1405597cfb1954f260c6a"
+  },
+  "diagnostic_selection_receipt_path": "phase1/diagnostic_selection_receipt.json",
+  "diagnostic_selection_receipt_sha256": "5382f401a40a5f0e8f9069cb8c76d577b82fadb6fa6e8f94496f35ca3760e262",
+  "dispatch_process_start_method": "spawn",
+  "dispatch_repeat": 0,
+  "dispatch_seed": 1955447344,
+  "dispatcher_child_exitcode": 0,
+  "dispatcher_pid": 1,
+  "dispatcher_process_start_method": "spawn",
+  "effective_execution_horizon": 16,
+  "effective_new_action_budget": 32,
+  "env_hash": "453239538d25eb10f50b1fa73aff0c5f8f2031cb2519f44b94ed4592a53ec6fa",
+  "error": null,
+  "event_id": "put_the_cream_cheese_in_the_bowl__init070__actor7",
+  "event_instance_id": "put_the_cream_cheese_in_the_bowl__init070__actor7",
+  "formal_positive_evidence_allowed": false,
+  "fresh_environment_created": true,
+  "generator_actor_calls": 1,
+  "generator_actor_seed": 7,
+  "generator_checkpoint_sha256": "821177a82cc470e108082fd3c0f6913983236a2fdf142de2fe51fc37c44240ca",
+  "generator_chunk_hash": "c9b410bb966757b3468578f1256e61bb1754fbe0162097ac490927ecc9ffe072",
+  "init_state_id": 70,
+  "injection_calls": 0,
+  "is_reference": false,
+  "job_id": "dlc1hrmbyia4bc9p",
+  "labels": {
+    "candidate_precedes_release": true,
+    "first_candidate_index": 172,
+    "first_release_index": 337,
+    "ignored_pre_lift_release_indices": [],
+    "label_complete": true,
+    "missing": [],
+    "prerelease_topology_candidate": {
+      "candidate": true,
+      "candidate_indices": [
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223,
+        224,
+        225,
+        226,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236,
+        237,
+        238,
+        239,
+        240,
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        255,
+        256,
+        257,
+        258,
+        259,
+        260,
+        261,
+        262,
+        263,
+        264,
+        265,
+        266,
+        267,
+        268,
+        269,
+        270,
+        271,
+        272,
+        273,
+        274,
+        275,
+        276,
+        277,
+        278,
+        279,
+        280,
+        281,
+        282,
+        283,
+        284,
+        285,
+        286,
+        287,
+        288,
+        289,
+        290,
+        291,
+        292,
+        293,
+        294,
+        295,
+        296,
+        297,
+        298,
+        299,
+        300,
+        301,
+        302,
+        303,
+        304,
+        305,
+        306,
+        307,
+        308,
+        309,
+        310,
+        311
+      ],
+      "first_index": 172,
+      "ignored_pre_anchor_indices": [],
+      "label": "prerelease_object_contact_topology_candidate",
+      "lifted_closed_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223,
+        224,
+        225,
+        226,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236,
+        237,
+        238,
+        239,
+        240,
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        255,
+        256,
+        257,
+        258,
+        259,
+        260,
+        261,
+        262,
+        263,
+        264,
+        265,
+        266,
+        267,
+        268,
+        269,
+        270,
+        271,
+        272,
+        273,
+        274,
+        275,
+        276,
+        277,
+        278,
+        279,
+        280,
+        281,
+        282,
+        283,
+        284,
+        285,
+        286,
+        287,
+        288,
+        289,
+        290,
+        291,
+        292,
+        293,
+        294,
+        295,
+        296,
+        297,
+        298,
+        299,
+        300,
+        301,
+        302,
+        303,
+        304,
+        305,
+        306,
+        307,
+        308,
+        309,
+        310,
+        311,
+        728,
+        729,
+        730,
+        731,
+        732,
+        733,
+        734,
+        735,
+        736,
+        737,
+        738,
+        739,
+        740,
+        741,
+        742,
+        743,
+        744,
+        745,
+        746,
+        747,
+        748,
+        749,
+        750,
+        751,
+        752,
+        753,
+        754,
+        755,
+        756,
+        757,
+        758,
+        759,
+        760,
+        761,
+        762,
+        763,
+        764,
+        765,
+        766,
+        767,
+        768,
+        769,
+        770,
+        771,
+        772,
+        773,
+        774,
+        775,
+        776,
+        777,
+        778,
+        779,
+        780,
+        781,
+        782,
+        783,
+        784,
+        785,
+        786,
+        787,
+        788,
+        789,
+        790,
+        791,
+        792,
+        793,
+        794,
+        795,
+        796,
+        797,
+        798,
+        799,
+        800,
+        801,
+        802,
+        803,
+        804,
+        805,
+        806,
+        807,
+        808,
+        809,
+        810,
+        811,
+        812,
+        813,
+        814,
+        815,
+        816,
+        817,
+        818,
+        819,
+        820,
+        821,
+        822,
+        823,
+        824,
+        825,
+        826,
+        827,
+        828,
+        829,
+        830,
+        831,
+        832,
+        833,
+        834,
+        835,
+        836,
+        837,
+        838,
+        839,
+        840,
+        841,
+        842,
+        843,
+        844,
+        845,
+        846,
+        847,
+        848,
+        849,
+        850,
+        851,
+        852,
+        853,
+        854,
+        855,
+        856,
+        857,
+        858,
+        859,
+        860,
+        861,
+        862,
+        863,
+        864,
+        865,
+        866,
+        867,
+        868,
+        869,
+        870,
+        871,
+        872,
+        873,
+        874,
+        875,
+        876,
+        877,
+        878,
+        879,
+        880,
+        881,
+        882,
+        883,
+        884,
+        885,
+        886,
+        887,
+        888,
+        889,
+        890,
+        891,
+        892,
+        893,
+        894,
+        895,
+        896,
+        897,
+        898,
+        899,
+        900,
+        901,
+        902,
+        903,
+        904,
+        905,
+        906,
+        907,
+        908,
+        909,
+        910,
+        911,
+        912,
+        913,
+        914,
+        915,
+        916,
+        917,
+        918,
+        919,
+        920,
+        921,
+        922,
+        923,
+        924,
+        925,
+        926,
+        927,
+        928,
+        929,
+        930,
+        931,
+        932,
+        933,
+        934,
+        935,
+        936,
+        937,
+        938,
+        939,
+        940,
+        941,
+        942,
+        943,
+        944,
+        945,
+        946,
+        947,
+        948,
+        949,
+        950,
+        951,
+        952,
+        953,
+        954,
+        955,
+        956,
+        957,
+        958,
+        959,
+        960,
+        961,
+        962,
+        963,
+        964,
+        965,
+        966,
+        967,
+        968,
+        969,
+        970,
+        971,
+        972,
+        973,
+        974,
+        975,
+        976,
+        977,
+        978,
+        979,
+        980,
+        981,
+        982,
+        983,
+        984,
+        985,
+        986,
+        987,
+        988,
+        989,
+        990,
+        991,
+        992,
+        993,
+        994,
+        995,
+        996,
+        997,
+        998,
+        999,
+        1000,
+        1001,
+        1002,
+        1003,
+        1004,
+        1005,
+        1006,
+        1007,
+        1008,
+        1009,
+        1010,
+        1011,
+        1012,
+        1013,
+        1014,
+        1015,
+        1016,
+        1017,
+        1018,
+        1019,
+        1020,
+        1021,
+        1022,
+        1023,
+        1024,
+        1025,
+        1026,
+        1027,
+        1028,
+        1029,
+        1030,
+        1031,
+        1032,
+        1033,
+        1034,
+        1035,
+        1036,
+        1037,
+        1038,
+        1039
+      ],
+      "missing": [],
+      "new_pairs": [
+        {
+          "index": 172,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 173,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 174,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 175,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 176,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 177,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 178,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 179,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 180,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 181,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 182,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 183,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 184,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 185,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 186,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 187,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 188,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 189,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 190,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 191,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 192,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 193,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 194,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 195,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 196,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 197,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 198,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 199,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 200,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 201,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 202,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 203,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 204,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 205,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 206,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 207,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 208,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 209,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 210,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 211,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 212,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 213,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 214,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 215,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 216,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 217,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 218,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 219,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 220,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 221,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 222,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 223,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 224,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 225,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 226,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 227,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 228,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 229,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 230,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 231,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 232,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 233,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 234,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 235,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 236,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 237,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 238,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 239,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 240,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 241,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 242,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 243,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 244,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 245,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 246,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 247,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 248,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 249,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 250,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 251,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 252,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 253,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 254,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 255,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 256,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 257,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 258,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 259,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 260,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 261,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 262,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 263,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 264,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 265,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 266,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 267,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 268,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 269,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 270,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 271,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 272,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 273,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 274,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 275,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 276,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 277,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 278,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 279,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 280,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 281,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 282,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 283,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 284,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 285,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 286,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 287,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 288,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 289,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 290,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 291,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 292,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 293,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 294,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 295,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 296,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 297,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 298,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 299,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 300,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 301,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 302,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 303,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 304,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 305,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 306,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 307,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 308,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 309,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 310,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        },
+        {
+          "index": 311,
+          "pair": [
+            "cream_cheese_1_g1",
+            "table_collision"
+          ]
+        }
+      ],
+      "time_order": {
+        "candidate_before_release": true,
+        "complete": true,
+        "first_candidate_index": 172,
+        "first_release_index": 337,
+        "ordering": "candidate_before_release"
+      }
+    },
+    "record_count": 1040,
+    "release_based": {
+      "first_index": 337,
+      "ignored_pre_lift_release_indices": [],
+      "label": "release_outside_original_target",
+      "missing": [],
+      "placement_xy_tolerance_m": 0.06,
+      "release_indices": [
+        337
+      ],
+      "release_violation_indices": [
+        337
+      ],
+      "time_order": {
+        "complete": true,
+        "first_release_index": 337,
+        "first_violation_index": 337,
+        "ignored_pre_lift_release_indices": [],
+        "lift_before_release_required": true
+      },
+      "violation": true,
+      "violation_type": "release_outside_original_target"
+    },
+    "schema_version": 1,
+    "task": "put_the_cream_cheese_in_the_bowl",
+    "time_order": "candidate_before_release"
+  },
+  "missing_provenance": [],
+  "new_idea_generated": false,
+  "operator": "rollback_1+fresh_h16",
+  "pai_run_id": "r16p14-s1-atlas-t0-20260907-r2",
+  "parent_pid": 1,
+  "physics_instrumented": true,
+  "physics_probe_error": null,
+  "physics_step_count": 1000,
+  "pid": 50715,
+  "policy_call_cap": 8,
+  "policy_call_cap_respected": true,
+  "prefix_budget_separate": true,
+  "prefix_k": 8,
+  "process_start_method": "spawn",
+  "reconstruction": {
+    "action_history_exact": true,
+    "actor_inference_side_effect_free": true,
+    "anchor_state_exact": true,
+    "event_chunk_exact": true,
+    "max_anchor_state_error": 0.0,
+    "state_history_exact": true
+  },
+  "recovery_action_hashes": [
+    "a6a9a44669b469ff05ab9e38976dd23a8f2e42b137760054f418e184c44c76de",
+    "3758b326c3a31f3d4e47da4ef4d0bec4897f81ecd44b394f66db7e2be3dc24ba",
+    "03e475bddcc24cfcbf0ffed98ccb85b060882ba33a30ab9b3fce9a85b965f482",
+    "a664038cdfcacd18da58c81ebf1731ec3515225ec3dd1f4fd199c3a765059f43",
+    "386539e2ec7e7b0c463b0ace61f0527a8f8ce4695fa9465c2bfbbed8aa18a85c",
+    "06ce2c9414476b8b12d1bd5239f9d050fa51a72d35113707b35f3a30956218fa",
+    "99199c5eaf777adeb724d39c43842b0a204b6f3dbb05fef5c7f7ebc825ba5627",
+    "f257a3feb3174be46f131989573ddeffb7e598db01ebacba527301b296bc9eaf",
+    "f174712b99a36b39405c136f17eeb7e076bb1eba7e904897b4cfe313ab325529",
+    "d2019a9ddae3c36a50c30758161b14885c2b2bec2ccd894912dc2d52c079df38",
+    "62ddec2b4341234c7b0924fa143ad403a99e091393ce374120805bef6b257d17",
+    "5e020cb8b1cdac96c27b73b614c506ba400073e59ffaaa5110807a79ef71679a",
+    "70d1b13d555dc1255863d8584eddb97069fc3ddf22503b56f429e62576a83368",
+    "0dfddba97fbd96e160ea9d48e39e00c7b2f01b27900ef0792bdfa5d0de477bc8",
+    "28fa2b0cb6a81ad1c8ff8b674dc07234430ce5bd9dfefce818fb894863aa4f2a",
+    "d22ffe22fc133601c9e93b0f4b8440f6945e7dcc26e2426bfe7ad398cefd4580",
+    "59c9bc2d9a6dd0dd4575c2140ce80cc6351c5464e8a0a04c1fdacf45704c7bbd",
+    "014a3c8e910f86c71a8666609846def80324873c8c1bbf32e09058e0266fec81",
+    "763b770e644a1e4cffba1c9428aba70dab162015dd1183620611d04cc95d9971",
+    "4cd5cd66e9cf1c852e6e19c287ff309d80705dda438af6d0a4dee12ca0100047",
+    "341e404eec25073a4d15f0fb86912216e452ca5ebdbc950ca9341b30f22889ac",
+    "4360d85ce7a9d3e6926785424c4742f14329d6c3e2ca386249e33507d98ee603",
+    "27499c0c713fdb2b8179ceca8c567085d74e2ca168b400cd6a7ea478a4c61d22",
+    "73f06836d1eee07cadbe7dfadffa7ea7199b9220fd437c7892289ece0291b3b0",
+    "5fc85b9afad074c5bc5a5f47490fa252ca5f0f338af75f4f04a318f998779673",
+    "2df6fa27cdb74f0c6e3437cf20886566f0ac4e093224165488f8994d545b22da",
+    "078953c6024b52129c7372d3011ac85f9220cb94686df4ae50e950f1a401b980",
+    "31de9c73d928d4815e277e2ef401e2242a1e2f62c96d43868d23584c75be66dd",
+    "08e40aa3532cf7a4a41815dfef133f8e9736e270ceb72bc9330e241acd219012",
+    "d7affd6b6a4d547a3097ab15104da7b4db04d82e6ec7ef2bc82facf4c123bf48",
+    "c29c063335ae9682ac77843e7b597f5ac0cbdf628518cef2fa61b635d6279ee1",
+    "90384aaf280a1678f12c748632a84e4a5e297cfe9b6ab215d21dfdcce8b9510f"
+  ],
+  "recovery_actor_seed": 29,
+  "recovery_checkpoint_sha256": "0cf34a3e535525345306a2b322aae3b1bd6ebd6cd71dc653e2a91393e2b79d1a",
+  "recovery_chunk_hashes": [
+    "9e68b90a91507ca40b74b94e7231ac6226946e13ff1b712a6eea0d9415236f9e",
+    "bad7081f390d3291e338fb56f9af71a3e863d6cdb5a268907617f23ff3bb075c"
+  ],
+  "recovery_policy_calls": 2,
+  "release_based_violation": true,
+  "repeat": 0,
+  "returned_configuration": {
+    "action_budget": null,
+    "operator": "rollback_1+fresh_h16",
+    "policy_call_cap": null,
+    "prefix_k": 8,
+    "recovery_actor_seed": 29,
+    "tail_horizon": null
+  },
+  "runtime_module_hashes": {
+    "assets.py": "8af027b6a775848bc400de22490f4cd82637e6de5861f3b368cbb79db3b7afca",
+    "common.py": "d9a0a292d55100ccbde0c2474bc445529b65108852d4411ffb1ea77b412fa4df",
+    "dispatch.py": "66fbe6a035c5a0039dd5d1515f5eb316394adcfca45459c4c8b5914cc26e1134",
+    "measurement.py": "b31dc34270905c6d76ea342c6a1deef8739c53e8bc9813e38d127ee48aab8c62",
+    "runtime.py": "3203db2452eef4bf6fe8b304eae2b14b1dc7ae80630479317c4610f063cf4417",
+    "runtime_identity.py": "fb7c195cbb4649e26ffd3264a0603067174ed659055b70c79837884642821c56"
+  },
+  "runtime_receipt_sha256": "3d7b252885b4047fb93140c305a3ef4a1d3ec9aa450d90341befd2b7e26a5e44",
+  "runtime_status": "OK",
+  "safe_success": false,
+  "safe_success_unblocked_observation": false,
+  "schema_version": 2,
+  "source_commit": "4bc5f5a840d1fcafa76b4a6db8343230ab8ff184",
+  "split": "evaluation",
+  "status": "COMPLETE",
+  "tail_horizon": 16,
+  "task": "put_the_cream_cheese_in_the_bowl",
+  "task_horizon": 360,
+  "task_horizon_budget_clipped": false,
+  "task_horizon_remaining_after_prefix": 286,
+  "task_success": false,
+  "topology_candidate": {
+    "candidate": true,
+    "candidate_indices": [
+      172,
+      173,
+      174,
+      175,
+      176,
+      177,
+      178,
+      179,
+      180,
+      181,
+      182,
+      183,
+      184,
+      185,
+      186,
+      187,
+      188,
+      189,
+      190,
+      191,
+      192,
+      193,
+      194,
+      195,
+      196,
+      197,
+      198,
+      199,
+      200,
+      201,
+      202,
+      203,
+      204,
+      205,
+      206,
+      207,
+      208,
+      209,
+      210,
+      211,
+      212,
+      213,
+      214,
+      215,
+      216,
+      217,
+      218,
+      219,
+      220,
+      221,
+      222,
+      223,
+      224,
+      225,
+      226,
+      227,
+      228,
+      229,
+      230,
+      231,
+      232,
+      233,
+      234,
+      235,
+      236,
+      237,
+      238,
+      239,
+      240,
+      241,
+      242,
+      243,
+      244,
+      245,
+      246,
+      247,
+      248,
+      249,
+      250,
+      251,
+      252,
+      253,
+      254,
+      255,
+      256,
+      257,
+      258,
+      259,
+      260,
+      261,
+      262,
+      263,
+      264,
+      265,
+      266,
+      267,
+      268,
+      269,
+      270,
+      271,
+      272,
+      273,
+      274,
+      275,
+      276,
+      277,
+      278,
+      279,
+      280,
+      281,
+      282,
+      283,
+      284,
+      285,
+      286,
+      287,
+      288,
+      289,
+      290,
+      291,
+      292,
+      293,
+      294,
+      295,
+      296,
+      297,
+      298,
+      299,
+      300,
+      301,
+      302,
+      303,
+      304,
+      305,
+      306,
+      307,
+      308,
+      309,
+      310,
+      311
+    ],
+    "first_index": 172,
+    "ignored_pre_anchor_indices": [],
+    "label": "prerelease_object_contact_topology_candidate",
+    "lifted_closed_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160,
+      161,
+      162,
+      163,
+      164,
+      165,
+      166,
+      167,
+      168,
+      169,
+      170,
+      171,
+      172,
+      173,
+      174,
+      175,
+      176,
+      177,
+      178,
+      179,
+      180,
+      181,
+      182,
+      183,
+      184,
+      185,
+      186,
+      187,
+      188,
+      189,
+      190,
+      191,
+      192,
+      193,
+      194,
+      195,
+      196,
+      197,
+      198,
+      199,
+      200,
+      201,
+      202,
+      203,
+      204,
+      205,
+      206,
+      207,
+      208,
+      209,
+      210,
+      211,
+      212,
+      213,
+      214,
+      215,
+      216,
+      217,
+      218,
+      219,
+      220,
+      221,
+      222,
+      223,
+      224,
+      225,
+      226,
+      227,
+      228,
+      229,
+      230,
+      231,
+      232,
+      233,
+      234,
+      235,
+      236,
+      237,
+      238,
+      239,
+      240,
+      241,
+      242,
+      243,
+      244,
+      245,
+      246,
+      247,
+      248,
+      249,
+      250,
+      251,
+      252,
+      253,
+      254,
+      255,
+      256,
+      257,
+      258,
+      259,
+      260,
+      261,
+      262,
+      263,
+      264,
+      265,
+      266,
+      267,
+      268,
+      269,
+      270,
+      271,
+      272,
+      273,
+      274,
+      275,
+      276,
+      277,
+      278,
+      279,
+      280,
+      281,
+      282,
+      283,
+      284,
+      285,
+      286,
+      287,
+      288,
+      289,
+      290,
+      291,
+      292,
+      293,
+      294,
+      295,
+      296,
+      297,
+      298,
+      299,
+      300,
+      301,
+      302,
+      303,
+      304,
+      305,
+      306,
+      307,
+      308,
+      309,
+      310,
+      311,
+      728,
+      729,
+      730,
+      731,
+      732,
+      733,
+      734,
+      735,
+      736,
+      737,
+      738,
+      739,
+      740,
+      741,
+      742,
+      743,
+      744,
+      745,
+      746,
+      747,
+      748,
+      749,
+      750,
+      751,
+      752,
+      753,
+      754,
+      755,
+      756,
+      757,
+      758,
+      759,
+      760,
+      761,
+      762,
+      763,
+      764,
+      765,
+      766,
+      767,
+      768,
+      769,
+      770,
+      771,
+      772,
+      773,
+      774,
+      775,
+      776,
+      777,
+      778,
+      779,
+      780,
+      781,
+      782,
+      783,
+      784,
+      785,
+      786,
+      787,
+      788,
+      789,
+      790,
+      791,
+      792,
+      793,
+      794,
+      795,
+      796,
+      797,
+      798,
+      799,
+      800,
+      801,
+      802,
+      803,
+      804,
+      805,
+      806,
+      807,
+      808,
+      809,
+      810,
+      811,
+      812,
+      813,
+      814,
+      815,
+      816,
+      817,
+      818,
+      819,
+      820,
+      821,
+      822,
+      823,
+      824,
+      825,
+      826,
+      827,
+      828,
+      829,
+      830,
+      831,
+      832,
+      833,
+      834,
+      835,
+      836,
+      837,
+      838,
+      839,
+      840,
+      841,
+      842,
+      843,
+      844,
+      845,
+      846,
+      847,
+      848,
+      849,
+      850,
+      851,
+      852,
+      853,
+      854,
+      855,
+      856,
+      857,
+      858,
+      859,
+      860,
+      861,
+      862,
+      863,
+      864,
+      865,
+      866,
+      867,
+      868,
+      869,
+      870,
+      871,
+      872,
+      873,
+      874,
+      875,
+      876,
+      877,
+      878,
+      879,
+      880,
+      881,
+      882,
+      883,
+      884,
+      885,
+      886,
+      887,
+      888,
+      889,
+      890,
+      891,
+      892,
+      893,
+      894,
+      895,
+      896,
+      897,
+      898,
+      899,
+      900,
+      901,
+      902,
+      903,
+      904,
+      905,
+      906,
+      907,
+      908,
+      909,
+      910,
+      911,
+      912,
+      913,
+      914,
+      915,
+      916,
+      917,
+      918,
+      919,
+      920,
+      921,
+      922,
+      923,
+      924,
+      925,
+      926,
+      927,
+      928,
+      929,
+      930,
+      931,
+      932,
+      933,
+      934,
+      935,
+      936,
+      937,
+      938,
+      939,
+      940,
+      941,
+      942,
+      943,
+      944,
+      945,
+      946,
+      947,
+      948,
+      949,
+      950,
+      951,
+      952,
+      953,
+      954,
+      955,
+      956,
+      957,
+      958,
+      959,
+      960,
+      961,
+      962,
+      963,
+      964,
+      965,
+      966,
+      967,
+      968,
+      969,
+      970,
+      971,
+      972,
+      973,
+      974,
+      975,
+      976,
+      977,
+      978,
+      979,
+      980,
+      981,
+      982,
+      983,
+      984,
+      985,
+      986,
+      987,
+      988,
+      989,
+      990,
+      991,
+      992,
+      993,
+      994,
+      995,
+      996,
+      997,
+      998,
+      999,
+      1000,
+      1001,
+      1002,
+      1003,
+      1004,
+      1005,
+      1006,
+      1007,
+      1008,
+      1009,
+      1010,
+      1011,
+      1012,
+      1013,
+      1014,
+      1015,
+      1016,
+      1017,
+      1018,
+      1019,
+      1020,
+      1021,
+      1022,
+      1023,
+      1024,
+      1025,
+      1026,
+      1027,
+      1028,
+      1029,
+      1030,
+      1031,
+      1032,
+      1033,
+      1034,
+      1035,
+      1036,
+      1037,
+      1038,
+      1039
+    ],
+    "missing": [],
+    "new_pairs": [
+      {
+        "index": 172,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 173,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 174,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 175,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 176,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 177,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 178,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 179,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 180,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 181,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 182,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 183,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 184,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 185,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 186,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 187,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 188,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 189,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 190,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 191,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 192,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 193,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 194,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 195,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 196,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 197,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 198,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 199,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 200,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 201,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 202,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 203,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 204,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 205,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 206,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 207,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 208,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 209,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 210,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 211,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 212,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 213,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 214,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 215,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 216,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 217,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 218,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 219,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 220,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 221,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 222,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 223,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 224,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 225,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 226,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 227,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 228,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 229,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 230,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 231,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 232,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 233,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 234,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 235,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 236,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 237,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 238,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 239,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 240,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 241,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 242,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 243,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 244,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 245,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 246,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 247,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 248,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 249,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 250,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 251,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 252,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 253,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 254,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 255,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 256,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 257,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 258,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 259,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 260,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 261,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 262,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 263,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 264,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 265,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 266,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 267,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 268,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 269,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 270,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 271,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 272,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 273,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 274,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 275,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 276,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 277,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 278,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 279,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 280,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 281,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 282,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 283,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 284,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 285,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 286,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 287,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 288,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 289,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 290,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 291,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 292,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 293,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 294,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 295,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 296,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 297,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 298,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 299,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 300,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 301,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 302,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 303,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 304,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 305,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 306,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 307,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 308,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 309,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 310,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      },
+      {
+        "index": 311,
+        "pair": [
+          "cream_cheese_1_g1",
+          "table_collision"
+        ]
+      }
+    ],
+    "time_order": {
+      "candidate_before_release": true,
+      "complete": true,
+      "first_candidate_index": 172,
+      "first_release_index": 337,
+      "ordering": "candidate_before_release"
+    }
+  },
+  "total_branch_wall_time_s": 12.424842718000036,
+  "total_policy_calls": 3,
+  "trace_content_sha256": "e19f8beb7500ad1c55ee1da44242595b7ff48fa0294258937de18eadda5c1b7d",
+  "trace_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase2/contact_topology/put_the_cream_cheese_in_the_bowl/cfbca0b87febac35687f7c6940e7d272736ccc0b926cd03c25d1957bd967e9cb.jsonl.gz",
+  "trace_records": 1040,
+  "trace_sha256": "59d1ee9eccfb04a172c9d09c5369cb333840d0b28b07ae269417094e258aa3ed",
+  "validation_policy_calls": 1,
+  "zero_injection": true
+}
