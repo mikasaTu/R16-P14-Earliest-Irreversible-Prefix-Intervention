@@ -417,11 +417,13 @@ def test_structural_marker_requires_source_proven_horizon_and_never_becomes_nega
     assert any("structural marker" in item for item in unknown_reasons)
 
 
-def test_reused_calibration_requires_phase1_sha_and_only_allowed_appends(tmp_path):
+@pytest.mark.parametrize("source_commit", sorted(acceptance.PHASE1_SOURCE_COMMITS))
+@pytest.mark.parametrize("raw_init", [316, "316"])
+def test_reused_calibration_requires_phase1_sha_and_only_allowed_appends(tmp_path, monkeypatch, source_commit, raw_init):
     prior = {
         "task": TASK_BOWL,
         "event_instance_id": "event",
-        "init_state_id": "316",
+        "init_state_id": raw_init,
         "split": "calibration",
         "generator_actor_seed": 7,
         "recovery_actor_seed": 17,
@@ -434,7 +436,7 @@ def test_reused_calibration_requires_phase1_sha_and_only_allowed_appends(tmp_pat
         "status": "COMPLETE",
         "diagnostic_only": True,
         "safe_success": False,
-        "source_commit": acceptance.PHASE1_SOURCE_COMMIT,
+        "source_commit": source_commit,
         "runtime_receipt_sha256": "c" * 64,
         "trace_path": "/x/phase1/contact_topology/put_the_bowl_on_the_plate/x.jsonl.gz",
     }
@@ -454,7 +456,7 @@ def test_reused_calibration_requires_phase1_sha_and_only_allowed_appends(tmp_pat
         reasons,
         "row",
         selection_sha="a" * 64,
-        phase1_source_commits={acceptance.PHASE1_SOURCE_COMMIT},
+        phase1_source_commits=set(acceptance.PHASE1_SOURCE_COMMITS),
     )
     assert reasons == []
 
@@ -467,9 +469,35 @@ def test_reused_calibration_requires_phase1_sha_and_only_allowed_appends(tmp_pat
         changed_reasons,
         "changed",
         selection_sha="a" * 64,
-        phase1_source_commits={acceptance.PHASE1_SOURCE_COMMIT},
+        phase1_source_commits=set(acceptance.PHASE1_SOURCE_COMMITS),
     )
     assert any("outside allowed" in item for item in changed_reasons)
+
+
+    # Exercise the production caller: normalization must never rewrite raw reuse.
+    raw_path = tmp_path / "phase2" / "shards" / TASK_BOWL / "new.json"
+    current["__source_path"] = str(raw_path)
+    source_key = acceptance._source_key_from_row(current)
+    source = {source_key: {**current, "anchor_global_step": 100}}
+    key = acceptance._row_key(current)
+    monkeypatch.setattr(acceptance, "_read_rows",
+        lambda path, reasons, task: [current] if task == TASK_BOWL else [])
+    monkeypatch.setattr(acceptance, "_all_expected_keys", lambda *_: ({key}, set()))
+    actual_helper = acceptance._validate_reused_calibration
+    observed = []
+    def checked(*args, **kwargs):
+        result = actual_helper(*args, **kwargs)
+        observed.append((result, type(args[1]["init_state_id"]), kwargs["phase1_source_commits"]))
+        return result
+    monkeypatch.setattr(acceptance, "_validate_reused_calibration", checked)
+    acceptance._validate_rows(tmp_path, source, BUDGET, "a" * 64,
+                              set(acceptance.DEFAULT_PHASE2_SOURCE_COMMITS), [])
+    assert observed == [(True, type(raw_init), set(acceptance.PHASE1_SOURCE_COMMITS))]
+    crossed = {**current, "init_state_id": 317}
+    bad = []
+    assert not actual_helper(tmp_path, crossed, bad, "cross-init",
+        phase1_source_commits=set(acceptance.PHASE1_SOURCE_COMMITS))
+    assert any("init_state_id" in reason for reason in bad)
 
 
 def test_full_trace_validation_worker_one_and_two_are_identical(tmp_path):

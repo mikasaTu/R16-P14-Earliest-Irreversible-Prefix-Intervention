@@ -73,7 +73,13 @@ def test_every_bootstrap_rng_uses_declared_seed_and_reports_it(monkeypatch):
     # scope has one crossing and one Spearman bootstrap. Two identical
     # calls are made to check reproducibility. The three partitions per
     # family are retained without adding reverse-direction streams.
-    assert len(calls) == 2 * 2 * (3 + 9 + 9)
+    # Nine additional streams are the three families across two tasks + overall.
+    assert len(calls) == 2 * (2 * (3 + 9 + 9) + 9)
+    for family in first["safe_success_by_family"].values():
+        assert family["bootstrap_replicates"] == 5
+        for scope in [family["overall"], *family["by_task"].values()]:
+            assert scope["bootstrap"]["replicates"] == 5
+            assert scope["bootstrap"]["seed"] == declared_seed
     assert set(calls) == {declared_seed}
     assert set(_reported_bootstrap_seeds(first)) == {declared_seed}
     assert first == second

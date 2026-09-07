@@ -264,7 +264,7 @@ def _prefix_arm_means(event: Mapping[str, Any], prefixes: Sequence[int], operato
     return arms, oracles
 
 
-def _grid_metrics(events: Sequence[Mapping[str, Any]], prefixes: Sequence[int], operators: Sequence[str], actor_count: int, *, include_bootstrap: bool = False) -> dict[str, Any]:
+def _grid_metrics(events: Sequence[Mapping[str, Any]], prefixes: Sequence[int], operators: Sequence[str], actor_count: int, *, include_bootstrap: bool = False, bootstrap_replicates: int = PHASE2_BOOTSTRAP_REPLICATES, bootstrap_seed: int = PHASE2_BOOTSTRAP_SEED) -> dict[str, Any]:
     event_summaries = []
     event_prefix_summaries = []
     prefix_oracles: dict[int, dict[tuple[str, str, str], float]] = defaultdict(dict)
@@ -356,9 +356,9 @@ def _grid_metrics(events: Sequence[Mapping[str, Any]], prefixes: Sequence[int], 
             }
             for key in sorted(cluster_keys)
         ]
-        result["bootstrap"] = _bootstrap_success_means(cluster_rows, operators)
-        result["bootstrap_replicates"] = PHASE2_BOOTSTRAP_REPLICATES
-        result["bootstrap_seed"] = PHASE2_BOOTSTRAP_SEED
+        result["bootstrap"] = _bootstrap_success_means(cluster_rows, operators, replicates=bootstrap_replicates, seed=bootstrap_seed)
+        result["bootstrap_replicates"] = int(bootstrap_replicates)
+        result["bootstrap_seed"] = int(bootstrap_seed)
     return result
 
 
@@ -368,13 +368,15 @@ def _reference_summary(
     prefixes: Sequence[int],
     *,
     include_bootstrap: bool = False,
+    bootstrap_replicates: int = PHASE2_BOOTSTRAP_REPLICATES,
+    bootstrap_seed: int = PHASE2_BOOTSTRAP_SEED,
 ) -> dict[str, Any]:
     if not operators:
         result = {"operators": [], "row_count": 0, "by_task": {}, "selection_eligible": False}
         if include_bootstrap:
             result.update({
-                "bootstrap_replicates": PHASE2_BOOTSTRAP_REPLICATES,
-                "bootstrap_seed": PHASE2_BOOTSTRAP_SEED,
+                "bootstrap_replicates": int(bootstrap_replicates),
+                "bootstrap_seed": int(bootstrap_seed),
             })
         return result
     events, _ = _events(rows, operators=operators)
@@ -384,7 +386,7 @@ def _reference_summary(
         actor_count = max([len(actor_values) for event in task_events for ops in event["values"].values() for actor_values in ops.values()] or [0])
         by_task[task] = _grid_metrics(
             task_events, prefixes, operators, actor_count,
-            include_bootstrap=include_bootstrap,
+            include_bootstrap=include_bootstrap, bootstrap_replicates=bootstrap_replicates, bootstrap_seed=bootstrap_seed,
         )
     result = {
         "operators": list(operators),
@@ -394,8 +396,8 @@ def _reference_summary(
     }
     if include_bootstrap:
         result.update({
-            "bootstrap_replicates": PHASE2_BOOTSTRAP_REPLICATES,
-            "bootstrap_seed": PHASE2_BOOTSTRAP_SEED,
+            "bootstrap_replicates": int(bootstrap_replicates),
+            "bootstrap_seed": int(bootstrap_seed),
         })
     return result
 
@@ -649,7 +651,7 @@ def _crossing_scope(rows: Sequence[Mapping[str, Any]], task: str | None, replica
     return result
 
 
-def _family_success(events: Sequence[Mapping[str, Any]], operators: Sequence[str]) -> dict[str, Any]:
+def _family_success(events: Sequence[Mapping[str, Any]], operators: Sequence[str], *, replicates: int = PHASE2_BOOTSTRAP_REPLICATES, seed: int = PHASE2_BOOTSTRAP_SEED) -> dict[str, Any]:
     per_event = []
     for event in events:
         arms, oracles = _prefix_arm_means(event, PHASE2_PREFIXES, operators)
@@ -666,7 +668,7 @@ def _family_success(events: Sequence[Mapping[str, Any]], operators: Sequence[str
             "individual_arm_means": dict(arms), "cluster_count": len(cluster_rows),
             "event_count": len(selected),
             "estimand": "family oracle is the mean over prefixes of the per-prefix max operator after actor aggregation; event means are averaged within (task,init_state_id) clusters with equal cluster weight",
-            "bootstrap": _bootstrap_success_means(cluster_rows, operators),
+            "bootstrap": _bootstrap_success_means(cluster_rows, operators, replicates=replicates, seed=seed),
         }
     tasks = sorted({_text(row["task"]) for row in per_event}, key=_sort)
     return {
@@ -674,8 +676,8 @@ def _family_success(events: Sequence[Mapping[str, Any]], operators: Sequence[str
         "by_task": {task: scope([row for row in per_event if row["task"] == task]) for task in tasks},
         "overall": scope(per_event), "per_event": per_event,
         "selection_eligible": False,
-        "bootstrap_replicates": PHASE2_BOOTSTRAP_REPLICATES,
-        "bootstrap_seed": PHASE2_BOOTSTRAP_SEED,
+        "bootstrap_replicates": int(replicates),
+        "bootstrap_seed": int(seed),
     }
 
 
@@ -751,9 +753,9 @@ def analyze_crossing(rows: Iterable[Mapping[str, Any]], split: str = "evaluation
         bootstrap_p95 = float(np.quantile(bootstrap_draws, .95)) if bootstrap_draws else None
         null_by_task[task] = {"family_A_point_p95": a.get("point_p95"), "family_B_point_p95": b.get("point_p95"), "point_p95": point_p95, "bootstrap_null_p95": bootstrap_p95, "p95": bootstrap_p95, "bootstrap_null_draws": bootstrap_draws, "point_estimates": values, "partition_count": len(values), "null_draw_count": len(bootstrap_draws)}
     split_half_null = {"family_A": half_a, "family_B": half_b, "by_task": null_by_task, "bootstrap_seed": int(seed), "method": "for each task, merge the three 10000-draw cluster-bootstrap distributions from family A with the three from family B and take one 95th percentile; partition point estimates are descriptive only, and reverse directions are not duplicated"}
-    family_success = {"A": _family_success(events, FAMILY_A), "B": _family_success(events, FAMILY_B), "full": _family_success(events, FAMILY_FULL)}
+    family_success = {"A": _family_success(events, FAMILY_A, replicates=replicates, seed=seed), "B": _family_success(events, FAMILY_B, replicates=replicates, seed=seed), "full": _family_success(events, FAMILY_FULL, replicates=replicates, seed=seed)}
     reference_ops = sorted({_text(row["operator"]) for row in usable if _text(row["operator"]) not in OPERATORS}, key=_sort)
-    references = _reference_summary(usable, reference_ops, PHASE2_PREFIXES, include_bootstrap=True)
+    references = _reference_summary(usable, reference_ops, PHASE2_PREFIXES, include_bootstrap=True, bootstrap_replicates=replicates, bootstrap_seed=seed)
     references.update({"retained_separately": True, "used_for_selection": False})
     gate_by_task = {}
     for task, metrics in by_task.items():

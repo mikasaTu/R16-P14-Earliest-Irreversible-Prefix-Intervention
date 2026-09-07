@@ -57,8 +57,12 @@ BUDGETS = tuple(
 )
 REFERENCE_OPERATORS = tuple(REFERENCE_PREFIXES)
 PHASE1_SOURCE_COMMIT = "a0888d751117cbf7c5a73080d1ee1f421689e8bf"
+PHASE1_SOURCE_COMMITS = frozenset({
+    PHASE1_SOURCE_COMMIT,
+    "93872b41ad48d24e1c6cb46d8c46690dae359b62",
+})
 DEFAULT_PHASE2_SOURCE_COMMITS = frozenset(
-    {"93872b41ad48d24e1c6cb46d8c46690dae359b62"}
+    {"4bc5f5a840d1fcafa76b4a6db8343230ab8ff184"}
 )
 DIAGNOSTIC_DOC_SHA256 = (
     "2d14427c2391422dd372b0528d6d784d1066d8d059e1405597cfb1954f260c6a"
@@ -697,9 +701,9 @@ def _validate_reused_calibration(
                     raise ValueError(f"reused branch key mismatch {name}")
             elif previous[name] != row[name]:
                 raise ValueError(f"reused branch key mismatch {name}")
-        prior_sources = set(phase1_source_commits or {PHASE1_SOURCE_COMMIT})
+        prior_sources = set(PHASE1_SOURCE_COMMITS if phase1_source_commits is None else phase1_source_commits)
         # A direct helper caller may supply a synthetic allowed set.  The
-        # complete acceptance path always passes the frozen a088 set.
+        # complete acceptance path always passes both frozen Phase-1 sources.
         if phase1_source_commits is None and allowed_source_commits:
             if PHASE1_SOURCE_COMMIT not in allowed_source_commits:
                 prior_sources = set(allowed_source_commits)
@@ -1330,7 +1334,7 @@ def _validate_rows(
                 if normalized.get("trace_path") is not None and normalized.get("trace_sha256") is not None:
                     raise ValueError("structural row cannot provide a trace")
                 if "source_commit" in normalized and normalized["source_commit"] not in (
-                    {PHASE1_SOURCE_COMMIT} | set(phase2_source_commits)
+                    set(PHASE1_SOURCE_COMMITS) | set(phase2_source_commits)
                 ):
                     raise ValueError("structural source_commit is not allowed")
             else:
@@ -1357,12 +1361,12 @@ def _validate_rows(
                         raise ValueError("only calibration rows may be reused")
                     if not _validate_reused_calibration(
                         input_root,
-                        normalized,
+                        item,  # Compare immutable raw fields before normalization.
                         reasons,
                         label,
                         selection_sha=selection_sha,
-                        allowed_source_commits={PHASE1_SOURCE_COMMIT} | set(phase2_source_commits),
-                        phase1_source_commits={PHASE1_SOURCE_COMMIT},
+                        allowed_source_commits=set(PHASE1_SOURCE_COMMITS) | set(phase2_source_commits),
+                        phase1_source_commits=set(PHASE1_SOURCE_COMMITS),
                     ):
                         raise ValueError("reused calibration evidence failed")
                 elif source_commit not in phase2_source_commits:
