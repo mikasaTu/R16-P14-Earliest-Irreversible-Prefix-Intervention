@@ -2,11 +2,11 @@
 
 ## 当前结论
 
-Phase0A、600条Phase0B clean rollout、全部19440条Phase1可用请求已执行。两个Phase1 r2作业均为Succeeded，完整键、源身份、压缩文件SHA和D4分组验收PASS；逐物理步的完整trace验收也已PASS；整个S1仍需完成Phase2。
+Phase0A、600条Phase0B clean rollout、全部19440条Phase1请求及7128条Phase2请求均已执行并保存。K1、K2、K3均未通过；没有建立非平凡算子相对性，不启动S2。
 
-K1不通过：cream的calibration/evaluation合格事件为19/23，bowl为11/13，均低于每侧25。K2九档无共同工作区：bowl最高oracle-best为22.6667%，对应最大gap为13.3333pp，低于25%和15pp门槛；原计划每任务20个calibration事件的样本要求也未满足。
+K1：cream calibration/evaluation合格事件19/23，bowl11/13，均低于每侧25。K2：bowl九档最高oracle-best22.6667%、最大gap13.3333pp，低于25%和15pp门槛。K3 evaluation：cream/bowl两族均定义事件12/5，minority crossing均0、95% CI均[0,0]，Spearman均1；全部数值条件均未满足。按原数值规则输出FAIL / MONOTONE_RESCALING_ONLY。由于K1/K2未通过且both-defined远少于30，诊断解释为INSUFFICIENT_SUPPORT / NOT_ESTABLISHED_LOW_SUPPORT；不能把这次小支持观测外推成普遍单调性证明。
 
-按用户正文“不能因为一个gate不到就停止验证其他实验”继续独立诊断Phase2。正式selection receipt保留BLOCKED/null；在部分calibration数据之后封存的DIAGNOSTIC_ATLAS_CONTINUATION.md规定，仅按原calibration排序选择独立诊断预算，发布并验证真实Git提交后才打开evaluation。该补充不是事前预注册，不能冒充正式K1/K2通过。独立选择与真实Git证明已发布并验证，evaluation已解封，Phase2正在执行；K3尚无完整结果，不启动S2。
+用户正文“不能因为一个gate不到就停止验证其他实验”覆盖附件的停止条款，因此完成全部可用事件矩阵。正式selection receipt仍为BLOCKED/null；在部分calibration数据之后封存的DIAGNOSTIC_ATLAS_CONTINUATION.md规定按原calibration排序选择独立诊断预算，真实Git提交核验后才打开evaluation。该补充不是事前预注册，不代表正式K1/K2通过。原计划每任务20个calibration事件未达到；没有补样、使用reserve或更改split。
 
 ## 冻结设计与运行身份
 
@@ -97,11 +97,76 @@ bowl一个事件anchor316/320使部分prefix超出horizon，产生324 core+54 re
 
 六条release_based_violation均为false，成败差异来自task_success。这些cream成功记录在gripper闭合时就满足环境谓词，不等于已经完成真实释放后稳定放置。hold/rollback的prelude计入新动作预算；六条任务剩余horizon均未裁剪，故这些配对不能归因于隐藏的任务horizon截断。第一分叉动作后的即时contact set仍相同，不能用“接触拓扑立刻改变”解释；差异体现为随后的状态、动作历史、release时点与接触演化。以上是选定匹配案例，不能据此确定摩擦、冲量、滑移等未测量中介，也不能外推为全部事件的普遍规律。
 
-## Phase2：诊断选择已封存，正在执行
+## Phase2：非嵌套算子族完整诊断
 
-选择提交为6ae128f20e68bcd83b6a6da5c8e2841b70551a58，真实Git证明提交为4bc5f5a840d1fcafa76b4a6db8343230ab8ff184。canonical与实际CPFS运行目录的诊断准入都已PASS（UTC 2026-09-06 23:03:49），之后才读取evaluation。诊断预算固定tail16/action32/cap8，fallback_used=true，原K2数值FAIL。两个atlas作业已提交并进入Running，尚无完整K3数值、两族成功率或crossing结论。
+选择提交6ae128f20e68bcd83b6a6da5c8e2841b70551a58；真实Git证明及实际atlas源码4bc5f5a840d1fcafa76b4a6db8343230ab8ff184。canonical与实际CPFS目录于UTC 2026-09-06 23:03:49通过诊断准入，之后才读取evaluation。预算固定tail16/action32/cap8，fallback_used=true，原K2仍FAIL。
 
-本轮使用全部66个可用calibration+evaluation事件，四算子、八prefix、三恢复seed、四参考臂，共7128请求，其中2160个同配置calibration请求可复用Phase1原始证据，预计4968新请求。真实horizon越界继续单独保存。主统计split为evaluation；calibration仅描述性并列。U_A、U_B、U_full、max-k且None不补值、全部seed split-half划分、10000次(task,init) cluster bootstrap均保持冻结定义。
+使用全部66个calibration+evaluation事件、四算子、八prefix、三恢复seed及四参考臂，共7128请求：7050 COMPLETE、78真实horizon越界。2160条复用Phase1同配置原始证据（2118 COMPLETE、42越界），4968条新请求（4932 COMPLETE、36越界）。core6336、reference792；完整事件支持排除bowl anchor316的一个calibration事件后，共65事件、7020行（6240 core、780 reference），该排除不影响evaluation。所有请求与越界记录均保留。
+
+U_A={fresh_h4, hold_1+fresh_h4}，U_B={fresh_h16, rollback_1+fresh_h16}，U_full为并集。每(event,k,operator)先平均3个恢复seed，以至少2/3成功判恢复，族内取OR；k*取所有恢复点的最大k，None不填补。k*并不要求较小prefix连续可恢复，非单调prefix不能改成第一次失败。两族oracle成功率是在每个prefix取族内最大seed均值，再依次对prefix、事件、init平均；它是事后族能力摘要，不是可部署的选臂策略。
+
+### Evaluation主结果与K3
+
+| 任务 | 事件 / init cluster | both-defined | 双缺失 / 单缺失 | crossing A / B | minority及95% CI | Spearman及95% CI | split-half零分布p95 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| cream | 23 / 19 | 12 | 8 / 3 | 8.333% / 0.000% | 0% [0,0] | 1 [1,1] | 0.000% |
+| bowl | 13 / 11 | 5 | 6 / 2 | 20.000% / 0.000% | 0% [0,0] | 1 [1,1] | 25.000% |
+
+K3要求每任务both-defined≥30、minority≥15%、其CI下界严格大于零分布p95、Spearman≤0.8。两任务四项均未满足。Spearman bootstrap中常量/无可计算相关性的draw保留undefined：cream1098/10000、bowl703/10000，CI基于其余defined draws；不能把[1,1]误读为没有抽样不确定性。
+
+噪声地板枚举3个唯一singleton/complement划分：7 | 17,29；17 | 7,29；29 | 7,17。singleton要求1/1，双seed要求2/2；两族各3划分，每划分10000次(task,init) cluster bootstrap，共每任务60000个零分布draw，并保留逐划分点值、全draw及p95。相同族内噪声机制不应与跨族证据混用。所有统计使用seed216214；crossing点估计是both-defined事件均值，bootstrap重采样init并保留该init全部事件，prefix从未作为独立样本。
+
+### 绝对safe success（%及95% cluster CI）
+
+**Evaluation**
+
+| 任务 | U_A | U_B | U_full |
+|---|---:|---:|---:|
+| cream | 55.702 [38.816, 73.136] | 49.452 [31.138, 68.311] | 58.991 [42.215, 76.316] |
+| bowl | 23.864 [4.924, 46.591] | 27.399 [8.333, 50.126] | 29.167 [10.227, 51.515] |
+
+| 任务 | fresh_h4 | hold+fresh_h4 | fresh_h16 | rollback+fresh_h16 |
+|---|---:|---:|---:|---:|
+| cream | 55.154 [37.939, 72.807] | 23.355 [12.171, 36.294] | 49.452 [31.138, 68.311] | 3.070 [0.877, 5.702] |
+| bowl | 20.202 [3.409, 41.414] | 16.793 [2.778, 33.460] | 20.455 [1.136, 42.424] | 14.773 [4.536, 27.273] |
+
+| 任务 | immediate_fresh | fixed_delay_2 | fixed_delay_4 | fixed_delay_8 |
+|---|---:|---:|---:|---:|
+| cream | 48.246 [29.825, 67.544] | 46.491 [28.048, 66.667] | 46.491 [27.193, 66.667] | 49.123 [29.825, 69.298] |
+| bowl | 24.242 [3.030, 48.485] | 21.212 [0.000, 45.455] | 22.222 [0.000, 45.455] | 23.232 [0.000, 47.475] |
+
+**Calibration，仅描述性**
+
+| 任务 | U_A | U_B | U_full |
+|---|---:|---:|---:|
+| cream | 51.823 [33.333, 70.833] | 51.172 [31.377, 71.357] | 55.859 [37.106, 74.870] |
+| bowl | 18.750 [3.750, 39.177] | 14.583 [2.917, 32.500] | 20.833 [5.833, 41.250] |
+
+| 任务 | fresh_h4 | hold+fresh_h4 | fresh_h16 | rollback+fresh_h16 |
+|---|---:|---:|---:|---:|
+| cream | 51.432 [32.812, 70.703] | 23.177 [10.417, 38.281] | 50.651 [30.859, 70.833] | 4.036 [1.042, 8.203] |
+| bowl | 13.333 [1.667, 32.917] | 17.083 [2.500, 37.500] | 11.667 [0.000, 29.583] | 7.917 [1.250, 17.500] |
+
+| 任务 | immediate_fresh | fixed_delay_2 | fixed_delay_4 | fixed_delay_8 |
+|---|---:|---:|---:|---:|
+| cream | 48.958 [30.208, 67.708] | 48.958 [29.167, 68.750] | 53.125 [32.292, 73.958] | 51.042 [30.208, 72.917] |
+| bowl | 10.000 [0.000, 23.333] | 10.000 [0.000, 23.333] | 6.667 [0.000, 20.000] | 10.000 [0.000, 30.000] |
+
+Calibration完整支持为cream19事件/16init、bowl10事件/10init。both-defined分别10/2，双缺失5/6、单缺失4/2；crossing A/B分别0/20%与50%/0，minority仍均0，CI[0,0]。Spearman cream0.993808，bowl因常量而无定义；零分布p95分别10%与0。calibration不能与evaluation合并增加K3支持，也不能作为选择后的独立确认性证据。
+
+### 边界升降对应的实际算子与阈值
+
+独立提取后，主线程从480条原始shard重算全部5个both-defined且边界不同事件的8点序列，并逐文件绑定SHA；全部一致。证据为phase2/mechanism_boundary_parent_acceptance.json。
+
+| split / 任务 / init / generator seed | kA / kB | 在较高边界达标的算子 | 边界处机制事实 |
+|---|---:|---|---|
+| evaluation / cream / 057 / 29 | 8 / 2 | fresh_h4 | k8为fresh4 2/3、fresh16 1/3；两前导臂0/3，因此A较大来自重规划间隔差异。|
+| evaluation / bowl / 084 / 17 | 6 / 4 | hold+fresh_h4 | k6 hold 2/3，fresh4/fresh16均0/3、rollback1/3；B在k4由rollback3/3定义。|
+| calibration / bowl / 031 / 29 | 16 / 10 | fresh_h4与hold | k16分别2/3、2/3，fresh16 1/3、rollback0/3；B在k10由rollback2/3定义。|
+| calibration / cream / 023 / 7 | 8 / 12 | fresh_h16 | k12 fresh16 2/3、fresh4 1/3，其余0/3。|
+| calibration / cream / 032 / 7 | 8 / 14 | fresh_h16 | k14 fresh16 2/3、fresh4 1/3，其余0/3。|
+
+两例evaluation的边界差异均朝A方向，所以其minority crossing为0；不能把calibration的反方向事件移入evaluation补出双向交叉。bowl084的A仅在k6可恢复，B仅在k4可恢复；cream023的A在k2和k8可恢复，中间失败。由此可见max-k摘要并不是“所有更早点都安全”的证据。阈值计数解释了边界数值如何产生；hold/rollback的状态与动作变化机理见前述完整配对trace，不能仅凭2/3与1/3的计数断言具体力学因果。
 
 ## 工程故障、资源与证据
 
@@ -117,14 +182,22 @@ bowl一个事件anchor316/320使部分prefix超出horizon，产生324 core+54 re
 | dlc4vt6h6pcw6jzk | bowl grid r1 | Stopped，3133 COMPLETE、378结构越界、1超时、22取消 |
 | dlcgtvdvu94wlto1 | cream grid r2 | Succeeded，12312/12312 |
 | dlc1n05o22ewi5dx | bowl grid r2 | Succeeded，7128/7128 |
-| dlc1hrmbyia4bc9p | cream诊断atlas r2 | Running，待完整落盘验收 |
-| dlc1ill43ufm4eny | bowl诊断atlas r2 | Running，待完整落盘验收 |
+| dlc1hrmbyia4bc9p | cream诊断atlas r2 | Succeeded，4536/4536 |
+| dlc1ill43ufm4eny | bowl诊断atlas r2 | Succeeded，2592/2592 |
 
 r1父进程先join再Queue.get，较大结果导致feeder阻塞；2MiB CPU反例复现，修复为先drain再join。46个失败/取消尝试和存在的11条trace在两job终态后逐SHA归档，7029 COMPLETE及378结构行保留，只重试相同请求。原超时请求重跑成功，结果pickle342396字节，新旧trace解压后15225576字节逐字节一致。只有IPC顺序改变，runtime/measurement/actor/seed/预算不变；兼容许可绑定唯一旧/新dispatch SHA。
 
 统计复核发现未声明的bootstrap seed偏移，已在读取evaluation前统一为实际传入seed216214，10000次和统计定义未变；原PREREG/AMENDMENT没有被改写。诊断入口绑定真实Git object proof、协议SHA与calibration summary SHA，并重算选择结果。CPU回归与完整性回执按各自源提交保存，不重复累加测试数。
 
-资源保持最多2job、每job2×A800/24CPU/200Gi，逐JobId核验robot quota下UseOversoldResource=true。截至Phase1完成保守累计9.064916 GPU小时，含失败启动、排队与dev14预留0.5 GPU小时；总上限20，控制器19.8提前停止。北京时间09:25/19:25起拒绝提交并停止本任务精确job，以覆盖09:30–09:40与19:30–19:40禁跑窗，:40后按持久分片恢复。
+资源保持最多2job、每job2×A800/24CPU/200Gi，逐JobId核验robot quota下UseOversoldResource=true。Phase2完整验收PASS：7128个精确请求键、7050条COMPLETE trace、全部522个可行(event,k) D4组与复用源身份通过；164项CPU测试通过。复用验收修复仅将原始字段比较放在类型规范化之前，并明确保留两个已冻结Phase1来源，未知来源及跨init/改结果仍拒绝；原始数据未变。
+
+全部作业结束后保守累计11.286941 GPU小时，含失败启动、排队与dev14预留0.5 GPU小时；总上限20，控制器19.8提前停止。北京时间09:25/19:25起拒绝提交并停止本任务精确job，以覆盖09:30–09:40与19:30–19:40禁跑窗，:40后按持久分片恢复。
+
+全部作业在北京时间08:00前终态，未跨越本轮禁跑窗；08:09确认所有12个历史job终态后，精确核对PID/manifest并停止本任务两个控制器，已回读进程退出，无后续提交计划。
+
+600条源轨迹全量审计PASS：cream 1,936,116条、bowl 1,837,160条trace记录，逐条检查25个physics步+action末步、完整geom pair集合、哈希、零注入身份及离线标签重算。标签的记录范围是事件anchor后缀；成功后被丢弃的候选anchor按记录范围核对，未将其误当完整trace长度。完整源trace长度单独验证。
+
+发布校验接受原始记录的artifact-relative路径phase1/diagnostic_selection_receipt.json及同文件的repo-relative路径，严格SHA与Git证明不变；错误路径、跨目录路径和错误SHA均拒绝。
 
 原始shard和trace逐文件SHA发布；冗余大JSONL同时保留完整无损gzip与带raw shard SHA索引的精简表，统计使用外部原始完整数据。SHA256SUMS覆盖所有发布产物；verify脚本PASS只证明证据完整性，不等于科学主张成功。
 
@@ -134,4 +207,4 @@ r1父进程先join再Queue.get，较大结果导致feeder阻塞；2MiB CPU反例
 
 ## GitHub发布检查点
 
-[main代码与证据](https://github.com/mikasaTu/R16-P14-Earliest-Irreversible-Prefix-Intervention/tree/main/experiments/r16_p14_stage2f)；Phase1全量发布6ae128f2，证明发布4bc5f5a8，调度模板兼容修正dfb543a5。Phase1完整性验证40350文件PASS，CPU157项PASS。完整Phase2原始分支、统计与最终报告将在验收后继续提交main。
+[main代码与证据](https://github.com/mikasaTu/R16-P14-Earliest-Irreversible-Prefix-Intervention/tree/main/experiments/r16_p14_stage2f)；Phase1全量发布6ae128f2，证明发布4bc5f5a8，调度模板兼容修正dfb543a5。Phase1完整性验证40350文件PASS；最终CPU套件164项PASS（34.82秒），完整Phase2原始分支、统计、验收及本报告随最终main检查点发布。最终提交SHA与云文档回读在发布回执中绑定。

@@ -1,12 +1,885 @@
 {
+  "blocked": false,
+  "bootstrap_replicates": 10000,
+  "bootstrap_seed": 216214,
+  "calibration_split_is_descriptive_only": true,
+  "confirmatory": false,
+  "diagnostic_continuation": true,
+  "evaluation_read": true,
+  "excluded_event_count_by_task_split": {
+    "put_the_bowl_on_the_plate": {
+      "calibration": 1,
+      "evaluation": 0
+    },
+    "put_the_cream_cheese_in_the_bowl": {
+      "calibration": 0,
+      "evaluation": 0
+    }
+  },
+  "excluded_events": [
+    {
+      "event_instance_id": "put_the_bowl_on_the_plate__init018__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "18",
+      "reason": "PrefixOutsideTaskHorizon",
+      "split": "calibration",
+      "task": "put_the_bowl_on_the_plate"
+    }
+  ],
   "phase": "phase2",
-  "execution_status": "NOT_RUN",
-  "blocker": "BLOCKED_BY_FROZEN_SPAWN_ZERO_INJECTION_CONTRACT",
-  "gate": "K3",
-  "gate_status": "NOT_EVALUATED",
-  "all_planned_experiments_completed": false,
-  "observations": null,
-  "rollouts": 0,
-  "gpu_hours": 0.0,
-  "reason": "Static preflight found forbidden injection in the mandated frozen branch dispatcher before any Phase-0B data collection. Scientific gate continuation does not override the zero-injection stop rule."
+  "primary_split": "evaluation",
+  "row_counts": {
+    "atlas_rows": 6336,
+    "reference_rows": 792,
+    "structural_rows": 78,
+    "support_rows": 7020
+  },
+  "runtime_binding": {
+    "allowed_source_commits": [
+      "4bc5f5a840d1fcafa76b4a6db8343230ab8ff184",
+      "93872b41ad48d24e1c6cb46d8c46690dae359b62",
+      "a0888d751117cbf7c5a73080d1ee1f421689e8bf"
+    ],
+    "expected_runtime_receipt_sha256": "3d7b252885b4047fb93140c305a3ef4a1d3ec9aa450d90341befd2b7e26a5e44",
+    "job_bindings_by_task": {
+      "put_the_bowl_on_the_plate": [
+        {
+          "job_id": "dlc1ill43ufm4eny",
+          "pai_run_id": "r16p14-s1-atlas-t1-20260907-r2"
+        },
+        {
+          "job_id": "dlc1n05o22ewi5dx",
+          "pai_run_id": "r16p14-s1-grid-t1-20260907-r2"
+        },
+        {
+          "job_id": "dlc4vt6h6pcw6jzk",
+          "pai_run_id": "r16p14-s1-grid-t1-20260907-r1"
+        }
+      ],
+      "put_the_cream_cheese_in_the_bowl": [
+        {
+          "job_id": "dlc14obea2cugtbf",
+          "pai_run_id": "r16p14-s1-grid-t0-20260907-r1"
+        },
+        {
+          "job_id": "dlc1hrmbyia4bc9p",
+          "pai_run_id": "r16p14-s1-atlas-t0-20260907-r2"
+        },
+        {
+          "job_id": "dlcgtvdvu94wlto1",
+          "pai_run_id": "r16p14-s1-grid-t0-20260907-r2"
+        }
+      ]
+    },
+    "observed_source_commits": [
+      "4bc5f5a840d1fcafa76b4a6db8343230ab8ff184",
+      "93872b41ad48d24e1c6cb46d8c46690dae359b62",
+      "a0888d751117cbf7c5a73080d1ee1f421689e8bf"
+    ],
+    "runtime_receipts_by_source_commit": {
+      "4bc5f5a840d1fcafa76b4a6db8343230ab8ff184": [
+        "3d7b252885b4047fb93140c305a3ef4a1d3ec9aa450d90341befd2b7e26a5e44"
+      ],
+      "93872b41ad48d24e1c6cb46d8c46690dae359b62": [
+        "3d7b252885b4047fb93140c305a3ef4a1d3ec9aa450d90341befd2b7e26a5e44"
+      ],
+      "a0888d751117cbf7c5a73080d1ee1f421689e8bf": [
+        "3d7b252885b4047fb93140c305a3ef4a1d3ec9aa450d90341befd2b7e26a5e44"
+      ]
+    }
+  },
+  "schema_version": 1,
+  "selected_budget": {
+    "action_budget": 32,
+    "policy_call_cap": 8,
+    "tail_horizon": 16
+  },
+  "selection_receipt_sha256": "5382f401a40a5f0e8f9069cb8c76d577b82fadb6fa6e8f94496f35ca3760e262",
+  "source_event_counts": {
+    "put_the_bowl_on_the_plate": {
+      "calibration": 11,
+      "evaluation": 13
+    },
+    "put_the_cream_cheese_in_the_bowl": {
+      "calibration": 19,
+      "evaluation": 23
+    }
+  },
+  "source_event_references": [
+    {
+      "anchor_global_step": 146,
+      "event_instance_id": "put_the_bowl_on_the_plate__init017__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "17",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 316,
+      "event_instance_id": "put_the_bowl_on_the_plate__init018__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "18",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 83,
+      "event_instance_id": "put_the_bowl_on_the_plate__init019__actor17",
+      "generator_actor_seed": 17,
+      "init_state_id": "19",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 118,
+      "event_instance_id": "put_the_bowl_on_the_plate__init022__actor17",
+      "generator_actor_seed": 17,
+      "init_state_id": "22",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 255,
+      "event_instance_id": "put_the_bowl_on_the_plate__init027__actor17",
+      "generator_actor_seed": 17,
+      "init_state_id": "27",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 111,
+      "event_instance_id": "put_the_bowl_on_the_plate__init028__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "28",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 302,
+      "event_instance_id": "put_the_bowl_on_the_plate__init030__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "30",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 172,
+      "event_instance_id": "put_the_bowl_on_the_plate__init031__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "31",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 158,
+      "event_instance_id": "put_the_bowl_on_the_plate__init034__actor17",
+      "generator_actor_seed": 17,
+      "init_state_id": "34",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 79,
+      "event_instance_id": "put_the_bowl_on_the_plate__init046__actor7",
+      "generator_actor_seed": 7,
+      "init_state_id": "46",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 81,
+      "event_instance_id": "put_the_bowl_on_the_plate__init048__actor7",
+      "generator_actor_seed": 7,
+      "init_state_id": "48",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 81,
+      "event_instance_id": "put_the_bowl_on_the_plate__init052__actor7",
+      "generator_actor_seed": 7,
+      "init_state_id": "52",
+      "source_file_sha256": "4785d8a92c59f47ef0bcba40d608153fa300bb96e6e56cfc6b72a98da12e42f3",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_bowl_on_the_plate/init052__actor7.json",
+      "split": "evaluation",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 297,
+      "event_instance_id": "put_the_bowl_on_the_plate__init059__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "59",
+      "source_file_sha256": "8ec0418ea2588a2fb5caddbd7ae7b863568fc308332f35de0bcd17a89a0289b2",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_bowl_on_the_plate/init059__actor29.json",
+      "split": "evaluation",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 83,
+      "event_instance_id": "put_the_bowl_on_the_plate__init064__actor17",
+      "generator_actor_seed": 17,
+      "init_state_id": "64",
+      "source_file_sha256": "a11744979b414b097eb57b4ad6d5c4e42002221e8b6c7943efe2def273810afa",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_bowl_on_the_plate/init064__actor17.json",
+      "split": "evaluation",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 83,
+      "event_instance_id": "put_the_bowl_on_the_plate__init064__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "64",
+      "source_file_sha256": "5983fcff3014d6e49fde15cb13a67c767d9ccbba78c17b7f76f9bca04e289089",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_bowl_on_the_plate/init064__actor29.json",
+      "split": "evaluation",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 70,
+      "event_instance_id": "put_the_bowl_on_the_plate__init064__actor7",
+      "generator_actor_seed": 7,
+      "init_state_id": "64",
+      "source_file_sha256": "53ce23839c47e2d43edc6b119358a2e0e8f6fc684cd6f8134a0d42df3789fec0",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_bowl_on_the_plate/init064__actor7.json",
+      "split": "evaluation",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 187,
+      "event_instance_id": "put_the_bowl_on_the_plate__init070__actor7",
+      "generator_actor_seed": 7,
+      "init_state_id": "70",
+      "source_file_sha256": "53ccb54a0b94c6b9298ba3197edc9d34bda2e93510bccd88d1a4dde597c237a4",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_bowl_on_the_plate/init070__actor7.json",
+      "split": "evaluation",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 80,
+      "event_instance_id": "put_the_bowl_on_the_plate__init072__actor17",
+      "generator_actor_seed": 17,
+      "init_state_id": "72",
+      "source_file_sha256": "1cbcb74d192b61db775d76f512874e8fe184a23a0da1fb30de41b466256e6bd8",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_bowl_on_the_plate/init072__actor17.json",
+      "split": "evaluation",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 170,
+      "event_instance_id": "put_the_bowl_on_the_plate__init073__actor17",
+      "generator_actor_seed": 17,
+      "init_state_id": "73",
+      "source_file_sha256": "ed68347a911f3ea7a75debc8e04ce402cdb15a3ec35d8f33b4d69816046e9f31",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_bowl_on_the_plate/init073__actor17.json",
+      "split": "evaluation",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 229,
+      "event_instance_id": "put_the_bowl_on_the_plate__init079__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "79",
+      "source_file_sha256": "c01b62219c709b95b085eebc0e5a4ec02acb3c89e5168f1ffab6d83ee7f87edf",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_bowl_on_the_plate/init079__actor29.json",
+      "split": "evaluation",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 104,
+      "event_instance_id": "put_the_bowl_on_the_plate__init080__actor17",
+      "generator_actor_seed": 17,
+      "init_state_id": "80",
+      "source_file_sha256": "2ae9794dcf5c8200af5439be3177a4e940d59f8dbf333e708665669b246510bd",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_bowl_on_the_plate/init080__actor17.json",
+      "split": "evaluation",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 153,
+      "event_instance_id": "put_the_bowl_on_the_plate__init082__actor17",
+      "generator_actor_seed": 17,
+      "init_state_id": "82",
+      "source_file_sha256": "52abcb8191ab627708c4e6b4a04cc93712aee29b7184ff9a05f28efb527dd055",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_bowl_on_the_plate/init082__actor17.json",
+      "split": "evaluation",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 83,
+      "event_instance_id": "put_the_bowl_on_the_plate__init084__actor17",
+      "generator_actor_seed": 17,
+      "init_state_id": "84",
+      "source_file_sha256": "2c36144db0af2da3ca054b2eec48deecd8965760f7d9f0044d970ade87ce2ac6",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_bowl_on_the_plate/init084__actor17.json",
+      "split": "evaluation",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 72,
+      "event_instance_id": "put_the_bowl_on_the_plate__init087__actor7",
+      "generator_actor_seed": 7,
+      "init_state_id": "87",
+      "source_file_sha256": "b523a1b02f4d40c8806f03bd06362b52779dd70c9ec7e059c252cc51a7560c3b",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_bowl_on_the_plate/init087__actor7.json",
+      "split": "evaluation",
+      "task": "put_the_bowl_on_the_plate"
+    },
+    {
+      "anchor_global_step": 115,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init010__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "10",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 84,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init012__actor7",
+      "generator_actor_seed": 7,
+      "init_state_id": "12",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 56,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init018__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "18",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 79,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init020__actor17",
+      "generator_actor_seed": 17,
+      "init_state_id": "20",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 60,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init021__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "21",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 131,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init023__actor7",
+      "generator_actor_seed": 7,
+      "init_state_id": "23",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 114,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init030__actor7",
+      "generator_actor_seed": 7,
+      "init_state_id": "30",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 57,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init031__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "31",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 71,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init032__actor7",
+      "generator_actor_seed": 7,
+      "init_state_id": "32",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 53,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init035__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "35",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 58,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init037__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "37",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 66,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init037__actor7",
+      "generator_actor_seed": 7,
+      "init_state_id": "37",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 57,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init038__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "38",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 132,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init041__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "41",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 151,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init042__actor17",
+      "generator_actor_seed": 17,
+      "init_state_id": "42",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 54,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init042__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "42",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 77,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init045__actor17",
+      "generator_actor_seed": 17,
+      "init_state_id": "45",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 58,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init045__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "45",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 53,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init048__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "48",
+      "source_file_sha256": "eb9cf5fec5be277282b1abb46eb75e051d28f0cc92b202f6ac259db016b0be24",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/calibration_events.jsonl",
+      "split": "calibration",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 106,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init050__actor7",
+      "generator_actor_seed": 7,
+      "init_state_id": "50",
+      "source_file_sha256": "43820b7ad5fc66e128cd5f7776ff9cb986958bd7b6586933f34d12cf8be901b3",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_cream_cheese_in_the_bowl/init050__actor7.json",
+      "split": "evaluation",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 68,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init054__actor17",
+      "generator_actor_seed": 17,
+      "init_state_id": "54",
+      "source_file_sha256": "49591403604cc34373a394d7afd08a272328da732953f92d81eb73d8fc27ff87",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_cream_cheese_in_the_bowl/init054__actor17.json",
+      "split": "evaluation",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 103,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init055__actor7",
+      "generator_actor_seed": 7,
+      "init_state_id": "55",
+      "source_file_sha256": "f3537c23a5b475c5660afa76e9a132ceaa84eb9080e5dec898e315ae0994c056",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_cream_cheese_in_the_bowl/init055__actor7.json",
+      "split": "evaluation",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 81,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init057__actor17",
+      "generator_actor_seed": 17,
+      "init_state_id": "57",
+      "source_file_sha256": "e97199f49502cffde422c2b65efb695f32b9298575502ba1fe56cf31bc71faf5",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_cream_cheese_in_the_bowl/init057__actor17.json",
+      "split": "evaluation",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 55,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init057__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "57",
+      "source_file_sha256": "c087a384eed1f303b66002283efe808dbe01d56719ad737119283c6822829e6b",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_cream_cheese_in_the_bowl/init057__actor29.json",
+      "split": "evaluation",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 57,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init060__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "60",
+      "source_file_sha256": "3456ca43726ea0918ed3e340aae83c2cdde7ab663effa266f4b94c627d5922f9",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_cream_cheese_in_the_bowl/init060__actor29.json",
+      "split": "evaluation",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 55,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init066__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "66",
+      "source_file_sha256": "5d2c92beab263d5653b81f8944ae94dafe73b4f6fd99503d756cdbe702b69945",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_cream_cheese_in_the_bowl/init066__actor29.json",
+      "split": "evaluation",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 238,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init067__actor7",
+      "generator_actor_seed": 7,
+      "init_state_id": "67",
+      "source_file_sha256": "496185a7fe894854602f58db108a9dba9f4aa1dff65313059801db227959aab5",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_cream_cheese_in_the_bowl/init067__actor7.json",
+      "split": "evaluation",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 116,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init069__actor7",
+      "generator_actor_seed": 7,
+      "init_state_id": "69",
+      "source_file_sha256": "c17c82b83e45918ae930af867cf720cb9941a60f2af8152692dc8659fb008f63",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_cream_cheese_in_the_bowl/init069__actor7.json",
+      "split": "evaluation",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 59,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init070__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "70",
+      "source_file_sha256": "61da035e3b269b30a105751ce9a15d554224a569a0f6e2624c949218431bebd4",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_cream_cheese_in_the_bowl/init070__actor29.json",
+      "split": "evaluation",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 66,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init070__actor7",
+      "generator_actor_seed": 7,
+      "init_state_id": "70",
+      "source_file_sha256": "4e126b65607c2a2861ff876b2eecc858b391e9e67bb4f76f93d25e3d18c6af13",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_cream_cheese_in_the_bowl/init070__actor7.json",
+      "split": "evaluation",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 79,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init071__actor7",
+      "generator_actor_seed": 7,
+      "init_state_id": "71",
+      "source_file_sha256": "3f82ddd3e66ed8e9fe771fa1d33487d73d07042a0421722bd3e84fa50b2be16a",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_cream_cheese_in_the_bowl/init071__actor7.json",
+      "split": "evaluation",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 152,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init072__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "72",
+      "source_file_sha256": "a5de1101b7b50af92133af309c765f6e9d3c0e86f839b005a199ddc8448d40c8",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_cream_cheese_in_the_bowl/init072__actor29.json",
+      "split": "evaluation",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 122,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init074__actor17",
+      "generator_actor_seed": 17,
+      "init_state_id": "74",
+      "source_file_sha256": "0cb01905dc6b5bdba16f17e8b3fe34e22cd5716ea78246465d6848de8d274ae6",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_cream_cheese_in_the_bowl/init074__actor17.json",
+      "split": "evaluation",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 59,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init075__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "75",
+      "source_file_sha256": "b9b659a599f848264deeda2fdbcee9a3dc9bd44797c50a357597feb81ae4a0fa",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_cream_cheese_in_the_bowl/init075__actor29.json",
+      "split": "evaluation",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 58,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init078__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "78",
+      "source_file_sha256": "de5caef43fc4814b3d0afbfdf317889109566075e5189c1ad226eb997ffbe498",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_cream_cheese_in_the_bowl/init078__actor29.json",
+      "split": "evaluation",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 58,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init079__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "79",
+      "source_file_sha256": "f0d3df1b50d082eecadf664f3ec2f93d2a38b4fffe8e75eac5190448299c0787",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_cream_cheese_in_the_bowl/init079__actor29.json",
+      "split": "evaluation",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 65,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init079__actor7",
+      "generator_actor_seed": 7,
+      "init_state_id": "79",
+      "source_file_sha256": "89426af0f0566517a5440939b37ac12c1a6ba49a8221a10b2b54c3c6a0e382bb",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_cream_cheese_in_the_bowl/init079__actor7.json",
+      "split": "evaluation",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 70,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init080__actor17",
+      "generator_actor_seed": 17,
+      "init_state_id": "80",
+      "source_file_sha256": "991821ed1d686974b30a160dc6ddb8cae32a1e34d4711f5639ac813802acf132",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_cream_cheese_in_the_bowl/init080__actor17.json",
+      "split": "evaluation",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 57,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init080__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "80",
+      "source_file_sha256": "f691f9a97e32650c04578a0b3920d4c5b8638a03908e8ea03acd83f822134ce7",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_cream_cheese_in_the_bowl/init080__actor29.json",
+      "split": "evaluation",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 55,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init082__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "82",
+      "source_file_sha256": "2443b9c4ef2126219a88ad1e72e2427c4e002fd891079c67a33b1de5ca0c22d6",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_cream_cheese_in_the_bowl/init082__actor29.json",
+      "split": "evaluation",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 61,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init085__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "85",
+      "source_file_sha256": "70c2b572ae7723cfebaaf21ce604d0084415fdbb561755bbd927a7a697dae559",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_cream_cheese_in_the_bowl/init085__actor29.json",
+      "split": "evaluation",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    },
+    {
+      "anchor_global_step": 57,
+      "event_instance_id": "put_the_cream_cheese_in_the_bowl__init086__actor29",
+      "generator_actor_seed": 29,
+      "init_state_id": "86",
+      "source_file_sha256": "f9e729d52a1924e2dd7a5dc830c13dbf05d4d2f71b56c0712ea55ea5ce366979",
+      "source_path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/sealed_evaluation/put_the_cream_cheese_in_the_bowl/init086__actor29.json",
+      "split": "evaluation",
+      "task": "put_the_cream_cheese_in_the_bowl"
+    }
+  ],
+  "statistics": {
+    "calibration_descriptive": {
+      "both_defined_by_task": {
+        "put_the_bowl_on_the_plate": 2,
+        "put_the_cream_cheese_in_the_bowl": 10
+      },
+      "k3": {
+        "decision": "NOT_ESTABLISHED_LOW_SUPPORT",
+        "raw_k3": {
+          "by_task": {
+            "put_the_bowl_on_the_plate": {
+              "both_defined": 2,
+              "checks": {
+                "both_defined_at_least_30": false,
+                "ci_lower_above_split_half_p95": false,
+                "minority_at_least_015": false,
+                "spearman_at_most_08": false
+              },
+              "minority_ci_lower": 0.0,
+              "pass": false,
+              "spearman": null,
+              "split_half_null_p95": 0.0
+            },
+            "put_the_cream_cheese_in_the_bowl": {
+              "both_defined": 10,
+              "checks": {
+                "both_defined_at_least_30": false,
+                "ci_lower_above_split_half_p95": false,
+                "minority_at_least_015": false,
+                "spearman_at_most_08": false
+              },
+              "minority_ci_lower": 0.0,
+              "pass": false,
+              "spearman": 0.9938079899999065,
+              "split_half_null_p95": 0.1
+            }
+          },
+          "decision": "MONOTONE_RESCALING_ONLY",
+          "status": "FAIL"
+        },
+        "status": "INSUFFICIENT_SUPPORT"
+      },
+      "row_count": 3132,
+      "status": "COMPLETE"
+    },
+    "evaluation": {
+      "both_defined_by_task": {
+        "put_the_bowl_on_the_plate": 5,
+        "put_the_cream_cheese_in_the_bowl": 12
+      },
+      "k3": {
+        "decision": "NOT_ESTABLISHED_LOW_SUPPORT",
+        "raw_k3": {
+          "by_task": {
+            "put_the_bowl_on_the_plate": {
+              "both_defined": 5,
+              "checks": {
+                "both_defined_at_least_30": false,
+                "ci_lower_above_split_half_p95": false,
+                "minority_at_least_015": false,
+                "spearman_at_most_08": false
+              },
+              "minority_ci_lower": 0.0,
+              "pass": false,
+              "spearman": 1.0,
+              "split_half_null_p95": 0.25
+            },
+            "put_the_cream_cheese_in_the_bowl": {
+              "both_defined": 12,
+              "checks": {
+                "both_defined_at_least_30": false,
+                "ci_lower_above_split_half_p95": false,
+                "minority_at_least_015": false,
+                "spearman_at_most_08": false
+              },
+              "minority_ci_lower": 0.0,
+              "pass": false,
+              "spearman": 1.0,
+              "split_half_null_p95": 0.0
+            }
+          },
+          "decision": "MONOTONE_RESCALING_ONLY",
+          "status": "FAIL"
+        },
+        "status": "INSUFFICIENT_SUPPORT"
+      },
+      "row_count": 3888,
+      "status": "COMPLETE"
+    }
+  },
+  "status": "COMPLETE",
+  "support_event_count_by_task_split": {
+    "put_the_bowl_on_the_plate": {
+      "calibration": 10,
+      "evaluation": 13
+    },
+    "put_the_cream_cheese_in_the_bowl": {
+      "calibration": 19,
+      "evaluation": 23
+    }
+  },
+  "upstream_k_failures": {
+    "K1": {
+      "path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase0b/summary.json",
+      "status": "COMPLETE"
+    },
+    "K2": {
+      "path": "/mnt/cpfs/zbl-cpfs-new/USERS/leon/logs/r16_p14_stage2f/s1-20260907/artifacts/stage2f/phase1/summary.json",
+      "selected_budget": null,
+      "status": "BLOCKED"
+    },
+    "K3": {
+      "status": "NOT_EVALUATED_FORMAL"
+    }
+  }
 }

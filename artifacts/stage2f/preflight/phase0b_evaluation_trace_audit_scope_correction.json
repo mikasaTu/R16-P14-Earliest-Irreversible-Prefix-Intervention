@@ -1,0 +1,10 @@
+{
+  "status": "CORRECTED_AUDIT_ASSUMPTION",
+  "source_data_changed": false,
+  "runtime_changed": false,
+  "frozen_collector_sha256": "1926761145e9cc8fa1d059d850092acc0424070c4055961ec5c2616f9322305a",
+  "original_audit_error": "required labels.record_count == full trace count and used branch-only generator_checkpoint_sha256 name",
+  "actual_collector_contract": "full trace is 26*steps; cause labels use post-anchor suffix when a structural anchor exists; only qualified events retain anchor metadata, checkpoint field is checkpoint_sha256",
+  "validation": "full trace ordering checked independently; label suffix aligned to control boundary and to event anchor when available; offline label_trace exactly reproduces suffix labels; all240 PASS",
+  "nonqualified_anchor_limit": "successful structural anchor event is not persisted, so its label suffix start is derived from recorded label record_count; this is disclosed, not independently reconstructed grasp proof"
+}
