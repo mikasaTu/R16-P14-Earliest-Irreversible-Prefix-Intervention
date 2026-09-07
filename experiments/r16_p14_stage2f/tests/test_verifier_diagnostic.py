@@ -263,3 +263,16 @@ def test_formal_atlas_uses_formal_proof_only(tmp_path, monkeypatch):
     )
     assert result["diagnostic"] is False
     assert selection.calls and selection.calls[0][2] is False
+
+def test_runtime_artifact_relative_receipt_path_preserves_strict_binding(tmp_path):
+    import pytest
+    verifier = _verifier()
+    _, _, receipt, _, sha, row, budget = _fixture(tmp_path, verifier)
+    selection = {"receipt": json.loads(receipt.read_text()), "receipt_sha256": sha, "budget": budget}
+    for path in (verifier.DIAGNOSTIC_RECEIPT_PATH, "phase1/diagnostic_selection_receipt.json"):
+        verifier._validate_diagnostic_rows([{**row, "diagnostic_selection_receipt_path": path}], selection)
+    for path in ("../phase1/diagnostic_selection_receipt.json", "/tmp/phase1/diagnostic_selection_receipt.json", "phase1/selection_receipt.json"):
+        with pytest.raises(RuntimeError, match="receipt path mismatch"):
+            verifier._validate_diagnostic_rows([{**row, "diagnostic_selection_receipt_path": path}], selection)
+    with pytest.raises(RuntimeError, match="SHA256 mismatch"):
+        verifier._validate_diagnostic_rows([{**row, "diagnostic_selection_receipt_path": "phase1/diagnostic_selection_receipt.json", "diagnostic_selection_receipt_sha256": "0" * 64}], selection)

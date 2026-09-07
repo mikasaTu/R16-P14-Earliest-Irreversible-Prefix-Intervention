@@ -200,7 +200,10 @@ def _validate_diagnostic_rows(rows, selection):
         )
         if "diagnostic_selection_receipt_path" in row:
             require(
-                row.get("diagnostic_selection_receipt_path") == DIAGNOSTIC_RECEIPT_PATH,
+                row.get("diagnostic_selection_receipt_path") in {
+                    DIAGNOSTIC_RECEIPT_PATH,
+                    "phase1/diagnostic_selection_receipt.json",
+                },
                 f"diagnostic atlas row {number} receipt path mismatch",
             )
         if "confirmatory" in row:
